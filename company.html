@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGArtLab — 设计 · 品牌 · 数字体验</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ===== Company Site Template — CGArtLab Design System ===== */
+
+.c-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 var(--ds-space-6); }
+.c-wrapper--narrow { max-width: 800px; }
+
+/* --- Nav --- */
+.c-nav { padding: var(--ds-space-5) 0; border-bottom: 1px solid var(--ds-color-border); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: color-mix(in oklch, var(--ds-color-bg) 92%, transparent); backdrop-filter: blur(12px); z-index: 100; }
+.c-nav-brand { font-family: var(--ds-font-display); font-size: var(--ds-text-h5); font-weight: 700; color: var(--ds-color-fg-strong); text-decoration: none; letter-spacing: var(--ds-tracking-tight); }
+.c-nav-links { display: flex; gap: var(--ds-space-6); align-items: center; }
+.c-nav-links a { text-decoration: none; font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); transition: color .15s; letter-spacing: var(--ds-tracking-wide); font-weight: 500; }
+.c-nav-links a:hover { color: var(--ds-color-fg); }
+.c-cta-nav { padding: .5rem 1.25rem; background: var(--ds-accent); color: var(--ds-color-white); border-radius: var(--ds-radius-md); font-size: var(--ds-text-body-sm); font-weight: 600; text-decoration: none; transition: background .15s; }
+.c-cta-nav:hover { background: var(--ds-accent-hover); }
+
+/* --- Hero --- */
+.c-hero { padding: var(--ds-space-20) 0 var(--ds-space-16); display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-12); align-items: center; }
+.c-hero-text { }
+.c-hero-kicker { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-widest); color: var(--ds-accent); margin-bottom: var(--ds-space-4); }
+.c-hero h1 { font-family: var(--ds-font-display); font-size: var(--ds-text-hero); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-4); }
+.c-hero p { font-size: var(--ds-text-h5); color: var(--ds-color-muted); line-height: var(--ds-leading-body); max-width: 480px; margin-bottom: var(--ds-space-8); font-weight: var(--ds-weight-light); }
+.c-hero-cta { display: flex; gap: var(--ds-space-4); }
+.c-hero-visual { width: 100%; aspect-ratio: 4/3; background: var(--ds-accent-muted); border-radius: var(--ds-radius-2xl); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.c-hero-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, var(--ds-accent-soft) 0%, transparent 70%); }
+.c-hero-visual span { position: relative; font-family: var(--ds-font-display); font-size: var(--ds-text-hero); color: var(--ds-accent); opacity: .15; font-weight: 700; }
+
+/* --- Stats --- */
+.c-stats { padding: var(--ds-space-12) 0; border-top: 1px solid var(--ds-color-border); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ds-space-6); }
+.c-stat { text-align: center; }
+.c-stat-num { font-family: var(--ds-font-display); font-size: var(--ds-text-display); font-weight: 700; color: var(--ds-accent); line-height: 1; margin-bottom: var(--ds-space-2); }
+.c-stat-label { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); }
+
+/* --- Section common --- */
+.c-section { padding: var(--ds-space-20) 0; border-top: 1px solid var(--ds-color-border); }
+.c-section-header { margin-bottom: var(--ds-space-12); max-width: 600px; }
+.c-section-tag { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-widest); color: var(--ds-accent); margin-bottom: var(--ds-space-3); }
+.c-section-header h2 { font-family: var(--ds-font-display); font-size: var(--ds-text-h1); line-height: var(--ds-leading-tight); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-3); }
+.c-section-header p { font-size: var(--ds-text-body-lg); color: var(--ds-color-muted); line-height: var(--ds-leading-body); }
+
+/* --- About --- */
+.c-about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-10); }
+.c-about-text { font-size: var(--ds-text-body-lg); line-height: var(--ds-leading-body); color: var(--ds-color-fg); }
+.c-about-text p { margin-bottom: var(--ds-space-4); }
+.c-about-values { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-6); }
+.c-value { padding: var(--ds-space-6); background: var(--ds-color-surface); border-radius: var(--ds-radius-xl); border: 1px solid var(--ds-color-border-subtle); }
+.c-value h4 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-accent); margin-bottom: var(--ds-space-2); }
+.c-value p { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); line-height: var(--ds-leading-body); }
+
+/* --- Services --- */
+.c-services { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ds-space-6); }
+.c-service { padding: var(--ds-space-8); background: var(--ds-color-surface); border-radius: var(--ds-radius-xl); border: 1px solid var(--ds-color-border-subtle); transition: border-color .2s; }
+.c-service:hover { border-color: var(--ds-accent); }
+.c-service-icon { width: 48px; height: 48px; background: var(--ds-accent-muted); border-radius: var(--ds-radius-lg); display: flex; align-items: center; justify-content: center; color: var(--ds-accent); margin-bottom: var(--ds-space-4); font-size: var(--ds-text-h4); }
+.c-service h3 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-3); }
+.c-service p { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); line-height: var(--ds-leading-body); margin-bottom: var(--ds-space-4); }
+.c-service-more { font-size: var(--ds-text-body-sm); color: var(--ds-accent); text-decoration: none; font-weight: 600; }
+
+/* --- Cases --- */
+.c-cases { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--ds-space-6); }
+.c-case { border-radius: var(--ds-radius-xl); overflow: hidden; background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-subtle); transition: border-color .2s; }
+.c-case:hover { border-color: var(--ds-accent); }
+.c-case-image { width: 100%; aspect-ratio: 16/10; background: var(--ds-color-surface-overlay); display: flex; align-items: center; justify-content: center; color: var(--ds-color-border); font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); }
+.c-case-body { padding: var(--ds-space-6); }
+.c-case-tag { font-family: var(--ds-font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: var(--ds-tracking-wider); color: var(--ds-accent); margin-bottom: var(--ds-space-2); }
+.c-case-body h3 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-2); }
+.c-case-body p { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); line-height: var(--ds-leading-body); }
+
+/* --- Contact --- */
+.c-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-10); align-items: start; }
+.c-contact-info { display: flex; flex-direction: column; gap: var(--ds-space-6); }
+.c-contact-item { display: flex; gap: var(--ds-space-4); align-items: flex-start; }
+.c-contact-icon { width: 40px; height: 40px; background: var(--ds-accent-muted); border-radius: var(--ds-radius-lg); display: flex; align-items: center; justify-content: center; color: var(--ds-accent); flex-shrink: 0; }
+.c-contact-item h4 { font-size: var(--ds-text-body-sm); font-weight: 600; color: var(--ds-color-fg); margin-bottom: var(--ds-space-1); }
+.c-contact-item p { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); }
+.c-form { display: flex; flex-direction: column; gap: var(--ds-space-4); }
+.c-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-4); }
+.c-form textarea { min-height: 120px; resize: vertical; }
+
+/* --- Footer --- */
+.c-footer { border-top: 1px solid var(--ds-color-border); padding: var(--ds-space-10) 0; text-align: center; }
+.c-footer-copy { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); margin-bottom: var(--ds-space-3); }
+.c-footer-links { display: flex; gap: var(--ds-space-6); justify-content: center; }
+.c-footer-links a { color: var(--ds-color-muted); text-decoration: none; font-size: var(--ds-text-body-sm); }
+.c-footer-links a:hover { color: var(--ds-accent); }
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .c-hero { grid-template-columns: 1fr; padding: var(--ds-space-12) 0; }
+  .c-hero h1 { font-size: var(--ds-text-h1); }
+  .c-services { grid-template-columns: 1fr; }
+  .c-cases { grid-template-columns: 1fr; }
+  .c-about-grid, .c-contact-grid { grid-template-columns: 1fr; }
+  .c-stats { grid-template-columns: repeat(2, 1fr); gap: var(--ds-space-6); }
+  .c-stats .c-stat-num { font-size: var(--ds-text-h1); }
+}
+@media (max-width: 640px) {
+  .c-nav { flex-direction: column; gap: var(--ds-space-3); align-items: flex-start; }
+  .c-form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body style="background:var(--ds-color-bg);color:var(--ds-color-fg);">
+
+<!-- Nav -->
+<nav class="c-nav c-wrapper">
+  <a href="#" class="c-nav-brand">CGArtLab</a>
+  <div class="c-nav-links">
+    <a href="#about">关于</a>
+    <a href="#services">服务</a>
+    <a href="#cases">案例</a>
+    <a href="#contact" class="c-cta-nav">联系我们</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="c-wrapper">
+  <div class="c-hero">
+    <div class="c-hero-text">
+      <div class="c-hero-kicker">Brand · Design · Digital</div>
+      <h1>让品牌在数字<br>世界找到声音</h1>
+      <p>我们为有野心的组织构建品牌识别、设计系统和数字体验——从战略到像素，从 Penpot 到上线。</p>
+      <div class="c-hero-cta">
+        <a href="#contact" class="ds-btn ds-btn--primary ds-btn--lg">开始对话</a>
+        <a href="#cases" class="ds-btn ds-btn--secondary ds-btn--lg">查看案例</a>
+      </div>
+    </div>
+    <div class="c-hero-visual"><span>CG</span></div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="c-wrapper">
+  <div class="c-stats">
+    <div class="c-stat"><div class="c-stat-num">7+</div><div class="c-stat-label">年设计实践</div></div>
+    <div class="c-stat"><div class="c-stat-num">40+</div><div class="c-stat-label">服务客户</div></div>
+    <div class="c-stat"><div class="c-stat-num">200+</div><div class="c-stat-label">交付项目</div></div>
+    <div class="c-stat"><div class="c-stat-num">12</div><div class="c-stat-label">团队设计师</div></div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="c-section" id="about">
+  <div class="c-wrapper">
+    <div class="c-section-header">
+      <div class="c-section-tag">About</div>
+      <h2>编辑主义的设计<br>实践者</h2>
+      <p>我们是一支小而精的设计团队，专注品牌识别、设计系统与数字产品体验。不追风、不堆砌——用克制的方法做有温度的设计。</p>
+    </div>
+    <div class="c-about-grid">
+      <div class="c-about-text">
+        <p>CGArtLab 成立于 2019 年，从一本独立刊物的视觉设计起步，逐步发展为涵盖品牌策略、UI/UX、设计系统搭建的综合性工作室。我们的方法根植于编辑主义传统：清晰的层级、克制的色彩、对排版的偏执。</p>
+        <p>我们的客户覆盖科技、文化、消费、教育等多个领域——从初创公司到百年机构，从本地品牌到跨国企业。我们不做"漂亮但无用"的设计：每一个视觉决策背后，都有一个可解释的策略理由。</p>
+      </div>
+      <div class="c-about-values">
+        <div class="c-value"><h4>01 策略驱动</h4><p>每个项目从理解商业目标开始。视觉是结果，不是起点。</p></div>
+        <div class="c-value"><h4>02 系统思维</h4><p>不做一个页面，而是做一个体系。组件化、可扩展、可持续。</p></div>
+        <div class="c-value"><h4>03 排版信仰</h4><p>好的排版是设计的骨架。半数团队成员有印刷/出版物背景。</p></div>
+        <div class="c-value"><h4>04 开放协作</h4><p>基于 Penpot 的工作流让客户全程参与，不是"交了稿再修改"。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="c-section" id="services">
+  <div class="c-wrapper">
+    <div class="c-section-header">
+      <div class="c-section-tag">Services</div>
+      <h2>我们能做什么</h2>
+      <p>从品牌策略到设计执行，从设计系统到产品界面——我们用一致的品质标准贯穿每个环节。</p>
+    </div>
+    <div class="c-services">
+      <div class="c-service">
+        <div class="c-service-icon">◆</div>
+        <h3>品牌识别</h3>
+        <p>品牌策略、视觉识别系统、标志设计、品牌手册 —— 为组织建立一致的视觉语言。</p>
+        <a href="#" class="c-service-more">了解更多 →</a>
+      </div>
+      <div class="c-service">
+        <div class="c-service-icon">◈</div>
+        <h3>设计系统</h3>
+        <p>从设计令牌到组件库，从 Penpot 到代码交付——系统化的设计基础设施搭建。</p>
+        <a href="#" class="c-service-more">了解更多 →</a>
+      </div>
+      <div class="c-service">
+        <div class="c-service-icon">▣</div>
+        <h3>数字产品</h3>
+        <p>Web 应用、移动界面、数据仪表盘——为复杂产品提供清晰、可用的交互体验。</p>
+        <a href="#" class="c-service-more">了解更多 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cases -->
+<section class="c-section" id="cases">
+  <div class="c-wrapper">
+    <div class="c-section-header">
+      <div class="c-section-tag">Selected Works</div>
+      <h2>代表案例</h2>
+      <p>每个项目都是一次深入的合作。以下是我们近年来的部分交付。</p>
+    </div>
+    <div class="c-cases">
+      <div class="c-case">
+        <div class="c-case-image"><span>Case Study</span></div>
+        <div class="c-case-body">
+          <div class="c-case-tag">设计系统</div>
+          <h3>CGArtLab Design System</h3>
+          <p>一套完整的开源设计系统：200+ 令牌、23 核心组件、100 枚图标。基于 OKLch 色彩与编辑主义排版。</p>
+        </div>
+      </div>
+      <div class="c-case">
+        <div class="c-case-image"><span>Case Study</span></div>
+        <div class="c-case-body">
+          <div class="c-case-tag">品牌识别</div>
+          <h3>山隐 · 茶品牌重塑</h3>
+          <p>为一家高端茶品牌构建从标志到包装、从线上到线下的完整视觉体系。温暖、克制、有时间的质感。</p>
+        </div>
+      </div>
+      <div class="c-case">
+        <div class="c-case-image"><span>Case Study</span></div>
+        <div class="c-case-body">
+          <div class="c-case-tag">数字产品</div>
+          <h3>Kaleido 数据分析平台</h3>
+          <p>面向创意团队的数据分析工具 UI 设计。复杂信息层级下保持清晰与易用，暗色模式优先。</p>
+        </div>
+      </div>
+      <div class="c-case">
+        <div class="c-case-image"><span>Case Study</span></div>
+        <div class="c-case-body">
+          <div class="c-case-tag">出版物</div>
+          <h3>《字里行间》杂志改版</h3>
+          <p>一本独立文化刊物的全面视觉升级。网格系统、字体选择、图片编辑规则的重新定义。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="c-section" id="contact">
+  <div class="c-wrapper c-wrapper--narrow">
+    <div class="c-section-header" style="max-width:100%;">
+      <div class="c-section-tag">Contact</div>
+      <h2>开始对话</h2>
+      <p>告诉我们你的项目，我们会在一周内回复。初次咨询免费。</p>
+    </div>
+    <div class="c-contact-grid">
+      <div class="c-contact-info">
+        <div class="c-contact-item">
+          <div class="c-contact-icon">✉</div>
+          <div><h4>邮箱</h4><p>hello@cgartlab.com</p></div>
+        </div>
+        <div class="c-contact-item">
+          <div class="c-contact-icon">◉</div>
+          <div><h4>地址</h4><p>上海市静安区胶州路 322 号<br>创意园区 3F</p></div>
+        </div>
+        <div class="c-contact-item">
+          <div class="c-contact-icon">◎</div>
+          <div><h4>社交媒体</h4><p>Twitter / GitHub / Behance<br>@cgartlab</p></div>
+        </div>
+      </div>
+      <form class="c-form" onsubmit="event.preventDefault();alert('消息已发送（演示界面）');">
+        <div class="c-form-row">
+          <div><label class="ds-label">姓名</label><input class="ds-input" type="text" placeholder="您的姓名" style="max-width:100%;"></div>
+          <div><label class="ds-label">邮箱</label><input class="ds-input" type="email" placeholder="your@email.com" style="max-width:100%;"></div>
+        </div>
+        <div><label class="ds-label">项目简述</label><textarea class="ds-input" placeholder="请简要描述您的项目需求…" style="max-width:100%;"></textarea></div>
+        <div><button type="submit" class="ds-btn ds-btn--primary">发送消息</button></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="c-footer c-wrapper">
+  <div class="c-footer-copy">© 2026 CGArtLab · Shanghai</div>
+  <div class="c-footer-links">
+    <a href="#">Twitter</a>
+    <a href="#">GitHub</a>
+    <a href="#">Behance</a>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
