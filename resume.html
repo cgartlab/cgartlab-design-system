@@ -2,246 +2,647 @@
 <html lang="zh-CN"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>陈逸帆 · 设计总监 · 简历</title>
-<link rel="stylesheet" href="styles.css">
+<title>陈阳 · 简历与作品集</title>
 <style>
-/* ===== Resume Template — CGArtLab Design System ===== */
+/*
+ * Resume — CGArtLab Design System × Kami layout
+ * ==========================================
+ * Font tiers (5): 24 / 11 / 9 / 8 / 7 pt
+ */
 
-.r-page { max-width: 1000px; margin: var(--ds-space-10) auto; background: var(--ds-color-surface-raised); border-radius: var(--ds-radius-2xl); box-shadow: var(--ds-shadow-lg); overflow: hidden; }
+/* ===== Design Tokens ===== */
+:root {
+  --canvas:      oklch(96.8% 0.008 95);
+  --ivory:       oklch(99% 0.004 90);
+  --ink:         oklch(16% 0.015 85);
+  --ink-soft:    oklch(35% 0.014 85);
+  --muted:       oklch(50% 0.012 80);
+  --stone:       oklch(68% 0.008 85);
+  --hairline:    oklch(87% 0.01 90);
+  --divider:     oklch(84% 0.014 90);
 
-/* --- Dual-Column Layout --- */
-.r-grid { display: grid; grid-template-columns: 300px 1fr; min-height: 100%; }
+  --brand:       oklch(40% 0.075 120);
+  --brand-soft:  oklch(82% 0.032 118);
+  --brand-bg:    oklch(94% 0.014 115);
 
-/* --- Sidebar (Left) --- */
-.r-sidebar { background: var(--ds-color-fg-strong); color: var(--ds-color-fg-inverse); padding: var(--ds-space-8) var(--ds-space-6); display: flex; flex-direction: column; gap: var(--ds-space-8); }
-.r-avatar { width: 100px; height: 100px; border-radius: var(--ds-radius-full); background: var(--ds-accent); margin: 0 auto var(--ds-space-4); display: flex; align-items: center; justify-content: center; font-family: var(--ds-font-display); font-size: var(--ds-text-h1); font-weight: 700; color: var(--ds-color-white); }
-.r-name-sidebar { text-align: center; }
-.r-name-sidebar h1 { font-family: var(--ds-font-display); font-size: var(--ds-text-h2); font-weight: 700; color: var(--ds-color-white); line-height: var(--ds-leading-tight); }
-.r-name-sidebar .r-title { font-size: var(--ds-text-body-sm); color: var(--ds-accent); font-family: var(--ds-font-mono); text-transform: uppercase; letter-spacing: var(--ds-tracking-wider); margin-top: var(--ds-space-2); }
+  --serif: "Iowan Old Style", "Charter", Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+  --sans:  "Noto Sans SC", "Source Han Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --mono:  "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono SC", ui-monospace, monospace;
 
-.r-sidebar-section { }
-.r-sidebar-section h3 { font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-widest); color: var(--ds-accent); font-family: var(--ds-font-mono); margin-bottom: var(--ds-space-3); padding-bottom: var(--ds-space-2); border-bottom: 1px solid color-mix(in oklch, var(--ds-color-fg-inverse) 15%, transparent); }
+  --lh-title:  1.20;
+  --lh-dense:  1.42;
+  --lh-body:   1.52;
 
-/* --- Contact items --- */
-.r-contact-item { display: flex; gap: var(--ds-space-3); align-items: center; font-size: var(--ds-text-body-sm); color: color-mix(in oklch, var(--ds-color-fg-inverse) 70%, transparent); margin-bottom: var(--ds-space-2); }
-.r-contact-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--ds-accent); }
+  --sp-1:  2pt;
+  --sp-2:  4pt;
+  --sp-3:  6pt;
+  --sp-4:  8pt;
+  --sp-5:  10pt;
+  --sp-6:  12pt;
+  --sp-8:  16pt;
+  --sp-10: 20pt;
 
-/* --- Skills --- */
-.r-skill-group { margin-bottom: var(--ds-space-4); }
-.r-skill-group h4 { font-size: var(--ds-text-body-sm); color: var(--ds-color-fg-inverse); margin-bottom: var(--ds-space-2); font-weight: 600; }
-.r-skill-tags { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
-.r-skill-tag { font-size: 11px; padding: 4px 10px; border: 1px solid color-mix(in oklch, var(--ds-color-fg-inverse) 20%, transparent); border-radius: var(--ds-radius-full); color: color-mix(in oklch, var(--ds-color-fg-inverse) 80%, transparent); letter-spacing: var(--ds-tracking-wide); }
-.r-skill-tag--high { background: var(--ds-accent); border-color: var(--ds-accent); color: var(--ds-color-fg-strong); }
+  --r-sm:  1.5pt;
+  --r-md:  3pt;
 
-/* --- Sidebar text --- */
-.r-sidebar-text { font-size: var(--ds-text-body-sm); line-height: var(--ds-leading-body); color: color-mix(in oklch, var(--ds-color-fg-inverse) 70%, transparent); }
-.r-sidebar-text p { margin-bottom: var(--ds-space-2); }
+  --ring:    0 0 0 1pt oklch(0% 0 0 / 3%);
+  --whisper: 0 0.5pt 3pt oklch(0% 0 0 / 2%);
 
-/* --- Main Content (Right) --- */
-.r-main { padding: var(--ds-space-10) var(--ds-space-8); }
-.r-main-header { margin-bottom: var(--ds-space-8); display: none; } /* hidden when sidebar has name */
+  /* Unified font sizes — 5 tiers */
+  --fs-xl: 24pt;
+  --fs-l:  11pt;
+  --fs-m:  9pt;
+  --fs-s:  8pt;
+  --fs-xs: 7pt;
+}
 
-.r-main-section { margin-bottom: var(--ds-space-8); }
-.r-main-section h2 { font-family: var(--ds-font-display); font-size: var(--ds-text-h3); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-4); padding-bottom: var(--ds-space-2); border-bottom: 2px solid var(--ds-accent); display: inline-block; }
-.r-summary { font-size: var(--ds-text-body-lg); line-height: var(--ds-leading-body); color: var(--ds-color-fg-subtle); margin-bottom: var(--ds-space-6); }
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* --- Experience --- */
-.r-exp-item { margin-bottom: var(--ds-space-6); }
-.r-exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--ds-space-1); }
-.r-exp-header h3 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-color-fg-strong); }
-.r-exp-header .r-exp-date { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); color: var(--ds-color-muted); white-space: nowrap; }
-.r-exp-company { font-size: var(--ds-text-body-sm); color: var(--ds-accent); font-weight: 600; margin-bottom: var(--ds-space-2); }
-.r-exp-desc { font-size: var(--ds-text-body-sm); color: var(--ds-color-fg-subtle); line-height: var(--ds-leading-body); }
-.r-exp-desc ul { list-style: none; padding: 0; margin-top: var(--ds-space-2); }
-.r-exp-desc li { padding: var(--ds-space-1) 0; position: relative; padding-left: var(--ds-space-4); }
-.r-exp-desc li::before { content: '—'; position: absolute; left: 0; color: var(--ds-accent); }
+html {
+  font-size: 10.5pt;
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background: var(--canvas);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
 
-/* --- Education --- */
-.r-edu-item { margin-bottom: var(--ds-space-4); }
-.r-edu-item h4 { font-size: var(--ds-text-body); font-weight: 600; color: var(--ds-color-fg-strong); }
-.r-edu-item .r-edu-meta { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); }
+body {
+  font-family: var(--sans);
+  font-weight: 400;
+  background: var(--canvas);
+}
 
-/* --- Print --- */
+/* ===== A4 Page ===== */
+.page {
+  max-width: 184mm;
+  margin: 0 auto;
+  padding: 9mm 13mm 14mm;
+  background: var(--canvas);
+}
+
+@media screen {
+  .page {
+    margin: 2mm auto 8mm;
+    padding: 12mm 17mm 14mm;
+    box-shadow: var(--whisper);
+    border-radius: var(--r-sm);
+    background: var(--canvas);
+  }
+  html { background: oklch(93% 0.006 90); }
+}
+
+@page {
+  size: A4;
+  margin: 9mm 13mm 14mm 13mm;
+}
+
 @media print {
-  .r-page { box-shadow: none; margin: 0; border-radius: 0; }
-  body { background: white; }
+  html { font-size: 10pt; }
+  .page {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-family: var(--mono);
+    font-size: 6pt;
+    color: var(--muted);
+  }
+  .page-break { break-before: page; }
 }
-@media (max-width: 768px) {
-  .r-grid { grid-template-columns: 1fr; }
-  .r-sidebar { padding: var(--ds-space-6); }
+
+/* ================================================================
+   HEADER — left-aligned, unified sizes
+   ================================================================ */
+.header {
+  text-align: left;
+  margin-bottom: var(--sp-6);
 }
+
+.header h1 {
+  font-family: var(--serif);
+  font-size: var(--fs-xl);
+  font-weight: 500;
+  line-height: 1.10;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin-bottom: var(--sp-1);
+}
+
+.header .role {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--brand);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp-3);
+}
+
+.contact {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  margin-bottom: var(--sp-4);
+}
+
+.contact a { color: var(--ink-soft); text-decoration: none; }
+.contact a:hover { color: var(--brand); }
+.contact .sep { color: var(--hairline); margin: 0 var(--sp-1); }
+
+.summary {
+  font-size: var(--fs-s);
+  line-height: var(--lh-dense);
+  color: var(--ink-soft);
+}
+
+/* ================================================================
+   SECTION TITLES — Kami signature 2.5pt brand left bar
+   1pt divider between sections (was 0.5pt)
+   ================================================================ */
+.section {
+  margin-bottom: var(--sp-10);
+  padding-bottom: var(--sp-10);
+  border-bottom: 1pt solid var(--divider);
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: var(--fs-l);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: var(--lh-title);
+  letter-spacing: 0.03em;
+  border-left: 2.5pt solid var(--brand);
+  border-radius: 1.5pt;
+  padding-left: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+
+/* ================================================================
+   TIME-ROW — Experience & Honors (unified sizes: 7 / 9 / 8 / 8)
+   ================================================================ */
+.time-row {
+  display: grid;
+  grid-template-columns: 18mm 1fr;
+  gap: var(--sp-1) var(--sp-3);
+  break-inside: avoid;
+  margin-bottom: var(--sp-4);
+}
+
+.time-label {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  color: var(--brand);
+  line-height: var(--lh-title);
+  padding-top: 1pt;
+}
+
+.time-body { min-width: 0; }
+
+.time-title {
+  font-family: var(--serif);
+  font-size: var(--fs-m);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: var(--lh-title);
+  margin-bottom: var(--sp-1);
+}
+
+.time-sub {
+  font-size: var(--fs-s);
+  color: var(--ink-soft);
+  line-height: var(--lh-title);
+  margin-bottom: var(--sp-1);
+}
+
+.time-desc {
+  font-size: var(--fs-s);
+  line-height: var(--lh-dense);
+  color: var(--ink-soft);
+}
+
+/* ================================================================
+   SKILLS — serif label + inline list (8pt unified)
+   ================================================================ */
+.skill-group {
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-s);
+  line-height: var(--lh-dense);
+  color: var(--ink-soft);
+}
+
+.skill-group strong {
+  font-family: var(--serif);
+  font-size: var(--fs-s);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ================================================================
+   EDUCATION — two-item list (9 / 8 / 7 pt)
+   ================================================================ */
+.edu-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-2);
+}
+
+.edu-school {
+  font-family: var(--serif);
+  font-size: var(--fs-m);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: var(--lh-title);
+}
+
+.edu-meta {
+  font-size: var(--fs-s);
+  color: var(--ink-soft);
+}
+
+.edu-date {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ================================================================
+   PORTFOLIO CARDS — unified card style (9 / 8 / 7 / 7 pt)
+   ================================================================ */
+.card-list { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+
+.card-item {
+  break-inside: avoid;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--ivory);
+  border: 0.5pt solid var(--hairline);
+  border-radius: var(--r-md);
+}
+
+.card-item h3 {
+  font-family: var(--serif);
+  font-size: var(--fs-m);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: var(--lh-title);
+  margin-bottom: var(--sp-1);
+}
+
+.card-url {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  word-break: break-all;
+  margin-bottom: var(--sp-1);
+}
+
+.card-desc {
+  font-size: var(--fs-s);
+  line-height: var(--lh-dense);
+  color: var(--ink-soft);
+  margin-bottom: var(--sp-2);
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+}
+
+.card-tag {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  padding: 1pt var(--sp-2);
+  background: var(--brand-bg);
+  color: var(--brand);
+  border-radius: var(--r-sm);
+}
+
+.card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.card-link .card-item { transition: border-color 0.15s; }
+.card-link:hover .card-item { border-color: var(--brand-soft); }
+
+/* Full-width card variant */
+.card-item--full { grid-column: 1 / -1; }
+
+/* Sub-links within a card */
+.card-subs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--sp-1) var(--sp-2);
+  padding-top: var(--sp-2);
+  border-top: 0.5pt solid var(--hairline);
+}
+
+.card-sub-link {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  text-decoration: none;
+  text-align: center;
+  padding: var(--sp-1) 0;
+}
+
+.card-sub-link:hover { color: var(--brand); }
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+.footer {
+  margin-top: var(--sp-10);
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 680px) {
+  .page { padding: 4mm 6mm 6mm; }
+  .header h1 { font-size: 20pt; }
+  .time-row { grid-template-columns: 1fr; }
+  .time-label { margin-bottom: var(--sp-1); }
+  .card-list { grid-template-columns: 1fr; }
+  .card-subs { grid-template-columns: repeat(3, 1fr); }
+}
+
 </style>
 </head>
-<body style="background:var(--ds-color-bg);">
+<body>
 
-<div class="r-page">
-  <div class="r-grid">
+<div class="page">
 
-    <!-- Sidebar -->
-    <aside class="r-sidebar">
+  <!-- ===== HEADER + SUMMARY (left-aligned, merged) ===== -->
+  <header class="header">
+    <h1>Chen Yang</h1>
+    <div class="role">Cross-disciplinary Digital Creator</div>
+    <div class="contact">
+      <a href="mailto:cgartlab@outlook.com">cgartlab@outlook.com</a>
+      <span class="sep">·</span>
+      <a href="https://cgartlab.com">cgartlab.com</a>
+      <span class="sep">·</span>
+      <a href="https://github.com/cgartlab">github.com/cgartlab</a>
+      <span class="sep">·</span>
+      云南昆明
+    </div>
+    <p class="summary">陈阳，跨领域数字创作者 — 领域横跨动态视觉设计、数字艺术、前端开发与自媒体写作。从事数字动态视觉 15 年，目前运营独立站点 CG艺术实验室。以「工具是人类肢体的延伸，电脑是大脑的延伸，写作是思考本身」为创作哲学。常居云南昆明。</p>
+  </header>
+
+  <!-- ===== 工作经历 ===== -->
+  <section class="section">
+    <h2 class="section-title">工作经历</h2>
+
+    <div class="time-row">
+      <span class="time-label">2022 → 2025</span>
+      <div class="time-body">
+        <div class="time-title">云南 Animpoly 传媒有限公司</div>
+        <div class="time-sub">数字动态视觉设计</div>
+        <div class="time-desc">从事数字动态视觉设计与动画制作，参与多个商业项目的视觉设计与后期制作。</div>
+      </div>
+    </div>
+
+    <div class="time-row">
+      <span class="time-label">2020 → 2021</span>
+      <div class="time-body">
+        <div class="time-title">壹世界文化传播有限公司</div>
+        <div class="time-sub">品牌视觉设计</div>
+        <div class="time-desc">负责品牌视觉设计、项目策划与视觉创意输出，服务多个行业客户。</div>
+      </div>
+    </div>
+
+    <div class="time-row">
+      <span class="time-label">2019 → 2020</span>
+      <div class="time-body">
+        <div class="time-title">云南壹度影秀文化传播有限公司</div>
+        <div class="time-sub">设计部 · 项目经理</div>
+        <div class="time-desc">负责设计项目统筹管理与视觉创意指导，协调跨部门协作。</div>
+      </div>
+    </div>
+
+    <div class="time-row">
+      <span class="time-label">2016 → 2019</span>
+      <div class="time-body">
+        <div class="time-title">湖南卫风影视传媒有限公司</div>
+        <div class="time-sub">设计部 · 设计</div>
+        <div class="time-desc">从事平面设计、品牌视觉与数字媒体设计工作。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 荣誉与成就 ===== -->
+  <section class="section">
+    <h2 class="section-title">荣誉与成就</h2>
+
+    <div class="time-row">
+      <span class="time-label">2024</span>
+      <div class="time-body">
+        <div class="time-title">CCTV 品牌强国 · 数字艺术影响力人物</div>
+      </div>
+    </div>
+
+    <div class="time-row">
+      <span class="time-label">2023</span>
+      <div class="time-body">
+        <div class="time-title">澜湄六国青年文创设计大赛 · 获奖</div>
+      </div>
+    </div>
+
+    <div class="time-row">
+      <span class="time-label">2022</span>
+      <div class="time-body">
+        <div class="time-title">站酷推荐设计师 · 年度人气作品</div>
+      </div>
+    </div>
+
+    <div class="time-row">
+      <span class="time-label">2021</span>
+      <div class="time-body">
+        <div class="time-title">CCG EXPO 中国国际动漫游戏博览会 · 参展</div>
+      </div>
+    </div>
+
+    <div class="time-row">
+      <span class="time-label">2020</span>
+      <div class="time-body">
+        <div class="time-title">中国包装创意设计大赛 · 专业组二等奖</div>
+      </div>
+    </div>
+
+    <div class="time-row">
+      <span class="time-label">2018</span>
+      <div class="time-body">
+        <div class="time-title">作品收录于泰国曼谷当代艺术馆 (BACC)</div>
+      </div>
+    </div>
+
+    <div class="time-row">
+      <span class="time-label">2016</span>
+      <div class="time-body">
+        <div class="time-title">中国大学生计算机设计大赛 · 全国二等奖</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 专业技能 ===== -->
+  <section class="section">
+    <h2 class="section-title">专业技能</h2>
+
+    <div class="skill-group">
+      <strong>创作</strong> 数字视觉设计 · UI/UX · 数字艺术 · 内容创作
+    </div>
+    <div class="skill-group">
+      <strong>技术</strong> 前端开发 · 知识管理 · 服务器运维 · AI 工作流
+    </div>
+    <div class="skill-group">
+      <strong>工具</strong> Obsidian · 本地优先 · RSS 聚合 · 设计系统
+    </div>
+  </section>
+
+  <!-- ===== 教育 ===== -->
+  <section class="section">
+    <h2 class="section-title">教育</h2>
+
+    <div class="edu-item">
       <div>
-        <div class="r-avatar">陈</div>
-        <div class="r-name-sidebar">
-          <h1>陈逸帆</h1>
-          <div class="r-title">Design Director</div>
+        <div class="edu-school">Burapha University</div>
+        <div class="edu-meta">视觉传达 · 艺术学硕士</div>
+      </div>
+      <span class="edu-date">2015 → 2018</span>
+    </div>
+
+    <div class="edu-item">
+      <div>
+        <div class="edu-school">云南艺术学院</div>
+        <div class="edu-meta">艺术设计 · 学士</div>
+      </div>
+      <span class="edu-date">2009 → 2014</span>
+    </div>
+  </section>
+
+  <!-- ===== 作品集 (projects + portfolios + meditation series — unified cards) ===== -->
+  <section class="section">
+    <h2 class="section-title">作品集</h2>
+
+    <div class="card-list">
+
+      <!-- Project 1 -->
+      <div class="card-item">
+        <h3>CG 艺术实验室</h3>
+        <div class="card-url">cgartlab.com</div>
+        <div class="card-desc">独立数字艺术实验平台，涵盖数字绘画、动态视觉、AI 辅助创作等多方向探索。</div>
+        <div class="card-tags">
+          <span class="card-tag">Next.js</span>
+          <span class="card-tag">Astro</span>
+          <span class="card-tag">Cloudflare</span>
         </div>
       </div>
 
-      <div class="r-sidebar-section">
-        <h3>联系方式</h3>
-        <div class="r-contact-item"><span class="r-contact-icon">✉</span> yifan.chen@cgartlab.com</div>
-        <div class="r-contact-item"><span class="r-contact-icon">◉</span> +86 138 0001 2345</div>
-        <div class="r-contact-item"><span class="r-contact-icon">◎</span> @chenyifan.design</div>
-        <div class="r-contact-item"><span class="r-contact-icon">▣</span> Shanghai, China</div>
-      </div>
-
-      <div class="r-sidebar-section">
-        <h3>专业技能</h3>
-        <div class="r-skill-group">
-          <h4>设计</h4>
-          <div class="r-skill-tags">
-            <span class="r-skill-tag r-skill-tag--high">品牌识别</span>
-            <span class="r-skill-tag r-skill-tag--high">设计系统</span>
-            <span class="r-skill-tag r-skill-tag--high">UI/UX</span>
-            <span class="r-skill-tag">排版设计</span>
-            <span class="r-skill-tag">交互原型</span>
-          </div>
-        </div>
-        <div class="r-skill-group">
-          <h4>工具</h4>
-          <div class="r-skill-tags">
-            <span class="r-skill-tag r-skill-tag--high">Penpot</span>
-            <span class="r-skill-tag r-skill-tag--high">Figma</span>
-            <span class="r-skill-tag r-skill-tag--high">Adobe Suite</span>
-            <span class="r-skill-tag">VS Code</span>
-            <span class="r-skill-tag">Git</span>
-          </div>
-        </div>
-        <div class="r-skill-group">
-          <h4>前端</h4>
-          <div class="r-skill-tags">
-            <span class="r-skill-tag">HTML/CSS</span>
-            <span class="r-skill-tag">React</span>
-            <span class="r-skill-tag">Tailwind</span>
-          </div>
+      <!-- Project 2 -->
+      <div class="card-item">
+        <h3>玄光周刊</h3>
+        <div class="card-url">cgartlab.com/weekly</div>
+        <div class="card-desc">中文领域优质内容推荐周刊，以策展者视角聚合设计、艺术、技术领域的深度文章。</div>
+        <div class="card-tags">
+          <span class="card-tag">Obsidian</span>
+          <span class="card-tag">RSS</span>
+          <span class="card-tag">策展</span>
         </div>
       </div>
 
-      <div class="r-sidebar-section">
-        <h3>语言</h3>
-        <div class="r-sidebar-text">
-          <p><strong>中文</strong> — 母语</p>
-          <p><strong>英语</strong> — 工作流利 (IELTS 7.5)</p>
-          <p><strong>日语</strong> — 日常会话</p>
+      <!-- Project 3 -->
+      <div class="card-item">
+        <h3>LayerRenamer</h3>
+        <div class="card-url">github.com/cgartlab/LayerRenamer</div>
+        <div class="card-desc">AE 图层批量重命名工具，解决设计师工作流程中图层混乱的痛点。</div>
+        <div class="card-tags">
+          <span class="card-tag">AE Script</span>
+          <span class="card-tag">ExtendScript</span>
+          <span class="card-tag">OSS</span>
         </div>
       </div>
 
-      <div class="r-sidebar-section">
-        <h3>兴趣</h3>
-        <div class="r-skill-tags">
-          <span class="r-skill-tag">字体排印</span>
-          <span class="r-skill-tag">独立出版</span>
-          <span class="r-skill-tag">摄影</span>
-          <span class="r-skill-tag">咖啡烘焙</span>
+      <!-- Project 4 -->
+      <div class="card-item">
+        <h3>知识管理系统</h3>
+        <div class="card-url">cgartlab.com</div>
+        <div class="card-desc">本地优先的个人知识管理体系，基于 Obsidian 的创作、研究、项目管理方法论。</div>
+        <div class="card-tags">
+          <span class="card-tag">PKM</span>
+          <span class="card-tag">Markdown</span>
+          <span class="card-tag">Git</span>
         </div>
       </div>
-    </aside>
 
-    <!-- Main -->
-    <main class="r-main">
-      <p class="r-summary">拥有 8 年经验的设计总监，专注于品牌识别与设计系统。曾为 20+ 家科技与文化机构构建品牌体系。编辑主义设计方法的坚定实践者，相信克制的排版与精准的色彩是有效沟通的基石。</p>
-
-      <section class="r-main-section">
-        <h2>工作经历</h2>
-
-        <div class="r-exp-item">
-          <div class="r-exp-header">
-            <h3>设计总监</h3>
-            <span class="r-exp-date">2022 — 至今</span>
-          </div>
-          <div class="r-exp-company">CGArtLab · 上海</div>
-          <div class="r-exp-desc">
-            <ul>
-              <li>领导 12 人设计团队，负责品牌项目与设计系统交付</li>
-              <li>主导 CGArtLab Design System 的规划与落地，开源后获得 2k+ GitHub stars</li>
-              <li>建立基于 Penpot 的团队协作工作流，交付效率提升 40%</li>
-              <li>服务客户包括科技、文化、消费领域头部机构</li>
-            </ul>
+      <!-- Project 5 — CGArtLab Design System -->
+      <a class="card-link" href="https://github.com/cgartlab/cgartlab-design-system">
+        <div class="card-item">
+          <h3>CGArtLab 设计系统</h3>
+          <div class="card-url">github.com/cgartlab/cgartlab-design-system</div>
+          <div class="card-desc">编辑主义 × 橄榄绿设计系统，基于 OKLch 色彩体系构建。含 23 个组件、100 枚 SVG 图标、200+ CSS 设计令牌，完整暗色模式，Penpot 设计文件同步。</div>
+          <div class="card-tags">
+            <span class="card-tag">Design System</span>
+            <span class="card-tag">OKLch</span>
+            <span class="card-tag">Penpot</span>
+            <span class="card-tag">CSS</span>
           </div>
         </div>
+      </a>
 
-        <div class="r-exp-item">
-          <div class="r-exp-header">
-            <h3>高级设计师</h3>
-            <span class="r-exp-date">2019 — 2022</span>
+      <!-- Portfolio 2020-2024 -->
+      <a class="card-link" href="https://cgartlab.com/posts/demo-2024">
+        <div class="card-item">
+          <h3>作品集 2020–2024</h3>
+          <div class="card-url">cgartlab.com/posts/demo-2024</div>
+          <div class="card-desc">近五年数字艺术与动态视觉创作精选，涵盖商业委托与个人实验项目。</div>
+        </div>
+      </a>
+
+      <!-- Portfolio 2016-2020 -->
+      <a class="card-link" href="https://cgartlab.com/posts/demo-2020">
+        <div class="card-item">
+          <h3>作品集 2016–2020</h3>
+          <div class="card-url">cgartlab.com/posts/demo-2020</div>
+          <div class="card-desc">早期数字艺术实验到品牌设计项目的全面回顾，展现创作语言的演变轨迹。</div>
+        </div>
+      </a>
+
+      <!-- Meditation Series — full-width card with 10 individual piece sub-links -->
+      <a class="card-link" href="https://cgartlab.com/posts/meditation-series">
+        <div class="card-item card-item--full">
+          <h3>冥想系列</h3>
+          <div class="card-url">cgartlab.com/posts/meditation-series</div>
+          <div class="card-desc">冥想是一种改变意识的形式，是解剖自己内心的过程，是让人无限接近实相的道路。2013 年起以数字绘画表达不同阶段的内心独白——繁重的压迫、对立的矛盾、复杂的冲突，每一幅都是真实的自己。使用数字绘面形式探索潜意识视觉化，10 幅作品跨越六年创作周期。</div>
+          <div class="card-tags" style="margin-bottom: var(--sp-2);">
+            <span class="card-tag">数字绘画</span>
+            <span class="card-tag">2013–2019</span>
+            <span class="card-tag">10 幅</span>
           </div>
-          <div class="r-exp-company">Nexus Design · 北京</div>
-          <div class="r-exp-desc">
-            <ul>
-              <li>负责品牌识别与数字产品设计，参与 10+ 完整项目交付</li>
-              <li>主导公司内部设计系统的搭建，统一跨项目视觉语言</li>
-              <li>为客户团队提供排版与设计系统培训</li>
-            </ul>
-          </div>
+     
         </div>
+      </a>
 
-        <div class="r-exp-item">
-          <div class="r-exp-header">
-            <h3>视觉设计师</h3>
-            <span class="r-exp-date">2018 — 2019</span>
-          </div>
-          <div class="r-exp-company">Studio Glimpse · 上海</div>
-          <div class="r-exp-desc">
-            <ul>
-              <li>参与品牌设计、出版物排版与展览视觉</li>
-              <li>独立完成从概念到交付的全流程设计执行</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+    </div>
+  </section>
 
-      <section class="r-main-section">
-        <h2>教育背景</h2>
-        <div class="r-edu-item">
-          <h4>视觉传达设计 · 硕士</h4>
-          <div class="r-edu-meta">同济大学设计创意学院 · 2016 — 2018</div>
-        </div>
-        <div class="r-edu-item">
-          <h4>艺术设计 · 学士</h4>
-          <div class="r-edu-meta">中国美术学院 · 2012 — 2016</div>
-        </div>
-      </section>
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    工具是人类肢体的延伸，电脑是大脑的延伸，写作是思考本身。
+  </footer>
 
-      <section class="r-main-section">
-        <h2>代表项目</h2>
-        <div class="r-exp-item">
-          <div class="r-exp-header"><h3>CGArtLab Design System</h3><span class="r-exp-date">2025</span></div>
-          <div class="r-exp-desc">开源设计系统，200+ 令牌、23 组件、100 图标。基于 OKLch 色彩与编辑主义排版。</div>
-        </div>
-        <div class="r-exp-item">
-          <div class="r-exp-header"><h3>山隐 · 茶品牌重塑</h3><span class="r-exp-date">2024</span></div>
-          <div class="r-exp-desc">高端茶品牌完整视觉体系，从标志到包装到数字触点的全面升级。</div>
-        </div>
-        <div class="r-exp-item">
-          <div class="r-exp-header"><h3>Kaleido 数据平台</h3><span class="r-exp-date">2023</span></div>
-          <div class="r-exp-desc">面向创意团队的复杂数据分析工具 UI，暗色优先、信息层级清晰。</div>
-        </div>
-      </section>
-
-      <section class="r-main-section">
-        <h2>发表 &amp; 演讲</h2>
-        <div class="r-exp-desc">
-          <ul>
-            <li>《设计系统的「活文档」实践》— 2025 Design Systems Conf</li>
-            <li>《排版的自觉：数字时代的设计原则》— 2024 Typography Day</li>
-            <li>「从 Penpot 到代码」— CGArtLab 设计系统工作坊，2025</li>
-          </ul>
-        </div>
-      </section>
-    </main>
-
-  </div>
 </div>
 
-</body>
-</html>
+</body></html>

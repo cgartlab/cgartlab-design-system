@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "resume.html",
+  "entry": "resume.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-05-13T10:55:00.860Z",
+  "updatedAt": "2026-05-13T11:11:42.368Z",
+  "metadata": {
+    "inferred": true
+  }
+}
