@@ -1,301 +1,803 @@
 <!doctype html>
-<html lang="zh-CN"><head>
+<html lang="zh-CN" data-od-id="page"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CGArtLab — 设计 · 品牌 · 数字体验</title>
 <link rel="stylesheet" href="styles.css">
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 <style>
-/* ===== Company Site Template — CGArtLab Design System ===== */
+/* ===== CGArtLab Company Site v2 — Modern Hybrid Editorial × Tech ===== */
 
-.c-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 var(--ds-space-6); }
-.c-wrapper--narrow { max-width: 800px; }
+/* --- Reveal Animation --- */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s var(--ds-ease-out), transform 0.7s var(--ds-ease-out); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-stagger > * { opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--ds-ease-out), transform 0.6s var(--ds-ease-out); }
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.35s; opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
 
-/* --- Nav --- */
-.c-nav { padding: var(--ds-space-5) 0; border-bottom: 1px solid var(--ds-color-border); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: color-mix(in oklch, var(--ds-color-bg) 92%, transparent); backdrop-filter: blur(12px); z-index: 100; }
-.c-nav-brand { font-family: var(--ds-font-display); font-size: var(--ds-text-h5); font-weight: 700; color: var(--ds-color-fg-strong); text-decoration: none; letter-spacing: var(--ds-tracking-tight); }
-.c-nav-links { display: flex; gap: var(--ds-space-6); align-items: center; }
-.c-nav-links a { text-decoration: none; font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); transition: color .15s; letter-spacing: var(--ds-tracking-wide); font-weight: 500; }
-.c-nav-links a:hover { color: var(--ds-color-fg); }
-.c-cta-nav { padding: .5rem 1.25rem; background: var(--ds-accent); color: var(--ds-color-white); border-radius: var(--ds-radius-md); font-size: var(--ds-text-body-sm); font-weight: 600; text-decoration: none; transition: background .15s; }
-.c-cta-nav:hover { background: var(--ds-accent-hover); }
+/* --- Wrappers --- */
+.cg-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 var(--ds-space-6); }
+.cg-wrapper--narrow { max-width: 860px; }
 
-/* --- Hero --- */
-.c-hero { padding: var(--ds-space-20) 0 var(--ds-space-16); display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-12); align-items: center; }
-.c-hero-text { }
-.c-hero-kicker { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-widest); color: var(--ds-accent); margin-bottom: var(--ds-space-4); }
-.c-hero h1 { font-family: var(--ds-font-display); font-size: var(--ds-text-hero); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-4); }
-.c-hero p { font-size: var(--ds-text-h5); color: var(--ds-color-muted); line-height: var(--ds-leading-body); max-width: 480px; margin-bottom: var(--ds-space-8); font-weight: var(--ds-weight-light); }
-.c-hero-cta { display: flex; gap: var(--ds-space-4); }
-.c-hero-visual { width: 100%; aspect-ratio: 4/3; background: var(--ds-accent-muted); border-radius: var(--ds-radius-2xl); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-.c-hero-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, var(--ds-accent-soft) 0%, transparent 70%); }
-.c-hero-visual span { position: relative; font-family: var(--ds-font-display); font-size: var(--ds-text-hero); color: var(--ds-accent); opacity: .15; font-weight: 700; }
+/* --- Section Common --- */
+.cg-section { padding: var(--ds-space-28) 0; border-top: 1px solid var(--ds-color-border); }
+.cg-section:first-of-type { border-top: none; }
+.cg-section-header { margin-bottom: var(--ds-space-14); }
+.cg-section-header--centered { text-align: center; }
+.cg-eyebrow { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-widest); color: var(--ds-accent); margin-bottom: var(--ds-space-4); }
+.cg-section-header h2 { font-family: var(--ds-font-display); font-size: var(--ds-text-h1); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-4); }
+.cg-section-header p { font-size: var(--ds-text-body-lg); color: var(--ds-color-muted); line-height: var(--ds-leading-body); max-width: 540px; }
 
-/* --- Stats --- */
-.c-stats { padding: var(--ds-space-12) 0; border-top: 1px solid var(--ds-color-border); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ds-space-6); }
-.c-stat { text-align: center; }
-.c-stat-num { font-family: var(--ds-font-display); font-size: var(--ds-text-display); font-weight: 700; color: var(--ds-accent); line-height: 1; margin-bottom: var(--ds-space-2); }
-.c-stat-label { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); }
+/* ===== NAVIGATION ===== */
+.cg-nav { position: sticky; top: 0; z-index: var(--ds-z-sticky); padding: var(--ds-space-4) 0; background: var(--ds-glass-bg); backdrop-filter: blur(var(--ds-blur-md)); -webkit-backdrop-filter: blur(var(--ds-blur-md)); border-bottom: 1px solid var(--ds-glass-border); }
+.cg-nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.cg-nav-brand { font-family: var(--ds-font-display); font-size: var(--ds-text-h5); font-weight: 700; color: var(--ds-color-fg-strong); text-decoration: none; letter-spacing: var(--ds-tracking-tight); }
+.cg-nav-brand span { color: var(--ds-accent); }
+.cg-nav-links { display: flex; gap: var(--ds-space-1); align-items: center; }
+.cg-nav-links a { text-decoration: none; font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); padding: var(--ds-space-2) var(--ds-space-3); border-radius: var(--ds-radius-md); transition: color .15s, background .15s; letter-spacing: var(--ds-tracking-wide); font-weight: 500; }
+.cg-nav-links a:hover { color: var(--ds-color-fg); background: var(--ds-color-border-subtle); }
+.cg-nav-cta { padding: var(--ds-space-2) var(--ds-space-5); background: var(--ds-accent); color: var(--ds-color-white) !important; border-radius: var(--ds-radius-md); font-size: var(--ds-text-body-sm); font-weight: 600; text-decoration: none; transition: background .15s; margin-left: var(--ds-space-2); }
+.cg-nav-cta:hover { background: var(--ds-accent-hover) !important; color: var(--ds-color-white) !important; }
 
-/* --- Section common --- */
-.c-section { padding: var(--ds-space-20) 0; border-top: 1px solid var(--ds-color-border); }
-.c-section-header { margin-bottom: var(--ds-space-12); max-width: 600px; }
-.c-section-tag { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-widest); color: var(--ds-accent); margin-bottom: var(--ds-space-3); }
-.c-section-header h2 { font-family: var(--ds-font-display); font-size: var(--ds-text-h1); line-height: var(--ds-leading-tight); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-3); }
-.c-section-header p { font-size: var(--ds-text-body-lg); color: var(--ds-color-muted); line-height: var(--ds-leading-body); }
+/* Theme Toggle */
+.cg-theme-toggle { width: 36px; height: 36px; border: 1px solid var(--ds-color-border); border-radius: var(--ds-radius-lg); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--ds-color-muted); transition: all .15s; margin-left: var(--ds-space-3); }
+.cg-theme-toggle:hover { border-color: var(--ds-accent); color: var(--ds-accent); background: var(--ds-accent-muted); }
+.cg-theme-toggle svg { width: 16px; height: 16px; }
+.cg-theme-sun { display: none; }
+.cg-theme-moon { display: block; }
+[data-theme="dark"] .cg-theme-sun { display: block; }
+[data-theme="dark"] .cg-theme-moon { display: none; }
 
-/* --- About --- */
-.c-about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-10); }
-.c-about-text { font-size: var(--ds-text-body-lg); line-height: var(--ds-leading-body); color: var(--ds-color-fg); }
-.c-about-text p { margin-bottom: var(--ds-space-4); }
-.c-about-values { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-6); }
-.c-value { padding: var(--ds-space-6); background: var(--ds-color-surface); border-radius: var(--ds-radius-xl); border: 1px solid var(--ds-color-border-subtle); }
-.c-value h4 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-accent); margin-bottom: var(--ds-space-2); }
-.c-value p { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); line-height: var(--ds-leading-body); }
+/* ===== HERO ===== */
+.cg-hero { padding: var(--ds-space-28) 0 var(--ds-space-20); position: relative; overflow: hidden; }
+.cg-hero-grid { max-width: 640px; position: relative; z-index: 1; }
+.cg-hero-kicker { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-widest); color: var(--ds-accent); margin-bottom: var(--ds-space-4); display: flex; align-items: center; gap: var(--ds-space-3); }
+.cg-hero-kicker::after { content: ''; flex: 1; height: 1px; background: var(--ds-color-border); max-width: 60px; }
+.cg-hero h1 { font-family: var(--ds-font-display); font-size: clamp(2.5rem, 5.5vw, var(--ds-text-hero)); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-6); }
+.cg-hero h1 em { font-style: normal; color: var(--ds-accent); }
+.cg-hero p { font-size: var(--ds-text-lead); color: var(--ds-color-muted); line-height: var(--ds-leading-body); max-width: 480px; margin-bottom: var(--ds-space-8); }
+.cg-hero-cta { display: flex; gap: var(--ds-space-4); align-items: center; flex-wrap: wrap; }
+.cg-hero-cta .ds-btn--secondary { background: transparent; border: 1.5px solid var(--ds-color-border); color: var(--ds-color-fg); }
+.cg-hero-cta .ds-btn--secondary:hover { border-color: var(--ds-accent); color: var(--ds-accent); background: transparent; }
 
-/* --- Services --- */
-.c-services { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ds-space-6); }
-.c-service { padding: var(--ds-space-8); background: var(--ds-color-surface); border-radius: var(--ds-radius-xl); border: 1px solid var(--ds-color-border-subtle); transition: border-color .2s; }
-.c-service:hover { border-color: var(--ds-accent); }
-.c-service-icon { width: 48px; height: 48px; background: var(--ds-accent-muted); border-radius: var(--ds-radius-lg); display: flex; align-items: center; justify-content: center; color: var(--ds-accent); margin-bottom: var(--ds-space-4); font-size: var(--ds-text-h4); }
-.c-service h3 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-3); }
-.c-service p { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); line-height: var(--ds-leading-body); margin-bottom: var(--ds-space-4); }
-.c-service-more { font-size: var(--ds-text-body-sm); color: var(--ds-accent); text-decoration: none; font-weight: 600; }
+/* Hero 3D background overlay */
+.cg-hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.cg-hero-bg canvas { display: block; width: 100% !important; height: 100% !important; }
+.cg-hero-bg::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 65% at 50% 50%, transparent 20%, var(--ds-color-bg) 72%); pointer-events: none; z-index: 1; }
 
-/* --- Cases --- */
-.c-cases { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--ds-space-6); }
-.c-case { border-radius: var(--ds-radius-xl); overflow: hidden; background: var(--ds-color-surface); border: 1px solid var(--ds-color-border-subtle); transition: border-color .2s; }
-.c-case:hover { border-color: var(--ds-accent); }
-.c-case-image { width: 100%; aspect-ratio: 16/10; background: var(--ds-color-surface-overlay); display: flex; align-items: center; justify-content: center; color: var(--ds-color-border); font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); }
-.c-case-body { padding: var(--ds-space-6); }
-.c-case-tag { font-family: var(--ds-font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: var(--ds-tracking-wider); color: var(--ds-accent); margin-bottom: var(--ds-space-2); }
-.c-case-body h3 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-2); }
-.c-case-body p { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); line-height: var(--ds-leading-body); }
+/* ===== STATS ===== */
+.cg-stats-section { padding: var(--ds-space-14) 0; border-top: 1px solid var(--ds-color-border); }
+.cg-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ds-space-8); }
+.cg-stat { text-align: center; }
+.cg-stat-num { font-family: var(--ds-font-display); font-size: clamp(2.5rem, 5vw, var(--ds-text-display)); font-weight: 700; color: var(--ds-accent); line-height: 1; margin-bottom: var(--ds-space-2); font-variant-numeric: tabular-nums; }
+.cg-stat-label { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); letter-spacing: var(--ds-tracking-wide); }
+.cg-stat-suffix { font-size: 0.55em; font-weight: 400; }
 
-/* --- Contact --- */
-.c-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-10); align-items: start; }
-.c-contact-info { display: flex; flex-direction: column; gap: var(--ds-space-6); }
-.c-contact-item { display: flex; gap: var(--ds-space-4); align-items: flex-start; }
-.c-contact-icon { width: 40px; height: 40px; background: var(--ds-accent-muted); border-radius: var(--ds-radius-lg); display: flex; align-items: center; justify-content: center; color: var(--ds-accent); flex-shrink: 0; }
-.c-contact-item h4 { font-size: var(--ds-text-body-sm); font-weight: 600; color: var(--ds-color-fg); margin-bottom: var(--ds-space-1); }
-.c-contact-item p { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); }
-.c-form { display: flex; flex-direction: column; gap: var(--ds-space-4); }
-.c-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-4); }
-.c-form textarea { min-height: 120px; resize: vertical; }
+/* ===== ABOUT — Editorial Manifesto ===== */
+.cg-about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-16); align-items: start; }
+.cg-about-manifesto { font-size: var(--ds-text-body-lg); line-height: var(--ds-leading-relaxed); color: var(--ds-color-fg); }
+.cg-about-manifesto p { margin-bottom: var(--ds-space-5); }
+.cg-about-pullquote { font-family: var(--ds-font-display); font-size: var(--ds-text-h3); line-height: var(--ds-leading-snug); color: var(--ds-color-fg-strong); padding-left: var(--ds-space-6); border-left: 3px solid var(--ds-accent); margin: var(--ds-space-8) 0; font-style: italic; }
+.cg-about-pullquote cite { display: block; font-size: var(--ds-text-body-sm); font-family: var(--ds-font-body); color: var(--ds-color-muted); margin-top: var(--ds-space-3); font-style: normal; }
+.cg-values-list { display: flex; flex-direction: column; gap: var(--ds-space-6); }
+.cg-value-item { padding: var(--ds-space-6); background: var(--ds-color-surface); border-radius: var(--ds-radius-xl); border: 1px solid var(--ds-color-border-subtle); transition: border-color .2s, box-shadow .2s; }
+.cg-value-item:hover { border-color: var(--ds-accent-soft); box-shadow: var(--ds-shadow-sm); }
+.cg-value-num { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); color: var(--ds-accent); letter-spacing: var(--ds-tracking-wider); margin-bottom: var(--ds-space-2); }
+.cg-value-item h4 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-2); }
+.cg-value-item p { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); line-height: var(--ds-leading-body); }
 
-/* --- Footer --- */
-.c-footer { border-top: 1px solid var(--ds-color-border); padding: var(--ds-space-10) 0; text-align: center; }
-.c-footer-copy { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); margin-bottom: var(--ds-space-3); }
-.c-footer-links { display: flex; gap: var(--ds-space-6); justify-content: center; }
-.c-footer-links a { color: var(--ds-color-muted); text-decoration: none; font-size: var(--ds-text-body-sm); }
-.c-footer-links a:hover { color: var(--ds-accent); }
+/* ===== SERVICES ===== */
+.cg-services { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ds-space-6); }
+.cg-service-card { padding: var(--ds-space-8); background: var(--ds-color-surface); border-radius: var(--ds-radius-2xl); border: 1px solid var(--ds-color-border-subtle); transition: transform .25s var(--ds-ease-out), border-color .2s, box-shadow .25s; position: relative; overflow: hidden; }
+.cg-service-card:hover { transform: translateY(-4px); border-color: var(--ds-accent-soft); box-shadow: var(--ds-shadow-md); }
+.cg-service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--ds-accent); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ds-ease-out); }
+.cg-service-card:hover::before { transform: scaleX(1); }
+.cg-service-icon { width: 44px; height: 44px; background: var(--ds-accent-muted); border-radius: var(--ds-radius-lg); display: flex; align-items: center; justify-content: center; color: var(--ds-accent); margin-bottom: var(--ds-space-5); }
+.cg-service-icon svg { width: 20px; height: 20px; stroke-width: 1.5px; }
+.cg-service-card h3 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-3); }
+.cg-service-card p { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); line-height: var(--ds-leading-body); margin-bottom: var(--ds-space-5); }
+.cg-service-link { font-size: var(--ds-text-body-sm); color: var(--ds-accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: var(--ds-space-1); transition: gap .2s; }
+.cg-service-link:hover { gap: var(--ds-space-2); }
 
-/* --- Responsive --- */
+/* ===== CASES — Gallery ===== */
+.cg-cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--ds-space-6); }
+.cg-case-card { position: relative; border-radius: var(--ds-radius-2xl); overflow: hidden; cursor: pointer; transition: transform .35s var(--ds-ease-out), box-shadow .35s; }
+.cg-case-card:hover { transform: scale(1.02); box-shadow: var(--ds-shadow-xl); }
+.cg-case-thumb { width: 100%; aspect-ratio: 16/10; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.cg-case-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, oklch(0% 0 0 / 0.55) 0%, oklch(0% 0 0 / 0.08) 50%, transparent 100%); z-index: 1; transition: opacity .3s; }
+.cg-case-card:hover .cg-case-thumb::after { opacity: .75; }
+
+/* Thumbnail graphics */
+.cg-thumb-bg { position: absolute; inset: 0; }
+.cg-case-t1 { background: linear-gradient(135deg, var(--ds-color-olive-100), var(--ds-color-olive-50)); }
+.cg-case-t2 { background: linear-gradient(135deg, oklch(85% 0.02 80), oklch(92% 0.015 70)); }
+.cg-case-t3 { background: linear-gradient(135deg, oklch(88% 0.015 230), oklch(94% 0.01 210)); }
+.cg-case-t4 { background: linear-gradient(135deg, oklch(82% 0.025 100), oklch(90% 0.02 85)); }
+
+.cg-thumb-pattern { position: absolute; inset: 0; opacity: .15; }
+.cg-thumb-pattern--grid { background-image: linear-gradient(var(--ds-color-fg) 1px, transparent 1px), linear-gradient(90deg, var(--ds-color-fg) 1px, transparent 1px); background-size: 30px 30px; }
+.cg-thumb-pattern--dots { background-image: radial-gradient(circle, var(--ds-color-fg) 1px, transparent 1px); background-size: 20px 20px; }
+.cg-thumb-pattern--diagonal { background-image: repeating-linear-gradient(45deg, var(--ds-color-fg) 0, var(--ds-color-fg) 1px, transparent 0, transparent 20px); }
+.cg-thumb-pattern--cross { background-image: linear-gradient(var(--ds-color-fg) 1px, transparent 1px), linear-gradient(90deg, var(--ds-color-fg) 1px, transparent 1px); background-size: 16px 16px; }
+
+.cg-thumb-shape { position: absolute; border-radius: 50%; }
+.cg-thumb-shape--large { width: 60%; aspect-ratio: 1; background: var(--ds-accent-soft); opacity: .3; top: -15%; right: -15%; }
+.cg-thumb-shape--medium { width: 40%; aspect-ratio: 1; background: var(--ds-accent); opacity: .08; bottom: -10%; left: -10%; }
+
+.cg-case-tag { position: absolute; top: var(--ds-space-4); left: var(--ds-space-4); z-index: 2; font-family: var(--ds-font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--ds-tracking-wider); padding: 3px 8px; background: oklch(0% 0 0 / 0.45); color: oklch(100% 0 0 / 0.85); border-radius: var(--ds-radius-sm); backdrop-filter: blur(4px); }
+.cg-case-info { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: var(--ds-space-6); }
+.cg-case-info h3 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: oklch(100% 0 0 / 0.95); margin-bottom: var(--ds-space-1); }
+.cg-case-info p { font-size: var(--ds-text-body-sm); color: oklch(100% 0 0 / 0.7); line-height: var(--ds-leading-snug); }
+
+/* ===== CONTACT ===== */
+.cg-contact-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: var(--ds-space-16); align-items: start; }
+.cg-contact-sidebar { display: flex; flex-direction: column; gap: var(--ds-space-8); }
+.cg-contact-card { padding: var(--ds-space-6); background: var(--ds-color-surface); border-radius: var(--ds-radius-xl); border: 1px solid var(--ds-color-border-subtle); }
+.cg-contact-card-label { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-wider); color: var(--ds-color-muted); margin-bottom: var(--ds-space-2); }
+.cg-contact-card-value { font-family: var(--ds-font-display); font-size: var(--ds-text-h5); color: var(--ds-color-fg-strong); line-height: var(--ds-leading-snug); }
+.cg-contact-card-value small { font-family: var(--ds-font-body); font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); display: block; font-weight: 400; }
+
+.cg-form { display: flex; flex-direction: column; gap: var(--ds-space-5); }
+.cg-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-5); }
+.cg-form textarea { min-height: 130px; resize: vertical; }
+.cg-form .ds-label { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-wider); color: var(--ds-color-muted); margin-bottom: var(--ds-space-2); display: block; }
+.cg-form .ds-input { font-family: var(--ds-font-body); font-size: var(--ds-text-body); padding: var(--ds-space-3) var(--ds-space-4); border: 1px solid var(--ds-color-border); border-radius: var(--ds-radius-lg); background: var(--ds-color-surface); color: var(--ds-color-fg); width: 100%; transition: border-color .15s; outline: none; }
+.cg-form .ds-input:focus { border-color: var(--ds-accent); box-shadow: 0 0 0 3px var(--ds-accent-muted); }
+.cg-form-submit { padding: var(--ds-space-3) var(--ds-space-8); background: var(--ds-accent); color: var(--ds-color-white); border: none; border-radius: var(--ds-radius-lg); font-size: var(--ds-text-body); font-weight: 600; cursor: pointer; transition: background .15s; }
+.cg-form-submit:hover { background: var(--ds-accent-hover); }
+
+/* ===== FOOTER ===== */
+.cg-footer { padding: var(--ds-space-12) 0; text-align: center; }
+.cg-footer-brand { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); font-weight: 700; color: var(--ds-color-fg); margin-bottom: var(--ds-space-3); }
+.cg-footer-copy { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); margin-bottom: var(--ds-space-4); }
+.cg-footer-links { display: flex; gap: var(--ds-space-6); justify-content: center; flex-wrap: wrap; }
+.cg-footer-links a { color: var(--ds-color-muted); text-decoration: none; font-size: var(--ds-text-body-sm); transition: color .15s; }
+.cg-footer-links a:hover { color: var(--ds-accent); }
+.cg-footer-divider { width: 40px; height: 1px; background: var(--ds-color-border); margin: var(--ds-space-6) auto; }
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
-  .c-hero { grid-template-columns: 1fr; padding: var(--ds-space-12) 0; }
-  .c-hero h1 { font-size: var(--ds-text-h1); }
-  .c-services { grid-template-columns: 1fr; }
-  .c-cases { grid-template-columns: 1fr; }
-  .c-about-grid, .c-contact-grid { grid-template-columns: 1fr; }
-  .c-stats { grid-template-columns: repeat(2, 1fr); gap: var(--ds-space-6); }
-  .c-stats .c-stat-num { font-size: var(--ds-text-h1); }
+  .cg-stats { grid-template-columns: repeat(2, 1fr); gap: var(--ds-space-6); }
+  .cg-about-layout { grid-template-columns: 1fr; gap: var(--ds-space-10); }
+  .cg-services { grid-template-columns: 1fr; }
+  .cg-cases-grid { grid-template-columns: 1fr; }
+  .cg-contact-layout { grid-template-columns: 1fr; }
+  .cg-section-header h2 { font-size: var(--ds-text-h2); }
+  .cg-about-pullquote { font-size: var(--ds-text-h4); }
 }
 @media (max-width: 640px) {
-  .c-nav { flex-direction: column; gap: var(--ds-space-3); align-items: flex-start; }
-  .c-form-row { grid-template-columns: 1fr; }
+  .cg-nav-links { display: none; }
+  .cg-form-row { grid-template-columns: 1fr; }
+  .cg-stats { grid-template-columns: 1fr 1fr; gap: var(--ds-space-4); }
+  .cg-section { padding: var(--ds-space-16) 0; }
+  .cg-hero { padding: var(--ds-space-14) 0; }
 }
 </style>
 </head>
-<body style="background:var(--ds-color-bg);color:var(--ds-color-fg);">
+<body data-od-id="body">
 
-<!-- Nav -->
-<nav class="c-nav c-wrapper">
-  <a href="#" class="c-nav-brand">CGArtLab</a>
-  <div class="c-nav-links">
-    <a href="#about">关于</a>
-    <a href="#services">服务</a>
-    <a href="#cases">案例</a>
-    <a href="#contact" class="c-cta-nav">联系我们</a>
+<!-- ===== NAVIGATION ===== -->
+<nav class="cg-nav" data-od-id="nav">
+  <div class="cg-nav-inner cg-wrapper">
+    <a href="#" class="cg-nav-brand" data-od-id="nav-brand">CGA<span>rt</span>Lab</a>
+    <div class="cg-nav-links" data-od-id="nav-links">
+      <a href="#about">关于</a>
+      <a href="#services">服务</a>
+      <a href="#cases">案例</a>
+      <a href="#contact" class="cg-nav-cta">开始对话</a>
+      <button class="cg-theme-toggle" data-od-id="theme-toggle" onclick="toggleDarkMode()" aria-label="切换暗色模式" title="切换暗色模式">
+        <svg class="cg-theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg class="cg-theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
   </div>
 </nav>
 
-<!-- Hero -->
-<section class="c-wrapper">
-  <div class="c-hero">
-    <div class="c-hero-text">
-      <div class="c-hero-kicker">Brand · Design · Digital</div>
-      <h1>让品牌在数字<br>世界找到声音</h1>
-      <p>我们为有野心的组织构建品牌识别、设计系统和数字体验——从战略到像素，从 Penpot 到上线。</p>
-      <div class="c-hero-cta">
+<!-- ===== HERO ===== -->
+<section class="cg-hero" data-od-id="hero">
+  <div class="cg-hero-bg" data-od-id="hero-bg">
+    <canvas id="hero-canvas" data-od-id="hero-canvas"></canvas>
+  </div>
+  <div class="cg-hero-grid cg-wrapper">
+    <div class="reveal" data-od-id="hero-headline">
+      <div class="cg-hero-kicker">Brand · Design · Digital</div>
+      <h1>让品牌在数字<br>世界<em>找到声音</em></h1>
+      <p data-od-id="hero-subtitle">我们为有野心的组织构建品牌识别、设计系统和数字体验——从战略到像素，从概念到上线。</p>
+      <div class="cg-hero-cta" data-od-id="hero-cta">
         <a href="#contact" class="ds-btn ds-btn--primary ds-btn--lg">开始对话</a>
         <a href="#cases" class="ds-btn ds-btn--secondary ds-btn--lg">查看案例</a>
       </div>
     </div>
-    <div class="c-hero-visual"><span>CG</span></div>
   </div>
 </section>
 
-<!-- Stats -->
-<section class="c-wrapper">
-  <div class="c-stats">
-    <div class="c-stat"><div class="c-stat-num">7+</div><div class="c-stat-label">年设计实践</div></div>
-    <div class="c-stat"><div class="c-stat-num">40+</div><div class="c-stat-label">服务客户</div></div>
-    <div class="c-stat"><div class="c-stat-num">200+</div><div class="c-stat-label">交付项目</div></div>
-    <div class="c-stat"><div class="c-stat-num">12</div><div class="c-stat-label">团队设计师</div></div>
+<!-- ===== STATS ===== -->
+<section class="cg-stats-section" data-od-id="stats">
+  <div class="cg-wrapper">
+    <div class="cg-stats reveal-stagger" id="stats-grid">
+      <div class="cg-stat" data-od-id="stat-1">
+        <div class="cg-stat-num" data-target="7">0<span class="cg-stat-suffix">+</span></div>
+        <div class="cg-stat-label">年设计实践</div>
+      </div>
+      <div class="cg-stat" data-od-id="stat-2">
+        <div class="cg-stat-num" data-target="40">0<span class="cg-stat-suffix">+</span></div>
+        <div class="cg-stat-label">服务客户</div>
+      </div>
+      <div class="cg-stat" data-od-id="stat-3">
+        <div class="cg-stat-num" data-target="200">0<span class="cg-stat-suffix">+</span></div>
+        <div class="cg-stat-label">交付项目</div>
+      </div>
+      <div class="cg-stat" data-od-id="stat-4">
+        <div class="cg-stat-num" data-target="12">0</div>
+        <div class="cg-stat-label">团队设计师</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- About -->
-<section class="c-section" id="about">
-  <div class="c-wrapper">
-    <div class="c-section-header">
-      <div class="c-section-tag">About</div>
-      <h2>编辑主义的设计<br>实践者</h2>
+<!-- ===== ABOUT — 编辑主义的设计实践者 ===== -->
+<section class="cg-section" id="about" data-od-id="about">
+  <div class="cg-wrapper">
+    <div class="cg-section-header reveal">
+      <div class="cg-eyebrow">About</div>
+      <h2 data-od-id="about-headline">编辑主义的设计实践者</h2>
       <p>我们是一支小而精的设计团队，专注品牌识别、设计系统与数字产品体验。不追风、不堆砌——用克制的方法做有温度的设计。</p>
     </div>
-    <div class="c-about-grid">
-      <div class="c-about-text">
-        <p>CGArtLab 成立于 2019 年，从一本独立刊物的视觉设计起步，逐步发展为涵盖品牌策略、UI/UX、设计系统搭建的综合性工作室。我们的方法根植于编辑主义传统：清晰的层级、克制的色彩、对排版的偏执。</p>
-        <p>我们的客户覆盖科技、文化、消费、教育等多个领域——从初创公司到百年机构，从本地品牌到跨国企业。我们不做"漂亮但无用"的设计：每一个视觉决策背后，都有一个可解释的策略理由。</p>
+    <div class="cg-about-layout">
+      <div class="cg-about-manifesto reveal" data-od-id="about-manifesto">
+        <p>CGArtLab 成立于 2019 年，从一本独立刊物的视觉设计起步，逐步发展为涵盖品牌策略、UI/UX、设计系统搭建的综合性工作室。我们的方法根植于<strong>编辑主义传统</strong>：清晰的层级、克制的色彩、对排版的偏执。</p>
+        <div class="cg-about-pullquote">
+          “每一个视觉决策背后，都有一个可解释的策略理由。”
+          <cite>— CGArtLab 设计准则第一条</cite>
+        </div>
+        <p>我们的客户覆盖科技、文化、消费、教育等多个领域——从初创公司到百年机构，从本地品牌到跨国企业。我们不做“漂亮但无用”的设计，每一个像素都服务于目标。</p>
       </div>
-      <div class="c-about-values">
-        <div class="c-value"><h4>01 策略驱动</h4><p>每个项目从理解商业目标开始。视觉是结果，不是起点。</p></div>
-        <div class="c-value"><h4>02 系统思维</h4><p>不做一个页面，而是做一个体系。组件化、可扩展、可持续。</p></div>
-        <div class="c-value"><h4>03 排版信仰</h4><p>好的排版是设计的骨架。半数团队成员有印刷/出版物背景。</p></div>
-        <div class="c-value"><h4>04 开放协作</h4><p>基于 Penpot 的工作流让客户全程参与，不是"交了稿再修改"。</p></div>
+      <div class="cg-values-list reveal-stagger" data-od-id="about-values">
+        <div class="cg-value-item">
+          <div class="cg-value-num">01</div>
+          <h4>策略驱动</h4>
+          <p>每个项目从理解商业目标开始。视觉是结果，不是起点。</p>
+        </div>
+        <div class="cg-value-item">
+          <div class="cg-value-num">02</div>
+          <h4>系统思维</h4>
+          <p>不做一个页面，而是做一个体系。组件化、可扩展、可持续。</p>
+        </div>
+        <div class="cg-value-item">
+          <div class="cg-value-num">03</div>
+          <h4>排版信仰</h4>
+          <p>好的排版是设计的骨架。半数团队成员有印刷/出版物背景。</p>
+        </div>
+        <div class="cg-value-item">
+          <div class="cg-value-num">04</div>
+          <h4>开放协作</h4>
+          <p>我们相信最好的设计诞生于对话——与客户、与用户、与技术。</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Services -->
-<section class="c-section" id="services">
-  <div class="c-wrapper">
-    <div class="c-section-header">
-      <div class="c-section-tag">Services</div>
+<!-- ===== SERVICES ===== -->
+<section class="cg-section" id="services" data-od-id="services">
+  <div class="cg-wrapper">
+    <div class="cg-section-header reveal">
+      <div class="cg-eyebrow">Services</div>
       <h2>我们能做什么</h2>
       <p>从品牌策略到设计执行，从设计系统到产品界面——我们用一致的品质标准贯穿每个环节。</p>
     </div>
-    <div class="c-services">
-      <div class="c-service">
-        <div class="c-service-icon">◆</div>
+    <div class="cg-services reveal-stagger">
+      <div class="cg-service-card">
+        <div class="cg-service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+        </div>
         <h3>品牌识别</h3>
-        <p>品牌策略、视觉识别系统、标志设计、品牌手册 —— 为组织建立一致的视觉语言。</p>
-        <a href="#" class="c-service-more">了解更多 →</a>
+        <p>品牌策略、视觉识别系统、标志设计、品牌手册——为组织建立一致的视觉语言。</p>
+        <a href="#" class="cg-service-link">了解更多 <span>→</span></a>
       </div>
-      <div class="c-service">
-        <div class="c-service-icon">◈</div>
+      <div class="cg-service-card">
+        <div class="cg-service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
+        </div>
         <h3>设计系统</h3>
         <p>从设计令牌到组件库，从 Penpot 到代码交付——系统化的设计基础设施搭建。</p>
-        <a href="#" class="c-service-more">了解更多 →</a>
+        <a href="#" class="cg-service-link">了解更多 <span>→</span></a>
       </div>
-      <div class="c-service">
-        <div class="c-service-icon">▣</div>
+      <div class="cg-service-card">
+        <div class="cg-service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </div>
         <h3>数字产品</h3>
         <p>Web 应用、移动界面、数据仪表盘——为复杂产品提供清晰、可用的交互体验。</p>
-        <a href="#" class="c-service-more">了解更多 →</a>
+        <a href="#" class="cg-service-link">了解更多 <span>→</span></a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Cases -->
-<section class="c-section" id="cases">
-  <div class="c-wrapper">
-    <div class="c-section-header">
-      <div class="c-section-tag">Selected Works</div>
+<!-- ===== CASES — 代表案例（Gallery Style） ===== -->
+<section class="cg-section" id="cases" data-od-id="cases">
+  <div class="cg-wrapper">
+    <div class="cg-section-header reveal">
+      <div class="cg-eyebrow">Selected Works</div>
       <h2>代表案例</h2>
       <p>每个项目都是一次深入的合作。以下是我们近年来的部分交付。</p>
     </div>
-    <div class="c-cases">
-      <div class="c-case">
-        <div class="c-case-image"><span>Case Study</span></div>
-        <div class="c-case-body">
-          <div class="c-case-tag">设计系统</div>
-          <h3>CGArtLab Design System</h3>
-          <p>一套完整的开源设计系统：200+ 令牌、23 核心组件、100 枚图标。基于 OKLch 色彩与编辑主义排版。</p>
+    <div class="cg-cases-grid reveal-stagger" data-od-id="cases-grid">
+
+      <div class="cg-case-card" data-od-id="case-1">
+        <div class="cg-case-thumb">
+          <div class="cg-thumb-bg cg-case-t1"></div>
+          <div class="cg-thumb-pattern cg-thumb-pattern--grid"></div>
+          <div class="cg-thumb-shape cg-thumb-shape--large"></div>
+          <div class="cg-case-tag">设计系统</div>
+          <div class="cg-case-info">
+            <h3>CGArtLab Design System</h3>
+            <p>一套完整的开源设计系统：200+ 令牌、23 核心组件、100 枚图标。基于 OKLch 色彩与编辑主义排版。</p>
+          </div>
         </div>
       </div>
-      <div class="c-case">
-        <div class="c-case-image"><span>Case Study</span></div>
-        <div class="c-case-body">
-          <div class="c-case-tag">品牌识别</div>
-          <h3>山隐 · 茶品牌重塑</h3>
-          <p>为一家高端茶品牌构建从标志到包装、从线上到线下的完整视觉体系。温暖、克制、有时间的质感。</p>
+
+      <div class="cg-case-card" data-od-id="case-2">
+        <div class="cg-case-thumb">
+          <div class="cg-thumb-bg cg-case-t2"></div>
+          <div class="cg-thumb-pattern cg-thumb-pattern--dots"></div>
+          <div class="cg-thumb-shape cg-thumb-shape--medium"></div>
+          <div class="cg-case-tag">品牌识别</div>
+          <div class="cg-case-info">
+            <h3>山隐 · 茶品牌重塑</h3>
+            <p>为一家高端茶品牌构建从标志到包装、从线上到线下的完整视觉体系。温暖、克制、有时间的质感。</p>
+          </div>
         </div>
       </div>
-      <div class="c-case">
-        <div class="c-case-image"><span>Case Study</span></div>
-        <div class="c-case-body">
-          <div class="c-case-tag">数字产品</div>
-          <h3>Kaleido 数据分析平台</h3>
-          <p>面向创意团队的数据分析工具 UI 设计。复杂信息层级下保持清晰与易用，暗色模式优先。</p>
+
+      <div class="cg-case-card" data-od-id="case-3">
+        <div class="cg-case-thumb">
+          <div class="cg-thumb-bg cg-case-t3"></div>
+          <div class="cg-thumb-pattern cg-thumb-pattern--diagonal"></div>
+          <div class="cg-thumb-shape cg-thumb-shape--large" style="top:auto;bottom:-15%;right:-15%;"></div>
+          <div class="cg-case-tag">数字产品</div>
+          <div class="cg-case-info">
+            <h3>Kaleido 数据分析平台</h3>
+            <p>面向创意团队的数据分析工具 UI 设计。复杂信息层级下保持清晰与易用，暗色模式优先。</p>
+          </div>
         </div>
       </div>
-      <div class="c-case">
-        <div class="c-case-image"><span>Case Study</span></div>
-        <div class="c-case-body">
-          <div class="c-case-tag">出版物</div>
-          <h3>《字里行间》杂志改版</h3>
-          <p>一本独立文化刊物的全面视觉升级。网格系统、字体选择、图片编辑规则的重新定义。</p>
+
+      <div class="cg-case-card" data-od-id="case-4">
+        <div class="cg-case-thumb">
+          <div class="cg-thumb-bg cg-case-t4"></div>
+          <div class="cg-thumb-pattern cg-thumb-pattern--cross"></div>
+          <div class="cg-thumb-shape cg-thumb-shape--medium" style="bottom:auto;top:-10%;left:-10%;"></div>
+          <div class="cg-case-tag">出版物</div>
+          <div class="cg-case-info">
+            <h3>《字里行间》杂志改版</h3>
+            <p>一本独立文化刊物的全面视觉升级。网格系统、字体选择、图片编辑规则的重新定义。</p>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- Contact -->
-<section class="c-section" id="contact">
-  <div class="c-wrapper c-wrapper--narrow">
-    <div class="c-section-header" style="max-width:100%;">
-      <div class="c-section-tag">Contact</div>
+<!-- ===== CONTACT — 开始对话 ===== -->
+<section class="cg-section" id="contact" data-od-id="contact">
+  <div class="cg-wrapper cg-wrapper--narrow">
+    <div class="cg-section-header cg-section-header--centered reveal">
+      <div class="cg-eyebrow">Contact</div>
       <h2>开始对话</h2>
       <p>告诉我们你的项目，我们会在一周内回复。初次咨询免费。</p>
     </div>
-    <div class="c-contact-grid">
-      <div class="c-contact-info">
-        <div class="c-contact-item">
-          <div class="c-contact-icon">✉</div>
-          <div><h4>邮箱</h4><p>hello@cgartlab.com</p></div>
+    <div class="cg-contact-layout">
+      <div class="cg-contact-sidebar reveal" data-od-id="contact-info">
+        <div class="cg-contact-card">
+          <div class="cg-contact-card-label">邮箱</div>
+          <div class="cg-contact-card-value">hello@cgartlab.com</div>
         </div>
-        <div class="c-contact-item">
-          <div class="c-contact-icon">◉</div>
-          <div><h4>地址</h4><p>上海市静安区胶州路 322 号<br>创意园区 3F</p></div>
+        <div class="cg-contact-card">
+          <div class="cg-contact-card-label">地址</div>
+          <div class="cg-contact-card-value">昆明市呈贡区元宝路 322 号<small>创意园区 3F</small></div>
         </div>
-        <div class="c-contact-item">
-          <div class="c-contact-icon">◎</div>
-          <div><h4>社交媒体</h4><p>Twitter / GitHub / Behance<br>@cgartlab</p></div>
+        <div class="cg-contact-card">
+          <div class="cg-contact-card-label">社交媒体</div>
+          <div class="cg-contact-card-value">Twitter / GitHub / Behance<small>@cgartlab</small></div>
         </div>
       </div>
-      <form class="c-form" onsubmit="event.preventDefault();alert('消息已发送（演示界面）');">
-        <div class="c-form-row">
-          <div><label class="ds-label">姓名</label><input class="ds-input" type="text" placeholder="您的姓名" style="max-width:100%;"></div>
-          <div><label class="ds-label">邮箱</label><input class="ds-input" type="email" placeholder="your@email.com" style="max-width:100%;"></div>
+      <form class="cg-form reveal" data-od-id="contact-form" onsubmit="event.preventDefault();alert('消息已发送（演示界面）');">
+        <div class="cg-form-row">
+          <div>
+            <label class="ds-label">姓名</label>
+            <input class="ds-input" type="text" placeholder="您的姓名">
+          </div>
+          <div>
+            <label class="ds-label">邮箱</label>
+            <input class="ds-input" type="email" placeholder="your@email.com">
+          </div>
         </div>
-        <div><label class="ds-label">项目简述</label><textarea class="ds-input" placeholder="请简要描述您的项目需求…" style="max-width:100%;"></textarea></div>
-        <div><button type="submit" class="ds-btn ds-btn--primary">发送消息</button></div>
+        <div>
+          <label class="ds-label">项目简述</label>
+          <textarea class="ds-input" placeholder="请简要描述您的项目需求…"></textarea>
+        </div>
+        <div>
+          <button type="submit" class="cg-form-submit">发送消息</button>
+        </div>
       </form>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="c-footer c-wrapper">
-  <div class="c-footer-copy">© 2026 CGArtLab · Shanghai</div>
-  <div class="c-footer-links">
-    <a href="#">Twitter</a>
-    <a href="#">GitHub</a>
-    <a href="#">Behance</a>
+<!-- ===== FOOTER ===== -->
+<footer class="cg-footer" data-od-id="footer">
+  <div class="cg-wrapper">
+    <div class="cg-footer-brand">CGArtLab</div>
+    <div class="cg-footer-copy">© 2026 CGArtLab · Kunming</div>
+    <div class="cg-footer-divider"></div>
+    <div class="cg-footer-links">
+      <a href="#">Twitter</a>
+      <a href="#">GitHub</a>
+      <a href="#">Behance</a>
+      <a href="#">Penpot</a>
+      <a href="#">Dribbble</a>
+    </div>
   </div>
 </footer>
 
+<!-- ===== SCRIPTS ===== -->
 <script>
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const id = a.getAttribute('href').slice(1);
-    const el = document.getElementById(id);
-    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+/* ===== Dark Mode Toggle ===== */
+function toggleDarkMode() {
+  var h = document.documentElement;
+  var d = h.getAttribute("data-theme") === "dark";
+  h.setAttribute("data-theme", d ? "" : "dark");
+  try { localStorage.setItem("cg-theme", d ? "light" : "dark"); } catch(e) {}
+}
+
+(function initTheme() {
+  try {
+    var s = localStorage.getItem("cg-theme");
+    if (s === "dark") { document.documentElement.setAttribute("data-theme", "dark"); return; }
+    if (!s && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  } catch(e) {}
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function(e) {
+    if (!localStorage.getItem("cg-theme")) {
+      document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "");
+    }
   });
-});
+})();
+
+/* ===== IntersectionObserver — Scroll Reveal ===== */
+(function initReveal() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+  document.querySelectorAll(".reveal, .reveal-stagger").forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+
+/* ===== Counter Animation ===== */
+(function initCounters() {
+  var animated = new Set();
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting || animated.has(entry.target)) return;
+      animated.add(entry.target);
+      var el = entry.target;
+      var target = parseInt(el.getAttribute("data-target"), 10);
+      if (isNaN(target)) return;
+      var suffix = el.querySelector(".cg-stat-suffix");
+      var suffixText = suffix ? suffix.textContent : "";
+      var duration = 1500;
+      var start = performance.now();
+      function tick(now) {
+        var elapsed = now - start;
+        var progress = Math.min(elapsed / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.round(target * eased);
+        el.innerHTML = current + '<span class="cg-stat-suffix">' + suffixText + '</span>';
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll(".cg-stat-num[data-target]").forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+
+/* ===== Three.js — Frosted Acrylic Solar System, Directional Light from Left ===== */
+(function initHeroScene() {
+  var canvas = document.getElementById("hero-canvas");
+  if (!canvas) return;
+  var container = canvas.parentElement;
+  if (!container) return;
+
+  var scene = new THREE.Scene();
+
+  /* ── Lights (single directional from left + minimal ambient) ── */
+  var ambient = new THREE.AmbientLight(0x606080, 0.06);
+  scene.add(ambient);
+
+  var dirLight = new THREE.DirectionalLight(0xffffff, 3.0);
+  dirLight.position.set(-7, 5, 3);
+  scene.add(dirLight);
+
+  var starPointLight = new THREE.PointLight(0xffcc88, 0.25, 8);
+  starPointLight.position.set(0, 0, 0);
+  scene.add(starPointLight);
+
+  var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.set(0, 6, 0.001);
+  camera.lookAt(0, 0, 0);
+
+  var renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    alpha: true,
+    antialias: true
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
+
+  /* ── Theme-aware palette ── */
+  function getThemeColors() {
+    var dark = document.documentElement.getAttribute("data-theme") === "dark";
+    return {
+      star:       dark ? 0xf0e0c8 : 0xbf9b6b,
+      starGlow:   dark ? 0xd4a56a : 0x8a6a3e,
+      planet1:    dark ? 0x7ab89e : 0x5c8a7a,
+      planet1G:   dark ? 0xa8e0c8 : 0x7abc9a,
+      planet2:    dark ? 0xc49a7a : 0x9e7a5a,
+      planet2G:   dark ? 0xe0b89a : 0xbe9a7a,
+      planet3:    dark ? 0x8aa9c4 : 0x6a89a4,
+      planet3G:   dark ? 0xb0cee8 : 0x8aaac4,
+      planet4:    dark ? 0xb88aaa : 0x9a6a8a,
+      planet4G:   dark ? 0xd8aaca : 0xba8aaa,
+      ring:       dark ? 0x4a5a5a : 0x3a4a4a
+    };
+  }
+
+  var colors = getThemeColors();
+
+  /* ── Frosted acrylic material factory ── */
+  function acrylicMat(color, opacity, roughness) {
+    return new THREE.MeshPhysicalMaterial({
+      color: color,
+      roughness: roughness != null ? roughness : 0.45,
+      metalness: 0.0,
+      transparent: true,
+      opacity: opacity != null ? opacity : 0.78,
+      clearcoat: 0.0,
+      ior: 1.49,
+      specularIntensity: 0.04,
+      side: THREE.DoubleSide,
+      envMapIntensity: 0.1
+    });
+  }
+
+  /* ── Gradient circle shader (frosted glow halo — NormalBlending) ── */
+  var glowShader = {
+    uniforms: { uColor: { value: new THREE.Color() }, uGlowColor: { value: new THREE.Color() } },
+    vertexShader: [
+      "varying vec2 vUv;",
+      "void main() {",
+      "  vUv = uv;",
+      "  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);",
+      "}"
+    ].join("\n"),
+    fragmentShader: [
+      "uniform vec3 uColor;",
+      "uniform vec3 uGlowColor;",
+      "varying vec2 vUv;",
+      "void main() {",
+      "  float d = distance(vUv, vec2(0.5, 0.5)) * 2.0;",
+      "  if (d > 1.0) discard;",
+      "  float alpha = exp(-d * d * 3.0) * 0.12;",
+      "  vec3 col = mix(uGlowColor, uColor, 1.0 - d * 0.5);",
+      "  gl_FragColor = vec4(col, alpha);",
+      "}"
+    ].join("\n"),
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.NormalBlending,
+    side: THREE.DoubleSide
+  };
+
+  /* ── Central star (frosted acrylic) ── */
+  var starMat = acrylicMat(colors.star, 0.82, 0.50);
+  var star = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 48), starMat);
+  scene.add(star);
+
+  /* Star glow aura — larger, ultra-transparent frosted shell */
+  var starGlowMat = new THREE.MeshPhysicalMaterial({
+    color: colors.starGlow,
+    roughness: 0.6,
+    metalness: 0.0,
+    transparent: true,
+    opacity: 0.06,
+    depthWrite: false,
+    side: THREE.DoubleSide
+  });
+  var starGlow = new THREE.Mesh(new THREE.SphereGeometry(2.4, 32, 32), starGlowMat);
+  scene.add(starGlow);
+
+  /* ── Particle disk ── */
+  var particleCount = 160;
+  var particleGeo = new THREE.BufferGeometry();
+  var positions = new Float32Array(particleCount * 3);
+  for (var i = 0; i < particleCount; i++) {
+    var r = 1.1 + Math.random() * 2.2;
+    var theta = Math.random() * Math.PI * 2;
+    positions[i*3]   = r * Math.cos(theta);
+    positions[i*3+1] = (Math.random() - 0.5) * 0.3;
+    positions[i*3+2] = r * Math.sin(theta);
+  }
+  particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  var particleMat = new THREE.PointsMaterial({
+    color: colors.starGlow,
+    size: 0.035,
+    transparent: true,
+    opacity: 0.15,
+    blending: THREE.NormalBlending,
+    depthWrite: false,
+    sizeAttenuation: true
+  });
+  var particles = new THREE.Points(particleGeo, particleMat);
+  scene.add(particles);
+
+  /* ── Orbit rings ── */
+  function createOrbitRing(radius, opacity) {
+    var seg = 80;
+    var g = new THREE.BufferGeometry();
+    var p = new Float32Array((seg + 1) * 3);
+    for (var i = 0; i <= seg; i++) {
+      var a = (i / seg) * Math.PI * 2;
+      p[i*3]   = radius * Math.cos(a);
+      p[i*3+1] = 0;
+      p[i*3+2] = radius * Math.sin(a);
+    }
+    g.setAttribute("position", new THREE.BufferAttribute(p, 3));
+    return new THREE.Line(g, new THREE.LineBasicMaterial({
+      color: colors.ring,
+      transparent: true,
+      opacity: opacity,
+      depthWrite: false
+    }));
+  }
+  scene.add(createOrbitRing(2.0, 0.06));
+  scene.add(createOrbitRing(2.8, 0.045));
+  scene.add(createOrbitRing(3.6, 0.03));
+
+  /* ── Frosted acrylic planets lit by directional light ── */
+  var planets = [];
+  function makePlanet(orbitR, speed, coreSize, col, glowCol, yOff, angleOff) {
+    var group = new THREE.Group();
+
+    /* Core — frosted acrylic sphere (shaded by directional light) */
+    var core = new THREE.Mesh(
+      new THREE.SphereGeometry(coreSize, 32, 32),
+      acrylicMat(col, 0.75, 0.45)
+    );
+    group.add(core);
+
+    /* Glow disc — soft light-diffusion halo (NormalBlending, very subtle) */
+    var aura = new THREE.Mesh(
+      new THREE.CircleGeometry(coreSize * 4, 32),
+      new THREE.ShaderMaterial({
+        uniforms: {
+          uColor:     { value: new THREE.Color(glowCol) },
+          uGlowColor: { value: new THREE.Color(col) }
+        },
+        vertexShader:   glowShader.vertexShader,
+        fragmentShader: glowShader.fragmentShader,
+        transparent:    true,
+        depthWrite:     false,
+        blending:       THREE.NormalBlending,
+        side:           THREE.DoubleSide
+      })
+    );
+    aura.position.z = -0.02;
+    group.add(aura);
+
+    group.position.x = orbitR * Math.cos(angleOff);
+    group.position.z = orbitR * Math.sin(angleOff);
+    group.position.y = yOff;
+    scene.add(group);
+
+    return {
+      group: group, orbitR: orbitR, speed: speed,
+      angle: angleOff, yOff: yOff,
+      coreMat: core.material, auraMat: aura.material,
+      col: col, glowCol: glowCol
+    };
+  }
+
+  planets.push(makePlanet(2.0,  0.7,  0.14, colors.planet1, colors.planet1G,  0,      0));
+  planets.push(makePlanet(2.8, -0.45, 0.2,  colors.planet2, colors.planet2G,  0.08,   1.5));
+  planets.push(makePlanet(3.6,  0.3,  0.1,  colors.planet3, colors.planet3G, -0.06,   3.0));
+  planets.push(makePlanet(2.4, -0.6,  0.16, colors.planet4, colors.planet4G,  0.1,    4.5));
+
+  /* ── Mouse parallax — gentle pan ── */
+  var mouseX = 0, mouseY = 0, panX = 0, panY = 0;
+  document.addEventListener("mousemove", function(e) {
+    var rect = container.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.top + rect.height / 2;
+    mouseX = (e.clientX - cx) / rect.width;
+    mouseY = (e.clientY - cy) / rect.height;
+  }, { passive: true });
+
+  /* ── Resize ── */
+  function resize() {
+    var w = container.clientWidth;
+    var h = container.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  /* ── Theme observer ── */
+  var themeObs = new MutationObserver(function() {
+    colors = getThemeColors();
+    starMat.color.setHex(colors.star);
+    starGlowMat.color.setHex(colors.starGlow);
+    particleMat.color.setHex(colors.starGlow);
+    var keys = [["planet1","planet1G"],["planet2","planet2G"],["planet3","planet3G"],["planet4","planet4G"]];
+    planets.forEach(function(p, i) {
+      p.coreMat.color.setHex(colors[keys[i][0]]);
+      p.auraMat.uniforms.uColor.value.setHex(colors[keys[i][1]]);
+      p.auraMat.uniforms.uGlowColor.value.setHex(colors[keys[i][0]]);
+    });
+  });
+  themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  /* ── Animation ── */
+  var clock = new THREE.Clock();
+  function animate() {
+    requestAnimationFrame(animate);
+    var t = clock.getElapsedTime();
+
+    /* Rotate star & glow & particles */
+    star.rotation.y = t * 0.06;
+    starGlow.rotation.y = t * 0.03;
+    particles.rotation.y = t * 0.02;
+
+    /* Orbit planets with bobbing */
+    planets.forEach(function(p) {
+      p.angle += p.speed * 0.008;
+      p.group.position.x = p.orbitR * Math.cos(p.angle);
+      p.group.position.z = p.orbitR * Math.sin(p.angle);
+      p.group.position.y = p.yOff + Math.sin(t * 0.6 + p.angle) * 0.04;
+    });
+
+    /* Camera pan (subtle) */
+    panX += (mouseX * 0.4 - panX) * 0.015;
+    panY += (mouseY * 0.3 - panY) * 0.015;
+    camera.position.x = panX;
+    camera.position.z = 0.001 + panY * 0.4;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
 </script>
-</body>
-</html>
+
+
+
+</body></html>
