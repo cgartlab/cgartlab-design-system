@@ -1,0 +1,7 @@
+# Penpot design exports
+*.penpot
+.sisyphus/
+
+# OS
+Thumbs.db
+.DS_Store
