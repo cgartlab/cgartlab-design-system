@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>行业深度研究报告 · 中国设计系统生态 2026</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ===== Research Report Template — CGArtLab Design System ===== */
+
+.rp-wrapper { max-width: 1000px; margin: 0 auto; padding: 0 var(--ds-space-6); }
+.rp-wrapper--narrow { max-width: 720px; }
+
+/* --- Cover --- */
+.rp-cover { padding: var(--ds-space-28) 0 var(--ds-space-16); min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+.rp-cover-tag { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-widest); color: var(--ds-accent); margin-bottom: var(--ds-space-4); }
+.rp-cover h1 { font-family: var(--ds-font-display); font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); color: var(--ds-color-fg-strong); max-width: 900px; margin-bottom: var(--ds-space-4); }
+.rp-cover-sub { font-size: var(--ds-text-h4); color: var(--ds-color-muted); font-weight: var(--ds-weight-light); max-width: 600px; line-height: var(--ds-leading-body); margin-bottom: var(--ds-space-6); }
+.rp-cover-meta { display: flex; gap: var(--ds-space-6); font-family: var(--ds-font-mono); font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); }
+
+/* --- Section --- */
+.rp-section { padding: var(--ds-space-16) 0; border-top: 1px solid var(--ds-color-border); }
+.rp-section-number { font-family: var(--ds-font-mono); font-size: var(--ds-text-h4); color: var(--ds-accent); font-weight: 700; margin-bottom: var(--ds-space-2); }
+.rp-section h2 { font-family: var(--ds-font-display); font-size: var(--ds-text-h1); line-height: var(--ds-leading-tight); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-6); }
+.rp-section h3 { font-family: var(--ds-font-display); font-size: var(--ds-text-h2); line-height: var(--ds-leading-tight); color: var(--ds-color-fg-strong); margin-top: var(--ds-space-10); margin-bottom: var(--ds-space-4); }
+.rp-section h4 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-color-fg-strong); margin-top: var(--ds-space-6); margin-bottom: var(--ds-space-3); }
+
+/* --- Body text --- */
+.rp-body { font-size: var(--ds-text-body-lg); line-height: var(--ds-leading-body); color: var(--ds-color-fg); }
+.rp-body p { margin-bottom: var(--ds-space-6); }
+.rp-body strong { color: var(--ds-color-fg-strong); }
+
+/* --- Callout box --- */
+.rp-callout { margin: var(--ds-space-8) 0; padding: var(--ds-space-6); background: var(--ds-color-surface); border-radius: var(--ds-radius-xl); border-left: 4px solid var(--ds-accent); }
+.rp-callout h4 { font-size: var(--ds-text-body); font-weight: 700; color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-2); }
+.rp-callout p { font-size: var(--ds-text-body-sm); color: var(--ds-color-fg-subtle); margin-bottom: 0; }
+
+/* --- Data Viz Blocks --- */
+.rp-chart-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--ds-space-6); margin: var(--ds-space-8) 0; }
+.rp-chart { padding: var(--ds-space-6); background: var(--ds-color-surface); border-radius: var(--ds-radius-xl); border: 1px solid var(--ds-color-border-subtle); }
+.rp-chart-title { font-size: var(--ds-text-body-sm); font-weight: 600; color: var(--ds-color-fg); margin-bottom: var(--ds-space-4); }
+.rp-bar-group { display: flex; flex-direction: column; gap: var(--ds-space-3); }
+.rp-bar-row { display: flex; align-items: center; gap: var(--ds-space-3); }
+.rp-bar-label { font-size: var(--ds-text-caption); color: var(--ds-color-muted); min-width: 80px; text-align: right; }
+.rp-bar-track { flex: 1; height: 20px; background: var(--ds-color-surface-overlay); border-radius: var(--ds-radius-sm); overflow: hidden; }
+.rp-bar-fill { height: 100%; background: var(--ds-accent); border-radius: var(--ds-radius-sm); display: flex; align-items: center; justify-content: flex-end; padding-right: var(--ds-space-2); font-size: 10px; color: var(--ds-color-white); font-weight: 600; min-width: fit-content; }
+.rp-bar-fill--alt { background: var(--ds-color-olive-200); }
+.rp-bar-fill--accent { background: var(--ds-accent); }
+
+/* --- Donut chart (CSS) --- */
+.rp-donut { display: flex; align-items: center; gap: var(--ds-space-6); }
+.rp-donut-ring { width: 120px; height: 120px; border-radius: 50%; position: relative; }
+.rp-donut-center { position: absolute; inset: 20px; background: var(--ds-color-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--ds-font-display); font-size: var(--ds-text-h3); font-weight: 700; color: var(--ds-accent); }
+.rp-donut-legend { display: flex; flex-direction: column; gap: var(--ds-space-2); }
+.rp-donut-item { display: flex; align-items: center; gap: var(--ds-space-2); font-size: var(--ds-text-body-sm); color: var(--ds-color-fg-subtle); }
+.rp-donut-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* --- Table --- */
+.rp-table-wrap { overflow-x: auto; margin: var(--ds-space-6) 0; }
+.rp-table { width: 100%; border-collapse: collapse; font-size: var(--ds-text-body-sm); }
+.rp-table th { text-align: left; padding: var(--ds-space-3); font-weight: 600; color: var(--ds-color-fg-strong); border-bottom: 2px solid var(--ds-accent); font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-wider); }
+.rp-table td { padding: var(--ds-space-3); border-bottom: 1px solid var(--ds-color-border-subtle); color: var(--ds-color-fg-subtle); }
+.rp-table tr:hover td { background: var(--ds-color-surface-overlay); }
+.rp-table .rp-num { font-family: var(--ds-font-mono); font-variant-numeric: tabular-nums; }
+
+/* --- KPI row --- */
+.rp-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ds-space-4); margin: var(--ds-space-8) 0; }
+.rp-kpi { padding: var(--ds-space-6); background: var(--ds-color-surface); border-radius: var(--ds-radius-xl); border: 1px solid var(--ds-color-border-subtle); text-align: center; }
+.rp-kpi-num { font-family: var(--ds-font-display); font-size: var(--ds-text-h1); font-weight: 700; color: var(--ds-accent); line-height: 1; margin-bottom: var(--ds-space-2); }
+.rp-kpi-label { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); }
+.rp-kpi-desc { font-size: var(--ds-text-caption); color: var(--ds-color-muted); margin-top: var(--ds-space-1); }
+
+/* --- Blockquote (report style) --- */
+.rp-body blockquote { margin: var(--ds-space-8) 0; padding: var(--ds-space-4) var(--ds-space-6); border-left: 3px solid var(--ds-accent); background: var(--ds-accent-muted); border-radius: 0 var(--ds-radius-lg) var(--ds-radius-lg) 0; font-family: var(--ds-font-display); font-size: var(--ds-text-h5); line-height: var(--ds-leading-snug); color: var(--ds-color-fg-strong); }
+.rp-body blockquote cite { display: block; margin-top: var(--ds-space-2); font-size: var(--ds-text-body-sm); font-family: var(--ds-font-body); color: var(--ds-color-muted); font-style: normal; }
+
+/* --- Figure --- */
+.rp-figure { margin: var(--ds-space-8) 0; }
+.rp-figure-visual { width: 100%; aspect-ratio: 16/9; background: var(--ds-color-surface-overlay); border-radius: var(--ds-radius-lg); display: flex; align-items: center; justify-content: center; color: var(--ds-color-border); font-family: var(--ds-font-mono); }
+.rp-figure-caption { margin-top: var(--ds-space-2); font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); text-align: center; font-family: var(--ds-font-mono); }
+
+/* --- TOC --- */
+.rp-toc { padding: var(--ds-space-12) 0; }
+.rp-toc h2 { font-family: var(--ds-font-display); font-size: var(--ds-text-h2); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-6); }
+.rp-toc-list { list-style: none; padding: 0; }
+.rp-toc-list li { padding: var(--ds-space-3) 0; border-bottom: 1px solid var(--ds-color-border-subtle); display: flex; align-items: baseline; gap: var(--ds-space-4); }
+.rp-toc-num { font-family: var(--ds-font-mono); font-size: var(--ds-text-body-sm); color: var(--ds-accent); min-width: 48px; }
+.rp-toc-list a { color: var(--ds-color-fg); text-decoration: none; font-size: var(--ds-text-body); }
+.rp-toc-list a:hover { color: var(--ds-accent); }
+.rp-toc-divider { flex: 1; border-bottom: 1px dotted var(--ds-color-border-subtle); }
+.rp-toc-page { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); color: var(--ds-color-muted); }
+
+/* --- Footer --- */
+.rp-footer { border-top: 1px solid var(--ds-color-border); padding: var(--ds-space-8) 0; display: flex; justify-content: space-between; font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); }
+.rp-footer-links { display: flex; gap: var(--ds-space-4); }
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .rp-chart-grid { grid-template-columns: 1fr; }
+  .rp-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .rp-donut { flex-direction: column; align-items: flex-start; }
+  .rp-cover h1 { font-size: var(--ds-text-h1); }
+}
+</style>
+</head>
+<body style="background:var(--ds-color-bg);color:var(--ds-color-fg);">
+
+<!-- ===== COVER ===== -->
+<section class="rp-cover rp-wrapper">
+  <div class="rp-cover-tag">深度研究 · 2026 Q2</div>
+  <h1>中国设计系统<br>生态报告 2026</h1>
+  <p class="rp-cover-sub">基于对 120+ 设计团队、42 个开源设计系统及行业专家的深度调研，全面解读中国设计系统的发展现状、工具链变迁与未来趋势。</p>
+  <div class="rp-cover-meta">
+    <span>CGArtLab Research</span>
+    <span>2026.05</span>
+    <span>42 页</span>
+  </div>
+</section>
+
+<!-- ===== TOC ===== -->
+<section class="rp-section rp-wrapper">
+  <div class="rp-toc">
+    <h2>目录</h2>
+    <ul class="rp-toc-list">
+      <li><span class="rp-toc-num">01</span><a href="#ch1">设计系统采纳现状</a><span class="rp-toc-divider"></span><span class="rp-toc-page">03</span></li>
+      <li><span class="rp-toc-num">02</span><a href="#ch2">工具链：从 Figma 到 Penpot 的迁移潮</a><span class="rp-toc-divider"></span><span class="rp-toc-page">08</span></li>
+      <li><span class="rp-toc-num">03</span><a href="#ch3">设计令牌标准化进程</a><span class="rp-toc-divider"></span><span class="rp-toc-page">14</span></li>
+      <li><span class="rp-toc-num">04</span><a href="#ch4">AI 对设计系统的影响</a><span class="rp-toc-divider"></span><span class="rp-toc-page">20</span></li>
+      <li><span class="rp-toc-num">05</span><a href="#ch5">团队规模与管理模式</a><span class="rp-toc-divider"></span><span class="rp-toc-page">26</span></li>
+      <li><span class="rp-toc-num">06</span><a href="#ch6">趋势展望与建议</a><span class="rp-toc-divider"></span><span class="rp-toc-page">32</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== EXECUTIVE SUMMARY ===== -->
+<section class="rp-section rp-wrapper rp-wrapper--narrow">
+  <div class="rp-callout">
+    <h4>核心发现</h4>
+    <p>中国设计系统生态正处于从「工具采纳」向「体系化建设」转型的关键阶段。报告覆盖 6 个维度、12 项核心指标，为设计团队提供可操作的参考基准。</p>
+  </div>
+</section>
+
+<!-- ===== CHAPTER 1 ===== -->
+<section class="rp-section" id="ch1">
+  <div class="rp-wrapper rp-wrapper--narrow">
+    <span class="rp-section-number">01</span>
+    <h2>设计系统采纳现状</h2>
+
+    <div class="rp-kpi-grid">
+      <div class="rp-kpi"><div class="rp-kpi-num">68%</div><div class="rp-kpi-label">已建立设计系统</div><div class="rp-kpi-desc">较 2024 年增长 12%</div></div>
+      <div class="rp-kpi"><div class="rp-kpi-num">42%</div><div class="rp-kpi-label">自建 + 开源混合</div><div class="rp-kpi-desc">主流模式</div></div>
+      <div class="rp-kpi"><div class="rp-kpi-num">2.3yr</div><div class="rp-kpi-label">平均系统寿命</div><div class="rp-kpi-desc">从建设到成熟</div></div>
+      <div class="rp-kpi"><div class="rp-kpi-num">87%</div><div class="rp-kpi-label">计划升级或重构</div><div class="rp-kpi-desc">未来 12 个月内</div></div>
+    </div>
+
+    <div class="rp-body">
+      <p>根据本次调研，68% 的受访团队表示已经建立或正在建设设计系统——这一比例相较于 2024 年的 56% 有了显著提升。增长主要来自两个驱动力：一是多产品矩阵团队对一致性的刚性需求，二是开源设计系统的成熟降低了建设门槛。</p>
+      <p>值得注意的是，42% 的团队选择了"自建 + 开源混合"的模式——即在开源系统（如 Ant Design、CGArtLab Design System）的基础上，定制符合自身品牌与业务需求的令牌层。这一模式在 10–50 人规模的设计团队中尤为常见。</p>
+    </div>
+
+    <div class="rp-chart-grid">
+      <div class="rp-chart">
+        <div class="rp-chart-title">设计系统建设方式分布</div>
+        <div class="rp-bar-group">
+          <div class="rp-bar-row"><span class="rp-bar-label">完全自建</span><div class="rp-bar-track"><div class="rp-bar-fill" style="width:31%">31%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">自建 + 开源</span><div class="rp-bar-track"><div class="rp-bar-fill rp-bar-fill--accent" style="width:42%">42%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">直接使用开源</span><div class="rp-bar-track"><div class="rp-bar-fill rp-bar-fill--alt" style="width:18%">18%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">尚未建设</span><div class="rp-bar-track"><div class="rp-bar-fill" style="width:9%">9%</div></div></div>
+        </div>
+      </div>
+      <div class="rp-chart">
+        <div class="rp-chart-title">采纳动因 Top 5</div>
+        <div class="rp-bar-group">
+          <div class="rp-bar-row"><span class="rp-bar-label">多产品一致性</span><div class="rp-bar-track"><div class="rp-bar-fill rp-bar-fill--accent" style="width:89%">89%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">开发效率</span><div class="rp-bar-track"><div class="rp-bar-fill" style="width:76%">76%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">品牌统一</span><div class="rp-bar-track"><div class="rp-bar-fill rp-bar-fill--alt" style="width:64%">64%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">设计师协作</span><div class="rp-bar-track"><div class="rp-bar-fill" style="width:52%">52%</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHAPTER 2 ===== -->
+<section class="rp-section" id="ch2">
+  <div class="rp-wrapper rp-wrapper--narrow">
+    <span class="rp-section-number">02</span>
+    <h2>工具链：从 Figma 到 Penpot 的迁移潮</h2>
+
+    <div class="rp-body">
+      <p>2025–2026 年间，设计工具领域最显著的变量是 Penpot 的崛起和 Figma 在亚太地区的定价策略调整。调研显示，34% 的中国设计团队已经将 Penpot 纳入正式工作流，其中 12% 已完成从 Figma 的全面迁移。</p>
+
+      <blockquote>
+        "Penpot 的开放性和基于 Web 的协作模式，使得我们不需要为每个设计师支付昂贵的许可费用。对于 30 人以上的设计团队，仅工具成本一项就可以降低 60% 以上。"
+        <cite>—— 某互联网公司设计总监，受访编号 D-017</cite>
+      </blockquote>
+
+      <p>设计系统工具链的另一个重要趋势是「设计令牌原生」工具的普及。超过半数受访团队正在使用或评估 Design Tokens 的标准化方案，其中 W3C Design Tokens 格式获得了最高的关注度。</p>
+    </div>
+
+    <div class="rp-chart-grid">
+      <div class="rp-chart">
+        <div class="rp-chart-title">设计工具使用率（2025 vs 2026）</div>
+        <div class="rp-bar-group">
+          <div class="rp-bar-row"><span class="rp-bar-label">Figma</span><div class="rp-bar-track"><div class="rp-bar-fill rp-bar-fill--accent" style="width:78%">78%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">Penpot</span><div class="rp-bar-track"><div class="rp-bar-fill" style="width:34%">34%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">Sketch</span><div class="rp-bar-track"><div class="rp-bar-fill rp-bar-fill--alt" style="width:15%">15%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">即时设计</span><div class="rp-bar-track"><div class="rp-bar-fill" style="width:22%">22%</div></div></div>
+        </div>
+      </div>
+      <div class="rp-chart">
+        <div class="rp-chart-title">Penpot 迁移意愿分布</div>
+        <div class="rp-donut" style="margin-top:var(--ds-space-4);">
+          <div class="rp-donut-ring" style="background: conic-gradient(var(--ds-accent) 0deg 126deg, var(--ds-color-olive-200) 126deg 216deg, var(--ds-color-border-subtle) 216deg 360deg);">
+            <div class="rp-donut-center">35%</div>
+          </div>
+          <div class="rp-donut-legend">
+            <span class="rp-donut-item"><span class="rp-donut-dot" style="background:var(--ds-accent);"></span> 已用/计划迁移 (35%)</span>
+            <span class="rp-donut-item"><span class="rp-donut-dot" style="background:var(--ds-color-olive-200);"></span> 评估中 (25%)</span>
+            <span class="rp-donut-item"><span class="rp-donut-dot" style="background:var(--ds-color-border-subtle);"></span> 暂不考虑 (40%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHAPTER 3 ===== -->
+<section class="rp-section" id="ch3">
+  <div class="rp-wrapper rp-wrapper--narrow">
+    <span class="rp-section-number">03</span>
+    <h2>设计令牌标准化进程</h2>
+
+    <div class="rp-body">
+      <p>设计令牌（Design Tokens）已成为设计系统的事实基础设施。本次调研中，76% 的已建系统采用了某种形式的令牌架构，较 2024 年的 58% 有显著增长。</p>
+      <p>在色彩空间的选择上，OKLch 正在成为新一代设计系统的首选：2025 年仅有 12% 的系统使用 OKLch，而 2026 年这一比例已上升至 38%。相比传统的 HEX 和 HSL，OKLch 在色域覆盖和感知均匀性上具有明显优势。</p>
+    </div>
+
+    <div class="rp-table-wrap">
+      <table class="rp-table">
+        <thead>
+          <tr><th>色彩格式</th><th>2025 使用率</th><th>2026 使用率</th><th>增长率</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>HEX</td><td class="rp-num">82%</td><td class="rp-num">71%</td><td class="rp-num">−13%</td></tr>
+          <tr><td>HSL</td><td class="rp-num">45%</td><td class="rp-num">42%</td><td class="rp-num">−7%</td></tr>
+          <tr><td>OKLch</td><td class="rp-num">12%</td><td class="rp-num">38%</td><td class="rp-num">+217%</td></tr>
+          <tr><td>RGB</td><td class="rp-num">28%</td><td class="rp-num">24%</td><td class="rp-num">−14%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rp-body">
+      <p>在令牌交付方式上，CSS 自定义属性仍然是首选（89%），其次是 JSON/SDK 导出（45%）和设计工具插件（33%）。W3C Design Tokens 社区组的标准化工作得到了 58% 受访者的关注，但实际采用比例仍然较低（12%），主要障碍是工具链支持不足。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHAPTER 4 ===== -->
+<section class="rp-section" id="ch4">
+  <div class="rp-wrapper rp-wrapper--narrow">
+    <span class="rp-section-number">04</span>
+    <h2>AI 对设计系统的影响</h2>
+
+    <div class="rp-body">
+      <p>AI 正在改变设计系统的工作方式。调研发现，AI 在设计系统领域的影响集中在三个方向：</p>
+      <p><strong>自动生成令牌。</strong>从品牌视觉输入（标志、配色参考、截图）自动推导初始令牌值，正在成为设计系统建设的新起点。43% 的受访团队表示已经尝试过 AI 辅助的令牌生成，但仅 8% 将其纳入正式工作流。</p>
+      <p><strong>组件变体生成。</strong>基于已有的组件定义，AI 可以自动生成不同状态、尺寸和主题下的组件变体。这一场景在维护大型组件库时尤为有吸引力。</p>
+      <p><strong>文档自动化。</strong>从组件代码或设计文件自动生成使用文档、变更日志和迁移指南。超过半数受访者认为这是 AI 最有实用价值的领域。</p>
+
+      <div class="rp-callout">
+        <h4>值得关注的趋势</h4>
+        <p>受访者普遍认为，AI 在设计系统中的最佳定位是「副驾驶」而非「驾驶员」——它擅长处理重复性的令牌推导和变体生成，但在品牌判断、排版直觉和视觉决策层面，人类设计师的主导地位在可预见的未来不会改变。</p>
+      </div>
+    </div>
+
+    <div class="rp-chart-grid">
+      <div class="rp-chart">
+        <div class="rp-chart-title">AI 在设计系统中的采纳场景</div>
+        <div class="rp-bar-group">
+          <div class="rp-bar-row"><span class="rp-bar-label">文档自动化</span><div class="rp-bar-track"><div class="rp-bar-fill rp-bar-fill--accent" style="width:56%">56%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">组件变体</span><div class="rp-bar-track"><div class="rp-bar-fill" style="width:38%">38%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">令牌生成</span><div class="rp-bar-track"><div class="rp-bar-fill rp-bar-fill--alt" style="width:43%">43%</div></div></div>
+          <div class="rp-bar-row"><span class="rp-bar-label">代码生成</span><div class="rp-bar-track"><div class="rp-bar-fill" style="width:29%">29%</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHAPTER 5 ===== -->
+<section class="rp-section" id="ch5">
+  <div class="rp-wrapper rp-wrapper--narrow">
+    <span class="rp-section-number">05</span>
+    <h2>团队规模与管理模式</h2>
+
+    <div class="rp-body">
+      <p>设计系统的团队规模呈现出明显的两极分化：大型企业（1,000+ 人）通常拥有 5–15 人的专职设计系统团队；而中小团队（50–200 人）则往往以 1–3 人的核心小组 + 社区贡献的模式运作。</p>
+      <p>在管理模式上，「中心化 + 去中心化」的混合模式正在成为主流。即中央团队负责设计系统的基础设施（令牌、核心组件、工具链），而业务团队负责在其之上构建领域特定的组件和模式。这种方式既可以保证一致性，又不至于成为业务创新的瓶颈。</p>
+    </div>
+
+    <div class="rp-kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="rp-kpi"><div class="rp-kpi-num">5–15</div><div class="rp-kpi-label">大型团队专职</div></div>
+      <div class="rp-kpi"><div class="rp-kpi-num">1–3</div><div class="rp-kpi-label">中小团队核心</div></div>
+      <div class="rp-kpi"><div class="rp-kpi-num">68%</div><div class="rp-kpi-label">采用混合模式</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHAPTER 6 ===== -->
+<section class="rp-section" id="ch6">
+  <div class="rp-wrapper rp-wrapper--narrow">
+    <span class="rp-section-number">06</span>
+    <h2>趋势展望与建议</h2>
+
+    <div class="rp-body">
+      <p>基于本次调研的数据与专家访谈，我们提出以下趋势判断与行动建议：</p>
+      <p><strong>1. 设计系统将成为基础设施而非项目。</strong>类比于前端基建和后端服务，设计系统正在从一次性交付物转变为持续性基础设施。这意味着团队需要建立对应的运维预算和人员编制。</p>
+      <p><strong>2. 开源设计系统生态将持续繁荣。</strong>现有的 Ant Design、CGArtLab Design System、Arco Design 等开源系统将成为更多团队的起点而非终点。定制化层的标准化是下一步的关键课题。</p>
+      <p><strong>3. AI 工具链将渗透设计系统工作流。</strong>从令牌生成到文档维护，AI 将在未来 1–2 年内成为设计系统团队的标准配置。建议团队尽早实验、建立内部使用规范。</p>
+      <p><strong>4. OKLch + Design Tokens 将成为新默认。</strong>随着浏览器和设计工具对 OKLch 的支持日趋完善，建议新建系统直接采用 OKLch 色彩空间，并采用 W3C Design Tokens 格式作为交付标准。</p>
+    </div>
+
+    <div class="rp-callout">
+      <h4>方法论说明</h4>
+      <p>本报告基于 2026 年 2–4 月开展的在线问卷（N=127）与深度访谈（N=18）编写。受访者涵盖互联网、企业服务、消费电子、金融科技等领域的设计管理者与从业者。数据采集与分析方法遵循社会科学研究的基本规范。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="rp-footer rp-wrapper">
+  <span>CGArtLab Research · 2026</span>
+  <span style="text-align:center;">本报告采用 CC BY-NC 4.0 协议 · 欢迎引用，请注明出处</span>
+  <span>research@cgartlab.com</span>
+</footer>
+
+</body>
+</html>
