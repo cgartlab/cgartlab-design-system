@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陈逸帆 · 设计总监 · 简历</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ===== Resume Template — CGArtLab Design System ===== */
+
+.r-page { max-width: 1000px; margin: var(--ds-space-10) auto; background: var(--ds-color-surface-raised); border-radius: var(--ds-radius-2xl); box-shadow: var(--ds-shadow-lg); overflow: hidden; }
+
+/* --- Dual-Column Layout --- */
+.r-grid { display: grid; grid-template-columns: 300px 1fr; min-height: 100%; }
+
+/* --- Sidebar (Left) --- */
+.r-sidebar { background: var(--ds-color-fg-strong); color: var(--ds-color-fg-inverse); padding: var(--ds-space-8) var(--ds-space-6); display: flex; flex-direction: column; gap: var(--ds-space-8); }
+.r-avatar { width: 100px; height: 100px; border-radius: var(--ds-radius-full); background: var(--ds-accent); margin: 0 auto var(--ds-space-4); display: flex; align-items: center; justify-content: center; font-family: var(--ds-font-display); font-size: var(--ds-text-h1); font-weight: 700; color: var(--ds-color-white); }
+.r-name-sidebar { text-align: center; }
+.r-name-sidebar h1 { font-family: var(--ds-font-display); font-size: var(--ds-text-h2); font-weight: 700; color: var(--ds-color-white); line-height: var(--ds-leading-tight); }
+.r-name-sidebar .r-title { font-size: var(--ds-text-body-sm); color: var(--ds-accent); font-family: var(--ds-font-mono); text-transform: uppercase; letter-spacing: var(--ds-tracking-wider); margin-top: var(--ds-space-2); }
+
+.r-sidebar-section { }
+.r-sidebar-section h3 { font-size: var(--ds-text-caption); text-transform: uppercase; letter-spacing: var(--ds-tracking-widest); color: var(--ds-accent); font-family: var(--ds-font-mono); margin-bottom: var(--ds-space-3); padding-bottom: var(--ds-space-2); border-bottom: 1px solid color-mix(in oklch, var(--ds-color-fg-inverse) 15%, transparent); }
+
+/* --- Contact items --- */
+.r-contact-item { display: flex; gap: var(--ds-space-3); align-items: center; font-size: var(--ds-text-body-sm); color: color-mix(in oklch, var(--ds-color-fg-inverse) 70%, transparent); margin-bottom: var(--ds-space-2); }
+.r-contact-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--ds-accent); }
+
+/* --- Skills --- */
+.r-skill-group { margin-bottom: var(--ds-space-4); }
+.r-skill-group h4 { font-size: var(--ds-text-body-sm); color: var(--ds-color-fg-inverse); margin-bottom: var(--ds-space-2); font-weight: 600; }
+.r-skill-tags { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
+.r-skill-tag { font-size: 11px; padding: 4px 10px; border: 1px solid color-mix(in oklch, var(--ds-color-fg-inverse) 20%, transparent); border-radius: var(--ds-radius-full); color: color-mix(in oklch, var(--ds-color-fg-inverse) 80%, transparent); letter-spacing: var(--ds-tracking-wide); }
+.r-skill-tag--high { background: var(--ds-accent); border-color: var(--ds-accent); color: var(--ds-color-fg-strong); }
+
+/* --- Sidebar text --- */
+.r-sidebar-text { font-size: var(--ds-text-body-sm); line-height: var(--ds-leading-body); color: color-mix(in oklch, var(--ds-color-fg-inverse) 70%, transparent); }
+.r-sidebar-text p { margin-bottom: var(--ds-space-2); }
+
+/* --- Main Content (Right) --- */
+.r-main { padding: var(--ds-space-10) var(--ds-space-8); }
+.r-main-header { margin-bottom: var(--ds-space-8); display: none; } /* hidden when sidebar has name */
+
+.r-main-section { margin-bottom: var(--ds-space-8); }
+.r-main-section h2 { font-family: var(--ds-font-display); font-size: var(--ds-text-h3); color: var(--ds-color-fg-strong); margin-bottom: var(--ds-space-4); padding-bottom: var(--ds-space-2); border-bottom: 2px solid var(--ds-accent); display: inline-block; }
+.r-summary { font-size: var(--ds-text-body-lg); line-height: var(--ds-leading-body); color: var(--ds-color-fg-subtle); margin-bottom: var(--ds-space-6); }
+
+/* --- Experience --- */
+.r-exp-item { margin-bottom: var(--ds-space-6); }
+.r-exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--ds-space-1); }
+.r-exp-header h3 { font-family: var(--ds-font-display); font-size: var(--ds-text-h4); color: var(--ds-color-fg-strong); }
+.r-exp-header .r-exp-date { font-family: var(--ds-font-mono); font-size: var(--ds-text-caption); color: var(--ds-color-muted); white-space: nowrap; }
+.r-exp-company { font-size: var(--ds-text-body-sm); color: var(--ds-accent); font-weight: 600; margin-bottom: var(--ds-space-2); }
+.r-exp-desc { font-size: var(--ds-text-body-sm); color: var(--ds-color-fg-subtle); line-height: var(--ds-leading-body); }
+.r-exp-desc ul { list-style: none; padding: 0; margin-top: var(--ds-space-2); }
+.r-exp-desc li { padding: var(--ds-space-1) 0; position: relative; padding-left: var(--ds-space-4); }
+.r-exp-desc li::before { content: '—'; position: absolute; left: 0; color: var(--ds-accent); }
+
+/* --- Education --- */
+.r-edu-item { margin-bottom: var(--ds-space-4); }
+.r-edu-item h4 { font-size: var(--ds-text-body); font-weight: 600; color: var(--ds-color-fg-strong); }
+.r-edu-item .r-edu-meta { font-size: var(--ds-text-body-sm); color: var(--ds-color-muted); }
+
+/* --- Print --- */
+@media print {
+  .r-page { box-shadow: none; margin: 0; border-radius: 0; }
+  body { background: white; }
+}
+@media (max-width: 768px) {
+  .r-grid { grid-template-columns: 1fr; }
+  .r-sidebar { padding: var(--ds-space-6); }
+}
+</style>
+</head>
+<body style="background:var(--ds-color-bg);">
+
+<div class="r-page">
+  <div class="r-grid">
+
+    <!-- Sidebar -->
+    <aside class="r-sidebar">
+      <div>
+        <div class="r-avatar">陈</div>
+        <div class="r-name-sidebar">
+          <h1>陈逸帆</h1>
+          <div class="r-title">Design Director</div>
+        </div>
+      </div>
+
+      <div class="r-sidebar-section">
+        <h3>联系方式</h3>
+        <div class="r-contact-item"><span class="r-contact-icon">✉</span> yifan.chen@cgartlab.com</div>
+        <div class="r-contact-item"><span class="r-contact-icon">◉</span> +86 138 0001 2345</div>
+        <div class="r-contact-item"><span class="r-contact-icon">◎</span> @chenyifan.design</div>
+        <div class="r-contact-item"><span class="r-contact-icon">▣</span> Shanghai, China</div>
+      </div>
+
+      <div class="r-sidebar-section">
+        <h3>专业技能</h3>
+        <div class="r-skill-group">
+          <h4>设计</h4>
+          <div class="r-skill-tags">
+            <span class="r-skill-tag r-skill-tag--high">品牌识别</span>
+            <span class="r-skill-tag r-skill-tag--high">设计系统</span>
+            <span class="r-skill-tag r-skill-tag--high">UI/UX</span>
+            <span class="r-skill-tag">排版设计</span>
+            <span class="r-skill-tag">交互原型</span>
+          </div>
+        </div>
+        <div class="r-skill-group">
+          <h4>工具</h4>
+          <div class="r-skill-tags">
+            <span class="r-skill-tag r-skill-tag--high">Penpot</span>
+            <span class="r-skill-tag r-skill-tag--high">Figma</span>
+            <span class="r-skill-tag r-skill-tag--high">Adobe Suite</span>
+            <span class="r-skill-tag">VS Code</span>
+            <span class="r-skill-tag">Git</span>
+          </div>
+        </div>
+        <div class="r-skill-group">
+          <h4>前端</h4>
+          <div class="r-skill-tags">
+            <span class="r-skill-tag">HTML/CSS</span>
+            <span class="r-skill-tag">React</span>
+            <span class="r-skill-tag">Tailwind</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="r-sidebar-section">
+        <h3>语言</h3>
+        <div class="r-sidebar-text">
+          <p><strong>中文</strong> — 母语</p>
+          <p><strong>英语</strong> — 工作流利 (IELTS 7.5)</p>
+          <p><strong>日语</strong> — 日常会话</p>
+        </div>
+      </div>
+
+      <div class="r-sidebar-section">
+        <h3>兴趣</h3>
+        <div class="r-skill-tags">
+          <span class="r-skill-tag">字体排印</span>
+          <span class="r-skill-tag">独立出版</span>
+          <span class="r-skill-tag">摄影</span>
+          <span class="r-skill-tag">咖啡烘焙</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="r-main">
+      <p class="r-summary">拥有 8 年经验的设计总监，专注于品牌识别与设计系统。曾为 20+ 家科技与文化机构构建品牌体系。编辑主义设计方法的坚定实践者，相信克制的排版与精准的色彩是有效沟通的基石。</p>
+
+      <section class="r-main-section">
+        <h2>工作经历</h2>
+
+        <div class="r-exp-item">
+          <div class="r-exp-header">
+            <h3>设计总监</h3>
+            <span class="r-exp-date">2022 — 至今</span>
+          </div>
+          <div class="r-exp-company">CGArtLab · 上海</div>
+          <div class="r-exp-desc">
+            <ul>
+              <li>领导 12 人设计团队，负责品牌项目与设计系统交付</li>
+              <li>主导 CGArtLab Design System 的规划与落地，开源后获得 2k+ GitHub stars</li>
+              <li>建立基于 Penpot 的团队协作工作流，交付效率提升 40%</li>
+              <li>服务客户包括科技、文化、消费领域头部机构</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="r-exp-item">
+          <div class="r-exp-header">
+            <h3>高级设计师</h3>
+            <span class="r-exp-date">2019 — 2022</span>
+          </div>
+          <div class="r-exp-company">Nexus Design · 北京</div>
+          <div class="r-exp-desc">
+            <ul>
+              <li>负责品牌识别与数字产品设计，参与 10+ 完整项目交付</li>
+              <li>主导公司内部设计系统的搭建，统一跨项目视觉语言</li>
+              <li>为客户团队提供排版与设计系统培训</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="r-exp-item">
+          <div class="r-exp-header">
+            <h3>视觉设计师</h3>
+            <span class="r-exp-date">2018 — 2019</span>
+          </div>
+          <div class="r-exp-company">Studio Glimpse · 上海</div>
+          <div class="r-exp-desc">
+            <ul>
+              <li>参与品牌设计、出版物排版与展览视觉</li>
+              <li>独立完成从概念到交付的全流程设计执行</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="r-main-section">
+        <h2>教育背景</h2>
+        <div class="r-edu-item">
+          <h4>视觉传达设计 · 硕士</h4>
+          <div class="r-edu-meta">同济大学设计创意学院 · 2016 — 2018</div>
+        </div>
+        <div class="r-edu-item">
+          <h4>艺术设计 · 学士</h4>
+          <div class="r-edu-meta">中国美术学院 · 2012 — 2016</div>
+        </div>
+      </section>
+
+      <section class="r-main-section">
+        <h2>代表项目</h2>
+        <div class="r-exp-item">
+          <div class="r-exp-header"><h3>CGArtLab Design System</h3><span class="r-exp-date">2025</span></div>
+          <div class="r-exp-desc">开源设计系统，200+ 令牌、23 组件、100 图标。基于 OKLch 色彩与编辑主义排版。</div>
+        </div>
+        <div class="r-exp-item">
+          <div class="r-exp-header"><h3>山隐 · 茶品牌重塑</h3><span class="r-exp-date">2024</span></div>
+          <div class="r-exp-desc">高端茶品牌完整视觉体系，从标志到包装到数字触点的全面升级。</div>
+        </div>
+        <div class="r-exp-item">
+          <div class="r-exp-header"><h3>Kaleido 数据平台</h3><span class="r-exp-date">2023</span></div>
+          <div class="r-exp-desc">面向创意团队的复杂数据分析工具 UI，暗色优先、信息层级清晰。</div>
+        </div>
+      </section>
+
+      <section class="r-main-section">
+        <h2>发表 &amp; 演讲</h2>
+        <div class="r-exp-desc">
+          <ul>
+            <li>《设计系统的「活文档」实践》— 2025 Design Systems Conf</li>
+            <li>《排版的自觉：数字时代的设计原则》— 2024 Typography Day</li>
+            <li>「从 Penpot 到代码」— CGArtLab 设计系统工作坊，2025</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+  </div>
+</div>
+
+</body>
+</html>
