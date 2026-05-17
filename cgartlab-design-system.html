@@ -1,0 +1,448 @@
+
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGArtLab 设计系统 — 视觉手册</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Decorative Elements -->
+<div class="ds-edge-decor ds-edge-decor--tl" aria-hidden="true">
+  <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 120V0h120"/><path d="M0 80V0h80" stroke-width="1" opacity=".5"/><path d="M0 40V0h40" stroke-width=".5" opacity=".25"/></svg>
+</div>
+<div class="ds-edge-decor ds-edge-decor--br" aria-hidden="true">
+  <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 120V0h120"/><path d="M0 80V0h80" stroke-width="1" opacity=".5"/><path d="M0 40V0h40" stroke-width=".5" opacity=".25"/></svg>
+</div>
+<div class="ds-bg-blob ds-bg-blob--1" aria-hidden="true"></div>
+<div class="ds-bg-blob ds-bg-blob--2" aria-hidden="true"></div>
+
+<!-- Responsive Navbar -->
+<nav class="ds-navbar" role="navigation" aria-label="主导航">
+  <div class="ds-navbar-inner">
+    <a href="#" class="ds-navbar-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      CGArtLab DS
+    </a>
+    <button class="ds-navbar-toggle" id="nav-toggle" aria-label="切换导航菜单" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6" class="nav-line-top"/><line x1="3" y1="12" x2="21" y2="12" class="nav-line-mid"/><line x1="3" y1="18" x2="21" y2="18" class="nav-line-bot"/></svg>
+    </button>
+    <div class="ds-navbar-links" id="nav-menu">
+      <a href="#colors" class="ds-navbar-link">色彩</a>
+      <a href="#typography" class="ds-navbar-link">字体</a>
+      <a href="#spacing" class="ds-navbar-link">间距</a>
+      <a href="#components" class="ds-navbar-link">组件</a>
+      <a href="#timeline" class="ds-navbar-link">时间轴</a>
+      <a href="#contact" class="ds-navbar-link">联系</a>
+      <a href="#tokens" class="ds-navbar-link">令牌</a>
+    </div>
+  </div>
+</nav>
+<div class="ds-navbar-overlay" id="nav-overlay"></div>
+
+<!-- Floating TOC -->
+<nav class="ds-floating-toc ds-floating-toc--hidden" aria-label="页面目录">
+  <div class="ds-floating-toc-label">目录</div>
+  <ol class="ds-floating-toc-list" id="floating-toc-list"></ol>
+</nav>
+
+<section class="ds-cover">
+  <div class="ds-eyebrow">CGArtLab Design System v1.0</div>
+  <h1>CGArtLab<br>Design System</h1>
+  <p class="ds-subtitle">探索数字艺术的边界</p>
+  <p class="ds-meta">200+ 设计令牌 · 25 核心组件 · 100 UI 图标 · Penpot 就绪 · 2026.05</p>
+</section>
+<section class="ds-section ds-toc">
+  <div class="ds-wrapper">
+    <div class="ds-toc-grid">
+      <a href="#colors" class="ds-toc-item"><span class="ds-toc-num">01</span><h3>色彩系统</h3><p>中性色 · 橄榄绿 · 语义色</p></a>
+      <a href="#typography" class="ds-toc-item"><span class="ds-toc-num">02</span><h3>字体系统</h3><p>字族 · 比例尺 · 行距</p></a>
+      <a href="#spacing" class="ds-toc-item"><span class="ds-toc-num">03</span><h3>间距 &amp; 尺寸</h3><p>间距比例 · 圆角 · 阴影</p></a>
+      <a href="#components" class="ds-toc-item"><span class="ds-toc-num">04</span><h3>组件库</h3><p>25 个核心 UI 组件</p></a>
+      <a href="#icons" class="ds-toc-item"><span class="ds-toc-num">05</span><h3>图标库</h3><p>100 枚 SVG 图标</p></a>
+      <a href="#effects" class="ds-toc-item"><span class="ds-toc-num">06</span><h3>Overlay &amp; Blur</h3><p>玻璃 · 遮罩 · 透明度</p></a>
+      <a href="#tokens" class="ds-toc-item"><span class="ds-toc-num">07</span><h3>令牌索引</h3><p>所有 CSS 自定义属性</p></a>
+      <a href="#timeline" class="ds-toc-item"><span class="ds-toc-num">+</span><h3>时间轴</h3><p>Timeline 组件</p></a>
+      <a href="#contact" class="ds-toc-item"><span class="ds-toc-num">+</span><h3>联系表单</h3><p>Contact Form 组件</p></a>
+    </div>
+  </div>
+</section>
+<section class="ds-section" id="colors">
+  <div class="ds-wrapper">
+    <div class="ds-section-header">
+      <span class="ds-caption">01</span>
+      <h2 class="ds-h2 ds-serif ds-mt-12">色彩系统</h2>
+      <p>基于暖白纸色基底 + 橄榄绿强调色。所有颜色以 OKLch 定义。</p>
+    </div>
+    <h3 class="ds-h4 ds-serif ds-mb-8">中性色 — Neutral</h3>
+    <div class="ds-grid-4">
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-bg)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Background</div><div class="ds-swatch-value">oklch(97% 0.012 80)</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-surface)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Surface</div><div class="ds-swatch-value">oklch(99% 0.005 80)</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-surface-raised)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Surface Raised</div><div class="ds-swatch-value">oklch(100% 0 0)</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-border-subtle)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Border Subtle</div><div class="ds-swatch-value">oklch(92% 0.012 80)</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-border)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Border</div><div class="ds-swatch-value">oklch(89% 0.012 80)</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-border-strong)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Border Strong</div><div class="ds-swatch-value">oklch(82% 0.015 75)</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-muted)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Muted</div><div class="ds-swatch-value">oklch(48% 0.015 60)</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-fg-subtle)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">FG Subtle</div><div class="ds-swatch-value">oklch(35% 0.018 60)</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-fg)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Foreground</div><div class="ds-swatch-value">oklch(20% 0.02 60)</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-fg-strong)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">FG Strong</div><div class="ds-swatch-value">oklch(14% 0.025 60)</div></div></div>
+    </div>
+    <h3 class="ds-h4 ds-serif ds-mt-20 ds-mb-8">橄榄绿 — Olive (10 级色阶)</h3>
+    <div class="ds-grid-6">
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-50)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 50</div><div class="ds-swatch-value">oklch(90% …)</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-100)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 100</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-200)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 200</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-300)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 300</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-400)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 400</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-500)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 500</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-600)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 600</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-700)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 700</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-800)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 800</div></div></div>
+      <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-900)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 900</div></div></div>
+    </div>
+    <h3 class="ds-h4 ds-serif ds-mt-20 ds-mb-8">语义色</h3>
+    <div class="ds-flex-row">
+      <div class="ds-badge ds-badge--success">Success</div>
+      <div class="ds-badge ds-badge--warning">Warning</div>
+      <div class="ds-badge ds-badge--error">Error</div>
+      <div class="ds-badge">Info</div>
+    </div>
+  </div>
+</section>
+<section class="ds-section" id="typography">
+  <div class="ds-wrapper">
+    <div class="ds-section-header">
+      <span class="ds-caption">02</span>
+      <h2 class="ds-h2 ds-serif ds-mt-12">字体系统</h2>
+      <p>中英文混排优化 · 双字族排版 · 完整比例尺</p>
+    </div>
+    <p class="ds-mono" style="font-size:var(--ds-text-caption);margin-bottom:var(--ds-space-4);color:var(--ds-color-muted);">Display / Body / Mono / UI</p>
+    <div class="ds-display ds-hero" style="margin-bottom:var(--ds-space-2);">字有灵韵</div>
+    <p class="ds-display" style="font-size:var(--ds-text-h1);margin-bottom:var(--ds-space-6);">Type tells a story.<br>排版即是叙事。</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ds-space-6);font-size:var(--ds-text-body-sm);">
+      <div><p><strong>Display</strong> Iowan Old Style, Charter, Noto Serif SC</p><p style="font-family:var(--ds-font-display);margin-top:var(--ds-space-2);">设计系统的灵魂在于细节的考究。</p></div>
+      <div><p><strong>Body</strong> Noto Sans SC, -apple-system, system-ui</p><p style="margin-top:var(--ds-space-2);">设计系统的灵魂在于细节的考究。A great design system lives in the details.</p></div>
+    </div>
+  </div>
+</section>
+<section class="ds-section" id="spacing">
+  <div class="ds-wrapper">
+    <div class="ds-section-header">
+      <span class="ds-caption">03</span>
+      <h2 class="ds-h2 ds-serif ds-mt-12">间距 &amp; 尺寸</h2>
+      <p>4px 基准系统，20 级间距比例尺。圆角与阴影统一管理。</p>
+    </div>
+  </div>
+</section>
+<section class="ds-section" id="components">
+  <div class="ds-wrapper">
+    <div class="ds-section-header">
+      <span class="ds-caption">04</span>
+      <h2 class="ds-h2 ds-serif ds-mt-12">组件库</h2>
+      <p>25 个核心 UI 组件，包含所有变体状态。</p>
+    </div>
+    <div class="ds-component-group">
+      <div class="ds-component-label">01 · Button</div>
+      <div class="ds-component-preview">
+        <button class="ds-btn ds-btn--primary">Primary</button>
+        <button class="ds-btn ds-btn--secondary">Secondary</button>
+        <button class="ds-btn ds-btn--ghost">Ghost</button>
+        <button class="ds-btn ds-btn--primary" disabled="">Disabled</button>
+        <button class="ds-btn ds-btn--primary ds-btn--sm">Small</button>
+        <button class="ds-btn ds-btn--primary ds-btn--lg">Large</button>
+        <button class="ds-btn ds-btn--secondary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Download</button>
+      </div>
+    </div>
+    <div class="ds-component-group">
+      <div class="ds-component-label">02 · Card</div>
+      <div class="ds-component-preview">
+        <div class="ds-card" style="max-width:260px;"><h4 style="font-family:var(--ds-font-display);font-size:var(--ds-text-h4);margin-bottom:var(--ds-space-3);">Card Title</h4><p style="font-size:var(--ds-text-body-sm);color:var(--ds-color-muted);">A raised card with border.</p></div>
+        <div class="ds-card ds-card--hoverable" style="max-width:260px;"><h4 style="font-family:var(--ds-font-display);font-size:var(--ds-text-h4);margin-bottom:var(--ds-space-3);">Hover Card</h4><p style="font-size:var(--ds-text-body-sm);color:var(--ds-color-muted);">Hover for shadow transition.</p></div>
+        <div class="ds-card ds-card--flat" style="max-width:260px;"><h4 style="font-family:var(--ds-font-display);font-size:var(--ds-text-h4);margin-bottom:var(--ds-space-3);">Flat Card</h4><p style="font-size:var(--ds-text-body-sm);color:var(--ds-color-muted);">Borderless with subtle shadow.</p></div>
+      </div>
+    </div>
+    <div class="ds-component-group">
+      <div class="ds-component-label">03 · Text Input</div>
+      <div class="ds-component-preview" style="flex-direction:column;align-items:stretch;">
+        <div><label class="ds-label">Email</label><input class="ds-input" type="email" placeholder="your@email.com"></div>
+        <div><label class="ds-label">Password</label><input class="ds-input" type="password" placeholder="••••••••"><p class="ds-hint">At least 8 characters</p></div>
+        <div><label class="ds-label">With Error</label><input class="ds-input ds-input--error" type="text" value="invalid@"><p class="ds-hint" style="color:var(--ds-color-error);">Please enter a valid email</p></div>
+      </div>
+    </div>
+    <div class="ds-component-group">
+      <div class="ds-component-label">+ · Skeleton Loading</div>
+      <div class="ds-component-preview" style="flex-direction:column;gap:var(--ds-space-3);max-width:320px;">
+        <div class="ds-skeleton" style="width:100%;height:14px"></div>
+        <div class="ds-skeleton" style="width:75%;height:14px"></div>
+        <div class="ds-skeleton" style="width:50%;height:14px"></div>
+      </div>
+    </div>
+    <div class="ds-component-group">
+      <div class="ds-component-label">+ · Icon Button / Toolbar</div>
+      <div class="ds-component-preview">
+        <button class="ds-icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button>
+        <button class="ds-icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>
+        <button class="ds-icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg></button>
+        <button class="ds-icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+      </div>
+    </div>
+    <div class="ds-component-group">
+      <div class="ds-component-label">+ · Slider</div>
+      <div class="ds-component-preview" style="flex-direction:column;align-items:stretch;gap:var(--ds-space-5);padding:var(--ds-space-8);">
+        <div class="ds-slider-group">
+          <div class="ds-slider-label-row"><label class="ds-label">Volume</label><span class="ds-slider-value" id="slider-val-1">65%</span></div>
+          <div class="ds-slider-track-wrap">
+            <div class="ds-slider-track"><div class="ds-slider-fill" style="width:65%"></div></div>
+            <input class="ds-slider" type="range" min="0" max="100" value="65" data-val-id="slider-val-1">
+          </div>
+          <div class="ds-slider-labels"><span>0%</span><span>100%</span></div>
+        </div>
+        <div class="ds-slider-group">
+          <div class="ds-slider-label-row"><label class="ds-label">Brightness</label><span class="ds-slider-value" id="slider-val-2">40%</span></div>
+          <div class="ds-slider-track-wrap">
+            <div class="ds-slider-track"><div class="ds-slider-fill" style="width:40%"></div></div>
+            <input class="ds-slider" type="range" min="0" max="100" value="40" data-val-id="slider-val-2">
+          </div>
+          <div class="ds-slider-labels"><span>0%</span><span>100%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ds-component-group">
+      <div class="ds-component-label">+ · Date / Time Picker</div>
+      <div class="ds-component-preview" style="flex-direction:column;align-items:flex-start;gap:var(--ds-space-4);">
+        <div class="ds-date-group">
+          <div class="ds-date-wrap">
+            <svg class="ds-date-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <input class="ds-date-input" type="text" placeholder="选择日期…" value="2026-05-12">
+          </div>
+        <div class="ds-date-calendar">
+          <div class="ds-cal-header">
+            <button class="ds-cal-nav" aria-label="上月"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <div class="ds-cal-month-year">
+              <span class="ds-cal-month">五月</span>
+              <span class="ds-cal-year">2026</span>
+            </div>
+            <button class="ds-cal-nav" aria-label="下月"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+          </div>
+          <div class="ds-cal-weekdays">
+            <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span>
+            <span class="ds-cal-weekend">六</span><span class="ds-cal-weekend">日</span>
+          </div>
+          <div class="ds-cal-grid-new">
+            <span class="ds-cal-day ds-cal-muted">27</span><span class="ds-cal-day ds-cal-muted">28</span><span class="ds-cal-day ds-cal-muted">29</span><span class="ds-cal-day ds-cal-muted">30</span><span class="ds-cal-day">1</span><span class="ds-cal-day ds-cal-weekend-col">2</span><span class="ds-cal-day ds-cal-weekend-col">3</span>
+            <span class="ds-cal-day">4</span><span class="ds-cal-day">5</span><span class="ds-cal-day">6</span><span class="ds-cal-day">7</span><span class="ds-cal-day">8</span><span class="ds-cal-day ds-cal-weekend-col">9</span><span class="ds-cal-day ds-cal-weekend-col">10</span>
+            <span class="ds-cal-day">11</span><span class="ds-cal-day ds-cal-today">12</span><span class="ds-cal-day">13</span><span class="ds-cal-day">14</span><span class="ds-cal-day">15</span><span class="ds-cal-day ds-cal-weekend-col">16</span><span class="ds-cal-day ds-cal-weekend-col">17</span>
+            <span class="ds-cal-day">18</span><span class="ds-cal-day">19</span><span class="ds-cal-day">20</span><span class="ds-cal-day">21</span><span class="ds-cal-day">22</span><span class="ds-cal-day ds-cal-weekend-col">23</span><span class="ds-cal-day ds-cal-weekend-col">24</span>
+            <span class="ds-cal-day">25</span><span class="ds-cal-day">26</span><span class="ds-cal-day">27</span><span class="ds-cal-day ds-cal-today">28</span><span class="ds-cal-day">29</span><span class="ds-cal-day ds-cal-weekend-col">30</span><span class="ds-cal-day ds-cal-weekend-col">31</span>
+            <span class="ds-cal-day ds-cal-muted">1</span><span class="ds-cal-day ds-cal-muted">2</span><span class="ds-cal-day ds-cal-muted">3</span><span class="ds-cal-day ds-cal-muted">4</span><span class="ds-cal-day ds-cal-muted">5</span><span class="ds-cal-day ds-cal-muted">6</span><span class="ds-cal-day ds-cal-muted">7</span>
+          </div>
+          <div class="ds-cal-footer">
+            <button class="ds-cal-btn">取消</button>
+            <button class="ds-cal-btn ds-cal-btn--primary">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ds-component-group">
+      <div class="ds-component-label">+ · Article Table of Contents</div>
+      <div class="ds-component-preview" style="flex-direction:column;align-items:stretch;padding:var(--ds-space-6)">
+        <nav class="ds-toc-article" style="max-width:360px;">
+          <div class="ds-toc-article-title">On this page</div>
+          <ul class="ds-toc-list">
+            <li><a href="#" class="ds-toc-link ds-toc-link--active"><span class="ds-toc-indicator"></span>Introduction<span class="ds-toc-badge">1</span></a></li>
+            <li><a href="#" class="ds-toc-link"><span class="ds-toc-indicator"></span>Getting Started</a></li>
+            <li><a href="#" class="ds-toc-link ds-toc-link--h3"><span class="ds-toc-indicator"></span>Quick Install</a></li>
+            <li><a href="#" class="ds-toc-link ds-toc-link--h3"><span class="ds-toc-indicator"></span>Configuration</a></li>
+            <li><a href="#" class="ds-toc-link"><span class="ds-toc-indicator"></span>Components</a></li>
+            <li><a href="#" class="ds-toc-link ds-toc-link--h3"><span class="ds-toc-indicator"></span>Button</a></li>
+            <li><a href="#" class="ds-toc-link ds-toc-link--h3"><span class="ds-toc-indicator"></span>Input</a></li>
+            <li><a href="#" class="ds-toc-link"><span class="ds-toc-indicator"></span>API Reference</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="ds-component-group" id="timeline">
+      <div class="ds-component-label">24 · Timeline 时间轴</div>
+      <div class="ds-component-preview" style="flex-direction:column;align-items:stretch;max-width:560px;">
+        <div class="ds-timeline">
+          <div class="ds-timeline-item">
+            <div class="ds-timeline-dot"></div>
+            <div class="ds-timeline-content">
+              <span class="ds-timeline-tag">发布</span>
+              <div class="ds-timeline-date">2026.05 — v1.0</div>
+              <div class="ds-timeline-title">设计系统正式发布</div>
+              <p>200+ 设计令牌，25 个核心组件，100 枚图标，完整的暗色模式支持。Penpot 设计文件同步开源。</p>
+            </div>
+          </div>
+          <div class="ds-timeline-item">
+            <div class="ds-timeline-dot"></div>
+            <div class="ds-timeline-content">
+              <span class="ds-timeline-tag">迭代</span>
+              <div class="ds-timeline-date">2026.03 — v0.9</div>
+              <div class="ds-timeline-title">工程化与组件提取</div>
+              <p>从 tokens.json 生成 JS/TS token 包，提取 React 组件。Storybook 文档站点与 pnpm workspace 落地。</p>
+            </div>
+          </div>
+          <div class="ds-timeline-item">
+            <div class="ds-timeline-dot"></div>
+            <div class="ds-timeline-content">
+              <span class="ds-timeline-tag">设计</span>
+              <div class="ds-timeline-date">2026.01 — v0.5</div>
+              <div class="ds-timeline-title">品牌视觉定稿</div>
+              <p>橄榄绿 OKLch 色彩体系定稿，Display/Body 双字族排版确认。Penpot 设计文件完成，100 枚图标准备就绪。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-component-group" id="contact">
+      <div class="ds-component-label">25 · Contact Form 联系表单</div>
+      <div class="ds-component-preview" style="flex-direction:column;align-items:stretch;">
+        <div class="ds-contact-form">
+          <div class="ds-form-row">
+            <div class="ds-form-group">
+              <label class="ds-form-label" for="demo-name">姓名 <span class="ds-form-required">*</span></label>
+              <input class="ds-form-input" id="demo-name" type="text" placeholder="张三" required>
+            </div>
+            <div class="ds-form-group">
+              <label class="ds-form-label" for="demo-email">邮箱 <span class="ds-form-required">*</span></label>
+              <input class="ds-form-input" id="demo-email" type="email" placeholder="hello@example.com" required>
+            </div>
+          </div>
+          <div class="ds-form-group" style="margin-top:var(--ds-space-5);">
+            <label class="ds-form-label" for="demo-subject">主题</label>
+            <select class="ds-form-select" id="demo-subject">
+              <option value="">请选择…</option>
+              <option>合作咨询</option>
+              <option>技术支持</option>
+              <option>设计建议</option>
+              <option>其他</option>
+            </select>
+          </div>
+          <div class="ds-form-group" style="margin-top:var(--ds-space-5);">
+            <label class="ds-form-label" for="demo-message">留言 <span class="ds-form-required">*</span></label>
+            <textarea class="ds-form-textarea" id="demo-message" placeholder="请描述你的需求…" required></textarea>
+          </div>
+          <div class="ds-form-group ds-form-submit">
+            <div class="ds-form-checkbox">
+              <input type="checkbox" id="demo-consent">
+              <label for="demo-consent">我已阅读并同意 <a href="#">隐私政策</a></label>
+            </div>
+            <button class="ds-btn ds-btn--primary" style="margin-top:var(--ds-space-5);">发送留言</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section class="ds-section" id="icons">
+  <div class="ds-wrapper">
+    <div class="ds-section-header">
+      <span class="ds-caption">05</span>
+      <h2 class="ds-h2 ds-serif ds-mt-12">图标库</h2>
+      <p>100 枚 SVG 图标，24×24 viewBox，1.5px 描边。点击图标下载 SVG。</p>
+    </div>
+    <div class="ds-grid-icons" id="icon-grid"></div>
+    <p class="ds-body-sm" style="color:var(--ds-color-muted);margin-top:var(--ds-space-6);">完整图标文件：<code>icons.svg</code>（配套生成）— 可直接导入 Penpot。</p>
+  </div>
+</section>
+<section class="ds-section" id="effects">
+  <div class="ds-wrapper">
+    <div class="ds-section-header">
+      <span class="ds-caption">06</span>
+      <h2 class="ds-h2 ds-serif ds-mt-12">Overlay &amp; Blur</h2>
+      <p>透明度和背景模糊在编辑风格中的正确用法。全部基于 OKLch alpha 通道和 <code>backdrop-filter</code>，与系统色彩体系无缝衔接。</p>
+    </div>
+
+    <div class="ds-component-group">
+      <div class="ds-component-label">遮罩层 — Scrim</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ds-space-4);">
+        <div>
+          <div class="ds-overlay-sample"><div class="ds-overlay-bg"></div><div class="ds-overlay-layer ds-overlay-strong"><span>40%</span></div></div>
+          <div class="ds-overlay-label"><code>--ds-color-overlay</code> — oklch(0% 0 0 / 40%)</div>
+        </div>
+        <div>
+          <div class="ds-overlay-sample"><div class="ds-overlay-bg"></div><div class="ds-overlay-layer ds-overlay-light"><span>12%</span></div></div>
+          <div class="ds-overlay-label"><code>--ds-color-overlay-light</code> — oklch(0% 0 0 / 12%)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-component-group">
+      <div class="ds-component-label">毛玻璃导航 — Frosted Nav</div>
+      <div class="ds-glass-demo-bg" style="min-height:120px;">
+        <nav class="ds-frosted-nav">
+          <a href="#" class="ds-active">首页</a>
+          <a href="#">项目</a>
+          <a href="#">组件</a>
+          <a href="#">设置</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="ds-component-group">
+      <div class="ds-component-label">通知弹层 — Toast</div>
+      <div class="ds-glass-demo-bg" style="min-height:180px;">
+        <div class="ds-toast-group">
+          <div class="ds-toast ds-toast--success">
+            <svg class="ds-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span class="ds-toast-text">操作成功 · 设计系统已更新</span>
+            <button class="ds-toast-close" aria-label="关闭">✕</button>
+          </div>
+          <div class="ds-toast">
+            <svg class="ds-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span class="ds-toast-text">这是一条普通通知，毛玻璃背景衬托</span>
+            <button class="ds-toast-close" aria-label="关闭">✕</button>
+          </div>
+          <div class="ds-toast ds-toast--error">
+            <svg class="ds-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            <span class="ds-toast-text">出错了 · 请检查后重试</span>
+            <button class="ds-toast-close" aria-label="关闭">✕</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-component-group">
+      <div class="ds-component-label">玻璃按钮 — Glass Button</div>
+      <div class="ds-glass-demo-bg" style="min-height:100px;">
+        <div class="ds-glass-btn-row">
+          <button class="ds-glass-btn">默认玻璃</button>
+          <button class="ds-glass-btn" style="font-weight:600;">强化文字</button>
+          <button class="ds-glass-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>导出文件</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section class="ds-section" id="tokens">
+  <div class="ds-wrapper">
+    <div class="ds-section-header">
+      <span class="ds-caption">07</span>
+      <h2 class="ds-h2 ds-serif ds-mt-12">令牌索引</h2>
+      <p>全部 200+ CSS 自定义属性汇总。可直接复制使用。</p>
+    </div>
+    <div style="max-height:600px;overflow-y:auto;border:1px solid var(--ds-color-border);border-radius:var(--ds-radius-lg);">
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Value</th></tr></thead>
+        <tbody id="token-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<footer class="ds-footer">
+  <div class="ds-wrapper">
+    <p>CGArtLab Design System v1.0 · Editorial × Olive Green</p>
+    <p style="margin-top:var(--ds-space-2);">200+ 设计令牌 · 25 核心组件 · 100 UI 图标 · 中英文混排优化</p>
+  </div>
+</footer>
+<script src="scripts.js"></script>
+<button id="theme-toggle" onclick="toggleDarkMode()" aria-label="切换暗色/浅色模式">
+  <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+  <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+</button>
+</body></html>

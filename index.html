@@ -6,11 +6,50 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<!-- Decorative Elements -->
+<div class="ds-edge-decor ds-edge-decor--tl" aria-hidden="true">
+  <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 120V0h120"/><path d="M0 80V0h80" stroke-width="1" opacity=".5"/><path d="M0 40V0h40" stroke-width=".5" opacity=".25"/></svg>
+</div>
+<div class="ds-edge-decor ds-edge-decor--br" aria-hidden="true">
+  <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 120V0h120"/><path d="M0 80V0h80" stroke-width="1" opacity=".5"/><path d="M0 40V0h40" stroke-width=".5" opacity=".25"/></svg>
+</div>
+<div class="ds-bg-blob ds-bg-blob--1" aria-hidden="true"></div>
+<div class="ds-bg-blob ds-bg-blob--2" aria-hidden="true"></div>
+
+<!-- Responsive Navbar -->
+<nav class="ds-navbar" role="navigation" aria-label="主导航">
+  <div class="ds-navbar-inner">
+    <a href="#" class="ds-navbar-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      CGArtLab DS
+    </a>
+    <button class="ds-navbar-toggle" id="nav-toggle" aria-label="切换导航菜单" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6" class="nav-line-top"/><line x1="3" y1="12" x2="21" y2="12" class="nav-line-mid"/><line x1="3" y1="18" x2="21" y2="18" class="nav-line-bot"/></svg>
+    </button>
+    <div class="ds-navbar-links" id="nav-menu">
+      <a href="#colors" class="ds-navbar-link">色彩</a>
+      <a href="#typography" class="ds-navbar-link">字体</a>
+      <a href="#spacing" class="ds-navbar-link">间距</a>
+      <a href="#components" class="ds-navbar-link">组件</a>
+      <a href="#timeline" class="ds-navbar-link">时间轴</a>
+      <a href="#contact" class="ds-navbar-link">联系</a>
+      <a href="#tokens" class="ds-navbar-link">令牌</a>
+    </div>
+  </div>
+</nav>
+<div class="ds-navbar-overlay" id="nav-overlay"></div>
+
+<!-- Floating TOC -->
+<nav class="ds-floating-toc ds-floating-toc--hidden" aria-label="页面目录">
+  <div class="ds-floating-toc-label">目录</div>
+  <ol class="ds-floating-toc-list" id="floating-toc-list"></ol>
+</nav>
+
 <section class="ds-cover">
   <div class="ds-eyebrow">CGArtLab Design System v1.0</div>
   <h1>CGArtLab<br>Design System</h1>
   <p class="ds-subtitle">探索数字艺术的边界</p>
-  <p class="ds-meta">200+ 设计令牌 · 23 核心组件 · 100 UI 图标 · Penpot 就绪 · 2026.05</p>
+  <p class="ds-meta">200+ 设计令牌 · 25 核心组件 · 100 UI 图标 · Penpot 就绪 · 2026.05</p>
 </section>
 <section class="ds-section ds-toc">
   <div class="ds-wrapper">
@@ -22,6 +61,8 @@
       <a href="#icons" class="ds-toc-item"><span class="ds-toc-num">05</span><h3>图标库</h3><p>100 枚 SVG 图标</p></a>
       <a href="#effects" class="ds-toc-item"><span class="ds-toc-num">06</span><h3>Overlay &amp; Blur</h3><p>玻璃 · 遮罩 · 透明度</p></a>
       <a href="#tokens" class="ds-toc-item"><span class="ds-toc-num">07</span><h3>令牌索引</h3><p>所有 CSS 自定义属性</p></a>
+      <a href="#timeline" class="ds-toc-item"><span class="ds-toc-num">+</span><h3>时间轴</h3><p>Timeline 组件</p></a>
+      <a href="#contact" class="ds-toc-item"><span class="ds-toc-num">+</span><h3>联系表单</h3><p>Contact Form 组件</p></a>
     </div>
   </div>
 </section>
@@ -199,7 +240,7 @@
     <div class="ds-section-header">
       <span class="ds-caption">04</span>
       <h2 class="ds-h2 ds-serif ds-mt-12">组件库</h2>
-      <p>23 个核心 UI 组件，包含所有变体状态。</p>
+      <p>25 个核心 UI 组件，包含所有变体状态。</p>
     </div>
     <div class="ds-component-group">
       <div class="ds-component-label">01 · Button</div>
@@ -489,6 +530,81 @@
         </nav>
       </div>
     </div>
+
+    <div class="ds-component-group" id="timeline">
+      <div class="ds-component-label">24 · Timeline 时间轴</div>
+      <div class="ds-component-preview" style="flex-direction:column;align-items:stretch;max-width:560px;">
+        <div class="ds-timeline">
+          <div class="ds-timeline-item">
+            <div class="ds-timeline-dot"></div>
+            <div class="ds-timeline-content">
+              <span class="ds-timeline-tag">发布</span>
+              <div class="ds-timeline-date">2026.05 — v1.0</div>
+              <div class="ds-timeline-title">设计系统正式发布</div>
+              <p>200+ 设计令牌，23 个核心组件，100 枚图标，完整的暗色模式支持。Penpot 设计文件同步开源。</p>
+            </div>
+          </div>
+          <div class="ds-timeline-item">
+            <div class="ds-timeline-dot"></div>
+            <div class="ds-timeline-content">
+              <span class="ds-timeline-tag">迭代</span>
+              <div class="ds-timeline-date">2026.03 — v0.9</div>
+              <div class="ds-timeline-title">工程化与组件提取</div>
+              <p>从 tokens.json 生成 JS/TS token 包，提取 React 组件。Storybook 文档站点与 pnpm workspace 落地。</p>
+            </div>
+          </div>
+          <div class="ds-timeline-item">
+            <div class="ds-timeline-dot"></div>
+            <div class="ds-timeline-content">
+              <span class="ds-timeline-tag">设计</span>
+              <div class="ds-timeline-date">2026.01 — v0.5</div>
+              <div class="ds-timeline-title">品牌视觉定稿</div>
+              <p>橄榄绿 OKLch 色彩体系定稿，Display/Body 双字族排版确认。Penpot 设计文件完成，100 枚图标准备就绪。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-component-group" id="contact">
+      <div class="ds-component-label">25 · Contact Form 联系表单</div>
+      <div class="ds-component-preview" style="flex-direction:column;align-items:stretch;">
+        <div class="ds-contact-form">
+          <div class="ds-form-row">
+            <div class="ds-form-group">
+              <label class="ds-form-label" for="demo-name">姓名 <span class="ds-form-required">*</span></label>
+              <input class="ds-form-input" id="demo-name" type="text" placeholder="张三" required>
+            </div>
+            <div class="ds-form-group">
+              <label class="ds-form-label" for="demo-email">邮箱 <span class="ds-form-required">*</span></label>
+              <input class="ds-form-input" id="demo-email" type="email" placeholder="hello@example.com" required>
+            </div>
+          </div>
+          <div class="ds-form-group" style="margin-top:var(--ds-space-5);">
+            <label class="ds-form-label" for="demo-subject">主题</label>
+            <select class="ds-form-select" id="demo-subject">
+              <option value="">请选择…</option>
+              <option>合作咨询</option>
+              <option>技术支持</option>
+              <option>设计建议</option>
+              <option>其他</option>
+            </select>
+          </div>
+          <div class="ds-form-group" style="margin-top:var(--ds-space-5);">
+            <label class="ds-form-label" for="demo-message">留言 <span class="ds-form-required">*</span></label>
+            <textarea class="ds-form-textarea" id="demo-message" placeholder="请描述你的需求…" required></textarea>
+          </div>
+          <div class="ds-form-group ds-form-submit">
+            <div class="ds-form-checkbox">
+              <input type="checkbox" id="demo-consent">
+              <label for="demo-consent">我已阅读并同意 <a href="#">隐私政策</a></label>
+            </div>
+            <button class="ds-btn ds-btn--primary" style="margin-top:var(--ds-space-5);">发送留言</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 <section class="ds-section" id="icons">
@@ -604,7 +720,7 @@
 <footer class="ds-footer">
   <div class="ds-wrapper">
     <p>CGArtLab Design System v1.0 · Editorial × Olive Green</p>
-    <p style="margin-top:var(--ds-space-2);">200+ 设计令牌 · 23 核心组件 · 100 UI 图标</p>
+    <p style="margin-top:var(--ds-space-2);">200+ 设计令牌 · 25 核心组件 · 100 UI 图标 · 中英文混排优化</p>
   </div>
 </footer>
 <script src="scripts.js"></script>
