@@ -424,3 +424,157 @@ function toggleDarkMode() {
     });
   });
 })();
+
+
+/* =========================================================================
+   CGArtLab Design System v1.1 — Site interactions
+   Scroll reveal · Copy to clipboard · Tabs · Accordion · Docs nav · Year
+   All blocks are self-guarding; safe to load on every page.
+   ========================================================================= */
+
+/* ===== Scroll reveal ===== */
+(function() {
+  var els = document.querySelectorAll(".ds-reveal");
+  if (!els.length) return;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !("IntersectionObserver" in window)) {
+    Array.prototype.forEach.call(els, function(el) { el.classList.add("is-visible"); });
+    return;
+  }
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  Array.prototype.forEach.call(els, function(el) { obs.observe(el); });
+})();
+
+/* ===== Copy to clipboard ===== */
+(function() {
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function(resolve, reject) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "absolute";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        resolve();
+      } catch (e) { reject(e); }
+    });
+  }
+
+  function getSourceText(btn) {
+    if (btn.hasAttribute("data-copy-text")) return btn.getAttribute("data-copy-text");
+    var sel = btn.getAttribute("data-copy");
+    if (!sel) return "";
+    var src = document.querySelector(sel);
+    if (!src) return "";
+    if (src.value !== undefined && (src.tagName === "TEXTAREA" || src.tagName === "INPUT")) return src.value;
+    return src.innerText || src.textContent || "";
+  }
+
+  document.addEventListener("click", function(e) {
+    var btn = e.target.closest ? e.target.closest("[data-copy],[data-copy-text]") : null;
+    if (!btn) return;
+    e.preventDefault();
+    var text = getSourceText(btn);
+    if (!text) return;
+    copyText(text).then(function() {
+      var label = btn.querySelector(".ds-copy-label");
+      var original = label ? label.textContent : btn.getAttribute("data-label-original");
+      if (!label && !btn.getAttribute("data-label-original")) btn.setAttribute("data-label-original", btn.textContent.trim());
+      btn.classList.add("is-copied");
+      if (label) { label.textContent = "已复制"; }
+      else { btn.setAttribute("data-was", btn.innerHTML); }
+      window.setTimeout(function() {
+        btn.classList.remove("is-copied");
+        if (label && original) label.textContent = original;
+      }, 1800);
+    }).catch(function() {});
+  });
+})();
+
+/* ===== Functional tabs ===== */
+(function() {
+  var groups = document.querySelectorAll("[data-tabs]");
+  if (!groups.length) return;
+  Array.prototype.forEach.call(groups, function(group) {
+    var tabs = group.querySelectorAll("[data-tab]");
+    var scope = group.getAttribute("data-tabs-scope");
+    var panelHost = scope ? document.querySelector(scope) : group.parentNode;
+    function activate(name) {
+      Array.prototype.forEach.call(tabs, function(t) {
+        t.classList.toggle("ds-tab--active", t.getAttribute("data-tab") === name);
+        t.setAttribute("aria-selected", t.getAttribute("data-tab") === name ? "true" : "false");
+      });
+      var panels = (panelHost || document).querySelectorAll("[data-panel]");
+      Array.prototype.forEach.call(panels, function(p) {
+        p.classList.toggle("is-active", p.getAttribute("data-panel") === name);
+      });
+    }
+    Array.prototype.forEach.call(tabs, function(t) {
+      t.addEventListener("click", function() { activate(this.getAttribute("data-tab")); });
+    });
+    var first = tabs[0];
+    if (first) activate(first.getAttribute("data-tab"));
+  });
+})();
+
+/* ===== Accordion ===== */
+(function() {
+  var headers = document.querySelectorAll(".ds-accordion-header");
+  if (!headers.length) return;
+  Array.prototype.forEach.call(headers, function(h) {
+    h.addEventListener("click", function() {
+      var item = this.closest(".ds-accordion-item");
+      if (item) item.classList.toggle("open");
+    });
+  });
+})();
+
+/* ===== Docs sidebar active tracking ===== */
+(function() {
+  var menu = document.querySelector(".ds-docs-menu");
+  if (!menu || !("IntersectionObserver" in window)) return;
+  var blocks = document.querySelectorAll(".ds-doc-block[id]");
+  if (!blocks.length) return;
+  var links = menu.querySelectorAll("a");
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var id = entry.target.getAttribute("id");
+      Array.prototype.forEach.call(links, function(a) {
+        a.classList.toggle("is-active", a.getAttribute("href") === "#" + id);
+      });
+    });
+  }, { threshold: 0.1, rootMargin: "-80px 0px -65% 0px" });
+  Array.prototype.forEach.call(blocks, function(b) { obs.observe(b); });
+
+  Array.prototype.forEach.call(links, function(a) {
+    a.addEventListener("click", function(e) {
+      var target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+})();
+
+/* ===== Current year stamp ===== */
+(function() {
+  var year = String(new Date().getFullYear());
+  var els = document.querySelectorAll(".ds-year");
+  Array.prototype.forEach.call(els, function(el) { el.textContent = year; });
+})();
