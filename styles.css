@@ -570,14 +570,18 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 
 /* ===== Navbar mobile ===== */
 @media(max-width:767px){
+  /* Mobile: navbar uses solid background (no glass) for readability */
+  .ds-navbar{background:var(--ds-color-surface-raised);-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:1px solid var(--ds-color-border)}
+  /* Hamburger toggle: visible border + surface bg for clarity */
+  .ds-navbar-toggle{display:flex;background:var(--ds-color-surface);border:1px solid var(--ds-color-border);color:var(--ds-color-fg)}
+  .ds-navbar-toggle:hover,.ds-navbar-toggle:active{background:var(--ds-accent-soft);border-color:var(--ds-accent);color:var(--ds-accent)}
   /* Mobile drawer: solid opaque background, no transparency */
-  .ds-navbar-links{position:fixed;top:0;right:0;bottom:0;width:280px;background:var(--ds-color-surface-raised);flex-direction:column;gap:var(--ds-space-1);padding:var(--ds-space-16) var(--ds-space-6) var(--ds-space-6);transform:translateX(100%);transition:transform .35s cubic-bezier(.16,1,.3,1);z-index:var(--ds-z-modal);align-items:stretch;box-shadow:var(--ds-shadow-2xl);border-left:1px solid var(--ds-color-border);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .ds-navbar-links{position:fixed;top:0;right:0;bottom:0;width:280px;background:var(--ds-color-surface-raised);flex-direction:column;gap:var(--ds-space-2);padding:var(--ds-space-16) var(--ds-space-6) var(--ds-space-6);transform:translateX(100%);transition:transform .35s cubic-bezier(.16,1,.3,1);z-index:var(--ds-z-modal);align-items:stretch;box-shadow:var(--ds-shadow-2xl);border-left:1px solid var(--ds-color-border);-webkit-backdrop-filter:none;backdrop-filter:none}
   .ds-navbar-links--open{transform:translateX(0)}
-  .ds-navbar-toggle{display:flex}
-  .ds-navbar-link{padding:var(--ds-space-3) var(--ds-space-4);font-size:var(--ds-text-body);border-radius:var(--ds-radius-lg)}
+  .ds-navbar-link{padding:var(--ds-space-3) var(--ds-space-4);font-size:var(--ds-text-body);border-radius:var(--ds-radius-lg);color:var(--ds-color-fg)}
   .ds-navbar-link:hover,.ds-navbar-link:active{background:var(--ds-accent-soft);color:var(--ds-accent)}
   .ds-navbar-link--active{background:var(--ds-accent-muted);color:var(--ds-accent);font-weight:600}
-  /* Drawer header area: brand logo repeat for context */
+  /* Drawer header divider */
   .ds-navbar-links::before{content:"";display:block;position:absolute;top:0;left:0;right:0;height:var(--ds-space-14);background:var(--ds-color-surface);border-bottom:1px solid var(--ds-color-border-subtle)}
 }
 @media(min-width:768px){
