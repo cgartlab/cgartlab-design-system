@@ -565,28 +565,37 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-navbar-toggle{display:none;background:none;border:none;color:var(--ds-color-fg);cursor:pointer;width:40px;height:40px;border-radius:var(--ds-radius-lg);align-items:center;justify-content:center;transition:all .2s}
 .ds-navbar-toggle:hover{background:var(--ds-accent-soft);color:var(--ds-accent)}
 .ds-navbar-toggle svg{width:22px;height:22px}
-.ds-navbar-overlay{display:none;position:fixed;inset:0;z-index:calc(var(--ds-z-modal) - 1);opacity:0;transition:opacity var(--ds-duration-300) var(--ds-ease-out)}
+/* Overlay: subtle tint (overlay-light) — provides depth cue without darkening page */
+.ds-navbar-overlay{display:none;position:fixed;inset:0;background:var(--ds-color-overlay-light);z-index:calc(var(--ds-z-modal) - 1);opacity:0;transition:opacity var(--ds-duration-200) var(--ds-ease-out)}
 .ds-navbar-overlay--open{display:block;opacity:1}
 
 /* ===== Navbar mobile ===== */
 @media(max-width:767px){
   /* Hamburger toggle: ds-icon-btn pattern, 40px touch target */
-  .ds-navbar-toggle{display:inline-flex;width:40px;height:40px;border-radius:var(--ds-radius-md);border:1px solid var(--ds-color-border);background:var(--ds-color-surface-raised);color:var(--ds-color-muted);align-items:center;justify-content:center;transition:all var(--ds-duration-150)}
+  .ds-navbar-toggle{display:flex;width:40px;height:40px;border-radius:var(--ds-radius-md);border:1px solid var(--ds-color-border);background:var(--ds-color-surface-raised);color:var(--ds-color-muted);align-items:center;justify-content:center;transition:all var(--ds-duration-150)}
   .ds-navbar-toggle:hover,.ds-navbar-toggle:active{border-color:var(--ds-color-fg-subtle);color:var(--ds-color-fg)}
-  /* Mobile drawer: frosted glass slide-in panel */
-  .ds-navbar-links{position:fixed;top:0;right:0;bottom:0;width:280px;background:oklch(97% 0.012 80 / 0.92);-webkit-backdrop-filter:blur(var(--ds-blur-xl)) saturate(1.4);backdrop-filter:blur(var(--ds-blur-xl)) saturate(1.4);flex-direction:column;gap:var(--ds-space-3);padding:var(--ds-space-20) var(--ds-space-6) var(--ds-space-8);transform:translateX(100%);transition:transform var(--ds-duration-300) var(--ds-ease-out);z-index:var(--ds-z-modal);align-items:stretch;box-shadow:var(--ds-glass-shadow),var(--ds-shadow-2xl);border-left:1px solid var(--ds-glass-border);display:flex}
+  /* Mobile drawer: glass panel — NO backdrop-filter (mobile rendering bug workaround)
+     Achieves glass look via semi-transparent solid fill + blur-xl shadow */
+  .ds-navbar-links{display:flex;position:fixed;top:0;right:0;bottom:0;width:280px;
+    /* Light mode glass: warm paper tint, 90% opacity — glass-like but always opaque enough */
+    background:color-mix(in oklch, var(--ds-color-surface-raised) 90%, transparent);
+    -webkit-backdrop-filter:none;backdrop-filter:none;
+    flex-direction:column;gap:var(--ds-space-3);
+    padding:var(--ds-space-20) var(--ds-space-6) var(--ds-space-8);
+    transform:translateX(100%);
+    transition:transform var(--ds-duration-300) var(--ds-ease-out);
+    z-index:var(--ds-z-modal);align-items:stretch;
+    box-shadow:var(--ds-shadow-2xl);
+    border-left:1px solid var(--ds-color-border)}
   .ds-navbar-links--open{transform:translateX(0)}
-  /* Nav links: enlarged touch targets, clear contrast on glass */
-  .ds-navbar-link{display:flex;align-items:center;padding:var(--ds-space-3) var(--ds-space-4);font-family:var(--ds-font-ui);font-size:var(--ds-text-body);font-weight:500;color:var(--ds-color-fg-strong);border-radius:var(--ds-radius-lg);transition:all var(--ds-duration-150);text-decoration:none}
-  .ds-navbar-link:hover,.ds-navbar-link:active{background:oklch(100% 0 0 / 0.5);color:var(--ds-accent)}
-  .ds-navbar-link--active{background:oklch(100% 0 0 / 0.6);color:var(--ds-accent);font-weight:600}
-}
-/* Dark mode mobile drawer override */
-@media(max-width:767px){
-  [data-theme="dark"] .ds-navbar-links{background:oklch(15% 0.008 75 / 0.94);border-left-color:oklch(89% 0.012 80 / 0.08)}
-  [data-theme="dark"] .ds-navbar-link{color:var(--ds-color-fg)}
-  [data-theme="dark"] .ds-navbar-link:hover,[data-theme="dark"] .ds-navbar-link:active{background:oklch(0% 0 0 / 0.3);color:var(--ds-accent)}
-  [data-theme="dark"] .ds-navbar-link--active{background:oklch(0% 0 0 / 0.4);color:var(--ds-accent)}
+  /* Divider line below brand area */
+  .ds-navbar-links::before{content:"";display:block;position:absolute;top:0;left:0;right:0;height:var(--ds-space-16);border-bottom:1px solid var(--ds-color-border-subtle);pointer-events:none}
+  /* Nav links: ds-nav-item pattern, touch-friendly */
+  .ds-navbar-link{display:flex;align-items:center;padding:var(--ds-space-3) var(--ds-space-4);font-family:var(--ds-font-ui);font-size:var(--ds-text-body);font-weight:500;color:var(--ds-color-fg);border-radius:var(--ds-radius-lg);transition:all var(--ds-duration-150);text-decoration:none}
+  .ds-navbar-link:hover,.ds-navbar-link:active{background:var(--ds-accent-soft);color:var(--ds-accent)}
+  .ds-navbar-link--active{background:var(--ds-accent-muted);color:var(--ds-accent);font-weight:600}
+  /* Dark mode: use dark surface token at same 90% */
+  [data-theme="dark"] .ds-navbar-links{background:color-mix(in oklch, var(--ds-color-surface-raised) 92%, transparent);border-left-color:var(--ds-color-border)}
 }
 @media(min-width:768px){
   .ds-navbar-links{display:flex!important}
