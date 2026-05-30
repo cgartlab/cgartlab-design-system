@@ -958,3 +958,10 @@ a.ds-feature-card:focus-visible{outline:2px solid var(--ds-accent);outline-offse
 .ds-brand-preview img{max-width:100%;height:auto;max-height:56px}
 .ds-brand-preview--paper{background:var(--ds-brand-paper)}
 .ds-brand-preview--ink{background:var(--ds-brand-ink)}
+
+.ds-justify-start{justify-content:flex-start}
+
+
+/* ===== Skip to content (a11y) ===== */
+.ds-skip{position:absolute;top:-100%;left:var(--ds-space-4);padding:var(--ds-space-3) var(--ds-space-5);background:var(--ds-accent);color:var(--ds-color-white);border-radius:var(--ds-radius-md);font-size:var(--ds-text-body-sm);font-weight:600;z-index:9999;text-decoration:none;transition:top var(--ds-duration-200)}
+.ds-skip:focus{top:var(--ds-space-4)}
