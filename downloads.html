@@ -21,20 +21,37 @@
       </span>
       <span class="ds-logo-text"><span class="ds-logo-word">CGArtLab</span><span class="ds-logo-sub">Design System</span></span>
     </a>
-    <button class="ds-navbar-toggle" id="nav-toggle" aria-label="切换导航菜单" aria-expanded="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <button class="ds-navbar-toggle" id="nav-toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="nav-menu">
+      <span class="ds-navbar-toggle-icon">
+        <span class="ds-navbar-toggle-bar"></span>
+        <span class="ds-navbar-toggle-bar"></span>
+        <span class="ds-navbar-toggle-bar"></span>
+      </span>
     </button>
-    <div class="ds-navbar-links" id="nav-menu">
-      <a href="index.html" class="ds-navbar-link">首页</a>
-      <a href="handbook.html" class="ds-navbar-link">手册</a>
-      <a href="docs.html" class="ds-navbar-link">文档</a>
-      <a href="prompts.html" class="ds-navbar-link">提示词</a>
-      <a href="downloads.html" class="ds-navbar-link ds-navbar-link--active" aria-current="page">下载</a>
-      <a href="https://github.com/cgartlab/cgartlab-design-system" class="ds-navbar-link" target="_blank" rel="noopener">GitHub</a>
+    <div class="ds-navbar-links" id="nav-menu" role="dialog" aria-modal="true" aria-label="导航菜单">
+      <div class="ds-navbar-mobile-header">
+        <a href="index.html" class="ds-logo" aria-label="CGArtLab Design System 首页" tabindex="-1">
+          <span class="ds-logo-mark">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3C21 9 21 23 16 29C11 23 11 9 16 3Z"/><path d="M16 5.5V26.5"/><path d="M16 12.5L20.4 9.3"/><path d="M16 12.5L11.6 9.3"/><path d="M16 18.5L20.4 15.3"/><path d="M16 18.5L11.6 15.3"/><circle cx="16" cy="16" r="1.35" fill="currentColor" stroke="none"/></svg>
+          </span>
+          <span class="ds-logo-text"><span class="ds-logo-word">CGArtLab</span><span class="ds-logo-sub">Design System</span></span>
+        </a>
+        <button class="ds-navbar-close" id="nav-close" aria-label="关闭导航菜单" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="ds-navbar-mobile-links">
+        <a href="index.html" class="ds-navbar-link">首页</a>
+        <a href="handbook.html" class="ds-navbar-link">手册</a>
+        <a href="docs.html" class="ds-navbar-link">文档</a>
+        <a href="prompts.html" class="ds-navbar-link">提示词</a>
+        <a href="downloads.html" class="ds-navbar-link ds-navbar-link--active" aria-current="page">下载</a>
+        <a href="https://github.com/cgartlab/cgartlab-design-system" class="ds-navbar-link" target="_blank" rel="noopener">GitHub</a>
+      </div>
     </div>
   </div>
 </nav>
-<div class="ds-navbar-overlay" id="nav-overlay"></div>
+<div class="ds-navbar-overlay" id="nav-overlay" aria-hidden="true"></div>
 
 <!-- Header -->
 <header class="ds-section ds-section--tight">

@@ -309,32 +309,127 @@ function toggleDarkMode() {
   var toggle = document.getElementById("nav-toggle");
   var menu = document.getElementById("nav-menu");
   var overlay = document.getElementById("nav-overlay");
+  var closeBtn = document.getElementById("nav-close");
   if (!toggle || !menu) return;
-  function closeNav() {
-    menu.classList.remove("ds-navbar-links--open");
-    if (overlay) overlay.classList.remove("ds-navbar-overlay--open");
-    toggle.setAttribute("aria-expanded", "false");
+
+  var isOpen = false;
+  var lastFocused = null;
+
+  // All focusable elements inside the menu
+  function getFocusableEls() {
+    return menu.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
   }
+
+  function lockBody() {
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+  }
+
+  function unlockBody() {
+    document.body.style.overflow = "";
+    document.body.style.touchAction = "";
+  }
+
   function openNav() {
+    if (isOpen) return;
+    isOpen = true;
+    lastFocused = document.activeElement;
     menu.classList.add("ds-navbar-links--open");
     if (overlay) overlay.classList.add("ds-navbar-overlay--open");
     toggle.setAttribute("aria-expanded", "true");
+    toggle.setAttribute("aria-label", "关闭导航菜单");
+    toggle.classList.add("is-active");
+    lockBody();
+    // Focus the close button after transition
+    setTimeout(function() {
+      if (closeBtn) closeBtn.focus();
+    }, 100);
   }
-  toggle.addEventListener("click", function() {
-    var isOpen = menu.classList.contains("ds-navbar-links--open");
+
+  function closeNav() {
+    if (!isOpen) return;
+    isOpen = false;
+    menu.classList.remove("ds-navbar-links--open");
+    if (overlay) overlay.classList.remove("ds-navbar-overlay--open");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "打开导航菜单");
+    toggle.classList.remove("is-active");
+    unlockBody();
+    // Restore focus to toggle button
+    if (lastFocused && lastFocused.focus) {
+      lastFocused.focus();
+    } else {
+      toggle.focus();
+    }
+  }
+
+  // Toggle button click
+  toggle.addEventListener("click", function(e) {
+    e.preventDefault();
     isOpen ? closeNav() : openNav();
   });
-  if (overlay) overlay.addEventListener("click", closeNav);
-  /* Close on link click */
+
+  // Close button click
+  if (closeBtn) {
+    closeBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      closeNav();
+    });
+  }
+
+  // Overlay click
+  if (overlay) {
+    overlay.addEventListener("click", function() {
+      closeNav();
+    });
+  }
+
+  // Close on link click (mobile)
   var links = menu.querySelectorAll(".ds-navbar-link");
   Array.prototype.forEach.call(links, function(link) {
-    link.addEventListener("click", closeNav);
+    link.addEventListener("click", function() {
+      if (isOpen) closeNav();
+    });
   });
-  /* Close on Escape */
+
+  // Escape key
   document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape") closeNav();
+    if (e.key === "Escape" && isOpen) {
+      e.preventDefault();
+      closeNav();
+    }
+    // Focus trap within mobile menu
+    if (e.key === "Tab" && isOpen) {
+      var focusable = getFocusableEls();
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
   });
-  /* Navbar scroll shadow */
+
+  // Close on resize to desktop
+  var mq = window.matchMedia("(min-width: 768px)");
+  function handleResize(e) {
+    if (e.matches && isOpen) closeNav();
+  }
+  if (mq.addEventListener) {
+    mq.addEventListener("change", handleResize);
+  } else if (mq.addListener) {
+    mq.addListener(handleResize);
+  }
+
+  // Navbar scroll shadow
   var nav = document.querySelector(".ds-navbar");
   if (nav) {
     function checkScroll() { nav.classList.toggle("ds-navbar--scrolled", window.scrollY > 20); }
