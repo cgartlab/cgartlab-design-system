@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使用文档 · CGArtLab Design System</title>
+<meta name="description" content="CGArtLab 设计系统使用文档：安装引入、设计令牌、色彩主题、暗色模式、排版、组件、动效、图标、可访问性、定制扩展与 FAQ。">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="#intro" class="ds-skip">跳至主要内容</a>
+
+<!-- Site Navbar -->
+<nav class="ds-navbar" role="navigation" aria-label="主导航">
+  <div class="ds-navbar-inner">
+    <a href="index.html" class="ds-logo" aria-label="CGArtLab Design System 首页">
+      <span class="ds-logo-mark">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3C21 9 21 23 16 29C11 23 11 9 16 3Z"/><path d="M16 5.5V26.5"/><path d="M16 12.5L20.4 9.3"/><path d="M16 12.5L11.6 9.3"/><path d="M16 18.5L20.4 15.3"/><path d="M16 18.5L11.6 15.3"/><circle cx="16" cy="16" r="1.35" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <span class="ds-logo-text"><span class="ds-logo-word">CGArtLab</span><span class="ds-logo-sub">Design System</span></span>
+    </a>
+    <button class="ds-navbar-toggle" id="nav-toggle" aria-label="切换导航菜单" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="ds-navbar-links" id="nav-menu">
+      <a href="index.html" class="ds-navbar-link">首页</a>
+      <a href="handbook.html" class="ds-navbar-link">手册</a>
+      <a href="docs.html" class="ds-navbar-link ds-navbar-link--active" aria-current="page">文档</a>
+      <a href="prompts.html" class="ds-navbar-link">提示词</a>
+      <a href="downloads.html" class="ds-navbar-link">下载</a>
+      <a href="https://github.com/cgartlab/cgartlab-design-system" class="ds-navbar-link" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</nav>
+<div class="ds-navbar-overlay" id="nav-overlay"></div>
+
+<!-- Page header -->
+<header class="ds-section ds-section--tight">
+  <div class="ds-wrapper">
+    <span class="ds-eyebrow ds-block ds-mb-4">使用文档</span>
+    <h1 class="ds-display ds-hero ds-mb-4">使用文档</h1>
+    <p class="ds-lead ds-measure">从零开始把 CGArtLab 设计系统接入任意项目——纯静态、零依赖、令牌驱动。下面的每个片段都可直接复制。</p>
+  </div>
+</header>
+
+<section class="ds-section ds-pt-0">
+  <div class="ds-wrapper">
+    <div class="ds-docs">
+      <!-- Sidebar -->
+      <aside class="ds-docs-aside" aria-label="文档目录">
+        <div class="ds-docs-aside-title">目录</div>
+        <ul class="ds-docs-menu">
+          <li><a href="#intro">简介与哲学</a></li>
+          <li><a href="#install">安装与引入</a></li>
+          <li><a href="#tokens">使用设计令牌</a></li>
+          <li><a href="#color">色彩与语义</a></li>
+          <li><a href="#dark">暗色模式</a></li>
+          <li><a href="#typography">排版规范</a></li>
+          <li><a href="#spacing">间距与布局</a></li>
+          <li><a href="#components">组件用法</a></li>
+          <li><a href="#motion">动效与揭示</a></li>
+          <li><a href="#icons">图标用法</a></li>
+          <li><a href="#accessibility">可访问性</a></li>
+          <li><a href="#customize">定制与扩展</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ul>
+      </aside>
+
+      <!-- Content -->
+      <div class="ds-docs-main ds-prose">
+
+        <section class="ds-doc-block" id="intro">
+          <h2>简介与设计哲学</h2>
+          <p>CGArtLab 设计系统是一套<strong>纯静态、零构建</strong>的设计系统：所有视觉决策都被沉淀为 CSS 自定义属性（设计令牌），组件以语义化的 <code>ds-*</code> class 暴露。它的气质是<strong>编辑主义 × 橄榄绿</strong>——杂志般克制的排版、温暖的暖白纸色基底，以及自信而不喧哗的橄榄绿强调色。</p>
+          <ul>
+            <li><strong>令牌优先</strong>：先改变量，再谈样式。不写魔法数字。</li>
+            <li><strong>框架无关</strong>：一份 <code>styles.css</code> 可用于原生 HTML、React、Vue、Svelte、邮件与打印。</li>
+            <li><strong>双主题</strong>：浅色 / 暗色由 <code>[data-theme]</code> 切换，强调色可一键替换。</li>
+            <li><strong>中英混排</strong>：针对 CJK 与拉丁文混排做了字距、行高与标点优化。</li>
+          </ul>
+          <blockquote>设计系统的价值不在于「好看」，而在于「可被一致地复制」——无论复制者是人还是 AI。</blockquote>
+        </section>
+
+        <section class="ds-doc-block" id="install">
+          <h2>安装与引入</h2>
+          <p>无需 npm、无需打包器。把 <code>styles.css</code> 与 <code>scripts.js</code> 拷贝到你的项目，并在页面中引入即可。</p>
+          <figure class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-copy-btn" data-copy="#c-install" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button></div>
+            <pre id="c-install"><code>&lt;!doctype html&gt;
+&lt;html lang="zh-CN" data-theme=""&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link rel="icon" type="image/svg+xml" href="favicon.svg"&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- 你的内容 --&gt;
+    &lt;script src="scripts.js"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </figure>
+          <p><code>scripts.js</code> 是可选的——它负责暗色模式持久化、滚动揭示、复制按钮、标签页与图标渲染等渐进增强。即便不引入，所有样式依然完整可用。</p>
+        </section>
+
+        <section class="ds-doc-block" id="tokens">
+          <h2>使用设计令牌</h2>
+          <p>令牌定义在 <code>:root</code> 中，命名遵循 <code>--ds-{类别}-{名称}</code>。在任意属性中用 <code>var()</code> 引用，永远不要硬编码具体数值。</p>
+          <figure class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">css</span><button class="ds-copy-btn" data-copy="#c-token" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button></div>
+            <pre id="c-token"><code>.promo-card {
+  background: var(--ds-color-surface-raised);
+  color: var(--ds-color-fg);
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-xl);   /* 12px */
+  padding: var(--ds-space-6);            /* 24px */
+  box-shadow: var(--ds-shadow-md);
+  transition: box-shadow var(--ds-duration-200) var(--ds-ease-out);
+}
+.promo-card:hover { box-shadow: var(--ds-shadow-lg); }</code></pre>
+          </figure>
+          <p>令牌分为这些类别：<code>color</code>、<code>font</code>、<code>text</code>（字号）、<code>weight</code>、<code>leading</code>、<code>tracking</code>、<code>space</code>、<code>radius</code>、<code>shadow</code>、<code>duration</code>、<code>ease</code>、<code>z</code>、<code>blur</code>。完整清单见<a href="handbook.html#tokens">令牌索引</a>，结构化数据见 <code>tokens.json</code>。</p>
+        </section>
+
+        <section class="ds-doc-block" id="color">
+          <h2>色彩与语义</h2>
+          <p>所有颜色以 <strong>OKLch</strong> 定义，保证跨设备的感知均匀与可预测的明度阶梯。三大色组：</p>
+          <ul>
+            <li><strong>中性色</strong>：从 <code>--ds-color-bg</code> 到 <code>--ds-color-fg-strong</code>，构成背景、表面、边框与文字层级。</li>
+            <li><strong>橄榄绿</strong>：<code>--ds-color-olive-50…900</code> 十级色阶，<code>--ds-accent</code> 默认指向 <code>olive-400</code>。</li>
+            <li><strong>语义色</strong>：<code>success</code> / <code>warning</code> / <code>error</code> / <code>info</code>，各自带 <code>-bg</code> 浅底变体。</li>
+          </ul>
+          <p>需要混色时使用 <code>color-mix(in oklch, …)</code>，以保持色彩空间一致：</p>
+          <figure class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">css</span><button class="ds-copy-btn" data-copy="#c-mix" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button></div>
+            <pre id="c-mix"><code>.ring {
+  box-shadow: 0 0 0 3px
+    color-mix(in oklch, var(--ds-accent) 15%, transparent);
+}</code></pre>
+          </figure>
+        </section>
+
+        <section class="ds-doc-block" id="dark">
+          <h2>暗色模式</h2>
+          <p>暗色由 <code>&lt;html data-theme="dark"&gt;</code> 触发，整套令牌会被重写为暖灰基底（<em>而非纯黑</em>），强调色自动亮化 5–10%。<code>scripts.js</code> 提供 <code>toggleDarkMode()</code> 并做了系统偏好兜底与 <code>localStorage</code> 持久化。</p>
+          <figure class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-copy-btn" data-copy="#c-dark" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button></div>
+            <pre id="c-dark"><code>&lt;button onclick="toggleDarkMode()" aria-label="切换主题"&gt;切换&lt;/button&gt;
+
+&lt;!-- 想默认暗色，直接写在 html 上： --&gt;
+&lt;html lang="zh-CN" data-theme="dark"&gt;</code></pre>
+          </figure>
+          <div class="ds-alert ds-alert--info ds-mt-4" role="note">
+            <svg class="ds-alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div><div class="ds-alert-title">提示</div>暗色模式不要使用 <code>#000</code>，请沿用令牌；自定义组件只要使用 <code>var(--ds-*)</code>，即可自动适配深浅两套主题。</div>
+          </div>
+        </section>
+
+        <section class="ds-doc-block" id="typography">
+          <h2>排版规范</h2>
+          <p>四个字族：<strong>Display</strong>（衬线，标题）、<strong>Body</strong>（无衬线，正文）、<strong>UI</strong>（控件）、<strong>Mono</strong>（代码）。字号采用 <code>--ds-text-*</code> 比例尺，从 <code>caption</code>(12px) 到 <code>hero</code>(72px)。</p>
+          <ul>
+            <li>标题用 <code>--ds-font-display</code> + <code>--ds-leading-tight</code> + <code>--ds-tracking-tight</code>。</li>
+            <li>正文行长控制在 65–75 字符（约 <code>540px</code> 或 <code>72ch</code>）。</li>
+            <li>段间距用 <code>margin-bottom: var(--ds-space-6)</code>，避免 margin 折叠混乱。</li>
+            <li>大写小标签（Caption/Eyebrow）加 <code>--ds-tracking-wider</code>。</li>
+          </ul>
+          <figure class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-copy-btn" data-copy="#c-type" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button></div>
+            <pre id="c-type"><code>&lt;h1 class="ds-display ds-h1"&gt;色彩定义情绪&lt;/h1&gt;
+&lt;p class="ds-measure"&gt;正文使用 Body 字族，行长受 65ch 约束。&lt;/p&gt;
+&lt;span class="ds-caption"&gt;SECTION LABEL&lt;/span&gt;</code></pre>
+          </figure>
+        </section>
+
+        <section class="ds-doc-block" id="spacing">
+          <h2>间距与布局</h2>
+          <p>间距基于 <strong>4px 系统</strong>，所有值均为 4 的倍数（<code>--ds-space-1</code>=4px … <code>--ds-space-32</code>=128px）。布局优先使用内置工具类，减少一次性 CSS：</p>
+          <ul>
+            <li><code>.ds-wrapper</code>：最大宽度 1200px 的居中容器。</li>
+            <li><code>.ds-stack</code> / <code>.ds-cluster</code>：纵向 / 横向自动间距布局。</li>
+            <li><code>.ds-grid-2</code> / <code>.ds-grid-3</code> / <code>.ds-feature-grid</code>：响应式栅格。</li>
+            <li><code>.ds-section</code>：标准纵向区块留白与分隔线。</li>
+          </ul>
+        </section>
+
+        <section class="ds-doc-block" id="components">
+          <h2>组件用法</h2>
+          <p>组件以基类 + 修饰符表达：<code>ds-btn</code> 是基类，<code>ds-btn--primary</code> 是变体。下面是按钮、徽章与卡片的组合示例（在浅色与暗色下表现一致）。</p>
+          <div class="ds-component-preview ds-mb-4">
+            <button class="ds-btn ds-btn--primary">主要按钮</button>
+            <button class="ds-btn ds-btn--secondary">次要</button>
+            <button class="ds-btn ds-btn--ghost">幽灵</button>
+            <span class="ds-badge ds-badge--accent">Accent</span>
+            <span class="ds-badge ds-badge--success">Success</span>
+          </div>
+          <figure class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-copy-btn" data-copy="#c-comp" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button></div>
+            <pre id="c-comp"><code>&lt;button class="ds-btn ds-btn--primary"&gt;主要按钮&lt;/button&gt;
+&lt;span class="ds-badge ds-badge--accent"&gt;Accent&lt;/span&gt;
+
+&lt;article class="ds-card ds-card--hoverable"&gt;
+  &lt;h4&gt;卡片标题&lt;/h4&gt;
+  &lt;p&gt;使用令牌的卡片，悬停浮起。&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+          </figure>
+          <p>全部 25 个组件的 live 形态、变体与状态，请见<a href="handbook.html#components">视觉手册 · 组件库</a>。</p>
+        </section>
+
+        <section class="ds-doc-block" id="motion">
+          <h2>动效与滚动揭示</h2>
+          <p>动效统一由 <code>--ds-duration-*</code> 与 <code>--ds-ease-*</code> 令牌驱动。给元素加 <code>.ds-reveal</code> 即可在进入视口时淡入上移；用内联自定义属性 <code>--d</code> 设置错峰延迟。</p>
+          <figure class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-copy-btn" data-copy="#c-motion" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button></div>
+            <pre id="c-motion"><code>&lt;div class="ds-reveal"&gt;进入视口淡入&lt;/div&gt;
+&lt;div class="ds-reveal" style="--d:80ms"&gt;延迟 80ms&lt;/div&gt;
+&lt;div class="ds-reveal ds-reveal--left"&gt;从左滑入&lt;/div&gt;
+&lt;span class="ds-anim-float"&gt;持续漂浮&lt;/span&gt;</code></pre>
+          </figure>
+          <p>所有动效都尊重 <code>prefers-reduced-motion: reduce</code>——用户开启「减少动态效果」时会自动停用，内容立即可见。</p>
+        </section>
+
+        <section class="ds-doc-block" id="icons">
+          <h2>图标用法</h2>
+          <p>100 枚 1.5px 线性图标，遵循 24×24 视框、<code>currentColor</code> 描边，因此颜色随文字自动变化。直接内联 SVG，或在<a href="handbook.html#icons">图标库</a>点击下载单枚。</p>
+          <figure class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-copy-btn" data-copy="#c-icon" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button></div>
+            <pre id="c-icon"><code>&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="1.5"
+     stroke-linecap="round" stroke-linejoin="round"&gt;
+  &lt;circle cx="11" cy="11" r="8"/&gt;
+  &lt;line x1="21" y1="21" x2="16.65" y2="16.65"/&gt;
+&lt;/svg&gt;</code></pre>
+          </figure>
+        </section>
+
+        <section class="ds-doc-block" id="accessibility">
+          <h2>可访问性</h2>
+          <ul>
+            <li>正文与背景对比度满足 <strong>WCAG AA</strong>（≥ 4.5:1）。</li>
+            <li>交互元素提供可见的 <code>:focus-visible</code> 焦点环。</li>
+            <li>图标按钮务必加 <code>aria-label</code>；纯装饰图标加 <code>aria-hidden="true"</code>。</li>
+            <li>颜色不作为唯一信息载体（语义色配图标 / 文案）。</li>
+            <li>尊重 <code>prefers-reduced-motion</code> 与 <code>prefers-color-scheme</code>。</li>
+          </ul>
+        </section>
+
+        <section class="ds-doc-block" id="customize">
+          <h2>定制与扩展</h2>
+          <p>替换强调色只需覆盖橄榄绿色阶与 <code>--ds-accent</code> 系列——其余组件无需改动即可整体换肤：</p>
+          <figure class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">css</span><button class="ds-copy-btn" data-copy="#c-custom" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button></div>
+            <pre id="c-custom"><code>:root {
+  /* 改为品牌蓝，色相 H≈250，其余明度/彩度沿用 */
+  --ds-color-olive-400: oklch(52% 0.12 250);
+  --ds-color-olive-500: oklch(45% 0.13 250);
+  --ds-accent: var(--ds-color-olive-400);
+  --ds-accent-hover: var(--ds-color-olive-500);
+}</code></pre>
+          </figure>
+          <p>新增组件时遵循命名约定：基类 <code>ds-{组件}</code>，变体 <code>ds-{组件}--{变体}</code>，并只使用令牌——这样它会自动获得深浅主题、动效与可访问性的一致行为。</p>
+        </section>
+
+        <section class="ds-doc-block" id="faq">
+          <h2>常见问题</h2>
+          <div class="ds-accordion">
+            <div class="ds-accordion-item open">
+              <div class="ds-accordion-header">需要 npm 或构建工具吗？<svg class="ds-accordion-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+              <div class="ds-accordion-content">不需要。它是纯静态的 CSS + 原生 JS，复制文件、引入即可用。</div>
+            </div>
+            <div class="ds-accordion-item">
+              <div class="ds-accordion-header">OKLch 的浏览器兼容性如何？<svg class="ds-accordion-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+              <div class="ds-accordion-content">所有现代浏览器（Chrome/Edge 111+、Safari 15.4+、Firefox 113+）均支持 OKLch 与 color-mix。面向更老环境可在构建期降级为 sRGB 回退。</div>
+            </div>
+            <div class="ds-accordion-item">
+              <div class="ds-accordion-header">能用在 React / Vue 里吗？<svg class="ds-accordion-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+              <div class="ds-accordion-content">可以。引入 <code>styles.css</code> 后，把 class 写到 JSX/模板上即可；令牌也可在组件库中以变量形式引用。</div>
+            </div>
+            <div class="ds-accordion-item">
+              <div class="ds-accordion-header">如何让 AI 按这套系统输出？<svg class="ds-accordion-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+              <div class="ds-accordion-content">前往<a href="prompts.html">提示词</a>页，复制系统提示词或 Skill 粘贴给你的 Agent 即可。</div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="ds-footer-rich">
+  <div class="ds-wrapper">
+    <div class="ds-footer-cols">
+      <div class="ds-footer-brand">
+        <a href="index.html" class="ds-logo" aria-label="CGArtLab Design System">
+          <span class="ds-logo-mark">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3C21 9 21 23 16 29C11 23 11 9 16 3Z"/><path d="M16 5.5V26.5"/><path d="M16 12.5L20.4 9.3"/><path d="M16 12.5L11.6 9.3"/><path d="M16 18.5L20.4 15.3"/><path d="M16 18.5L11.6 15.3"/><circle cx="16" cy="16" r="1.35" fill="currentColor" stroke="none"/></svg>
+          </span>
+          <span class="ds-logo-text"><span class="ds-logo-word">CGArtLab</span><span class="ds-logo-sub">Design System</span></span>
+        </a>
+        <p>编辑主义 × 橄榄绿。一套以 OKLch 与设计令牌驱动的设计系统，让人与 AI 都能输出一致、优雅、可访问的界面与文档。</p>
+      </div>
+      <div class="ds-footer-col">
+        <h4>系统</h4>
+        <ul class="ds-footer-links">
+          <li><a href="handbook.html">视觉手册</a></li>
+          <li><a href="docs.html">使用文档</a></li>
+          <li><a href="handbook.html#tokens">设计令牌</a></li>
+          <li><a href="handbook.html#icons">图标库</a></li>
+        </ul>
+      </div>
+      <div class="ds-footer-col">
+        <h4>AI 协作</h4>
+        <ul class="ds-footer-links">
+          <li><a href="prompts.html">Agent 提示词</a></li>
+          <li><a href="prompts.html#skill">Skill 技能包</a></li>
+          <li><a href="downloads.html">资源下载</a></li>
+        </ul>
+      </div>
+      <div class="ds-footer-col">
+        <h4>关于</h4>
+        <ul class="ds-footer-links">
+          <li><a href="https://cgartlab.com" target="_blank" rel="noopener">CGArtLab.com</a></li>
+          <li><a href="https://github.com/cgartlab/cgartlab-design-system" target="_blank" rel="noopener">GitHub 仓库</a></li>
+          <li><a href="downloads.html#examples">真实示例</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ds-footer-bottom">
+      <span>© <span class="ds-year">2026</span> CGArtLab · 探索数字艺术的边界</span>
+      <span class="ds-mono">v1.1 · 200+ 令牌 · 25 组件 · 100 图标</span>
+    </div>
+  </div>
+</footer>
+
+<script src="scripts.js"></script>
+<button id="theme-toggle" onclick="toggleDarkMode()" aria-label="切换暗色/浅色模式">
+  <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+  <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+</button>
+</body></html>

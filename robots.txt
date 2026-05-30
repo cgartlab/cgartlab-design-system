@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://designsystem.cgartlab.com/sitemap.xml
