@@ -1,7 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 64" role="img" aria-label="CGArtLab Design System">
   <title>CGArtLab Design System (on dark)</title>
-  <rect x="6" y="8" width="48" height="48" rx="11" fill="none" stroke="#a8a55f" stroke-width="1.5"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" fill="#bfbc73" d="M30 14C38 21 40 43 30 50C20 43 22 21 30 14ZM30 19C30.85 27 30.85 37 30 45C29.15 37 29.15 27 30 19Z"/>
+  <!-- LobeHub-style gradient squircle mark for dark backgrounds + editorial wordmark. Tile brightened (oklch 78%..45%) so it glows on ink. -->
+  <defs>
+    <linearGradient id="cg-tile-d" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b3af6c"/>
+      <stop offset="0.55" stop-color="#86833f"/>
+      <stop offset="1" stop-color="#5f5d2c"/>
+    </linearGradient>
+    <linearGradient id="cg-leaf-d" x1="10" y1="4" x2="21" y2="29" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fbf8f1"/>
+      <stop offset="1" stop-color="#e7e1d0"/>
+    </linearGradient>
+    <radialGradient id="cg-gloss-d" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(9 5) rotate(55) scale(22)">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cg-seed-d" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(16 15.5) scale(3.1)">
+      <stop offset="0" stop-color="#f8f1c6"/>
+      <stop offset="1" stop-color="#d2ca80"/>
+    </radialGradient>
+  </defs>
+  <!-- Mark tile (48x48) -->
+  <svg x="6" y="8" width="48" height="48" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="8" fill="url(#cg-tile-d)"/>
+    <rect width="32" height="32" rx="8" fill="url(#cg-gloss-d)"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#cg-leaf-d)" d="M16 4C22.5 8 24.4 17 16 28.5C7.6 17 9.5 8 16 4ZM16 8.4C16.9 13.2 16.9 18.8 16 23.6C15.1 18.8 15.1 13.2 16 8.4Z"/>
+    <circle cx="16" cy="15.8" r="2.05" fill="url(#cg-seed-d)"/>
+  </svg>
+  <!-- Wordmark -->
   <text x="70" y="34" font-family="'Iowan Old Style','Charter',Georgia,'Times New Roman',serif" font-size="25" font-weight="700" fill="#f1eee6" letter-spacing="-0.3">CGArtLab</text>
   <text x="71" y="50" font-family="'JetBrains Mono','IBM Plex Mono',ui-monospace,monospace" font-size="9" font-weight="600" fill="#a8a55f" letter-spacing="3.4">DESIGN SYSTEM</text>
 </svg>

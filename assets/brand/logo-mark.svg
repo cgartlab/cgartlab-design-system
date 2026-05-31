@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" role="img" aria-label="CGArtLab Design System mark">
   <title>CGArtLab Design System</title>
-  <!-- Editorial olive-leaf monogram. Single closed filled shape with a negative-space midrib. Inherits currentColor. -->
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.5C22 8 24 20 16 29C8 20 10 8 16 2.5ZM16 7.5C16.65 13.5 16.65 19 16 24.5C15.35 19 15.35 13.5 16 7.5Z"/>
+  <!-- Editorial olive-leaf / aperture monogram. Single closed filled shape with a negative-space midrib. Inherits currentColor for theme adaptation. -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16 3C23 7.5 25 17 16 29C7 17 9 7.5 16 3ZM16 8C16.95 13 16.95 19 16 24C15.05 19 15.05 13 16 8Z"/>
 </svg>
