@@ -27,7 +27,7 @@ cgartlab-design-system/
 ├── styles.css          # 独立样式表（:root 令牌 + 暗色 + 全部组件 + v1.1 动效/站点壳）
 ├── scripts.js          # 独立脚本（图标渲染 + 令牌表 + 暗色 + 滚动揭示 + 复制 + 标签页）
 ├── tokens.json         # 结构化令牌数据（颜色/字体/间距/圆角）
-├── favicon.svg         # 站点图标（橄榄叶 monogram 瓷砖）
+├── favicon.svg         # 站点图标（橄榄叶 / 光圈 monogram · 渐变方瓷砖）
 ├── assets/brand/       # 品牌 Logo：logo.svg / logo-on-dark.svg / logo-mark.svg
 ├── assets/downloads/   # 生成的示例 PDF（reference / color-card）
 ├── prompts/            # system-prompt.md · quick-prompt.md
@@ -39,11 +39,13 @@ cgartlab-design-system/
 └── 真实示例：blog.html · company.html · resume.html · report.html
 ```
 
-### 品牌 Logo
+### 品牌 Logo（v1.2 重绘 — LobeHub 风格）
 
-- 编辑主义橄榄叶 monogram：**单一封闭曲线填充形状**（含负空间中脉），`currentColor` 着色，深浅主题自适配。
-- `logo-mark.svg`（自适配）/ `logo.svg`（浅底锁版）/ `logo-on-dark.svg`（深底）/ `favicon.svg`（瓷砖）。
-- 站点内（导航/页脚/Hero）使用同一内联填充叶形；Hero 版本先描边绘制再淡入填充。
+- 编辑主义橄榄叶 / 光圈 monogram，参考 LobeHub 图标气质重绘：**渐变圆角方瓷砖（squircle）+ 纸色填充叶形（负空间中脉）+ 中心「光圈」种子高光 + 左上柔光泽面**。
+- 渐变色板取自 OKLch 橄榄色阶（olive-200…600）的 hex 近似值，保证各端（favicon / og:image / 社交抓取）稳定渲染；站点 CSS 仍用 OKLch 令牌。
+- `logo-mark.svg`：纯 `currentColor` 单一封闭路径（叶形 + 中脉负空间），深浅主题自适配，作最简归一。
+- `logo.svg`（浅底锁版）/ `logo-on-dark.svg`（深底，瓷砖提亮）/ `favicon.svg`（渐变方瓷砖）为完整彩色版（渐变 + 泽面 + 光圈种子）。
+- 站点内导航/页脚 `.ds-logo-mark` 改为橄榄渐变瓷砖（olive-300→accent→olive-600）承载白色叶形；Hero `.ds-logo-hero` 为三段渐变 + `::before` 柔光泽面，叶形先描边绘制再淡入填充。
 
 ### 动效系统（v1.1）
 
@@ -195,7 +197,7 @@ xs → 2xl 共 6 级，暗色模式 opacity 提高以保持层次。
 | 图标 SVG 合集 | `scripts.js` 的 `ICONS` 数组 | 100 枚图标，运行时渲染 + 单枚下载 |
 | 暗色模式 | `styles.css` `[data-theme="dark"]` | 完整暗色令牌覆盖 |
 | 移动端导航 | `styles.css` `.ds-navbar*` / `scripts.js` 「Mobile Navigation」 | 玻璃顶栏 + 右侧抽屉 |
-| 品牌 Logo | `assets/brand/*.svg` + `favicon.svg` | 填充叶形 monogram |
+| 品牌 Logo | `assets/brand/*.svg` + `favicon.svg` | 渐变方瓷砖 + 叶形/光圈 monogram |
 
 ## NOTES
 

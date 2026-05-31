@@ -1,5 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="CGArtLab Design System">
   <title>CGArtLab Design System</title>
-  <rect width="32" height="32" rx="7" fill="#7d7a42"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" fill="#f7f4ee" d="M16 5C21 9.5 22.5 19 16 27C9.5 19 11 9.5 16 5ZM16 9C16.6 14 16.6 18 16 23C15.4 18 15.4 14 16 9Z"/>
+  <!-- LobeHub-style gradient squircle + olive-leaf / aperture monogram. Hex stops approximate the OKLch olive ramp (oklch 72%..38% 0.05-0.08 115). -->
+  <defs>
+    <linearGradient id="cg-tile" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9a9657"/>
+      <stop offset="0.55" stop-color="#6f6c39"/>
+      <stop offset="1" stop-color="#4d4b24"/>
+    </linearGradient>
+    <linearGradient id="cg-leaf" x1="10" y1="4" x2="21" y2="29" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fdfbf6"/>
+      <stop offset="1" stop-color="#ece7d9"/>
+    </linearGradient>
+    <radialGradient id="cg-gloss" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(9 5) rotate(55) scale(22)">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cg-seed" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(16 15.5) scale(3.1)">
+      <stop offset="0" stop-color="#f6efc0"/>
+      <stop offset="1" stop-color="#cbc377"/>
+    </radialGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#cg-tile)"/>
+  <rect width="32" height="32" rx="8" fill="url(#cg-gloss)"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#cg-leaf)" d="M16 4C22.5 8 24.4 17 16 28.5C7.6 17 9.5 8 16 4ZM16 8.4C16.9 13.2 16.9 18.8 16 23.6C15.1 18.8 15.1 13.2 16 8.4Z"/>
+  <circle cx="16" cy="15.8" r="2.05" fill="url(#cg-seed)"/>
 </svg>
