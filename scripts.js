@@ -321,13 +321,26 @@ function toggleDarkMode() {
   }
 
   function lockBody() {
+    document.body.dataset.dsOverflow = document.body.style.overflow || "";
+    document.body.dataset.dsTouchAction = document.body.style.touchAction || "";
     document.body.style.overflow = "hidden";
     document.body.style.touchAction = "none";
   }
 
+
   function unlockBody() {
-    document.body.style.overflow = "";
-    document.body.style.touchAction = "";
+    var prev = document.body.dataset.dsOverflow;
+    var prevTouch = document.body.dataset.dsTouchAction;
+    if (prev === "hidden") {
+      document.body.style.overflow = prev;
+    } else {
+      document.body.style.overflow = "";
+    }
+    if (prevTouch === "none") {
+      document.body.style.touchAction = prevTouch;
+    } else {
+      document.body.style.touchAction = "";
+    }
   }
 
   function openNav() {
@@ -335,12 +348,14 @@ function toggleDarkMode() {
     isOpen = true;
     lastFocused = document.activeElement;
     menu.classList.add("ds-navbar-links--open");
+    menu.setAttribute("role", "dialog");
+    menu.setAttribute("aria-modal", "true");
+    menu.setAttribute("aria-label", "导航菜单");
     if (overlay) overlay.classList.add("ds-navbar-overlay--open");
     toggle.setAttribute("aria-expanded", "true");
     toggle.setAttribute("aria-label", "关闭导航菜单");
     toggle.classList.add("is-active");
     lockBody();
-    // Focus the close button after transition
     setTimeout(function() {
       if (closeBtn) closeBtn.focus();
     }, 100);
@@ -350,12 +365,14 @@ function toggleDarkMode() {
     if (!isOpen) return;
     isOpen = false;
     menu.classList.remove("ds-navbar-links--open");
+    menu.removeAttribute("role");
+    menu.removeAttribute("aria-modal");
+    menu.removeAttribute("aria-label");
     if (overlay) overlay.classList.remove("ds-navbar-overlay--open");
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-label", "打开导航菜单");
     toggle.classList.remove("is-active");
     unlockBody();
-    // Restore focus to toggle button
     if (lastFocused && lastFocused.focus) {
       lastFocused.focus();
     } else {
