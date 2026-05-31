@@ -306,6 +306,7 @@ function toggleDarkMode() {
 
 /* ===== Mobile Navigation ===== */
 (function() {
+  var nav = document.querySelector(".ds-navbar");
   var trigger = document.getElementById("mnav-trigger");
   var panel = document.getElementById("mnav-panel");
   var backdrop = document.getElementById("mnav-backdrop");
@@ -324,6 +325,7 @@ function toggleDarkMode() {
     savedTouchAction = document.body.style.touchAction;
     document.body.style.overflow = "hidden";
     document.body.style.touchAction = "none";
+    if (nav) nav.classList.add("is-menu-open");
     panel.classList.add("is-open");
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-modal", "true");
@@ -343,6 +345,7 @@ function toggleDarkMode() {
     isOpen = false;
     document.body.style.overflow = savedOverflow;
     document.body.style.touchAction = savedTouchAction;
+    if (nav) nav.classList.remove("is-menu-open");
     panel.classList.remove("is-open");
     panel.removeAttribute("role");
     panel.removeAttribute("aria-modal");
@@ -364,10 +367,11 @@ function toggleDarkMode() {
     if (!isOpen) return;
     if (e.key === "Escape") { e.preventDefault(); close(); return; }
     if (e.key === "Tab") {
-      var els = panel.querySelectorAll('a[href], button');
-      var all = [trigger];
-      for (var i = 0; i < els.length; i++) all.push(els[i]);
-      var first = all[0], last = all[all.length - 1];
+      // The panel lives inside <nav>, so every focusable header/menu control is captured here
+      var scope = nav || panel;
+      var els = scope.querySelectorAll('a[href], button:not([disabled])');
+      if (!els.length) return;
+      var first = els[0], last = els[els.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
@@ -378,7 +382,6 @@ function toggleDarkMode() {
   if (mq.addEventListener) mq.addEventListener("change", onResize);
   else if (mq.addListener) mq.addListener(onResize);
 
-  var nav = document.querySelector(".ds-navbar");
   if (nav) {
     var onScroll = function() { nav.classList.toggle("ds-navbar--scrolled", window.scrollY > 20); };
     window.addEventListener("scroll", onScroll, { passive: true });
