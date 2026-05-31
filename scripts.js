@@ -308,6 +308,7 @@ function toggleDarkMode() {
 (function() {
   var trigger = document.getElementById("mnav-trigger");
   var panel = document.getElementById("mnav-panel");
+  var backdrop = document.getElementById("mnav-backdrop");
   if (!trigger || !panel) return;
 
   var isOpen = false;
@@ -319,89 +320,64 @@ function toggleDarkMode() {
     if (isOpen) return;
     isOpen = true;
     lastFocused = document.activeElement;
-
-    // Lock scroll
     savedOverflow = document.body.style.overflow;
     savedTouchAction = document.body.style.touchAction;
     document.body.style.overflow = "hidden";
     document.body.style.touchAction = "none";
-
-    // Show panel
     panel.classList.add("is-open");
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-modal", "true");
     panel.setAttribute("aria-label", "导航菜单");
-
-    // Animate trigger to X
+    if (backdrop) backdrop.classList.add("is-open");
     trigger.classList.add("is-open");
     trigger.setAttribute("aria-expanded", "true");
     trigger.setAttribute("aria-label", "关闭导航菜单");
-
-    // Focus first link after animation
     setTimeout(function() {
-      var firstLink = panel.querySelector(".ds-navbar-link");
-      if (firstLink) firstLink.focus();
-    }, 80);
+      var first = panel.querySelector(".ds-navbar-link");
+      if (first) first.focus();
+    }, 60);
   }
 
   function close() {
     if (!isOpen) return;
     isOpen = false;
-
-    // Unlock scroll (restore exact previous value)
     document.body.style.overflow = savedOverflow;
     document.body.style.touchAction = savedTouchAction;
-
-    // Hide panel
     panel.classList.remove("is-open");
     panel.removeAttribute("role");
     panel.removeAttribute("aria-modal");
     panel.removeAttribute("aria-label");
-
-    // Animate trigger back to bars
+    if (backdrop) backdrop.classList.remove("is-open");
     trigger.classList.remove("is-open");
     trigger.setAttribute("aria-expanded", "false");
     trigger.setAttribute("aria-label", "打开导航菜单");
-
-    // Restore focus
     if (lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
-  // Trigger click
-  trigger.addEventListener("click", function(e) {
-    e.stopPropagation();
-    isOpen ? close() : open();
+  trigger.addEventListener("click", function(e) { e.stopPropagation(); isOpen ? close() : open(); });
+  if (backdrop) backdrop.addEventListener("click", close);
+  Array.prototype.forEach.call(panel.querySelectorAll(".ds-navbar-link"), function(l) {
+    l.addEventListener("click", function() { if (isOpen) close(); });
   });
 
-  // Close when a nav link is clicked
-  var links = panel.querySelectorAll(".ds-navbar-link");
-  Array.prototype.forEach.call(links, function(link) {
-    link.addEventListener("click", function() { if (isOpen) close(); });
-  });
-
-  // Keyboard: Escape to close, Tab to trap
   document.addEventListener("keydown", function(e) {
     if (!isOpen) return;
     if (e.key === "Escape") { e.preventDefault(); close(); return; }
     if (e.key === "Tab") {
-      // Include the trigger button (visible as X) in the focus trap
-      var panelEls = panel.querySelectorAll('a[href], button:not([tabindex="-1"])');
+      var els = panel.querySelectorAll('a[href], button');
       var all = [trigger];
-      for (var i = 0; i < panelEls.length; i++) all.push(panelEls[i]);
-      var first = all[0];
-      var last = all[all.length - 1];
+      for (var i = 0; i < els.length; i++) all.push(els[i]);
+      var first = all[0], last = all[all.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
 
-  // Auto-close on resize to desktop
-  var mq = window.matchMedia("(min-width: 768px)");
+  var mq = window.matchMedia("(min-width:768px)");
   function onResize(e) { if (e.matches && isOpen) close(); }
   if (mq.addEventListener) mq.addEventListener("change", onResize);
   else if (mq.addListener) mq.addListener(onResize);
 
-  // Navbar scroll shadow
   var nav = document.querySelector(".ds-navbar");
   if (nav) {
     var onScroll = function() { nav.classList.toggle("ds-navbar--scrolled", window.scrollY > 20); };
