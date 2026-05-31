@@ -318,22 +318,32 @@ function toggleDarkMode() {
 
   var isOpen = false;
   var savedOverflow = "";
+  var savedTouchAction = "";
   var lastFocused = null;
 
   function open(shouldFocusMenu) {
     if (isOpen) return;
     isOpen = true;
     lastFocused = document.activeElement;
+    // Lock background scroll. touch-action is required for iOS Safari, where
+    // body{overflow:hidden} alone does not stop touch scrolling / rubber-banding.
     savedOverflow = document.body.style.overflow;
+    savedTouchAction = document.body.style.touchAction;
     document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
     if (nav) nav.classList.add("is-menu-open");
     panel.classList.add("is-open");
-    panel.setAttribute("aria-label", "移动端主导航");
+    // The drawer locks scroll, traps focus and dims the page — i.e. it behaves as a
+    // modal — so expose modal semantics while open (set dynamically, never on desktop).
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-modal", "true");
+    panel.setAttribute("aria-label", "导航菜单");
     if (backdrop) backdrop.classList.add("is-open");
     trigger.classList.add("is-open");
     trigger.setAttribute("aria-expanded", "true");
     trigger.setAttribute("aria-label", "关闭导航菜单");
-
+    // Only pull focus into the menu for keyboard activation (click detail === 0),
+    // so pointer/touch users are not scroll-jumped.
     if (shouldFocusMenu) {
       setTimeout(function() {
         var first = panel.querySelector(".ds-navbar-link");
@@ -347,8 +357,11 @@ function toggleDarkMode() {
     var opts = options || {};
     isOpen = false;
     document.body.style.overflow = savedOverflow;
+    document.body.style.touchAction = savedTouchAction;
     if (nav) nav.classList.remove("is-menu-open");
     panel.classList.remove("is-open");
+    panel.removeAttribute("role");
+    panel.removeAttribute("aria-modal");
     panel.removeAttribute("aria-label");
     if (backdrop) backdrop.classList.remove("is-open");
     trigger.classList.remove("is-open");
@@ -371,7 +384,8 @@ function toggleDarkMode() {
     if (!isOpen) return;
     if (e.key === "Escape") { e.preventDefault(); close(); return; }
     if (e.key === "Tab") {
-      // The drawer is a navigation region, not a modal dialog; keep focus within the visible nav shell while it is open.
+      // Panel lives inside <nav>, so trapping across <nav> captures every visible
+      // control (logo + trigger/X + links) and prevents focus escaping the modal.
       var scope = nav || panel;
       var els = scope.querySelectorAll('a[href], button:not([disabled])');
       if (!els.length) return;
@@ -381,7 +395,8 @@ function toggleDarkMode() {
     }
   });
 
-  var mq = window.matchMedia("(min-width:961px)");
+  // Auto-close when the layout crosses into the desktop breakpoint (--ds-bp-lg 1024px)
+  var mq = window.matchMedia("(min-width:1024px)");
   function onResize(e) { if (e.matches && isOpen) close({ restoreFocus: false }); }
   if (mq.addEventListener) mq.addEventListener("change", onResize);
   else if (mq.addListener) mq.addListener(onResize);

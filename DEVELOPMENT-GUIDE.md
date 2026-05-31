@@ -858,8 +858,8 @@ body { transition: background .4s, color .4s; }
   .ds-grid-4 { grid-template-columns: 1fr; }      /* 多列 → 单列 */
 }
 
-/* Navbar 移动端/平板窄屏（≤960px）*/
-@media (max-width: 960px) {
+/* Navbar 移动端/平板（< --ds-bp-lg 1024px）*/
+@media (max-width: 1023px) {
   .ds-navbar-links {
     position: fixed;
     right: 0; top: 0; bottom: 0;
@@ -891,8 +891,7 @@ body { transition: background .4s, color .4s; }
 | 视口宽度 | 封面标题 | 网格列数 | 边距 | Section间距 | 浮动TOC | Navbar |
 |----------|---------|---------|------|------------|---------|--------|
 | <640px | 36px | 1列 | 16px | 48px | 隐藏 | 汉堡菜单 |
-| 640-960px | 72px | 2列 | 24px | 80px | 隐藏 | 汉堡菜单 |
-| 961-1023px | 72px | 2列 | 24px | 80px | 隐藏 | 水平链接 |
+| 640-1023px | 72px | 2列 | 24px | 80px | 隐藏 | 汉堡菜单 |
 | 1024-1439px | 72px | 4列 | 32px | 80px | 显示 | 水平链接 |
 | ≥1440px | 72px | 4-5列 | 24px | 80px | 显示 | 水平链接 |
 
