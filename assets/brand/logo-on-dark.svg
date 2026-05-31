@@ -1,15 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 64" role="img" aria-label="CGArtLab Design System">
   <title>CGArtLab Design System (on dark)</title>
   <rect x="6" y="8" width="48" height="48" rx="11" fill="none" stroke="#a8a55f" stroke-width="1.5"/>
-  <g fill="none" stroke="#bfbc73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M30 14C37 22 37 42 30 50C23 42 23 22 30 14Z"/>
-    <path d="M30 17V47"/>
-    <path d="M30 26L35 22"/>
-    <path d="M30 26L25 22"/>
-    <path d="M30 34L35 30"/>
-    <path d="M30 34L25 30"/>
-  </g>
-  <circle cx="30" cy="32" r="1.7" fill="#bfbc73"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="#bfbc73" d="M30 14C38 21 40 43 30 50C20 43 22 21 30 14ZM30 19C30.85 27 30.85 37 30 45C29.15 37 29.15 27 30 19Z"/>
   <text x="70" y="34" font-family="'Iowan Old Style','Charter',Georgia,'Times New Roman',serif" font-size="25" font-weight="700" fill="#f1eee6" letter-spacing="-0.3">CGArtLab</text>
   <text x="71" y="50" font-family="'JetBrains Mono','IBM Plex Mono',ui-monospace,monospace" font-size="9" font-weight="600" fill="#a8a55f" letter-spacing="3.4">DESIGN SYSTEM</text>
 </svg>
