@@ -576,34 +576,49 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-mnav-trigger.is-open .ds-mnav-trigger-bar:nth-child(3){transform:rotate(-45deg)}
 
 /* --- Mobile menu dimming backdrop --- */
-.ds-mnav-backdrop{display:none;position:fixed;inset:0;z-index:var(--ds-z-modal);background:oklch(0% 0 0 / .5);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;transition:opacity .32s var(--ds-ease-out)}
+.ds-mnav-backdrop{display:none;position:fixed;inset:0;z-index:var(--ds-z-overlay);background:var(--ds-color-overlay-light);opacity:0;transition:opacity var(--ds-duration-300) var(--ds-ease-out)}
 .ds-mnav-backdrop.is-open{opacity:1}
 
 /* --- Mobile menu drawer --- */
-@media(max-width:767px){
+@media(max-width:960px){
+  .ds-navbar{background:var(--ds-color-surface-raised);-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom-color:var(--ds-color-border-subtle)}
   .ds-mnav-trigger{display:block}
   .ds-mnav-backdrop{display:block;pointer-events:none}
   .ds-mnav-backdrop.is-open{pointer-events:auto}
 
-  /* Navbar turns into a solid, cohesive menu header when open (removes the glass seam) */
+  /* When the drawer is open, avoid painting a full-width header slab over the page. */
   .ds-navbar.is-menu-open{
-    background:var(--ds-color-surface-raised);
+    background:transparent;
     -webkit-backdrop-filter:none;backdrop-filter:none;
     border-bottom-color:transparent;
-    z-index:calc(var(--ds-z-modal) + 2);
+    box-shadow:none;
+    pointer-events:none;
+    z-index:var(--ds-z-modal);
+  }
+  .ds-navbar.is-menu-open .ds-logo,
+  .ds-navbar.is-menu-open .ds-navbar-brand{opacity:0;pointer-events:none}
+  .ds-navbar.is-menu-open .ds-mnav-trigger{
+    position:fixed;
+    top:10px;
+    right:var(--ds-space-6);
+    background:var(--ds-color-surface-raised);
+    box-shadow:var(--ds-shadow-sm);
+    pointer-events:auto;
   }
 
-  /* The drawer shares the navbar's surface colour, so header + drawer read as one panel */
+  /* The drawer owns the solid surface; the surrounding page only receives the light scrim. */
   .ds-navbar-links{
-    position:fixed;top:0;right:0;bottom:0;width:min(312px,82vw);
+    position:fixed;top:0;right:0;bottom:0;width:min(340px,86vw);
     z-index:calc(var(--ds-z-modal) + 1);
     display:flex;flex-direction:column;align-items:stretch;gap:var(--ds-space-1);
     background:var(--ds-color-surface-raised);
     padding:calc(64px + var(--ds-space-4)) var(--ds-space-5) var(--ds-space-8);
     box-shadow:var(--ds-shadow-2xl);
+    border-left:1px solid var(--ds-color-border-subtle);
     transform:translateX(100%);visibility:hidden;
     transition:transform .32s var(--ds-ease-out),visibility 0s .32s;
     overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+    pointer-events:auto;
   }
   .ds-navbar-links.is-open{transform:translateX(0);visibility:visible;transition:transform .32s var(--ds-ease-out),visibility 0s 0s}
 
@@ -617,8 +632,11 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-navbar-link:hover,.ds-navbar-link:active{background:var(--ds-accent-soft);color:var(--ds-accent)}
   .ds-navbar-link--active{color:var(--ds-accent);font-weight:600;background:var(--ds-accent-muted)}
 }
-@media(min-width:768px){
+@media(min-width:961px){
   .ds-navbar-links{display:flex!important;opacity:1!important;visibility:visible!important;position:static!important;transform:none!important;flex-direction:row!important;background:none!important;box-shadow:none!important;border:none!important;padding:0!important;width:auto!important;overflow:visible!important}
+}
+@media(max-width:374px){
+  .ds-navbar-links{width:100vw;border-left:none}
 }
 @media(prefers-reduced-motion:reduce){
   .ds-mnav-trigger-bar,.ds-mnav-backdrop,.ds-navbar-links{transition:none!important}

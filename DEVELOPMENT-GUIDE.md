@@ -858,16 +858,17 @@ body { transition: background .4s, color .4s; }
   .ds-grid-4 { grid-template-columns: 1fr; }      /* 多列 → 单列 */
 }
 
-/* Navbar 移动端（<768px）*/
-@media (max-width: 767px) {
+/* Navbar 移动端/平板窄屏（≤960px）*/
+@media (max-width: 960px) {
+  .ds-navbar.is-menu-open { background: transparent; }  /* 打开时不绘制全宽顶栏 */
   .ds-navbar-links {
     position: fixed;
     right: 0; top: 0; bottom: 0;
-    width: 280px;
+    width: min(340px, 86vw);
     transform: translateX(100%);   /* 默认滑出屏幕 */
     /* 打开时：transform: translateX(0) */
   }
-  .ds-navbar-toggle { display: flex; }  /* 显示汉堡菜单 */
+  .ds-mnav-trigger { display: block; }  /* 显示汉堡菜单 */
 }
 
 /* 中屏（平板）*/
@@ -891,14 +892,14 @@ body { transition: background .4s, color .4s; }
 | 视口宽度 | 封面标题 | 网格列数 | 边距 | Section间距 | 浮动TOC | Navbar |
 |----------|---------|---------|------|------------|---------|--------|
 | <640px | 36px | 1列 | 16px | 48px | 隐藏 | 汉堡菜单 |
-| 640-767px | 72px | 2列 | 24px | 80px | 隐藏 | 汉堡菜单 |
-| 768-1023px | 72px | 2列 | 24px | 80px | 隐藏 | 水平链接 |
+| 640-960px | 72px | 2列 | 24px | 80px | 隐藏 | 汉堡菜单 |
+| 961-1023px | 72px | 2列 | 24px | 80px | 隐藏 | 水平链接 |
 | 1024-1439px | 72px | 4列 | 32px | 80px | 显示 | 水平链接 |
 | ≥1440px | 72px | 4-5列 | 24px | 80px | 显示 | 水平链接 |
 
 ### 10.4 移动端 Navbar 抽屉动画
 
-打开时的动画 timing：`transform .35s cubic-bezier(.16, 1, .3, 1)`
+打开时的动画 timing：`transform .32s cubic-bezier(.16, 1, .3, 1)`
 
 这是 `--ds-ease-out` 的值 — 开始时快速滑入，结尾减速。配合遮罩层 `opacity .3s` 的淡入，产生"从右侧滑入"的标准移动端导航体验。
 
@@ -992,7 +993,7 @@ function syncSlider(slider) {
 ```javascript
 // 打开/关闭抽屉
 toggle.addEventListener("click", function() {
-  var isOpen = menu.classList.contains("ds-navbar-links--open");
+  var isOpen = menu.classList.contains("is-open");
   isOpen ? closeNav() : openNav();
 });
 
