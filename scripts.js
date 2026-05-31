@@ -329,18 +329,10 @@ function toggleDarkMode() {
 
 
   function unlockBody() {
-    var prev = document.body.dataset.dsOverflow;
-    var prevTouch = document.body.dataset.dsTouchAction;
-    if (prev === "hidden") {
-      document.body.style.overflow = prev;
-    } else {
-      document.body.style.overflow = "";
-    }
-    if (prevTouch === "none") {
-      document.body.style.touchAction = prevTouch;
-    } else {
-      document.body.style.touchAction = "";
-    }
+    document.body.style.overflow = document.body.dataset.dsOverflow || "";
+    document.body.style.touchAction = document.body.dataset.dsTouchAction || "";
+    delete document.body.dataset.dsOverflow;
+    delete document.body.dataset.dsTouchAction;
   }
 
   function openNav() {
