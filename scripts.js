@@ -304,146 +304,109 @@ function toggleDarkMode() {
   });
 })();
 
-/* ===== Responsive Navbar Toggle ===== */
+/* ===== Mobile Navigation ===== */
 (function() {
-  var toggle = document.getElementById("nav-toggle");
-  var menu = document.getElementById("nav-menu");
-  var overlay = document.getElementById("nav-overlay");
-  var closeBtn = document.getElementById("nav-close");
-  if (!toggle || !menu) return;
+  var trigger = document.getElementById("mnav-trigger");
+  var panel = document.getElementById("mnav-panel");
+  if (!trigger || !panel) return;
 
   var isOpen = false;
+  var savedOverflow = "";
+  var savedTouchAction = "";
   var lastFocused = null;
 
-  // All focusable elements inside the menu
-  function getFocusableEls() {
-    return menu.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
-  }
-
-  function lockBody() {
-    document.body.dataset.dsOverflow = document.body.style.overflow || "";
-    document.body.dataset.dsTouchAction = document.body.style.touchAction || "";
-    document.body.style.overflow = "hidden";
-    document.body.style.touchAction = "none";
-  }
-
-
-  function unlockBody() {
-    document.body.style.overflow = document.body.dataset.dsOverflow || "";
-    document.body.style.touchAction = document.body.dataset.dsTouchAction || "";
-    delete document.body.dataset.dsOverflow;
-    delete document.body.dataset.dsTouchAction;
-  }
-
-  function openNav() {
+  function open() {
     if (isOpen) return;
     isOpen = true;
     lastFocused = document.activeElement;
-    menu.classList.add("ds-navbar-links--open");
-    menu.setAttribute("role", "dialog");
-    menu.setAttribute("aria-modal", "true");
-    menu.setAttribute("aria-label", "导航菜单");
-    if (overlay) overlay.classList.add("ds-navbar-overlay--open");
-    toggle.setAttribute("aria-expanded", "true");
-    toggle.setAttribute("aria-label", "关闭导航菜单");
-    toggle.classList.add("is-active");
-    lockBody();
+
+    // Lock scroll
+    savedOverflow = document.body.style.overflow;
+    savedTouchAction = document.body.style.touchAction;
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+
+    // Show panel
+    panel.classList.add("is-open");
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-modal", "true");
+    panel.setAttribute("aria-label", "导航菜单");
+
+    // Animate trigger to X
+    trigger.classList.add("is-open");
+    trigger.setAttribute("aria-expanded", "true");
+    trigger.setAttribute("aria-label", "关闭导航菜单");
+
+    // Focus first link after animation
     setTimeout(function() {
-      if (closeBtn) closeBtn.focus();
-    }, 100);
+      var firstLink = panel.querySelector(".ds-navbar-link");
+      if (firstLink) firstLink.focus();
+    }, 80);
   }
 
-  function closeNav() {
+  function close() {
     if (!isOpen) return;
     isOpen = false;
-    menu.classList.remove("ds-navbar-links--open");
-    menu.removeAttribute("role");
-    menu.removeAttribute("aria-modal");
-    menu.removeAttribute("aria-label");
-    if (overlay) overlay.classList.remove("ds-navbar-overlay--open");
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "打开导航菜单");
-    toggle.classList.remove("is-active");
-    unlockBody();
-    if (lastFocused && lastFocused.focus) {
-      lastFocused.focus();
-    } else {
-      toggle.focus();
-    }
+
+    // Unlock scroll (restore exact previous value)
+    document.body.style.overflow = savedOverflow;
+    document.body.style.touchAction = savedTouchAction;
+
+    // Hide panel
+    panel.classList.remove("is-open");
+    panel.removeAttribute("role");
+    panel.removeAttribute("aria-modal");
+    panel.removeAttribute("aria-label");
+
+    // Animate trigger back to bars
+    trigger.classList.remove("is-open");
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.setAttribute("aria-label", "打开导航菜单");
+
+    // Restore focus
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
-  // Toggle button click
-  toggle.addEventListener("click", function(e) {
-    e.preventDefault();
-    isOpen ? closeNav() : openNav();
+  // Trigger click
+  trigger.addEventListener("click", function(e) {
+    e.stopPropagation();
+    isOpen ? close() : open();
   });
 
-  // Close button click
-  if (closeBtn) {
-    closeBtn.addEventListener("click", function(e) {
-      e.preventDefault();
-      closeNav();
-    });
-  }
-
-  // Overlay click
-  if (overlay) {
-    overlay.addEventListener("click", function() {
-      closeNav();
-    });
-  }
-
-  // Close on link click (mobile)
-  var links = menu.querySelectorAll(".ds-navbar-link");
+  // Close when a nav link is clicked
+  var links = panel.querySelectorAll(".ds-navbar-link");
   Array.prototype.forEach.call(links, function(link) {
-    link.addEventListener("click", function() {
-      if (isOpen) closeNav();
-    });
+    link.addEventListener("click", function() { if (isOpen) close(); });
   });
 
-  // Escape key
+  // Keyboard: Escape to close, Tab to trap
   document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape" && isOpen) {
-      e.preventDefault();
-      closeNav();
-    }
-    // Focus trap within mobile menu
-    if (e.key === "Tab" && isOpen) {
-      var focusable = getFocusableEls();
-      if (!focusable.length) return;
-      var first = focusable[0];
-      var last = focusable[focusable.length - 1];
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
+    if (!isOpen) return;
+    if (e.key === "Escape") { e.preventDefault(); close(); return; }
+    if (e.key === "Tab") {
+      // Include the trigger button (visible as X) in the focus trap
+      var panelEls = panel.querySelectorAll('a[href], button:not([tabindex="-1"])');
+      var all = [trigger];
+      for (var i = 0; i < panelEls.length; i++) all.push(panelEls[i]);
+      var first = all[0];
+      var last = all[all.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
 
-  // Close on resize to desktop
+  // Auto-close on resize to desktop
   var mq = window.matchMedia("(min-width: 768px)");
-  function handleResize(e) {
-    if (e.matches && isOpen) closeNav();
-  }
-  if (mq.addEventListener) {
-    mq.addEventListener("change", handleResize);
-  } else if (mq.addListener) {
-    mq.addListener(handleResize);
-  }
+  function onResize(e) { if (e.matches && isOpen) close(); }
+  if (mq.addEventListener) mq.addEventListener("change", onResize);
+  else if (mq.addListener) mq.addListener(onResize);
 
   // Navbar scroll shadow
   var nav = document.querySelector(".ds-navbar");
   if (nav) {
-    function checkScroll() { nav.classList.toggle("ds-navbar--scrolled", window.scrollY > 20); }
-    window.addEventListener("scroll", checkScroll, {passive:true});
-    checkScroll();
+    var onScroll = function() { nav.classList.toggle("ds-navbar--scrolled", window.scrollY > 20); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
   }
 })();
 
