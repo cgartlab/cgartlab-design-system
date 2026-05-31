@@ -27,7 +27,7 @@ cgartlab-design-system/
 ├── styles.css          # 独立样式表（:root 令牌 + 暗色 + 全部组件 + v1.1 动效/站点壳）
 ├── scripts.js          # 独立脚本（图标渲染 + 令牌表 + 暗色 + 滚动揭示 + 复制 + 标签页）
 ├── tokens.json         # 结构化令牌数据（颜色/字体/间距/圆角）
-├── favicon.svg         # 站点图标（简洁眼睛 / 光圈 monogram · 双封闭曲线）
+├── favicon.svg         # 站点图标（45° 钢笔头 monogram · 双封闭曲线）
 ├── assets/brand/       # 品牌 Logo：logo.svg / logo-on-dark.svg / logo-mark.svg
 ├── assets/downloads/   # 生成的示例 PDF（reference / color-card）
 ├── prompts/            # system-prompt.md · quick-prompt.md
@@ -39,14 +39,14 @@ cgartlab-design-system/
 └── 真实示例：blog.html · company.html · resume.html · report.html
 ```
 
-### 品牌 Logo（v1.2 重绘 — 简洁眼睛 monogram）
+### 品牌 Logo（v1.3 重绘 — 45° 钢笔头 monogram）
 
-- 极简「眼睛 / 光圈」monogram：整个图形**仅由两根封闭曲线绘制**——一条杏仁形眼睑 + 一个虹膜圆，呼应 CGArtLab「探索数字艺术的边界」的观察 / 镜头 / 光圈意象。
-- v1.2.1 微调：仅在杏仁眼睑的曲线弧度上做调整，使两端收为更精致、略微拉长的尖角终端，带来**一点「衬线」笔形质感**（呼应衬线字标），不改变两曲线结构、不破坏线条流畅度。
+- 精致钢笔头（fountain-pen nib）monogram，笔尖朝左下 45°，呼应 CGArtLab「书写 / 创作 / 编辑主义」的理念。整个图形**仅由两根封闭曲线绘制**——笔尖轮廓（笔缝为尖端处的开放凹口）+ 透气孔圆。
+- 实现为单一复合路径（轮廓 + 透气孔，`evenodd`），`transform="rotate(45 16 16)"` 旋转到 45°；笔缝由轮廓在笔尖处的凹口表达，透气孔与笔缝相连成「钥匙孔」，均为负空间。
 - 渐变色板取自 OKLch 橄榄色阶（olive-200…600）的 hex 近似值，保证各端（favicon / og:image / 社交抓取）稳定渲染；站点 CSS 仍用 OKLch 令牌。
-- `logo-mark.svg`：纯 `currentColor` 单一复合路径（杏仁 + 虹膜负空间，evenodd 两条封闭曲线），深浅主题自适配，作最简归一。
-- `logo.svg`（浅底锁版）/ `logo-on-dark.svg`（深底，眼睑提亮）/ `favicon.svg`（透明底）为完整彩色版：橄榄渐变眼睑 + 暗瞳 → 米色虹膜径向渐变。
-- 站点内导航/页脚 `.ds-logo-mark` 仍以橄榄渐变瓷砖（olive-300→accent→olive-600）作 CSS 容器承载白色眼睛图形（虹膜为负空间透出渐变）；Hero `.ds-logo-hero` 为三段渐变 + `::before` 柔光泽面，眼睛先描边绘制再淡入填充。
+- `logo-mark.svg`：纯 `currentColor` 单一复合路径（两条封闭曲线），深浅主题自适配，作最简归一。
+- `logo.svg`（浅底锁版）/ `logo-on-dark.svg`（深底，笔头提亮）/ `favicon.svg`（透明底）为完整彩色版：橄榄渐变笔头。
+- 站点内导航/页脚 `.ds-logo-mark` 仍以橄榄渐变瓷砖（olive-300→accent→olive-600）作 CSS 容器承载白色笔头图形（笔缝/透气孔为负空间透出渐变）；Hero `.ds-logo-hero` 为三段渐变 + `::before` 柔光泽面，笔头先描边绘制再淡入填充。
 
 ### 动效系统（v1.1）
 
@@ -198,7 +198,7 @@ xs → 2xl 共 6 级，暗色模式 opacity 提高以保持层次。
 | 图标 SVG 合集 | `scripts.js` 的 `ICONS` 数组 | 100 枚图标，运行时渲染 + 单枚下载 |
 | 暗色模式 | `styles.css` `[data-theme="dark"]` | 完整暗色令牌覆盖 |
 | 移动端导航 | `styles.css` `.ds-navbar*` / `scripts.js` 「Mobile Navigation」 | 玻璃顶栏 + 右侧抽屉 |
-| 品牌 Logo | `assets/brand/*.svg` + `favicon.svg` | 双曲线极简眼睛 / 光圈 monogram |
+| 品牌 Logo | `assets/brand/*.svg` + `favicon.svg` | 双曲线 45° 钢笔头 monogram |
 
 ## NOTES
 

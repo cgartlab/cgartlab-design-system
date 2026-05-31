@@ -1,23 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 64" role="img" aria-label="CGArtLab Design System">
   <title>CGArtLab Design System (on dark)</title>
-  <!-- Minimal eye / aperture monogram (two closed curves) for dark backgrounds + editorial wordmark. Olive lid brightened so it glows on ink. -->
+  <!-- Refined fountain-pen nib at 45 deg (tip down-left; two closed curves) for dark backgrounds + editorial wordmark. Olive nib brightened so it glows on ink. -->
   <defs>
-    <linearGradient id="cg-eye-d" x1="4" y1="6" x2="28" y2="26" gradientUnits="userSpaceOnUse">
+    <linearGradient id="cg-nib-d" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#c0bb74"/>
       <stop offset="0.55" stop-color="#8a8740"/>
       <stop offset="1" stop-color="#5f5d2c"/>
     </linearGradient>
-    <radialGradient id="cg-iris-d" cx="0.5" cy="0.45" r="0.5">
-      <stop offset="0" stop-color="#23241a"/>
-      <stop offset="0.38" stop-color="#23241a"/>
-      <stop offset="0.42" stop-color="#f3eee0"/>
-      <stop offset="1" stop-color="#ddd7c5"/>
-    </radialGradient>
   </defs>
-  <!-- Eye mark (48x48) -->
+  <!-- Nib mark (48x48) -->
   <svg x="6" y="8" width="48" height="48" viewBox="0 0 32 32">
-    <path fill="url(#cg-eye-d)" d="M2.6 16C10.4 7 21.6 7 29.4 16C21.6 25 10.4 25 2.6 16Z"/>
-    <circle cx="16" cy="16" r="5" fill="url(#cg-iris-d)"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#cg-nib-d)" transform="rotate(45 16 16)" d="M11 8C13.5 6.6 18.5 6.6 21 8C23.2 11 22 19 16.1 26.6L16.5 14C16.5 13.5 15.5 13.5 15.5 14L15.9 26.6C10 19 8.8 11 11 8ZM14.3 11.8a1.7 1.7 0 1 0 3.4 0a1.7 1.7 0 1 0 -3.4 0Z"/>
   </svg>
   <!-- Wordmark -->
   <text x="70" y="34" font-family="'Iowan Old Style','Charter',Georgia,'Times New Roman',serif" font-size="25" font-weight="700" fill="#f1eee6" letter-spacing="-0.3">CGArtLab</text>
