@@ -1,11 +1,11 @@
 # cgartlab Design System — 知识库
 
 **生成时间:** 2026-05-14
-**Updated:** 2026-05-29
+**Updated:** 2026-05-31
 **分层**: 基础设施 (Infrastructure) — 设计系统
 **状态:** v1.1 — 设计令牌 + 组件手册 + 图标库 + 暗色模式 + **展示网站 + AI 提示词/Skill + 品牌 Logo + 动效系统** 已完成
 
-> **v1.1 新增**: 设计系统已升级为一个**多页静态展示网站**（首页 / 视觉手册 / 使用文档 / 提示词 / 下载），网站本身严格遵循设计系统规范，可经 GitHub Pages 公开访问（`designsystem.cgartlab.com`）。新增品牌 Logo、CSS/SVG 动效系统、滚动揭示、复制交互，以及可复制给任意 Agent 的系统提示词与 Skill 技能包，并生成真实示例 PDF。`animpoly-com`（公司官网）是首个采用 `--ds-*` 令牌的生产消费者。
+> **v1.1 新增**: 设计系统已升级为一个**多页静态展示网站**（首页 / 视觉手册 / 使用文档 / 提示词 / 下载），网站本身严格遵循设计系统规范，可经 GitHub Pages 公开访问（`designsystem.cgartlab.com`）。新增品牌 Logo、CSS/SVG 动效系统、滚动揭示、复制交互，以及可复制给任意 Agent 的系统提示词与 Skill 技能包，并生成真实示例 PDF。`company.html`（CGArtLab 公司官网示例）是首个采用 `--ds-*` 令牌的生产级页面。
 
 ## OVERVIEW
 
@@ -41,8 +41,9 @@ cgartlab-design-system/
 
 ### 品牌 Logo
 
-- 编辑主义橄榄叶 / 光圈 monogram，单线条 `currentColor`，深浅主题自适配。
+- 编辑主义橄榄叶 monogram：**单一封闭曲线填充形状**（含负空间中脉），`currentColor` 着色，深浅主题自适配。
 - `logo-mark.svg`（自适配）/ `logo.svg`（浅底锁版）/ `logo-on-dark.svg`（深底）/ `favicon.svg`（瓷砖）。
+- 站点内（导航/页脚/Hero）使用同一内联填充叶形；Hero 版本先描边绘制再淡入填充。
 
 ### 动效系统（v1.1）
 
@@ -110,13 +111,15 @@ cgartlab-design-system/
 
 附加：Skeleton Loading（骨架屏）、Icon Button（图标按钮）
 
-### 文件大小
+### 文件大小（约值）
 
-| 文件 | 行数 | 说明 |
-|------|------|------|
-| `index.html` | ~450 行 | 仅 HTML 结构，引用外部 CSS/JS |
-| `styles.css` | ~500 行 / ~33 KB | 完整 `:root` 令牌 + 暗色模式 + 23 组件 CSS |
-| `scripts.js` | ~350 行 / ~16 KB | 100 图标渲染 + 令牌表 + 暗色模式切换 |
+| 文件 | 说明 |
+|------|------|
+| `index.html` | 网站首页，仅 HTML 结构，引用外部 `styles.css?v=*` / `scripts.js?v=*` |
+| `styles.css` | `:root` 令牌 + 暗色模式 + 全部组件 + v1.1 站点壳/动效/导航 |
+| `scripts.js` | 100 图标渲染 + 令牌表 + 暗色切换 + 滚动揭示 + 复制 + 移动端导航 |
+
+> 资源通过 `?v=x.y.z` 查询串做缓存刷新（纯静态、无构建）。**改动 `styles.css`/`scripts.js` 后，务必在所有 HTML 中同步 bump 该版本号**，否则浏览器/CDN 会继续命中旧缓存。
 
 ## DESIGN TOKENS（已定义）
 
@@ -174,27 +177,25 @@ xs → 2xl 共 6 级，暗色模式 opacity 提高以保持层次。
 - ❌ 暗色模式不要用纯黑 `#000` — 用暖灰 `oklch(15% ...)`
 - ❌ 强调色在暗色模式不要直接用浅色模式的值 — 需要亮化 5-10%
 
-## NEXT PHASE（代码级工程化）
+## 构建与部署
 
-当前 v1.0 为设计优先交付，以下为后续工程化规划：
+**零构建。** 纯静态站点，无 `package.json`、无打包器、无 CI 工作流。GitHub Pages「Deploy from branch」直接托管 `main` 根目录，`.nojekyll` 关闭 Jekyll；`CNAME` 指向 `designsystem.cgartlab.com`。
 
-- `packages/tokens/` — 从 `tokens.json` 生成 JS/TS token 包
-- `packages/components/` — 将 index.html 中的组件提取为独立 React 组件
-- `packages/icons/` — SVG 图标自动生成 React 组件
-- `apps/docs/` — Storybook 文档站点
-- pnpm workspace + Turborepo 构建
-- npm publish via Changesets
+- 这是有意为之的设计取舍——保持框架无关、零依赖。请勿引入打包/转译步骤。
+- 唯一脚本 `tools/generate_pdfs.py` 为手动运行的示例 PDF 生成器，不在任何自动链路中。
+- 缓存刷新：见上文「文件大小」备注（手动 bump `?v=`）。
 
 ## WHERE TO LOOK
 
 | 事项 | 位置 | 说明 |
 |------|------|------|
-| 设计令牌定义 | `index.html` `:root` 中 | 所有 CSS 自定义属性 |
+| 设计令牌定义 | `styles.css` `:root` | 所有 CSS 自定义属性（暗色在 `[data-theme="dark"]`） |
 | 结构化令牌数据 | `tokens.json` | 程序化导入用 |
-| 组件预览 | `index.html` #components | 23 组件 live 展示 |
-| 图标 SVG 合集 | `icons.svg` | 100 枚图标，拖入 Penpot |
-| 暗色模式 | `index.html` `[data-theme="dark"]` | 完整暗色令牌覆盖 |
-| Penpot 设计稿 | `CGARTLAB-设计系统.penpot` | Penpot 原生文件 |
+| 组件预览 | `handbook.html` #components | 组件 live 展示 |
+| 图标 SVG 合集 | `scripts.js` 的 `ICONS` 数组 | 100 枚图标，运行时渲染 + 单枚下载 |
+| 暗色模式 | `styles.css` `[data-theme="dark"]` | 完整暗色令牌覆盖 |
+| 移动端导航 | `styles.css` `.ds-navbar*` / `scripts.js` 「Mobile Navigation」 | 玻璃顶栏 + 右侧抽屉 |
+| 品牌 Logo | `assets/brand/*.svg` + `favicon.svg` | 填充叶形 monogram |
 
 ## NOTES
 

@@ -1,11 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="CGArtLab Design System mark">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" role="img" aria-label="CGArtLab Design System mark">
   <title>CGArtLab Design System</title>
-  <!-- Editorial olive-leaf / aperture monogram. Monoline, inherits currentColor. -->
-  <path d="M16 3C21 9 21 23 16 29C11 23 11 9 16 3Z"/>
-  <path d="M16 5.5V26.5"/>
-  <path d="M16 12.5L20.4 9.3"/>
-  <path d="M16 12.5L11.6 9.3"/>
-  <path d="M16 18.5L20.4 15.3"/>
-  <path d="M16 18.5L11.6 15.3"/>
-  <circle cx="16" cy="16" r="1.35" fill="currentColor" stroke="none"/>
+  <!-- Editorial olive-leaf monogram. Single closed filled shape with a negative-space midrib. Inherits currentColor. -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.5C22 8 24 20 16 29C8 20 10 8 16 2.5ZM16 7.5C16.65 13.5 16.65 19 16 24.5C15.35 19 15.35 13.5 16 7.5Z"/>
 </svg>

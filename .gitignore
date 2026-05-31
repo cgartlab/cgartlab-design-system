@@ -6,3 +6,10 @@
 Thumbs.db
 .DS_Store
 opencode.json
+
+
+# Editor / generator metadata (not part of the published site)
+*.artifact.json
+
+# Legacy single-page handbook (superseded by handbook.html)
+cgartlab-design-system.html
