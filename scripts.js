@@ -384,10 +384,12 @@ function toggleDarkMode() {
     if (!isOpen) return;
     if (e.key === "Escape") { e.preventDefault(); close(); return; }
     if (e.key === "Tab") {
-      var focusable = panel.querySelectorAll('a[href], button:not([tabindex="-1"])');
-      if (!focusable.length) return;
-      var first = focusable[0];
-      var last = focusable[focusable.length - 1];
+      // Include the trigger button (visible as X) in the focus trap
+      var panelEls = panel.querySelectorAll('a[href], button:not([tabindex="-1"])');
+      var all = [trigger];
+      for (var i = 0; i < panelEls.length; i++) all.push(panelEls[i]);
+      var first = all[0];
+      var last = all[all.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
