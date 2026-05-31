@@ -552,8 +552,11 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-glass-btn-row{display:flex;gap:var(--ds-space-3);flex-wrap:wrap;position:relative;z-index:1}
 
 /* ===== Responsive Navbar ===== */
-.ds-navbar{position:sticky;top:0;z-index:var(--ds-z-sticky);background:var(--ds-glass-bg);-webkit-backdrop-filter:blur(var(--ds-blur-lg));backdrop-filter:blur(var(--ds-blur-lg));border-bottom:1px solid var(--ds-glass-border);transition:box-shadow .3s,background .4s,border-color .4s}
-.ds-navbar--scrolled{box-shadow:var(--ds-shadow-md);border-bottom-color:var(--ds-color-border)}
+/* Glass is applied via ::before (a pseudo, not an ancestor of the fixed drawer) so the
+   navbar itself carries no backdrop-filter and never becomes the drawer's containing block. */
+.ds-navbar{position:sticky;top:0;z-index:var(--ds-z-sticky);background:transparent;border-bottom:1px solid var(--ds-glass-border);transition:box-shadow .3s,border-color .4s}
+.ds-navbar::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--ds-glass-bg);-webkit-backdrop-filter:blur(var(--ds-blur-lg)) saturate(180%);backdrop-filter:blur(var(--ds-blur-lg)) saturate(180%);transition:background var(--ds-duration-500) var(--ds-ease-out)}
+.ds-navbar--scrolled{box-shadow:var(--ds-glass-shadow),var(--ds-shadow-md);border-bottom-color:var(--ds-color-border)}
 .ds-navbar-inner{max-width:1200px;margin:0 auto;padding:0 var(--ds-space-6);display:flex;align-items:center;justify-content:space-between;height:64px}
 .ds-navbar-brand{font-family:var(--ds-font-display);font-size:var(--ds-text-h5);font-weight:700;color:var(--ds-color-fg-strong);text-decoration:none;letter-spacing:var(--ds-tracking-wide);display:flex;align-items:center;gap:var(--ds-space-2)}
 .ds-navbar-brand:hover{color:var(--ds-accent)}
@@ -581,10 +584,10 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 
 /* --- Mobile menu drawer (< lg breakpoint = --ds-bp-lg 1024px) --- */
 @media(max-width:1023px){
-  /* Solid navbar on mobile/tablet. This also drops backdrop-filter, which is REQUIRED:
-     an ancestor with backdrop-filter becomes the containing block for position:fixed
-     descendants, which would otherwise clip the drawer to the navbar box instead of the viewport. */
-  .ds-navbar{background:var(--ds-color-surface-raised);-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom-color:var(--ds-color-border-subtle)}
+  /* The navbar keeps its frosted-glass texture on mobile too. Because the blur lives on
+     .ds-navbar::before (a pseudo-element, NOT an ancestor of the drawer), .ds-navbar itself
+     has no backdrop-filter and never becomes the containing block for the position:fixed
+     drawer — so the drawer stays anchored to the viewport, full height. */
   .ds-mnav-trigger{display:block}
   .ds-mnav-backdrop{display:block;pointer-events:none}
   .ds-mnav-backdrop.is-open{pointer-events:auto}
@@ -593,15 +596,17 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
      drop the divider so the header + drawer read as one cohesive panel. */
   .ds-navbar.is-menu-open{z-index:calc(var(--ds-z-modal) + 1);border-bottom-color:transparent}
 
-  /* Drawer shares the navbar's surface colour so header + drawer look like one panel */
+  /* Drawer is a frosted-glass acrylic panel using the same glass tokens as the navbar
+     (--ds-glass-bg/border/shadow auto-adapt to dark mode via [data-theme="dark"]). */
   .ds-navbar-links{
     position:fixed;top:0;right:0;bottom:0;width:min(340px,86vw);
     z-index:calc(var(--ds-z-modal) + 1);
     display:flex;flex-direction:column;align-items:stretch;gap:var(--ds-space-1);
-    background:var(--ds-color-surface-raised);
+    background:var(--ds-glass-bg);
+    -webkit-backdrop-filter:blur(var(--ds-blur-xl)) saturate(180%);backdrop-filter:blur(var(--ds-blur-xl)) saturate(180%);
     padding:calc(64px + var(--ds-space-4)) var(--ds-space-5) var(--ds-space-8);
-    box-shadow:var(--ds-shadow-2xl);
-    border-left:1px solid var(--ds-color-border-subtle);
+    box-shadow:var(--ds-glass-shadow),var(--ds-shadow-2xl);
+    border-left:1px solid var(--ds-glass-border);
     transform:translateX(100%);visibility:hidden;
     transition:transform .32s var(--ds-ease-out),visibility 0s .32s;
     overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
@@ -619,7 +624,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-navbar-link--active{color:var(--ds-accent);font-weight:600;background:var(--ds-accent-muted)}
 }
 @media(min-width:1024px){
-  .ds-navbar-links{display:flex!important;opacity:1!important;visibility:visible!important;position:static!important;transform:none!important;flex-direction:row!important;background:none!important;box-shadow:none!important;border:none!important;padding:0!important;width:auto!important;overflow:visible!important}
+  .ds-navbar-links{display:flex!important;opacity:1!important;visibility:visible!important;position:static!important;transform:none!important;flex-direction:row!important;background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;border:none!important;padding:0!important;width:auto!important;overflow:visible!important}
 }
 @media(max-width:374px){
   .ds-navbar-links{width:100vw;border-left:none}
