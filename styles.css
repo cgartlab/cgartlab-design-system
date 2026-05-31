@@ -575,26 +575,25 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-mnav-trigger.is-open .ds-mnav-trigger-bar:nth-child(2){opacity:0}
 .ds-mnav-trigger.is-open .ds-mnav-trigger-bar:nth-child(3){transform:rotate(-45deg)}
 
-/* --- Mobile menu dimming backdrop --- */
-.ds-mnav-backdrop{display:none;position:fixed;inset:0;z-index:var(--ds-z-overlay);background:var(--ds-color-overlay-light);opacity:0;transition:opacity var(--ds-duration-300) var(--ds-ease-out)}
+/* --- Mobile menu dimming backdrop (token-driven: --ds-color-overlay = 40% black) --- */
+.ds-mnav-backdrop{display:none;position:fixed;inset:0;z-index:var(--ds-z-modal);background:var(--ds-color-overlay);-webkit-backdrop-filter:blur(var(--ds-blur-sm));backdrop-filter:blur(var(--ds-blur-sm));opacity:0;transition:opacity var(--ds-duration-300) var(--ds-ease-out)}
 .ds-mnav-backdrop.is-open{opacity:1}
 
-/* --- Mobile menu drawer --- */
-@media(max-width:960px){
+/* --- Mobile menu drawer (< lg breakpoint = --ds-bp-lg 1024px) --- */
+@media(max-width:1023px){
+  /* Solid navbar on mobile/tablet. This also drops backdrop-filter, which is REQUIRED:
+     an ancestor with backdrop-filter becomes the containing block for position:fixed
+     descendants, which would otherwise clip the drawer to the navbar box instead of the viewport. */
   .ds-navbar{background:var(--ds-color-surface-raised);-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom-color:var(--ds-color-border-subtle)}
   .ds-mnav-trigger{display:block}
   .ds-mnav-backdrop{display:block;pointer-events:none}
   .ds-mnav-backdrop.is-open{pointer-events:auto}
 
-  /* Navbar turns into a solid, cohesive menu header when open (removes the glass seam) */
-  .ds-navbar.is-menu-open{
-    background:var(--ds-color-surface-raised);
-    -webkit-backdrop-filter:none;backdrop-filter:none;
-    border-bottom-color:transparent;
-    z-index:var(--ds-z-modal);
-  }
+  /* When open: lift the navbar (and the drawer nested in it) above the backdrop,
+     drop the divider so the header + drawer read as one cohesive panel. */
+  .ds-navbar.is-menu-open{z-index:calc(var(--ds-z-modal) + 1);border-bottom-color:transparent}
 
-  /* The drawer shares the navbar's surface colour, so header + drawer read as one panel */
+  /* Drawer shares the navbar's surface colour so header + drawer look like one panel */
   .ds-navbar-links{
     position:fixed;top:0;right:0;bottom:0;width:min(340px,86vw);
     z-index:calc(var(--ds-z-modal) + 1);
@@ -619,7 +618,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-navbar-link:hover,.ds-navbar-link:active{background:var(--ds-accent-soft);color:var(--ds-accent)}
   .ds-navbar-link--active{color:var(--ds-accent);font-weight:600;background:var(--ds-accent-muted)}
 }
-@media(min-width:961px){
+@media(min-width:1024px){
   .ds-navbar-links{display:flex!important;opacity:1!important;visibility:visible!important;position:static!important;transform:none!important;flex-direction:row!important;background:none!important;box-shadow:none!important;border:none!important;padding:0!important;width:auto!important;overflow:visible!important}
 }
 @media(max-width:374px){
