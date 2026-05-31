@@ -209,16 +209,16 @@
           <p>全部 25 个组件的 live 形态、变体与状态，请见<a href="handbook.html#components">视觉手册 · 组件库</a>。</p>
 
           <h3>响应式导航 · Mobile Drawer</h3>
-          <p>导航栏 <code>.ds-navbar</code> 在桌面端为水平毛玻璃浮动导航，在移动端（≤767px）自动转为右侧滑出抽屉。整套移动端导航严格遵循已有设计令牌。</p>
+          <p>导航栏 <code>.ds-navbar</code> 在桌面端为水平毛玻璃浮动导航，在移动端与平板窄屏（≤960px）自动转为右侧滑出抽屉。整套移动端导航严格遵循已有设计令牌。</p>
 
           <h4>设计决策与使用令牌</h4>
           <ul>
             <li><strong>顶部导航栏（移动端）</strong>：切换为实底 <code>--ds-color-surface-raised</code>，禁用毛玻璃。移动设备上 <code>backdrop-filter</code> 性能开销大且文字可读性不可控，因此移动端一律实底。</li>
-            <li><strong>汉堡按钮</strong>：遵循 <code>ds-icon-btn</code> 规范——40×40px（触控友好）、圆角 <code>--ds-radius-md</code>、边框 <code>--ds-color-border</code>、背景 <code>--ds-color-surface-raised</code>、图标色 <code>--ds-color-muted</code>。悬停时边框加深至 <code>--ds-color-fg-subtle</code>。</li>
+            <li><strong>汉堡按钮</strong>：44×44px 触控目标、圆角 <code>--ds-radius-md</code>、3 条线到 X 的状态动画；悬停/按下时使用 <code>--ds-accent-soft</code> 背景与 <code>--ds-accent</code> 图标色。</li>
             <li><strong>遮罩层</strong>：使用 <code>--ds-color-overlay-light</code>（12% 黑色）——提供微妙的层级暗示但不会让整页变暗。<em>不使用</em> <code>--ds-color-overlay</code>（40%）——那是模态框专用的重级遮罩。动画使用 <code>--ds-duration-300</code> + <code>--ds-ease-out</code>。</li>
             <li><strong>抽屉面板</strong>：实底 <code>--ds-color-surface-raised</code>、左侧边框 <code>--ds-color-border</code>、阴影 <code>--ds-shadow-2xl</code>（最深级别，表达最高抬起层级）。滑入动画使用 <code>--ds-duration-300</code> + <code>--ds-ease-out</code>。</li>
             <li><strong>导航链接</strong>：遵循 <code>ds-nav-item</code> 模式——padding <code>--ds-space-3 / --ds-space-4</code>（≥44px 触控目标）、圆角 <code>--ds-radius-lg</code>、悬停态 <code>--ds-accent-soft</code> 背景 + <code>--ds-accent</code> 文字。活跃态使用 <code>--ds-accent-muted</code> 浅底。</li>
-            <li><strong>层级</strong>：遮罩 <code>z-index: var(--ds-z-modal) - 1</code>，抽屉 <code>z-index: var(--ds-z-modal)</code>。</li>
+            <li><strong>层级</strong>：遮罩 <code>z-index: var(--ds-z-overlay)</code>，打开态导航壳 <code>z-index: var(--ds-z-modal)</code>，抽屉与触发按钮在导航壳内递进抬升。</li>
             <li><strong>键盘可达</strong>：按 Escape 关闭，点击链接关闭，<code>aria-expanded</code> 同步。</li>
           </ul>
 
@@ -248,8 +248,8 @@
             <table class="ds-table">
               <thead><tr><th>元素</th><th>令牌</th><th>桌面端</th><th>移动端</th></tr></thead>
               <tbody>
-                <tr><td>导航栏背景</td><td><code>--ds-glass-bg</code></td><td>毛玻璃（55% + blur）</td><td>全屏覆盖 <code>--ds-color-bg</code></td></tr>
-                <tr><td>触发按钮</td><td><code>ds-mnav-trigger</code></td><td>隐藏</td><td>44px · 2-bar → X 动画</td></tr>
+                <tr><td>导航栏背景</td><td><code>--ds-glass-bg</code> / <code>--ds-color-surface-raised</code></td><td>毛玻璃（55% + blur）</td><td>实底表面，禁用 blur</td></tr>
+                <tr><td>触发按钮</td><td><code>ds-mnav-trigger</code></td><td>隐藏</td><td>44px · 3-bar → X 动画</td></tr>
                 <tr><td>遮罩</td><td><code>--ds-color-overlay-light</code></td><td>无</td><td>12% 黑色 · 点击关闭</td></tr>
                 <tr><td>抽屉阴影</td><td><code>--ds-shadow-2xl</code></td><td>无</td><td>最深投影</td></tr>
                 <tr><td>动画时长</td><td><code>--ds-duration-300</code></td><td>—</td><td>300ms</td></tr>
@@ -262,7 +262,7 @@
             <svg class="ds-alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             <div><div class="ds-alert-title">移动端规范</div>
               <ul style="margin:var(--ds-space-2) 0 0;padding-left:var(--ds-space-5);font-size:var(--ds-text-body-sm);color:var(--ds-color-fg-subtle)">
-                <li>移动端导航<strong>禁止使用毛玻璃</strong>（<code>--ds-glass-bg</code>）——低端设备性能差且文字可读性不足。</li>
+                <li>移动端与平板窄屏导航<strong>禁止使用毛玻璃</strong>（<code>--ds-glass-bg</code>）——低端设备性能差且文字可读性不足。</li>
                 <li>遮罩层使用 <code>--ds-color-overlay-light</code>（12%），<strong>不</strong>使用 <code>--ds-color-overlay</code>（40%）——后者是模态框级别。</li>
                 <li>触控目标不小于 44×44px（符合 WCAG 2.5.5）。</li>
               </ul>

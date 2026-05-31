@@ -273,7 +273,9 @@ function toggleDarkMode() {
   var h = document.documentElement;
   var d = h.getAttribute("data-theme") === "dark";
   h.setAttribute("data-theme", d ? "" : "dark");
-  try { localStorage.setItem("ds-theme", d ? "light" : "dark"); } catch(e) {}
+  try { localStorage.setItem("ds-theme", d ? "light" : "dark"); } catch(e) {
+    console.warn("Unable to persist theme preference", e);
+  }
 }
 
 (function() {
@@ -283,7 +285,9 @@ function toggleDarkMode() {
     if (!s && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
       document.documentElement.setAttribute("data-theme", "dark");
     }
-  } catch(e) {}
+  } catch(e) {
+    console.warn("Unable to read theme preference", e);
+  }
 })();
 
 /* ===== Slider sync ===== */
@@ -314,60 +318,60 @@ function toggleDarkMode() {
 
   var isOpen = false;
   var savedOverflow = "";
-  var savedTouchAction = "";
   var lastFocused = null;
 
-  function open() {
+  function open(shouldFocusMenu) {
     if (isOpen) return;
     isOpen = true;
     lastFocused = document.activeElement;
     savedOverflow = document.body.style.overflow;
-    savedTouchAction = document.body.style.touchAction;
     document.body.style.overflow = "hidden";
-    document.body.style.touchAction = "none";
     if (nav) nav.classList.add("is-menu-open");
     panel.classList.add("is-open");
-    panel.setAttribute("role", "dialog");
-    panel.setAttribute("aria-modal", "true");
-    panel.setAttribute("aria-label", "导航菜单");
+    panel.setAttribute("aria-label", "移动端主导航");
     if (backdrop) backdrop.classList.add("is-open");
     trigger.classList.add("is-open");
     trigger.setAttribute("aria-expanded", "true");
     trigger.setAttribute("aria-label", "关闭导航菜单");
-    setTimeout(function() {
-      var first = panel.querySelector(".ds-navbar-link");
-      if (first) first.focus();
-    }, 60);
+
+    if (shouldFocusMenu) {
+      setTimeout(function() {
+        var first = panel.querySelector(".ds-navbar-link");
+        if (first) first.focus();
+      }, 60);
+    }
   }
 
-  function close() {
+  function close(options) {
     if (!isOpen) return;
+    var opts = options || {};
     isOpen = false;
     document.body.style.overflow = savedOverflow;
-    document.body.style.touchAction = savedTouchAction;
     if (nav) nav.classList.remove("is-menu-open");
     panel.classList.remove("is-open");
-    panel.removeAttribute("role");
-    panel.removeAttribute("aria-modal");
     panel.removeAttribute("aria-label");
     if (backdrop) backdrop.classList.remove("is-open");
     trigger.classList.remove("is-open");
     trigger.setAttribute("aria-expanded", "false");
     trigger.setAttribute("aria-label", "打开导航菜单");
-    if (lastFocused && lastFocused.focus) lastFocused.focus();
+    if (opts.restoreFocus !== false && lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
-  trigger.addEventListener("click", function(e) { e.stopPropagation(); isOpen ? close() : open(); });
-  if (backdrop) backdrop.addEventListener("click", close);
+  trigger.addEventListener("click", function(e) {
+    e.stopPropagation();
+    if (isOpen) close();
+    else open(e.detail === 0);
+  });
+  if (backdrop) backdrop.addEventListener("click", function() { close(); });
   Array.prototype.forEach.call(panel.querySelectorAll(".ds-navbar-link"), function(l) {
-    l.addEventListener("click", function() { if (isOpen) close(); });
+    l.addEventListener("click", function() { if (isOpen) close({ restoreFocus: false }); });
   });
 
   document.addEventListener("keydown", function(e) {
     if (!isOpen) return;
     if (e.key === "Escape") { e.preventDefault(); close(); return; }
     if (e.key === "Tab") {
-      // The panel lives inside <nav>, so every focusable header/menu control is captured here
+      // The drawer is a navigation region, not a modal dialog; keep focus within the visible nav shell while it is open.
       var scope = nav || panel;
       var els = scope.querySelectorAll('a[href], button:not([disabled])');
       if (!els.length) return;
@@ -377,8 +381,8 @@ function toggleDarkMode() {
     }
   });
 
-  var mq = window.matchMedia("(min-width:768px)");
-  function onResize(e) { if (e.matches && isOpen) close(); }
+  var mq = window.matchMedia("(min-width:961px)");
+  function onResize(e) { if (e.matches && isOpen) close({ restoreFocus: false }); }
   if (mq.addEventListener) mq.addEventListener("change", onResize);
   else if (mq.addListener) mq.addListener(onResize);
 
