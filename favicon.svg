@@ -1,19 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="CGArtLab Design System">
   <title>CGArtLab Design System</title>
-  <!-- Minimal eye / aperture monogram drawn with exactly two closed curves: an almond lid + an iris circle. The lid tapers to fine, slightly extended terminals for a subtle serif feel (matching the serif wordmark). Hex stops approximate the OKLch olive ramp. -->
+  <!-- Refined fountain-pen nib at 45 deg (tip down-left). Exactly two closed curves: the nib outline (slit = open notch at the tip) + the breather-hole circle; evenodd. Hex stops approximate the OKLch olive ramp. -->
   <defs>
-    <linearGradient id="cg-eye" x1="4" y1="6" x2="28" y2="26" gradientUnits="userSpaceOnUse">
+    <linearGradient id="cg-nib" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#a6a25f"/>
       <stop offset="0.55" stop-color="#6f6c39"/>
       <stop offset="1" stop-color="#46441f"/>
     </linearGradient>
-    <radialGradient id="cg-iris" cx="0.5" cy="0.45" r="0.5">
-      <stop offset="0" stop-color="#23241a"/>
-      <stop offset="0.38" stop-color="#23241a"/>
-      <stop offset="0.42" stop-color="#f1ebdc"/>
-      <stop offset="1" stop-color="#d9d3c0"/>
-    </radialGradient>
   </defs>
-  <path fill="url(#cg-eye)" d="M2.6 16C10.4 7 21.6 7 29.4 16C21.6 25 10.4 25 2.6 16Z"/>
-  <circle cx="16" cy="16" r="5" fill="url(#cg-iris)"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#cg-nib)" transform="rotate(45 16 16)" d="M11 8C13.5 6.6 18.5 6.6 21 8C23.2 11 22 19 16.1 26.6L16.5 14C16.5 13.5 15.5 13.5 15.5 14L15.9 26.6C10 19 8.8 11 11 8ZM14.3 11.8a1.7 1.7 0 1 0 3.4 0a1.7 1.7 0 1 0 -3.4 0Z"/>
 </svg>
