@@ -15,9 +15,6 @@
     "validate:a11y": "python3 tools/validate_a11y.py",
     "validate:versions": "python3 tools/validate_versions.py",
     "validate:links": "python3 tools/validate_links.py",
-    "stamp": "python3 tools/stamp_version.py",
-    "stamp:check": "python3 tools/stamp_version.py --check",
-    "stamp:diff": "python3 tools/stamp_version.py --diff",
     "serve": "npx serve -l 8000 .",
     "pdfs": "python3 tools/generate_pdfs.py",
     "clean": "node scripts/clean.js"

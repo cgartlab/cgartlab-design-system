@@ -23,17 +23,10 @@ const VALIDATORS = [
   "validate_links.py",
 ];
 
-const STAMPERS = [
-  // validate_versions.py 已经会检测 {{DS_VERSION}} 占位符残留；
-  // 单独 stamp --check 用于在 CI 入口最前面快速失败。
-  { script: "stamp_version.py", args: ["--check"] },
-];
-
-function runOne(script, args = []) {
+function runOne(script) {
   const toolPath = path.join(ROOT, "tools", script);
-  const label = args.length ? `${script} ${args.join(" ")}` : script;
-  console.log(`\n── ${label} ──`);
-  const result = spawnSync(PYTHON, [toolPath, ...args], {
+  console.log(`\n── ${script} ──`);
+  const result = spawnSync(PYTHON, [toolPath], {
     stdio: "inherit",
     cwd: ROOT,
   });
@@ -46,11 +39,6 @@ function main() {
 
   let hasFail = false;
   let hasWarn = false;
-  for (const { script, args } of STAMPERS) {
-    const r = runOne(script, args);
-    if (r === "fail") hasFail = true;
-    if (r === "warn") hasWarn = true;
-  }
   for (const script of VALIDATORS) {
     const r = runOne(script);
     if (r === "fail") hasFail = true;

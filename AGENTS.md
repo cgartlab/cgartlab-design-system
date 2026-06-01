@@ -31,9 +31,9 @@ cgartlab-design-system/
 ├── scripts.js          # 独立脚本（图标渲染 + 令牌表 + 暗色 + 滚动揭示 + 复制 + 标签页）
 ├── tokens.json         # 结构化令牌数据（颜色/字体/间距/圆角）
 ├── favicon.svg         # 站点图标（45° 钢笔头 monogram · 双封闭曲线）
-├── VERSION             # 单行版本号文件（唯一真相源；stamp 工具会同步到 HTML/MD）
+├── VERSION             # 单行版本号文件（供 validate_versions.py 读取）
 ├── package.json        # 仅用于开发体验（serve / clean / 验证 wrapper）；运行时无 Node 依赖
-├── Makefile            # 跨平台任务编排（make validate / make stamp-version / make serve）
+├── Makefile            # 跨平台任务编排（make validate / make serve / make clean）
 ├── .editorconfig       # 编辑器一致性（缩进/换行/编码）
 ├── .gitattributes      # Git 属性（行尾/二进制/Markdown diff）
 ├── .nvmrc              # Node 版本锁定（20）
@@ -51,8 +51,7 @@ cgartlab-design-system/
 │   ├── validate_a11y.py       # 可访问性（img alt、标题层级、对比度）
 │   ├── validate_versions.py   # 资源 ?v= 与 VERSION 同步
 │   ├── validate_links.py      # 内部/跨页锚点、资源引用
-│   ├── stamp_version.py       # 把占位符替换为 VERSION（单一真相源）
-│   └── generate_pdfs.py       # 无依赖 PDF 生成器（页脚读取 VERSION）
+│   └── generate_pdfs.py       # 无依赖 PDF 生成器
 │
 ├── scripts/            # 本地开发辅助
 │   ├── dev.sh                  # Bash 跨平台入口

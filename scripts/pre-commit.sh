@@ -32,9 +32,6 @@ if [ -n "$CHANGED_HTML" ]; then
 fi
 
 if [ -n "$CHANGED_HTML" ] || [ -n "$CHANGED_CSS" ] || [ -n "$CHANGED_JS" ]; then
-  echo "  → 资源改动，自动 stamp VERSION ..."
-  python3 tools/stamp_version.py || { echo "✗ stamp 失败，请修复后再提交"; exit 1; }
-
   echo "  → 资源改动，校验版本号同步..."
   python3 tools/validate_versions.py || { echo "✗ 版本号校验失败"; exit 1; }
 fi

@@ -30,16 +30,6 @@ case "$cmd" in
   validate-versions) python3 tools/validate_versions.py ;;
   validate-links)    python3 tools/validate_links.py ;;
 
-  stamp|stamp-version)
-    echo "→ 将 VERSION 同步到所有 HTML / MD 资源"
-    python3 tools/stamp_version.py
-    ;;
-
-  stamp-check)
-    echo "→ 检查所有文件是否已 stamp"
-    python3 tools/stamp_version.py --check
-    ;;
-
   pdfs|generate-pdfs)
     echo "→ 生成示例 PDF"
     python3 tools/generate_pdfs.py
