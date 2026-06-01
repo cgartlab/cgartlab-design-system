@@ -96,15 +96,30 @@ def extract_icons(scripts_text: str) -> list[dict]:
 
 
 def build_symbol(icon_id: str, svg: str) -> str:
-    """将 <svg viewBox="...">CONTENT</svg> 转换为 <symbol id="..." viewBox="...">CONTENT</symbol>。
+    """将 <svg viewBox="...">CONTENT</svg> 转换为带 presentation attributes 的 <symbol>。
 
-    注意：保持与源 SVG 完全一致，不添加额外属性（fill/stroke 由消费方 CSS 控制）。
+    所有图标源 SVG 均为纯几何元素（line / polyline / path），不携带任何
+    stroke / fill 属性。SVG 规范默认值是 fill="black" stroke="none"，
+    因此在没有外部 CSS 的环境下（Penpot 导入、<use> 裸引用等）：
+      - line / polyline 元素因 stroke:none 完全不可见
+      - path 元素因 fill:black 渲染为填充色块而非描边线条
+
+    修复方式（与 Feather Icons / Lucide 标准一致）：
+      在 <symbol> 元素本身注入 presentation attributes，
+      子元素通过 SVG 继承机制自动获得这些默认值；
+      外部 CSS（如 .ds-icon-box svg）仍可通过 currentColor 覆盖颜色，
+      行为与修复前完全向后兼容。
     """
     vb_match = VIEWBOX_RE.search(svg)
     viewbox = vb_match.group(1) if vb_match else "0 0 24 24"
     content = SVG_OPEN_RE.sub("", svg)
     content = SVG_CLOSE_RE.sub("", content)
-    return f'<symbol id="{icon_id}" viewBox="{viewbox}">{content}</symbol>'
+    return (
+        f'<symbol id="{icon_id}" viewBox="{viewbox}"'
+        f' stroke="currentColor" fill="none"'
+        f' stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"'
+        f'>{content}</symbol>'
+    )
 
 
 def build_sprite(icons: list[dict]) -> str:
@@ -122,6 +137,10 @@ def build_sprite(icons: list[dict]) -> str:
   ⚠ 由 tools/generate_icons.py 从 scripts.js 的 ICONS 数组自动生成。
   ⚠ 请勿手动编辑；修改图标请改 scripts.js，然后跑 `make icons`。
   ⚠ 验证同步：跑 `make icons-check`（CI 用）。
+
+  每个 <symbol> 携带 presentation attributes（stroke="currentColor" fill="none"
+  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"），
+  无需外部 CSS 即可正确渲染线性图标；颜色通过 currentColor 继承父级。
 
   用法：
     <svg width="24" height="24"><use href="icons.svg#archive"/></svg>
