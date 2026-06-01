@@ -7,6 +7,9 @@ No third-party dependencies: this writes valid PDF 1.7 by hand (Helvetica /
 Helvetica-Bold / Courier built-in fonts + filled rectangles for swatches).
 Text is ASCII (token names + OKLch values), which suits a reference card.
 
+版本号：页脚中显示的 "vX.Y.Z" 从仓库根目录的 VERSION 文件读取
+（由 stamp_version.py 与 HTML/MD 文件保持一致）。
+
 Outputs (relative to repo root):
     assets/downloads/cgartlab-ds-reference.pdf   (multi-page reference)
     assets/downloads/cgartlab-ds-color-card.pdf  (one-page color card)
@@ -17,6 +20,21 @@ Run:  python tools/generate_pdfs.py
 import os
 
 A4_W, A4_H = 595.28, 841.89  # points
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+VERSION_FILE = os.path.join(ROOT, "VERSION")
+
+
+def read_version() -> str:
+    """从仓库根目录的 VERSION 文件读取当前版本号。失败回退到 '0.0.0'。"""
+    try:
+        with open(VERSION_FILE, "r", encoding="utf-8") as f:
+            return f.read().strip().splitlines()[0].strip() or "0.0.0"
+    except OSError:
+        return "0.0.0"
+
+
+VERSION = read_version()
 
 # ---- Approximate sRGB (0..1) for the OKLch palette (for swatches only;
 #      exact OKLch values are printed alongside each swatch). ----
@@ -166,8 +184,7 @@ def header(p, title, subtitle):
 
 def footer(p, page_label):
     p.line(56, 40, p.w - 56, 40, RGB["border"], 0.6)
-    p.text(56, 36, "CGArtLab Design System  -  Editorial x Olive Green  -  v1.1",
-           "F3", 7.5, RGB["muted"])
+    p.text(56, 36, f"CGArtLab Design System  -  Editorial x Olive Green  -  v{VERSION}", "F3", 7.5, RGB["muted"])
     p.text(p.w - 110, 36, page_label, "F3", 7.5, RGB["muted"])
 
 

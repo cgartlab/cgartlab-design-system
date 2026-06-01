@@ -3,9 +3,13 @@
 
 检查项：
   1. 所有 HTML 中 styles.css?v=... 与 scripts.js?v=... 一致
-  2. ?v= 值与 CHANGELOG.md 最新稳定版本号一致
+  2. ?v= 值与 CHANGELOG.md / VERSION 最新稳定版本号一致
   3. ?v= 格式合法（X.Y.Z 或 X.Y.Z-{prerelease}）
   4. 同一资源在所有 HTML 中 ?v= 一致
+  5. 占位符 {{VERSION}} 已被 stamp（不应有遗留）
+  6. HTML 用户可见版本（hero badge / footer v{{VERSION}}）已被 stamp
+  7. README.md 顶部版本 badge 已被 stamp
+  8. AGENTS.md 状态行版本号已被 stamp
 """
 from __future__ import annotations
 
@@ -18,10 +22,13 @@ ROOT = Path(__file__).resolve().parent.parent
 HTML_GLOB = "*.html"
 CHANGELOG = ROOT / "CHANGELOG.md"
 VERSION_FILE = ROOT / "VERSION"
+README_FILE = ROOT / "README.md"
+AGENTS_FILE = ROOT / "AGENTS.md"
 
 VERSION_RE = re.compile(r"\?v=([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?)")
 SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?$")
 CHANGELOG_VERSION_RE = re.compile(r"^##\s+\[([0-9]+\.[0-9]+\.[0-9]+[^\]]*)\]")
+PLACEHOLDER_RE = re.compile(r"\{\{VERSION\}\}")
 
 
 def get_expected_version() -> str | None:
@@ -51,6 +58,14 @@ def check_html(path: Path) -> dict[str, str]:
     return found
 
 
+def count_placeholders(path: Path) -> int:
+    """统计文件中残留的 {{VERSION}} 占位符数量。"""
+    if not path.exists():
+        return 0
+    text = path.read_text(encoding="utf-8", errors="replace")
+    return len(PLACEHOLDER_RE.findall(text))
+
+
 def main() -> int:
     html_files = sorted(ROOT.glob(HTML_GLOB))
     if not html_files:
@@ -63,6 +78,7 @@ def main() -> int:
         print(f"期望版本（来自 {'VERSION' if VERSION_FILE.exists() else 'CHANGELOG.md'}）: {expected}")
     else:
         print(f"[WARN] 未发现期望版本（VERSION 文件或 CHANGELOG.md 缺失）")
+        return 1
 
     # 收集所有 HTML 的版本号
     by_resource: dict[str, dict[str, list[str]]] = defaultdict(lambda: defaultdict(list))
@@ -93,21 +109,37 @@ def main() -> int:
                 errors += 1
 
             # 3. 与期望版本对比
-            if expected and version != expected:
-                print(f"  [WARN] 与期望版本 {expected} 不一致")
-                warnings += 1
+            if version != expected:
+                print(f"  [ERROR] 与 VERSION {expected} 不一致（需 stamp）")
+                errors += 1
+            # 兼容旧：仍把一致情况下也提示一下
+            elif version == expected:
+                pass  # silent OK
 
-    # 4. 漏掉 ?v= 的资源
+    # 4. 漏掉 ?v= 的资源（仅 link/script 标签，不含 a 标签）
     no_version = []
     for path in html_files:
         text = path.read_text(encoding="utf-8", errors="replace")
-        for match in re.finditer(r'(?:href|src)="(styles\.css|scripts\.js)"', text):
+        # 匹配 <link rel="stylesheet" href="styles.css"> 或 <script src="scripts.js">
+        for match in re.finditer(r'<(?:link[^>]+href|script[^>]+src)="(styles\.css|scripts\.js)"', text):
             no_version.append((path.name, match.group(1)))
     if no_version:
         print(f"\n[WARN] 以下资源未使用 ?v= 版本号：")
         for file, resource in no_version:
             print(f"  {file}: {resource}")
         warnings += 1
+
+    # 5. {{DS_VERSION}} 占位符不应残留
+    placeholder_files = []
+    for path in list(html_files) + [README_FILE, AGENTS_FILE]:
+        n = count_placeholders(path)
+        if n > 0:
+            placeholder_files.append((path.name, n))
+    if placeholder_files:
+        print(f"\n[ERROR] 以下文件残留 {{{{DS_VERSION}}}} 占位符，需 stamp：")
+        for name, n in placeholder_files:
+            print(f"  {name}: {n} 处")
+        errors += len(placeholder_files)
 
     print()
     print(f"错误: {errors}  警告: {warnings}")
