@@ -4,7 +4,7 @@
 
 SHELL := /bin/sh
 .DEFAULT_GOAL := help
-.PHONY: help validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links stamp-version serve clean serve-py serve-node generate-pdfs test
+.PHONY: help validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links stamp-version serve clean serve-py serve-node generate-pdfs icons icons-check test
 
 PYTHON ?= python3
 NODE ?= node
@@ -60,6 +60,12 @@ serve-node:  ## npx serve（备选）
 # ─── 资源生成 ──────────────────────────────────────────────
 generate-pdfs:  ## 重新生成示例 PDF
 	$(PYTHON) tools/generate_pdfs.py
+
+icons:  ## 从 scripts.js 的 ICONS 数组生成 icons.svg sprite
+	$(PYTHON) tools/generate_icons.py
+
+icons-check:  ## 校验 icons.svg 是否与 scripts.js 的 ICONS 数组同步（CI 用）
+	$(PYTHON) tools/generate_icons.py --check
 
 # ─── 测试 ──────────────────────────────────────────────────
 test: validate  ## 运行所有测试（当前等价于 validate）

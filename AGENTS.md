@@ -260,6 +260,7 @@ xs → 2xl 共 6 级，暗色模式 opacity 提高以保持层次。
 | 结构化令牌数据 | `tokens.json` | 程序化导入用 |
 | 组件预览 | `handbook.html` #components | 组件 live 展示 |
 | 图标 SVG 合集 | `scripts.js` 的 `ICONS` 数组 | 100 枚图标，运行时渲染 + 单枚下载 |
+| 图标 sprite 文件 | `icons.svg`（由 `tools/generate_icons.py` 生成） | 独立 SVG sprite，Penpot 导入 / 外部 `<use href="icons.svg#X"/>` 引用 |
 | 暗色模式 | `styles.css` `[data-theme="dark"]` | 完整暗色令牌覆盖 |
 | 移动端导航 | `styles.css` `.ds-navbar*` / `scripts.js` 「Mobile Navigation」 | 玻璃顶栏 + 右侧抽屉 |
 | 品牌 Logo | `assets/brand/*.svg` + `favicon.svg` | 双曲线 45° 钢笔头 monogram |

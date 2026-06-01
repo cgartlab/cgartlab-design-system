@@ -45,6 +45,16 @@ case "$cmd" in
     python3 tools/generate_pdfs.py
     ;;
 
+  icons|generate-icons)
+    echo "→ 生成 SVG 图标 sprite"
+    python3 tools/generate_icons.py
+    ;;
+
+  icons-check)
+    echo "→ 校验 icons.svg 是否与 ICONS 数组同步"
+    python3 tools/generate_icons.py --check
+    ;;
+
   clean)
     echo "→ 清理"
     rm -rf test-reports/
@@ -69,6 +79,8 @@ CGArtLab Design System — dev 辅助脚本
   validate-versions  校验版本号
   validate-links     校验链接
   pdfs               生成示例 PDF
+  icons              生成 icons.svg（SVG sprite）
+  icons-check        校验 icons.svg 与 ICONS 是否同步
   clean              清理临时文件
   help               显示此帮助
 
