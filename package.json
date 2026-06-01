@@ -20,6 +20,8 @@
     "stamp:diff": "python3 tools/stamp_version.py --diff",
     "serve": "npx serve -l 8000 .",
     "pdfs": "python3 tools/generate_pdfs.py",
+    "icons": "python3 tools/generate_icons.py",
+    "icons:check": "python3 tools/generate_icons.py --check",
     "clean": "node scripts/clean.js"
   },
   "devDependencies": {
