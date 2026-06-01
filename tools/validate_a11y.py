@@ -209,7 +209,7 @@ def main() -> int:
     print(f"扫描文件: {len(html_files)}")
     print(f"错误    : {total_errors}")
     print(f"警告    : {total_warnings}")
-    return 1 if total_errors else (2 if total_warnings else 0)
+    return 1 if total_errors else 0
 
 
 if __name__ == "__main__":

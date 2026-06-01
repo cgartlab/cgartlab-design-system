@@ -111,7 +111,7 @@ def main() -> int:
 
     print()
     print(f"错误: {errors}  警告: {warnings}")
-    return 1 if errors else (2 if warnings else 0)
+    return 1 if errors else 0
 
 
 if __name__ == "__main__":

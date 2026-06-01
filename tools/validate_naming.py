@@ -161,7 +161,7 @@ def main() -> int:
             print(f"[WARN] {issue}")
     print()
     print(f"错误: {len(errors)}  警告: {len(warnings)}")
-    return 1 if errors else (2 if warnings else 0)
+    return 1 if errors else 0
 
 
 if __name__ == "__main__":

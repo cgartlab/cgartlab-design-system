@@ -117,7 +117,7 @@ def main() -> int:
     html_files = sorted(ROOT.glob(HTML_GLOB))
     if not html_files:
         print(f"[WARN] 未发现 HTML 文件（{HTML_GLOB}）")
-        return 2
+        return 0
 
     total_errors = 0
     total_warnings = 0

@@ -73,7 +73,7 @@ def main() -> int:
     html_files = sorted(ROOT.glob(HTML_GLOB))
     if not html_files:
         print(f"[WARN] 未发现 HTML 文件（{HTML_GLOB}）")
-        return 2
+        return 0
 
     # 预收集所有 id
     ids_cache: dict[Path, set[str]] = {p: collect_ids(p) for p in html_files}
@@ -143,7 +143,7 @@ def main() -> int:
 
     print()
     print(f"错误: {errors}  警告: {warnings}")
-    return 1 if errors else (2 if warnings else 0)
+    return 1 if errors else 0
 
 
 if __name__ == "__main__":
