@@ -240,14 +240,6 @@ const TOKENS = [
     box.className = "ds-icon-box";
     box.innerHTML = ic.svg + "<span>" + ic.id + "</span>";
     box.title = ic.id;
-    box.addEventListener("click", function() {
-      var full = ic.svg.replace("<svg", '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"');
-      var b = new Blob([full], {type:"image/svg+xml"});
-      var u = URL.createObjectURL(b);
-      var a = document.createElement("a");
-      a.href = u; a.download = ic.id + ".svg"; a.click();
-      URL.revokeObjectURL(u);
-    });
     grid.appendChild(box);
   });
 })();
