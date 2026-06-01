@@ -4,7 +4,7 @@
 
 SHELL := /bin/sh
 .DEFAULT_GOAL := help
-.PHONY: help validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links serve clean serve-py serve-node generate-pdfs test
+.PHONY: help validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links stamp-version serve clean serve-py serve-node generate-pdfs test
 
 PYTHON ?= python3
 NODE ?= node
