@@ -268,26 +268,90 @@ const TOKENS = [
   });
 })();
 
-/* ===== Dark mode toggle ===== */
-function toggleDarkMode() {
-  var h = document.documentElement;
-  var d = h.getAttribute("data-theme") === "dark";
-  h.setAttribute("data-theme", d ? "" : "dark");
-  try { localStorage.setItem("ds-theme", d ? "light" : "dark"); } catch(e) {
-    console.warn("Unable to persist theme preference", e);
-  }
-}
-
+/* ===== Theme Switcher ===== */
 (function() {
-  try {
-    var s = localStorage.getItem("ds-theme");
-    if (s === "dark") { document.documentElement.setAttribute("data-theme", "dark"); return; }
-    if (!s && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      document.documentElement.setAttribute("data-theme", "dark");
-    }
-  } catch(e) {
-    console.warn("Unable to read theme preference", e);
+  var THEME_KEY = "ds-theme-mode";
+  var themes = ["system", "light", "dark"];
+  var labels = { system: "跟随系统", light: "浅色模式", dark: "暗色模式" };
+
+  function getSystemPref() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }
+
+  function applyTheme(mode) {
+    var html = document.documentElement;
+    if (mode === "system") {
+      html.setAttribute("data-theme", getSystemPref());
+      html.removeAttribute("data-theme-mode");
+    } else {
+      html.setAttribute("data-theme", mode);
+      html.setAttribute("data-theme-mode", mode);
+    }
+    try { localStorage.setItem(THEME_KEY, mode); } catch(e) {}
+    updateButton(mode);
+  }
+
+  function updateButton(mode) {
+    var btns = document.querySelectorAll(".ds-theme-toggle-btn");
+    var icons = ICONS.reduce(function(acc, ic) { acc[ic.id] = ic.svg; return acc; }, {});
+    Array.prototype.forEach.call(btns, function(btn) {
+      if (!btn) return;
+      var iconEl = btn.querySelector(".theme-icon");
+      if (mode === "dark") {
+        iconEl.innerHTML = icons.moon;
+        btn.setAttribute("aria-label", "暗色模式 · 点击切换");
+      } else if (mode === "light") {
+        iconEl.innerHTML = icons.sun;
+        btn.setAttribute("aria-label", "浅色模式 · 点击切换");
+      } else {
+        iconEl.innerHTML = icons.monitor;
+        btn.setAttribute("aria-label", "跟随系统 · 点击切换");
+      }
+    });
+  }
+
+  function cycleTheme() {
+    var btn = document.getElementById("theme-toggle-btn");
+    if (!btn) return;
+    var label = btn.getAttribute("aria-label") || "";
+    if (label.indexOf("浅色") !== -1) {
+      applyTheme("dark");
+    } else if (label.indexOf("暗色") !== -1) {
+      applyTheme("system");
+    } else {
+      applyTheme("light");
+    }
+  }
+
+  window.setTheme = function(mode) {
+    if (themes.indexOf(mode) !== -1) applyTheme(mode);
+  };
+
+  window.cycleTheme = cycleTheme;
+
+  function init() {
+    var saved;
+    try { saved = localStorage.getItem(THEME_KEY); } catch(e) {}
+    var initial = themes.indexOf(saved) !== -1 ? saved : "system";
+    applyTheme(initial);
+
+    var btns = document.querySelectorAll(".ds-theme-toggle-btn");
+    Array.prototype.forEach.call(btns, function(btn) {
+      if (btn) btn.addEventListener("click", cycleTheme);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
+  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function(e) {
+    if (document.documentElement.getAttribute("data-theme-mode") === "system") {
+      document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "light");
+    }
+  });
 })();
 
 /* ===== Slider sync ===== */
