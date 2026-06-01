@@ -504,14 +504,14 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-toc-link--active .ds-toc-indicator{width:6px;height:6px;opacity:1;background:var(--ds-accent)}
 .ds-toc-badge{font-size:10px;background:var(--ds-accent-soft);color:var(--ds-accent);padding:1px 6px;border-radius:var(--ds-radius-sm);margin-left:auto}
 
-/* ===== Theme Toggle ===== */
-#theme-toggle{position:fixed;bottom:24px;right:24px;z-index:999;width:44px;height:44px;border-radius:50%;border:1px solid var(--ds-color-border);background:color-mix(in oklch,var(--ds-color-surface-raised),transparent 30%);color:var(--ds-color-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--ds-shadow-lg);transition:all .2s;backdrop-filter:blur(8px)}
-#theme-toggle:hover{color:var(--ds-color-fg);border-color:var(--ds-color-fg-subtle)}
-#theme-toggle svg{width:18px;height:18px}
-[data-theme="dark"] #theme-toggle .moon-icon{display:none}
-[data-theme="dark"] #theme-toggle .sun-icon{display:block}
-#theme-toggle .sun-icon{display:none}
-#theme-toggle .moon-icon{display:block}
+/* ===== Theme Toggle Button ===== */
+.ds-theme-toggle-btn{display:inline-flex;align-items:center;justify-content:center;padding:var(--ds-space-2) var(--ds-space-3);border-radius:var(--ds-radius-lg);border:none;background:transparent;color:var(--ds-color-muted);cursor:pointer;transition:color .2s,background .2s}
+.ds-theme-toggle-btn:hover{color:var(--ds-color-fg);background:var(--ds-accent-soft)}
+.ds-theme-toggle-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block}
+.ds-theme-toggle-btn--fixed{position:fixed;bottom:var(--ds-space-6);right:var(--ds-space-6);z-index:var(--ds-z-dropdown);width:44px;height:44px;padding:0;border-radius:50%;background:var(--ds-color-surface-raised);border:1px solid var(--ds-color-border);box-shadow:var(--ds-shadow-lg);backdrop-filter:blur(8px)}
+.ds-theme-toggle-btn--fixed svg{width:20px;height:20px}
+@media(min-width:1024px){.ds-theme-toggle-btn--fixed{display:none!important}}
+@media(max-width:1023px){.ds-navbar .ds-theme-toggle-btn{display:none!important}}
 
 /* ===== Overlay & Glass Effects ===== */
 .ds-overlay-sample{position:relative;width:100%;height:80px;border-radius:var(--ds-radius-lg);overflow:hidden;display:flex;align-items:center;justify-content:center}
@@ -723,7 +723,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 
 /* ===== Print ===== */
 @media print{
-  .ds-navbar,.ds-floating-toc,.ds-edge-decor,.ds-bg-blob,#theme-toggle{display:none!important}
+  .ds-navbar,.ds-floating-toc,.ds-edge-decor,.ds-bg-blob,.ds-theme-toggle-btn{display:none!important}
   .ds-section{break-inside:avoid;padding:var(--ds-space-12) 0}
 }
 
