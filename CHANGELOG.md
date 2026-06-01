@@ -7,6 +7,12 @@
 
 ### 新增（进行中）
 
+#### 图标 sprite 生成（icons.svg）
+- 新增 `tools/generate_icons.py` — 从 `scripts.js` 的 `ICONS` 数组生成独立 SVG sprite
+- 兑现 `handbook.html` 第 5 章"配套生成 icons.svg"的承诺
+- 输出文件 `icons.svg`（仓库根目录）支持 Penpot 直接导入 + 外部 `<svg><use href="icons.svg#archive"/></svg>` 引用
+- 集成入口：`make icons` / `make icons-check` / `npm run icons` / `npm run icons:check` / `./scripts/dev.sh icons`
+
 #### 工程治理（preparation）
 - 工程基础配置：`.editorconfig` / `.gitattributes` / 扩展 `.gitignore`
 - 治理文档：`LICENSE` / `CONTRIBUTING.md` / `CHANGELOG.md` / `CODE_OF_CONDUCT.md` / `SECURITY.md`
