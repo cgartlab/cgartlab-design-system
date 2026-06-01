@@ -86,6 +86,47 @@ MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]
 > 注意：当前项目没有 `package.json`，所以版本源在 `CHANGELOG.md` 头部
 > 或专门的 `VERSION` 文件（推荐）。
 
+### stamp 工具（自动化同步）
+
+为消除"改 VERSION → 改 6 个 HTML → 改 README → 改 AGENTS"的繁琐手动流程，
+项目提供 `tools/stamp_version.py`：
+
+| 场景 | 命令 |
+|------|------|
+| 修改 VERSION 后同步全部资源 | `python3 tools/stamp_version.py` |
+| CI / pre-commit 检查是否已 stamp | `python3 tools/stamp_version.py --check` |
+| 预览 diff | `python3 tools/stamp_version.py --diff` |
+| 反向还原（开发期） | `python3 tools/stamp_version.py --restore` |
+
+源码中所有需要跟随 VERSION 同步的位置都写成 `{{DS_VERSION}}` 占位符，stamp 工具
+会一次性替换为真实版本号（无构建步骤，GitHub Pages 仍可直接部署静态文件）。
+
+> 占位符使用 `DS_` 前缀（Design System）以避免与文档中说明占位符语法的示例
+> （如 `{{VERSION}}`、`{{TOKEN}}` 等通用写法）发生冲突。
+
+**触发方式**：
+- pre-commit hook：改 HTML/CSS/JS 时自动 stamp
+- Release workflow：打 tag 前手动 `make stamp-version`
+
+**典型发布流程**：
+
+```bash
+# 1. 改 VERSION（单行文本）
+echo "1.4.0" > VERSION
+
+# 2. 自动同步所有文件
+make stamp-version
+
+# 3. 验证
+make validate-versions
+
+# 4. 提交
+git add -A && git commit -m "chore(release): bump to v1.4.0"
+
+# 5. 打 tag
+git tag v1.4.0 && git push origin v1.4.0
+```
+
 ## 分支与版本对应
 
 | 分支 | 用途 | tag 前缀 |
