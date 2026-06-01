@@ -1,11 +1,13 @@
 # cgartlab Design System — 知识库
 
 **生成时间:** 2026-05-14
-**Updated:** 2026-05-31
+**Updated:** 2026-06-01
 **分层**: 基础设施 (Infrastructure) — 设计系统
-**状态:** v1.1 — 设计令牌 + 组件手册 + 图标库 + 暗色模式 + **展示网站 + AI 提示词/Skill + 品牌 Logo + 动效系统** 已完成
+**状态:** v1.3.1 — 设计令牌 + 组件手册 + 图标库 + 暗色模式 + 展示网站 + AI 提示词/Skill + 品牌 Logo + 动效系统 + **完整工程治理层（CI/验证/流程文档）** 已完成
 
-> **v1.1 新增**: 设计系统已升级为一个**多页静态展示网站**（首页 / 视觉手册 / 使用文档 / 提示词 / 下载），网站本身严格遵循设计系统规范，可经 GitHub Pages 公开访问（`designsystem.cgartlab.com`）。新增品牌 Logo、CSS/SVG 动效系统、滚动揭示、复制交互，以及可复制给任意 Agent 的系统提示词与 Skill 技能包，并生成真实示例 PDF。`company.html`（CGArtLab 公司官网示例）是首个采用 `--ds-*` 令牌的生产级页面。
+> **v1.3.x 新增（2026-06-01）**: 在 v1.1 视觉层之上补齐**工程治理层**——`.editorconfig` / `.gitattributes` / `.github/` 完整模板、`CONTRIBUTING.md` / `CHANGELOG.md` / `CODE_OF_CONDUCT.md` / `SECURITY.md` / `LICENSE`、流程文档（`docs/VERSIONING.md` / `COMPONENT-DEVELOPMENT.md` / `TESTING.md` / `RELEASE-CHECKLIST.md`）、6 个 Python 验证脚本（`tools/validate_*.py`）、CI 流水线（`ci.yml` + `release.yml`）、本地开发辅助（`Makefile` + `scripts/dev.*` + `.nvmrc`）、测试夹具（`tests/fixtures/`）。保持项目**零运行时依赖**原貌，仅添加开发期工具。
+
+> **v1.1 关键特性**: 设计系统已升级为一个**多页静态展示网站**（首页 / 视觉手册 / 使用文档 / 提示词 / 下载），网站本身严格遵循设计系统规范，可经 GitHub Pages 公开访问（`designsystem.cgartlab.com`）。新增品牌 Logo、CSS/SVG 动效系统、滚动揭示、复制交互，以及可复制给任意 Agent 的系统提示词与 Skill 技能包，并生成真实示例 PDF。`company.html`（CGArtLab 公司官网示例）是首个采用 `--ds-*` 令牌的生产级页面。
 
 ## OVERVIEW
 
@@ -24,18 +26,72 @@ cgartlab-design-system/
 ├── docs.html           # 使用文档（安装/令牌/主题/排版/组件/动效/可访问性/定制/FAQ）
 ├── prompts.html        # Agent 提示词与 Skill（完整/精简/Skill 三版，含各家接入位置）
 ├── downloads.html      # 下载（示例 PDF · 令牌 · 样式表 · 品牌素材 · 真实示例）
+├── terms.html          # 使用条款（CC BY 4.0）
 ├── styles.css          # 独立样式表（:root 令牌 + 暗色 + 全部组件 + v1.1 动效/站点壳）
 ├── scripts.js          # 独立脚本（图标渲染 + 令牌表 + 暗色 + 滚动揭示 + 复制 + 标签页）
 ├── tokens.json         # 结构化令牌数据（颜色/字体/间距/圆角）
 ├── favicon.svg         # 站点图标（45° 钢笔头 monogram · 双封闭曲线）
+├── VERSION             # 单行版本号文件（供 validate_versions.py 读取）
+├── package.json        # 仅用于开发体验（serve / clean / 验证 wrapper）；运行时无 Node 依赖
+├── Makefile            # 跨平台任务编排（make validate / make serve / make clean）
+├── .editorconfig       # 编辑器一致性（缩进/换行/编码）
+├── .gitattributes      # Git 属性（行尾/二进制/Markdown diff）
+├── .nvmrc              # Node 版本锁定（20）
+│
 ├── assets/brand/       # 品牌 Logo：logo.svg / logo-on-dark.svg / logo-mark.svg
 ├── assets/downloads/   # 生成的示例 PDF（reference / color-card）
+│
 ├── prompts/            # system-prompt.md · quick-prompt.md
 ├── skills/cgartlab-design-system/SKILL.md   # Agent 技能包
-├── tools/generate_pdfs.py                   # 无依赖 PDF 生成器
+│
+├── tools/              # 验证脚本（纯 Python stdlib，零依赖）
+│   ├── validate_tokens.py     # tokens.json ↔ styles.css 一致性
+│   ├── validate_naming.py     # BEM / token 命名 + 反模式
+│   ├── validate_html.py       # HTML 结构、引用有效性
+│   ├── validate_a11y.py       # 可访问性（img alt、标题层级、对比度）
+│   ├── validate_versions.py   # 资源 ?v= 与 VERSION 同步
+│   ├── validate_links.py      # 内部/跨页锚点、资源引用
+│   └── generate_pdfs.py       # 无依赖 PDF 生成器
+│
+├── scripts/            # 本地开发辅助
+│   ├── dev.sh                  # Bash 跨平台入口
+│   ├── dev.ps1                 # PowerShell 入口
+│   ├── pre-commit.sh           # Git hook 提交前自检
+│   ├── run-validators.js       # Node 包装器（无 Python 也能用）
+│   └── clean.js                # 跨平台清理
+│
+├── tests/              # 验证工具自检夹具
+│   ├── README.md
+│   ├── fixtures/html/          # minimal / with-errors / good-classes / bad-classes
+│   ├── fixtures/tokens/        # tokens-good / tokens-bad
+│   ├── fixtures/css/           # styles-sample
+│   └── snapshots/              # 视觉回归占位
+│
+├── docs/               # 流程文档（v1.2）
+│   ├── VERSIONING.md           # SemVer 适配设计系统的版本策略
+│   ├── COMPONENT-DEVELOPMENT.md # 组件开发完整工作流
+│   ├── TESTING.md              # 测试策略与各 validate_*.py 规范
+│   └── RELEASE-CHECKLIST.md    # 发布流程检查清单
+│
+├── .github/            # GitHub 集成（v1.2）
+│   ├── ISSUE_TEMPLATE/         # bug / feature / component / token / icon / docs / discussion
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   ├── CODEOWNERS              # 路径 → 维护者团队映射
+│   └── workflows/
+│       ├── ci.yml              # 主验证流水线（PR / push 触发）
+│       └── release.yml         # Tag 触发：构建 PDF + 创建 GitHub Release
+│
+├── 治理文件（v1.2）
+│   ├── CONTRIBUTING.md         # 贡献流程
+│   ├── CHANGELOG.md            # 版本历史（Keep a Changelog 格式）
+│   ├── CODE_OF_CONDUCT.md      # 行为准则（Contributor Covenant 2.1）
+│   ├── SECURITY.md             # 漏洞披露策略
+│   └── LICENSE                 # CC BY 4.0 完整许可证文本
+│
 ├── CNAME · .nojekyll   # GitHub Pages（自定义域名 designsystem.cgartlab.com）
 ├── README.md           # 仓库说明 + 部署指南
 ├── AGENTS.md           # 本文件
+│
 └── 真实示例：blog.html · company.html · resume.html · report.html
 ```
 
@@ -182,11 +238,18 @@ xs → 2xl 共 6 级，暗色模式 opacity 提高以保持层次。
 
 ## 构建与部署
 
-**零构建。** 纯静态站点，无 `package.json`、无打包器、无 CI 工作流。GitHub Pages「Deploy from branch」直接托管 `main` 根目录，`.nojekyll` 关闭 Jekyll；`CNAME` 指向 `designsystem.cgartlab.com`。
+**零运行时依赖 / 零构建。** 纯静态站点。GitHub Pages「Deploy from branch」直接托管 `main` 根目录，`.nojekyll` 关闭 Jekyll；`CNAME` 指向 `designsystem.cgartlab.com`。
 
-- 这是有意为之的设计取舍——保持框架无关、零依赖。请勿引入打包/转译步骤。
-- 唯一脚本 `tools/generate_pdfs.py` 为手动运行的示例 PDF 生成器，不在任何自动链路中。
-- 缓存刷新：见上文「文件大小」备注（手动 bump `?v=`）。
+> 唯一**开发时**依赖：Python 3.11+（验证工具）和 Node 20+（可选 `npx serve`）。**生产部署无需任何依赖**。
+>
+> 详细见 `docs/VERSIONING.md` 中"资源版本号同步"一节。
+
+- 这是有意为之的设计取舍——保持框架无关、零运行时依赖。请勿引入打包/转译步骤。
+- **v1.2 新增**：引入轻量**开发期**工具链（Python 验证脚本 + Makefile + Node 包装器），不影响运行时。
+- 唯一运行时脚本 `tools/generate_pdfs.py` 为手动运行的示例 PDF 生成器，不在任何自动链路中（但 `release.yml` 会在 tag 触发时跑）。
+- 缓存刷新：见上文「文件大小」备注（手动 bump `?v=`，由 `validate_versions.py` 自动校验）。
+- **CI**：[`.github/workflows/ci.yml`](./.github/workflows/ci.yml) 在 PR / push / 每周一自动跑全部 6 个验证脚本。
+- **Release**：[`.github/workflows/release.yml`](./.github/workflows/release.yml) 在 `v*` tag 触发，自动构建 PDF + 创建 GitHub Release。
 
 ## WHERE TO LOOK
 
@@ -199,9 +262,93 @@ xs → 2xl 共 6 级，暗色模式 opacity 提高以保持层次。
 | 暗色模式 | `styles.css` `[data-theme="dark"]` | 完整暗色令牌覆盖 |
 | 移动端导航 | `styles.css` `.ds-navbar*` / `scripts.js` 「Mobile Navigation」 | 玻璃顶栏 + 右侧抽屉 |
 | 品牌 Logo | `assets/brand/*.svg` + `favicon.svg` | 双曲线 45° 钢笔头 monogram |
+| 版本号源 | `VERSION` 单行文件 | 供 `validate_versions.py` 读取 |
+| 贡献流程 | `CONTRIBUTING.md` | 从提 Issue 到 PR 的完整指南 |
+| 版本策略 | `docs/VERSIONING.md` | SemVer 适配设计系统的规则 |
+| 组件开发工作流 | `docs/COMPONENT-DEVELOPMENT.md` | 提案 → 令牌 → 原型 → 评审 |
+| 测试策略 | `docs/TESTING.md` | 各 `validate_*.py` 规范 + 未来工作 |
+| 发布检查清单 | `docs/RELEASE-CHECKLIST.md` | T-7 → T+1 天的完整发布流程 |
+| 验证工具 | `tools/validate_*.py` | 6 个独立校验脚本 |
+| CI 配置 | `.github/workflows/ci.yml` | 主验证流水线 |
+| 发布流水线 | `.github/workflows/release.yml` | tag 触发 PDF + Release |
+| 本地开发 | `Makefile` / `scripts/dev.*` | 跨平台任务入口 |
+| 验证夹具 | `tests/fixtures/` | validate_*.py 自检样本 |
+| GitHub 模板 | `.github/ISSUE_TEMPLATE/*` + `PULL_REQUEST_TEMPLATE.md` | 7 种 Issue 模板 + PR 模板 |
 
 ## NOTES
 
 - 所有颜色使用 OKLch 定义，确保跨设备色准和可访问性
 - 强调色 Olive Green 可无障碍替换（改 `--ds-color-olive-*` 和 `--ds-accent` 系）
 - 参考优秀设计系统：Monocle（排版克制）、Stripe（温暖 utility）、Mercury（精致沉稳）
+
+## 工程治理（v1.2 新增）
+
+### 本地开发快速开始
+
+```bash
+# 验证全部
+make validate
+
+# 单项
+make validate-tokens
+make validate-naming
+make validate-html
+make validate-a11y
+make validate-versions
+make validate-links
+
+# 本地预览
+make serve            # http://localhost:8000
+
+# 清理
+make clean
+```
+
+或用 Node 包装（无需 Python）：
+
+```bash
+npm run validate
+npm run serve
+npm run clean
+```
+
+或用 Bash / PowerShell 脚本：
+
+```bash
+./scripts/dev.sh validate
+./scripts/dev.sh serve
+```
+
+```powershell
+.\scripts\dev.ps1 -Command validate
+.\scripts\dev.ps1 -Command serve
+```
+
+### 提交前自检（可选）
+
+```bash
+# 一次性安装
+ln -s ../../scripts/pre-commit.sh .git/hooks/pre-commit
+```
+
+之后每次 `git commit` 都会自动跑相关验证（仅检查本次改动的相关工具）。
+
+### 验证工具退出码
+
+| 退出码 | 含义 | CI 行为 |
+|--------|------|---------|
+| 0 | 全部通过 | ✓ |
+| 1 | 存在错误 | ✗ 阻塞合并 |
+| 2 | 仅警告 | ⚠ 提示但不阻塞 |
+
+### 强制执行的反模式（CI 拒收）
+
+- ❌ `as any` / `@ts-expect-error` / `@ts-ignore` / `@ts-nocheck`（JS 注释）
+- ❌ 空 `catch {}` 块
+- ❌ 顶层 `var` 声明（`scripts.js`）
+- ❌ 颜色 token 不用 OKLch
+- ❌ 重复 HTML id
+- ❌ 资源 `?v=` 与 `VERSION` 不一致
+- ❌ 内部锚点 / 跨页锚点 / 资源引用不存在
+- ❌ `<html>` 缺 `lang` / `<head>` 缺 `meta charset`
+- ❌ `<img>` 缺 `alt`
