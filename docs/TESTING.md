@@ -1,0 +1,199 @@
+# 测试策略（Testing Strategy）
+
+> 零运行时依赖 ≠ 零测试。本项目采用**轻量、可独立运行**的验证脚本，
+> 覆盖设计系统的**核心契约**。
+
+## 测试金字塔（适配设计系统）
+
+```
+        ┌─────────┐
+        │ Visual  │  (可选：浏览器视觉回归)
+        │ Snapshots│
+        └─────────┘
+      ┌─────────────┐
+      │ Integration │  (CI：链接、版本号同步)
+      └─────────────┘
+   ┌───────────────────┐
+   │  Static / Lint    │  (CI：令牌、命名、HTML、a11y)
+   └───────────────────┘
+```
+
+## 工具栈
+
+| 工具 | 作用 | 语言 | 依赖 |
+|------|------|------|------|
+| `validate_tokens.py` | tokens.json ↔ styles.css 一致性 | Python 3.11+ | stdlib |
+| `validate_naming.py` | BEM / token 命名规范 | Python 3.11+ | stdlib |
+| `validate_html.py` | HTML 标签闭合、属性合法性 | Python 3.11+ | stdlib |
+| `validate_a11y.py` | 基础可访问性（alt / aria / 标题层级） | Python 3.11+ | stdlib |
+| `validate_versions.py` | 资源 `?v=` 与最新版本号同步 | Python 3.11+ | stdlib |
+| `validate_links.py` | 内部链接、锚点、CSS / JS 引用有效性 | Python 3.11+ | stdlib |
+| **CI 自动化** | 上述全部 | GitHub Actions | 无（除 Python） |
+
+> 工具都是**纯 Python stdlib**，无 `pip install` 需求，保持项目"零运行时依赖"特性。
+
+## 运行方式
+
+### 全部校验
+
+```bash
+make validate
+# 或
+python3 tools/validate_tokens.py && \
+python3 tools/validate_naming.py && \
+python3 tools/validate_html.py && \
+python3 tools/validate_a11y.py && \
+python3 tools/validate_versions.py && \
+python3 tools/validate_links.py
+```
+
+### 单项校验
+
+```bash
+make validate-tokens
+make validate-naming
+make validate-html
+make validate-a11y
+make validate-versions
+make validate-links
+```
+
+### 在 CI 中
+
+`.github/workflows/ci.yml` 在 PR 与 push 时自动跑全部校验。
+失败会阻塞 PR 合并。
+
+## 各工具详细规范
+
+### 1. `validate_tokens.py`
+
+**目标**：确保 `tokens.json` 与 `styles.css` 同步。
+
+**规则**：
+
+- ✅ `tokens.json` 中每个 token 必须在 `styles.css` 中定义
+- ✅ `styles.css` 中所有 `--ds-color-*` 应在 `tokens.json` 有对应条目
+- ✅ 颜色值必须用 OKLch 表达（不强制覆盖所有 token 类别，但至少 `colors` 必查）
+- ✅ 浅色 / 暗色 token 必须成对存在
+
+**示例输出**：
+
+```
+[OK] tokens.json ↔ styles.css 同步 (208 tokens)
+[WARN] tokens.json 缺少 --ds-color-surface-sunken（建议补全）
+[ERROR] styles.css 中 --ds-color-olive-400 与 tokens.json 不一致
+```
+
+### 2. `validate_naming.py`
+
+**目标**：强制 BEM / token 命名规范。
+
+**规则**：
+
+- ✅ 组件 class 必须 `ds-{component}` 或 `ds-{component}--{variant}`
+- ✅ Token 必须 `--ds-{category}-{name}`
+- ✅ 类别前缀必须在白名单中（`color / font / text / weight / ...`）
+- ❌ 禁止 `as any` / `@ts-expect-error` / `@ts-ignore`（JS 注释检查）
+- ❌ 禁止空 catch 块
+
+### 3. `validate_html.py`
+
+**目标**：HTML 结构合法性。
+
+**规则**：
+
+- ✅ `<html>` 必须有 `lang` 属性
+- ✅ `<head>` 必须包含 `<meta charset>` 与 `<meta name="viewport">`
+- ✅ `<link rel="stylesheet">` 引用的 CSS 文件存在
+- ✅ `<script src>` 引用的 JS 文件存在
+- ✅ 标签闭合（HTML5 容错模式只警告，不阻断）
+- ✅ 重复 `id` 检测
+
+### 4. `validate_a11y.py`
+
+**目标**：基础可访问性合规。
+
+**规则**：
+
+- ✅ `<img>` 必有 `alt`（装饰性 `alt=""` 允许）
+- ✅ 交互元素（`<a>` / `<button>`）必有可访问名称
+- ✅ `<a>` 嵌套 `<a>` 警告
+- ✅ `<button>` 不嵌套 `<button>` 警告
+- ✅ 标题层级连贯（h1 → h2 → h3，不跳级）
+- ✅ 页面至少一个 `<h1>`
+- ✅ 暗色模式背景与文字对比度提示（基于 OKLch 推算简化模型）
+
+> 完整 a11y 测试应使用 `axe-core`（可选 npx 集成，见 [未来工作](#未来工作)）。
+
+### 5. `validate_versions.py`
+
+**目标**：资源版本号同步。
+
+**规则**：
+
+- ✅ 所有 HTML 的 `styles.css?v=` 与 `scripts.js?v=` 一致
+- ✅ `?v=` 值与 `CHANGELOG.md` 最新版本号（或 `VERSION` 文件）一致
+- ✅ `?v=` 格式必须是 `X.Y.Z` 或 `X.Y.Z-{prerelease}`
+
+### 6. `validate_links.py`
+
+**目标**：链接与引用有效性。
+
+**规则**：
+
+- ✅ 内部链接（`href="#xxx"`）的目标 `id` 存在
+- ✅ 跨页锚点（`href="page.html#xxx"`）目标存在
+- ✅ `assets/...` 引用文件存在
+- ⚠️ 外链仅做格式校验（不实际 HTTP 请求）
+
+## 测试夹具
+
+位于 `tests/fixtures/`：
+
+- `minimal.html` — 最小合法 HTML
+- `with-errors.html` — 已知错误的 HTML（用于校验工具本身）
+- `tokens-sample.json` — 合法 tokens.json 样本
+- `tokens-bad.json` — 非法 tokens.json 样本
+
+## 未来工作
+
+### 短期（v1.2）
+
+- [ ] `validate_a11y.py` 集成 `axe-core`（通过 `npx @axe-core/cli`）
+- [ ] HTML 校验工具改用 `html5lib`（更严格）
+- [ ] 视觉回归测试：Playwright 截图对比（GitHub Actions 跑）
+
+### 中期（v1.3+）
+
+- [ ] 引入 Storybook-like 组件 playground
+- [ ] 视觉测试：Chromatic / Percy（需付费，留作可选）
+- [ ] 跨浏览器测试：BrowserStack（可选）
+
+### 长期（v2.0）
+
+- [ ] 引入 Web Test Runner / Vitest
+- [ ] 引入 Stylelint 自定义规则
+- [ ] 引入 ESLint（针对 `scripts.js`）
+- [ ] 引入 Lighthouse CI（性能 / SEO / a11y 综合评分）
+
+## 不在范围内
+
+- ❌ **单元测试组件 JS 行为** — 当前 `scripts.js` 主要是 DOM 操作与渲染，测试 ROI 低
+- ❌ **端到端测试（E2E）** — 项目是纯静态展示站，无业务逻辑
+- ❌ **服务器端测试** — 项目无后端
+
+## CI 集成
+
+完整工作流见 [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml)。
+简述：
+
+1. **触发**：push 到 main、PR、weekly schedule
+2. **环境**：`ubuntu-latest` + `python3 --version` ≥ 3.11
+3. **步骤**：
+   - checkout
+   - 运行 `python3 tools/validate_*.py`
+   - 报告失败 → 阻塞合并
+
+---
+
+*本策略的代码实现见 [`tools/`](../../tools/) 目录。*

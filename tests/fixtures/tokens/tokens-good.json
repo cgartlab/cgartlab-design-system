@@ -1,0 +1,12 @@
+{
+  "name": "Test Token Set — Good",
+  "version": "1.0.0",
+  "tokens": {
+    "colors": {
+      "neutral": {
+        "bg": "oklch(97% 0.012 80)",
+        "fg": "oklch(20% 0.02 60)"
+      }
+    }
+  }
+}

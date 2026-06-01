@@ -1,0 +1,11 @@
+{
+  "name": "Test Token Set — Bad (with errors)",
+  "tokens": {
+    "colors": {
+      "neutral": {
+        "bg": "#ffffff",
+        "fg": "rgb(0, 0, 0)"
+      }
+    }
+  }
+}

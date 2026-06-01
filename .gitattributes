@@ -1,0 +1,36 @@
+# Git attributes — 跨平台一致性与语言统计
+# https://git-scm.com/docs/gitattributes
+
+# 文本文件统一换行符为 LF（GitHub Pages 在 Windows/Linux 一致渲染）
+*          text=auto eol=lf
+
+# 明确标记文本，避免 Git 误判
+*.html     text eol=lf
+*.css      text eol=lf
+*.js       text eol=lf
+*.json     text eol=lf
+*.md       text eol=lf
+*.svg      text eol=lf
+*.py       text eol=lf
+*.yml      text eol=lf
+*.yaml     text eol=lf
+*.sh       text eol=lf
+
+# 标记为二进制（不尝试行尾归一化、不做 diff）
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.gif      binary
+*.webp     binary
+*.ico      binary
+*.woff     binary
+*.woff2    binary
+*.ttf      binary
+*.pdf      binary
+*.penpot   binary
+
+# Markdown diff 友好（按段落而非行）
+*.md       diff=markdown
+
+# 导出归档（下载产物 — 仍跟随仓库，但避免误改）
+/assets/downloads/* linguist-generated

@@ -1,0 +1,26 @@
+{
+  "name": "cgartlab-design-system",
+  "version": "1.3.1",
+  "private": true,
+  "description": "CGArtLab Design System — 零运行时依赖的纯静态设计系统（仅用于开发工具与 CI 自动化）",
+  "license": "CC-BY-4.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "validate": "node scripts/run-validators.js",
+    "validate:tokens": "python3 tools/validate_tokens.py",
+    "validate:naming": "python3 tools/validate_naming.py",
+    "validate:html": "python3 tools/validate_html.py",
+    "validate:a11y": "python3 tools/validate_a11y.py",
+    "validate:versions": "python3 tools/validate_versions.py",
+    "validate:links": "python3 tools/validate_links.py",
+    "serve": "npx serve -l 8000 .",
+    "pdfs": "python3 tools/generate_pdfs.py",
+    "clean": "node scripts/clean.js"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  },
+  "comment": "本 package.json 仅用于开发体验（serve / clean）和 CI 桥接（run-validators.js）。运行时无 Node 依赖，所有令牌、组件、样式均通过 HTML/CSS/JS 直接使用。"
+}
