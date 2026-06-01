@@ -35,7 +35,8 @@
 
 ## 代码阶段（发布当天）
 
-- [ ] 在所有 HTML 中 bump `?v=X.Y.Z`
+- [ ] 写入新版本号到 `VERSION`（如 `1.4.0`）
+- [ ] 运行 `make stamp-version` 一次性同步所有 HTML / README / AGENTS
 - [ ] 同步更新 `scripts.js` 的 `TOKENS` 数组（如有新增令牌）
 - [ ] 同步更新 `tokens.json`（如有新增令牌）
 - [ ] 运行 `make validate-versions` 确认 `?v=` 一致

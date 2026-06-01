@@ -134,8 +134,29 @@ make validate-links
 - ✅ 所有 HTML 的 `styles.css?v=` 与 `scripts.js?v=` 一致
 - ✅ `?v=` 值与 `CHANGELOG.md` 最新版本号（或 `VERSION` 文件）一致
 - ✅ `?v=` 格式必须是 `X.Y.Z` 或 `X.Y.Z-{prerelease}`
+- ✅ HTML / README / AGENTS 中无 `{{DS_VERSION}}` 占位符残留
 
-### 6. `validate_links.py`
+### 6. `stamp_version.py`（stamp 工具）
+
+**目标**：消除"改 VERSION → 改 6 个 HTML → 改 README → 改 AGENTS"的繁琐手动流程。
+
+**机制**：源码中所有需要同步的位置都写成 `{{DS_VERSION}}` 占位符，stamp 工具
+一次性替换为真实版本号。无构建步骤，GitHub Pages 仍可直接部署静态文件。
+
+**使用**：
+
+```bash
+python3 tools/stamp_version.py           # 应用变更
+python3 tools/stamp_version.py --check   # 仅检查（CI 用）
+python3 tools/stamp_version.py --diff    # 预览 diff
+```
+
+**自动触发**：
+
+- pre-commit hook（改 HTML/CSS/JS 时自动 stamp）
+- `make stamp-version` / `make stamp-check` / `./scripts/dev.sh stamp`
+
+### 7. `validate_links.py`
 
 **目标**：链接与引用有效性。
 

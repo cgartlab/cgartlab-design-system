@@ -73,6 +73,8 @@ CGArtLab Design System — dev 辅助脚本
   validate-a11y      校验可访问性
   validate-versions  校验版本号
   validate-links     校验链接
+  stamp              将 VERSION 同步到所有 HTML / MD 资源
+  stamp-check        检查 stamp 状态（CI 用）
   pdfs               生成示例 PDF
   clean              清理临时文件
   help               显示此帮助

@@ -4,7 +4,7 @@
 
 SHELL := /bin/sh
 .DEFAULT_GOAL := help
-.PHONY: help validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links serve clean serve-py serve-node generate-pdfs test
+.PHONY: help validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links stamp-version serve clean serve-py serve-node generate-pdfs test
 
 PYTHON ?= python3
 NODE ?= node
@@ -41,6 +41,9 @@ validate-versions:  ## 校验资源 ?v= 版本号同步
 
 validate-links:  ## 校验链接与引用
 	$(PYTHON) tools/validate_links.py
+
+stamp-version:  ## 将 VERSION 同步到所有 HTML / MD 资源
+	$(PYTHON) tools/stamp_version.py
 
 # ─── 本地预览 ──────────────────────────────────────────────
 serve: serve-py  ## 本地启动 HTTP 服务器（默认 8000）
