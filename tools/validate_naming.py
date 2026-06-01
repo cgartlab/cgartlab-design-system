@@ -101,19 +101,99 @@ def check_anti_patterns(paths: list[Path]) -> list[str]:
     return issues
 
 
+def _find_non_string_braces(line: str) -> int:
+    """统计一行中不在字符串/注释内的 {} 差异（{ +1, } -1）。"""
+    depth = 0
+    in_single = False
+    in_double = False
+    in_backtick = False
+    in_block = False
+
+    j = 0
+    while j < len(line):
+        c = line[j]
+
+        if in_block:
+            if c == '*' and j + 1 < len(line) and line[j + 1] == '/':
+                in_block = False
+                j += 2
+            else:
+                j += 1
+            continue
+
+        if in_single:
+            if c == '\\':
+                j += 2
+                continue
+            if c == "'":
+                in_single = False
+            j += 1
+            continue
+
+        if in_double:
+            if c == '\\':
+                j += 2
+                continue
+            if c == '"':
+                in_double = False
+            j += 1
+            continue
+
+        if in_backtick:
+            if c == '\\':
+                j += 2
+                continue
+            if c == '`':
+                in_backtick = False
+            j += 1
+            continue
+
+        # Not in any string / block comment
+        if c == '/' and j + 1 < len(line):
+            if line[j + 1] == '/':
+                break  # rest of line is a single-line comment
+            if line[j + 1] == '*':
+                in_block = True
+                j += 2
+                continue
+
+        if c == "'":
+            in_single = True
+            j += 1
+            continue
+
+        if c == '"':
+            in_double = True
+            j += 1
+            continue
+
+        if c == '`':
+            in_backtick = True
+            j += 1
+            continue
+
+        if c == '{':
+            depth += 1
+        elif c == '}':
+            depth -= 1
+
+        j += 1
+
+    return depth
+
+
 def check_var_in_js() -> list[str]:
     """检查 scripts.js 顶层禁用 var。"""
     if not JS_FILE.exists():
         return []
     text = JS_FILE.read_text(encoding="utf-8", errors="replace")
     issues = []
-    # 仅检查顶层（非函数内、非注释）的 var 声明
     in_function = 0
     for i, line in enumerate(text.splitlines(), 1):
         stripped = line.strip()
-        if not stripped or stripped.startswith("//") or stripped.startswith("/*"):
+        if not stripped:
             continue
-        in_function += line.count("{") - line.count("}")
+        in_function += _find_non_string_braces(line)
         if in_function > 0:
             continue
         if re.match(r"^var\s+[a-zA-Z_$]", stripped):
