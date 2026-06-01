@@ -158,12 +158,69 @@ def diff_text(old: str, new: str) -> list[str]:
     return out
 
 
+def replace_old_version(text: str, old_version: str, new_version: str) -> tuple[str, int]:
+    """在已提交（已 stamp）的文件中把旧版本号替换为新版本号。
+
+    处理两种形式：
+      - ?v=OLD  （cache-busting query string）
+      - vOLD    （可见的版本文字，仅在词边界处）
+    """
+    count = 0
+
+    def _sub(pattern: str, repl: str, s: str) -> tuple[str, int]:
+        new, n = re.subn(pattern, repl, s)
+        return new, n
+
+    quote_class = r"""["']"""
+    text, n = _sub(
+        rf"\?v={re.escape(old_version)}(?={quote_class})",
+        f"?v={new_version}",
+        text,
+    )
+    count += n
+    text, n = _sub(rf"\bv{re.escape(old_version)}\b", f"v{new_version}", text)
+    count += n
+    return text, count
+
+
+def find_previous_version(paths: list[Path], current_version: str) -> str | None:
+    """从已提交的文件中探测现有的版本号（?v=X.Y.Z），用于版本 bump 场景。
+
+    当文件已被 stamp（不含占位符），需要把旧版本号替换为新版本号时使用。
+    """
+    version_re = re.compile(r'\?v=([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?)["\']')
+    for path in paths:
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        m = version_re.search(text)
+        if m:
+            v = m.group(1)
+            if v != current_version:
+                return v
+    return None
+
+
 def apply_stamp(paths: Iterable[Path], version: str, mode: str) -> int:
     """执行 stamp 主体逻辑。
 
     mode ∈ {"write", "check", "diff", "restore"}
     返回：0 = 成功 / 一致；1 = 错误；2 = check 模式发现不一致
+
+    两段式策略（write / check / diff）：
+      第一段：将 {{DS_VERSION}} 占位符替换为 version（初次 stamp）
+      第二段：将已 stamp 的旧版本号替换为 version（版本 bump）
+    两段合并后得到最终的变更数，确保无论源文件处于哪种状态都能正确更新。
     """
+    paths = list(paths)  # 需要两次遍历（探测旧版本）
+
+    # 探测已提交文件中的旧版本号（用于 bump 场景）
+    old_version: str | None = None
+    if mode in ("write", "check", "diff"):
+        old_version = find_previous_version(paths, version)
+        if old_version:
+            print(f"检测到旧版本号: v{old_version}（将同步为 v{version}）")
+
     total_changes = 0
     files_changed = 0
     files_checked = 0
@@ -184,15 +241,28 @@ def apply_stamp(paths: Iterable[Path], version: str, mode: str) -> int:
                 path.write_text(new_text, encoding="utf-8")
             continue
 
-        # write / check / diff 都是把 {{VERSION}} 替换为 version
-        new_text, n = PLACEHOLDER_RE.subn(version, original)
-        if n == 0:
-            files_checked += 1
-            continue
+        # ── 第一段：占位符替换 ──────────────────────────────────────
+        new_text, n_placeholder = PLACEHOLDER_RE.subn(version, original)
+
+        # ── 第二段：旧版本号替换（bump 场景）──────────────────────
+        n_bump = 0
+        if old_version:
+            new_text, n_bump = replace_old_version(new_text, old_version, version)
+
+        n = n_placeholder + n_bump
         files_checked += 1
 
+        if n == 0:
+            # 文件已是最新版本，跳过
+            continue
+
         if mode == "check":
-            print(f"  [STAMP NEEDED] {path.name}: {n} 个占位符仍是 {PLACEHOLDER}")
+            reasons = []
+            if n_placeholder:
+                reasons.append(f"{n_placeholder} 个 {PLACEHOLDER} 占位符")
+            if n_bump:
+                reasons.append(f"{n_bump} 处旧版本号 v{old_version}")
+            print(f"  [STAMP NEEDED] {path.name}: {', '.join(reasons)}")
             inconsistencies += 1
             total_changes += n
             continue
@@ -206,7 +276,12 @@ def apply_stamp(paths: Iterable[Path], version: str, mode: str) -> int:
             continue
 
         # mode == "write"
-        print(f"  [stamp] {path.name}: {n} 个占位符 → v{version}")
+        reasons = []
+        if n_placeholder:
+            reasons.append(f"{n_placeholder} 个占位符")
+        if n_bump:
+            reasons.append(f"{n_bump} 处旧版本号 v{old_version}")
+        print(f"  [stamp] {path.name}: {', '.join(reasons)} → v{version}")
         total_changes += n
         files_changed += 1
         if new_text != original:

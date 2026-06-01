@@ -6,8 +6,8 @@
   2. ?v= 值与 CHANGELOG.md / VERSION 最新稳定版本号一致
   3. ?v= 格式合法（X.Y.Z 或 X.Y.Z-{prerelease}）
   4. 同一资源在所有 HTML 中 ?v= 一致
-  5. 占位符 {{VERSION}} 已被 stamp（不应有遗留）
-  6. HTML 用户可见版本（hero badge / footer v{{VERSION}}）已被 stamp
+  5. 占位符 {{DS_VERSION}} 已被 stamp（不应有遗留）
+  6. HTML 用户可见版本（hero badge / footer v{{DS_VERSION}}）已被 stamp
   7. README.md 顶部版本 badge 已被 stamp
   8. AGENTS.md 状态行版本号已被 stamp
 """
@@ -28,7 +28,7 @@ AGENTS_FILE = ROOT / "AGENTS.md"
 VERSION_RE = re.compile(r"\?v=([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?)")
 SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?$")
 CHANGELOG_VERSION_RE = re.compile(r"^##\s+\[([0-9]+\.[0-9]+\.[0-9]+[^\]]*)\]")
-PLACEHOLDER_RE = re.compile(r"\{\{VERSION\}\}")
+PLACEHOLDER_RE = re.compile(r"\{\{DS_VERSION\}\}")
 
 
 def get_expected_version() -> str | None:
@@ -59,7 +59,7 @@ def check_html(path: Path) -> dict[str, str]:
 
 
 def count_placeholders(path: Path) -> int:
-    """统计文件中残留的 {{VERSION}} 占位符数量。"""
+    """统计文件中残留的 {{DS_VERSION}} 占位符数量。"""
     if not path.exists():
         return 0
     text = path.read_text(encoding="utf-8", errors="replace")
@@ -129,7 +129,7 @@ def main() -> int:
             print(f"  {file}: {resource}")
         warnings += 1
 
-    # 5. {{DS_VERSION}} 占位符不应残留
+    # 5. {{DS_VERSION}} 占位符不应残留（与 stamp_version.py 保持一致）
     placeholder_files = []
     for path in list(html_files) + [README_FILE, AGENTS_FILE]:
         n = count_placeholders(path)
