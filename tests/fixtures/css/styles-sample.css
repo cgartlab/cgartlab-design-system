@@ -1,0 +1,27 @@
+/* tests/fixtures/css/styles-sample.css — 合法 CSS 样本 */
+:root {
+  --ds-color-bg: oklch(97% 0.012 80);
+  --ds-color-fg: oklch(20% 0.02 60);
+  --ds-color-olive-400: oklch(52% 0.08 115);
+  --ds-space-4: 1rem;
+  --ds-radius-md: 4px;
+  --ds-text-body: 1rem;
+}
+
+[data-theme="dark"] {
+  --ds-color-bg: oklch(15% 0.008 75);
+  --ds-color-fg: oklch(84% 0.008 72);
+  --ds-color-olive-400: oklch(57% 0.065 115);
+}
+
+.ds-card {
+  background: var(--ds-color-bg);
+  color: var(--ds-color-fg);
+  padding: var(--ds-space-4);
+  border-radius: var(--ds-radius-md);
+}
+
+.ds-btn--primary {
+  background: var(--ds-color-olive-400);
+  color: var(--ds-color-bg);
+}
