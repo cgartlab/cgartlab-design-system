@@ -1,15 +1,55 @@
-# Penpot design exports
+# ─── Design source (not published) ───────────────────────
+# Penpot exports
 *.penpot
 .sisyphus/
 
-# OS
-Thumbs.db
+# ─── Local tooling / runtime ─────────────────────────────
+# Node（如果用 npm 跑 lint/axe）
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python（tools/validate_*.py 与测试）
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# 验证工具报告
+test-reports/
+*.report.json
+
+# ─── Editor / OS metadata ────────────────────────────────
 .DS_Store
+Thumbs.db
+desktop.ini
 opencode.json
 
+# IDE / 编辑器
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
 
-# Editor / generator metadata (not part of the published site)
-*.artifact.json
-
-# Legacy single-page handbook (superseded by handbook.html)
+# ─── Generator / artifact metadata ───────────────────────
+# 旧版单页手册（已被 handbook.html 取代）
 cgartlab-design-system.html
+# Artifact 元数据
+*.artifact.json
+# OpenCode 生成物
+.opencode/
+
+# ─── Build / dist（保留可能性，但不提交）─────────────────
+dist/
+build/
+out/
+.tmp/
+.cache/
