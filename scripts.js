@@ -282,7 +282,7 @@ const TOKENS = [
     var html = document.documentElement;
     if (mode === "system") {
       html.setAttribute("data-theme", getSystemPref());
-      html.removeAttribute("data-theme-mode");
+      html.setAttribute("data-theme-mode", "system");
     } else {
       html.setAttribute("data-theme", mode);
       html.setAttribute("data-theme-mode", mode);
