@@ -207,6 +207,76 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-caption, .ds-eyebrow, .ds-meta, .ds-toc-num{letter-spacing:var(--ds-tracking-wider)!important}
 .ds-btn, .ds-input, .ds-form-input, .ds-form-textarea, .ds-label, .ds-badge, .ds-chip, .ds-toast-text{letter-spacing:var(--ds-tracking-normal)}
 
+/* ===== Chinese Typography Utilities (中文排版规范) ===== */
+/* 中文正文排版优化 - 两端对齐、自动换行、适当字距 */
+.ds-text-cjk{
+  line-height:var(--ds-cjk-line-height);
+  letter-spacing:var(--ds-tracking-cjk-body);
+  text-align:justify;
+  word-wrap:break-word;
+  overflow-wrap:break-word;
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+
+/* 中文标题排版 - 不宜使用过粗字重 */
+.ds-text-cjk-heading{
+  letter-spacing:var(--ds-tracking-cjk-heading);
+  font-weight:600;
+  line-height:var(--ds-leading-snug);
+}
+
+/* 中西文混排优化 - 在中文和英文/数字之间添加微小间距 */
+.ds-text-mixed{
+  word-spacing:0.05em;
+}
+
+/* 中文段落首行缩进（可选，用于正式文档） */
+.ds-text-indent{
+  text-indent:2em;
+}
+
+/* 标点符号悬挂（可选，用于专业排版） */
+.ds-hanging-punctuation{
+  hanging-punctuation:first allow-end last;
+}
+
+/* 中文强调样式 - 使用着重号而非斜体 */
+.ds-text-emphasis{
+  font-style:normal;
+  text-emphasis:dot var(--ds-accent);
+  text-emphasis-position:under right;
+}
+
+/* 中文高亮 - 使用背景色而非斜体 */
+.ds-text-highlight{
+  font-style:normal;
+  background:var(--ds-accent-soft);
+  padding:0.125em 0.25em;
+  border-radius:var(--ds-radius-sm);
+}
+
+/* 中文引用样式 - 使用直角引号风格 */
+.ds-quote-cjk{
+  font-style:normal;
+  color:var(--ds-color-fg-subtle);
+  border-left:3px solid var(--ds-accent);
+  padding-left:var(--ds-space-4);
+  margin:var(--ds-space-4) 0;
+}
+
+/* 防止孤字成行 */
+.ds-no-orphan{
+  orphans:2;
+  widows:2;
+}
+
+/* 数字与单位之间的间距优化 */
+.ds-num-unit{
+  font-variant-numeric:tabular-nums;
+  word-spacing:0.04em;
+}
+
 /* ===== Scrollbar ===== */
 ::-webkit-scrollbar{width:8px;height:8px}
 ::-webkit-scrollbar-track{background:transparent}
