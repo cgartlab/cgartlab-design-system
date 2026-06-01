@@ -50,6 +50,16 @@ switch ($Command) {
         & python "$Root/tools/generate_pdfs.py"
     }
 
+    { @("icons", "generate-icons") -contains $_ } {
+        Write-Host "→ 生成 SVG 图标 sprite" -ForegroundColor Green
+        & python "$Root/tools/generate_icons.py"
+    }
+
+    "icons-check" {
+        Write-Host "→ 校验 icons.svg 是否与 ICONS 数组同步" -ForegroundColor Green
+        & python "$Root/tools/generate_icons.py" --check
+    }
+
     "clean" {
         Write-Host "→ 清理" -ForegroundColor Green
         if (Test-Path "$Root/test-reports") { Remove-Item -Recurse -Force "$Root/test-reports" }
@@ -76,6 +86,8 @@ CGArtLab Design System — dev 辅助脚本
   stamp              将 VERSION 同步到所有 HTML / MD 资源
   stamp-check        检查 stamp 状态（CI 用）
   pdfs               生成示例 PDF
+  icons              生成 icons.svg（SVG sprite）
+  icons-check        校验 icons.svg 与 ICONS 是否同步
   clean              清理临时文件
   help               显示此帮助
 "@
