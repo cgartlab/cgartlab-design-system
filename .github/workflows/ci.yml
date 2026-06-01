@@ -1,0 +1,125 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev-**, fix-**, write-**, release/**]
+  pull_request:
+    branches: [main]
+  schedule:
+    # 每周一 UTC 0:00 跑一次，防止 main 长期不活动而失修
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate (tokens · naming · html · a11y · versions · links)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache (no-op placeholder for future heavy deps)
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-python-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-python-
+
+      - name: Make scripts executable
+        run: |
+          chmod +x tools/validate_*.py
+          echo "✓ Scripts are executable"
+
+      - name: Validate tokens
+        id: tokens
+        run: python3 tools/validate_tokens.py
+
+      - name: Validate naming
+        id: naming
+        run: python3 tools/validate_naming.py
+
+      - name: Validate HTML
+        id: html
+        run: python3 tools/validate_html.py
+
+      - name: Validate accessibility
+        id: a11y
+        run: python3 tools/validate_a11y.py
+
+      - name: Validate version sync
+        id: versions
+        run: python3 tools/validate_versions.py
+
+      - name: Validate links
+        id: links
+        run: python3 tools/validate_links.py
+
+      - name: Summarize
+        if: always()
+        run: |
+          echo "## 验证总结" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| 校验项 | 结果 |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|------|" >> $GITHUB_STEP_SUMMARY
+          echo "| tokens | ${{ steps.tokens.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| naming | ${{ steps.naming.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| html   | ${{ steps.html.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| a11y   | ${{ steps.a11y.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| versions | ${{ steps.versions.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| links  | ${{ steps.links.outcome }} |" >> $GITHUB_STEP_SUMMARY
+
+  # 可选：可视化快照对比（未来启用）
+  visual-regression:
+    name: Visual regression (optional)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: true
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright
+        run: |
+          npm install -g playwright@latest
+          npx playwright install --with-deps chromium
+
+      - name: Capture screenshots
+        run: |
+          python3 -m http.server 8765 &
+          SERVER_PID=$!
+          sleep 2
+          mkdir -p test-reports
+          npx playwright screenshot --browser=chromium --full-page \
+            http://localhost:8765/handbook.html test-reports/handbook.png
+          npx playwright screenshot --browser=chromium --full-page \
+            http://localhost:8765/index.html test-reports/index.png
+          kill $SERVER_PID 2>/dev/null || true
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-snapshots
+          path: test-reports/*.png
+          retention-days: 14

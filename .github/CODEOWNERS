@@ -1,0 +1,44 @@
+# CGArtLab Design System CODEOWNERS
+# 维护者请将本文件中的占位符替换为实际 GitHub 用户名。
+# 当 PR 涉及以下路径时，相应维护者会被自动指派为评审者。
+
+# 默认：所有变更需 @cgartlab 维护者团队评审
+*                                          @cgartlab/maintainers
+
+# ─── 视觉 / 设计 ──────────────────────────────────────────
+/assets/brand/                              @cgartlab/design-lead
+/favicon.svg                                @cgartlab/design-lead
+
+# ─── 核心样式 / 令牌 ──────────────────────────────────────
+/styles.css                                 @cgartlab/frontend-lead
+/tokens.json                                @cgartlab/design-lead
+
+# ─── 核心脚本 ──────────────────────────────────────────────
+/scripts.js                                 @cgartlab/frontend-lead
+
+# ─── 文档 ──────────────────────────────────────────────────
+/*.md                                       @cgartlab/docs-maintainer
+/docs/                                      @cgartlab/docs-maintainer
+/DEVELOPMENT-GUIDE.md                       @cgartlab/frontend-lead
+/AGENTS.md                                  @cgartlab/maintainers
+/README.md                                  @cgartlab/maintainers
+
+# ─── 治理 ──────────────────────────────────────────────────
+/.github/                                   @cgartlab/maintainers
+/CONTRIBUTING.md                            @cgartlab/maintainers
+/CODE_OF_CONDUCT.md                         @cgartlab/maintainers
+/SECURITY.md                                @cgartlab/maintainers
+/LICENSE                                    @cgartlab/maintainers
+
+# ─── AI / 提示词 ──────────────────────────────────────────
+/prompts/                                   @cgartlab/ai-lead
+/skills/                                    @cgartlab/ai-lead
+
+# ─── 工具 / 验证 ──────────────────────────────────────────
+/tools/                                     @cgartlab/frontend-lead
+/tests/                                     @cgartlab/frontend-lead
+/.github/workflows/                         @cgartlab/devops
+
+# ─── 部署 ──────────────────────────────────────────────────
+/CNAME                                      @cgartlab/devops
+/.nojekyll                                  @cgartlab/devops
