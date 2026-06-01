@@ -118,6 +118,9 @@ def main() -> int:
             else:
                 file_part, anchor = href, None
 
+            # 去除查询字符串（如 ?v=1.3.1），避免把版本化引用误判为不存在的文件
+            file_part = file_part.split("?")[0]
+
             # 文件存在性
             target_path = (path.parent / file_part).resolve()
             if not target_path.exists():

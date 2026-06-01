@@ -59,7 +59,7 @@ jobs:
       - name: Extract changelog
         id: changelog
         run: |
-          awk '/^## \[/{flag=!flag; if(flag && !/Unreleased/) {capture=1}} capture' CHANGELOG.md | \
+          awk '/^## \[/{flag=!flag; if(flag && !/Unreleased|未发布/) {capture=1}} capture' CHANGELOG.md | \
             awk 'BEGIN{count=0} /^## \[/{count++; if(count>1) exit} {print}' > /tmp/release-notes.md
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
           cat /tmp/release-notes.md >> $GITHUB_OUTPUT

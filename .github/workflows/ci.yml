@@ -52,27 +52,28 @@ jobs:
 
       - name: Validate tokens
         id: tokens
-        run: python3 tools/validate_tokens.py
+        # Exit 0 = OK, exit 1 = errors (fail), exit 2 = warnings-only (pass)
+        run: python3 tools/validate_tokens.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
 
       - name: Validate naming
         id: naming
-        run: python3 tools/validate_naming.py
+        run: python3 tools/validate_naming.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
 
       - name: Validate HTML
         id: html
-        run: python3 tools/validate_html.py
+        run: python3 tools/validate_html.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
 
       - name: Validate accessibility
         id: a11y
-        run: python3 tools/validate_a11y.py
+        run: python3 tools/validate_a11y.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
 
       - name: Validate version sync
         id: versions
-        run: python3 tools/validate_versions.py
+        run: python3 tools/validate_versions.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
 
       - name: Validate links
         id: links
-        run: python3 tools/validate_links.py
+        run: python3 tools/validate_links.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
 
       - name: Summarize
         if: always()
