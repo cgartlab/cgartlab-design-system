@@ -145,6 +145,7 @@
   --ds-blur-md: 12px;
   --ds-blur-lg: 24px;
   --ds-blur-xl: 48px;
+  --d: 0ms;
 }
 
 /* ===== Dark mode ===== */
