@@ -303,12 +303,10 @@ const TOKENS = [
   }
 
   function cycleTheme() {
-    const btn = document.getElementById("theme-toggle-btn");
-    if (!btn) return;
-    const label = btn.getAttribute("aria-label") || "";
-    if (label.indexOf("浅色") !== -1) {
+    const mode = document.documentElement.getAttribute("data-theme-mode") || "system";
+    if (mode === "light") {
       applyTheme("dark");
-    } else if (label.indexOf("暗色") !== -1) {
+    } else if (mode === "dark") {
       applyTheme("system");
     } else {
       applyTheme("light");
