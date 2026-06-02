@@ -265,7 +265,6 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   letter-spacing:var(--ds-tracking-cjk-body);
   text-align:justify;
   word-wrap:break-word;
-  overflow-wrap:break-word;
   word-break:normal;
   overflow-wrap:anywhere;
 }
