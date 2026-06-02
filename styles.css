@@ -1102,7 +1102,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-text-pretty{text-wrap:pretty}
 .ds-mx-auto{margin-left:auto;margin-right:auto}
 .ds-measure{max-width:65ch}
-.ds-narrow{max-width:760px}
+.ds-narrow{max-width:820px}
+.ds-narrow .ds-lead{max-width:none}
 .ds-narrow-sm{max-width:560px}
 .ds-stack{display:flex;flex-direction:column;gap:var(--ds-stack-gap,var(--ds-space-4))}
 .ds-stack--lg{--ds-stack-gap:var(--ds-space-8)}
