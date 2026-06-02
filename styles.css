@@ -973,8 +973,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-gradient-text{background:linear-gradient(110deg,var(--ds-color-olive-600),var(--ds-accent) 45%,var(--ds-color-olive-300));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:ds-gradient-pan 8s var(--ds-ease-in-out) infinite;font-style:italic;font-weight:inherit}
 .ds-hero-lead{font-size:var(--ds-text-h5);font-weight:var(--ds-weight-regular);line-height:1.65;color:var(--ds-color-muted);max-width:min(660px,100%);margin:0 auto var(--ds-space-12);letter-spacing:var(--ds-tracking-cjk-body)}
 .ds-hero-actions{display:flex;flex-wrap:wrap;gap:var(--ds-space-4);justify-content:center;align-items:center;margin-bottom:var(--ds-space-12)}
-.ds-hero-meta{font-family:var(--ds-font-mono);font-size:var(--ds-text-caption);color:var(--ds-color-muted);letter-spacing:var(--ds-tracking-wider);text-transform:uppercase;display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--ds-space-3);padding-top:var(--ds-space-6);border-top:1px solid var(--ds-color-border-subtle);max-width:fit-content;margin-left:auto;margin-right:auto;position:relative}
-.ds-hero-meta::before,.ds-hero-meta::after{content:"";width:24px;height:1px;background:var(--ds-color-border);opacity:.6}
+.ds-hero-meta{font-family:var(--ds-font-mono);font-size:var(--ds-text-caption);color:var(--ds-color-muted);letter-spacing:var(--ds-tracking-wider);text-transform:uppercase;display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--ds-space-3);padding-top:var(--ds-space-6);border-top:1px solid var(--ds-color-border-subtle);max-width:fit-content;margin-left:auto;margin-right:auto}
 @keyframes ds-pulse-dot{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(2.4);opacity:0}}
 
 /* ===== Feature grid ===== */
@@ -1138,7 +1137,6 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-hero-actions{margin-bottom:var(--ds-space-10)}
   .ds-hero-actions .ds-btn{width:100%;max-width:280px}
   .ds-hero-meta{padding-top:var(--ds-space-5);font-size:11px;letter-spacing:var(--ds-tracking-wide)}
-  .ds-hero-meta::before,.ds-hero-meta::after{width:16px}
   .ds-stat-num{font-size:var(--ds-text-h1)}
   .ds-footer-cols{grid-template-columns:1fr;gap:var(--ds-space-8)}
   .ds-navbar-cta span{display:none}
