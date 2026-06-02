@@ -200,7 +200,7 @@
 
 /* ===== Reset & Base ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;scroll-behavior:smooth;scroll-padding-top:72px;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
+html{font-size:16px;scroll-behavior:smooth;scroll-padding-top:calc(64px + var(--ds-space-2));-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
 body{font-family:var(--ds-font-body);font-size:var(--ds-text-body);line-height:var(--ds-leading-body);letter-spacing:var(--ds-tracking-cjk-body);font-weight:var(--ds-weight-regular);color:var(--ds-color-fg);background:var(--ds-color-bg);transition:background .4s,color .4s}
 /* CJK & mixed text optimizations */
 body, p, li, .ds-wrapper, .ds-section-header p, .ds-component-label, .ds-form-label, .ds-timeline-content p, .ds-toast-text, .ds-navbar a{letter-spacing:var(--ds-tracking-cjk-body)}
@@ -1133,3 +1133,5 @@ a.ds-feature-card:focus-visible{outline:2px solid var(--ds-accent);outline-offse
 /* ===== Skip to content (a11y) ===== */
 .ds-skip{position:absolute;top:-100%;left:var(--ds-space-4);padding:var(--ds-space-3) var(--ds-space-5);background:var(--ds-accent);color:var(--ds-color-white);border-radius:var(--ds-radius-md);font-size:var(--ds-text-body-sm);font-weight:600;z-index:9999;text-decoration:none;transition:top var(--ds-duration-200)}
 .ds-skip:focus{top:var(--ds-space-4)}
+#ds-main{outline:none}
+#ds-main:focus-visible{outline:2px solid var(--ds-accent);outline-offset:2px}
