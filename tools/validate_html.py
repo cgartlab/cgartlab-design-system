@@ -31,6 +31,8 @@ class HTMLChecker(HTMLParser):
         self.has_viewport = False
         self.has_html_lang = False
         self.html_lang = ""
+        self.has_description = False
+        self.has_title = False
         self.in_head = False
         self.in_body = False
 
@@ -51,6 +53,10 @@ class HTMLChecker(HTMLParser):
                 self.has_charset = True
             if name == "viewport":
                 self.has_viewport = True
+            if name == "description":
+                self.has_description = True
+        elif tag == "title":
+            self.has_title = True
         elif tag == "link":
             href = attr_d.get("href", "")
             if href and not href.startswith(("http://", "https://", "//")):
@@ -88,6 +94,10 @@ def check_html(path: Path) -> list[tuple[str, str]]:
         issues.append(("ERROR", "<head> 缺少 <meta charset>"))
     if not checker.has_viewport:
         issues.append(("WARN", "<head> 缺少 <meta name='viewport'>"))
+    if not checker.has_description:
+        issues.append(("WARN", "<head> 缺少 <meta name='description'>"))
+    if not checker.has_title:
+        issues.append(("WARN", "<head> 缺少 <title>"))
 
     # 3. CSS 引用
     for href, line in checker.links:

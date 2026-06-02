@@ -57,6 +57,8 @@ class LinkExtractor(HTMLParser):
             self.links.append((attr_d["href"], None))
         elif tag == "link" and "href" in attr_d:
             self.links.append((attr_d["href"], None))
+        elif tag == "script" and "src" in attr_d:
+            self.links.append((attr_d["src"], None))
 
 
 def extract_links(path: Path) -> list[tuple[str, str | None]]:
