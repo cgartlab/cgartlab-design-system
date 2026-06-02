@@ -47,6 +47,8 @@ class A11YChecker(HTMLParser):
             self._in_heading = level
             self._heading_line = self.getpos()[0]
             self._current_heading_text = ""
+            if tag == "h1":
+                self.has_h1 = True
         elif tag == "img":
             if "alt" not in attr_d:
                 src = attr_d.get("src", "?")[:60]
@@ -60,8 +62,6 @@ class A11YChecker(HTMLParser):
             self.button_stack.append(True)
             if not self._has_accessible_name(attr_d):
                 self.interactive_no_name.append((f"<button>", self.getpos()[0]))
-        elif tag == "h1":
-            self.has_h1 = True
 
     def handle_endtag(self, tag: str) -> None:
         if tag in ("h1", "h2", "h3", "h4", "h5", "h6"):
@@ -81,15 +81,16 @@ class A11YChecker(HTMLParser):
         if self._in_heading is not None:
             self._current_heading_text += data
 
-    def _has_accessible_name(self, attrs: dict[str, str | None]) -> bool:
+    def _has_accessible_name(self, attrs: dict[str, str | None], text: str = "") -> bool:
         if attrs.get("aria-label"):
             return True
         if attrs.get("aria-labelledby"):
             return True
         if attrs.get("title"):
             return True
-        # 文本内容在 endtag 时统计，这里简化：先放过
-        return False  # 保守：先标记，稍后由后续 data 检查覆盖
+        if text and text.strip():
+            return True
+        return False
 
 
 def check_html(path: Path) -> list[tuple[str, str]]:
