@@ -17,6 +17,7 @@ Outputs (relative to repo root):
 Run:  python tools/generate_pdfs.py
 """
 
+import math
 import os
 
 A4_W, A4_H = 595.28, 841.89  # points
@@ -36,34 +37,88 @@ def read_version() -> str:
 
 VERSION = read_version()
 
-# ---- Approximate sRGB (0..1) for the OKLch palette (for swatches only;
-#      exact OKLch values are printed alongside each swatch). ----
-RGB = {
-    "bg":            (0.965, 0.953, 0.929),
-    "surface":       (0.988, 0.984, 0.972),
-    "surface-raised":(1.000, 1.000, 1.000),
-    "border":        (0.886, 0.874, 0.843),
-    "border-strong": (0.812, 0.792, 0.745),
-    "muted":         (0.460, 0.443, 0.415),
-    "fg-subtle":     (0.330, 0.315, 0.292),
-    "fg":            (0.180, 0.168, 0.149),
-    "fg-strong":     (0.130, 0.118, 0.102),
-    "olive-50":      (0.906, 0.902, 0.831),
-    "olive-100":     (0.824, 0.816, 0.698),
-    "olive-200":     (0.706, 0.698, 0.525),
-    "olive-300":     (0.592, 0.584, 0.369),
-    "olive-400":     (0.482, 0.478, 0.251),
-    "olive-500":     (0.408, 0.404, 0.200),
-    "olive-600":     (0.337, 0.333, 0.165),
-    "olive-700":     (0.259, 0.255, 0.129),
-    "olive-800":     (0.184, 0.184, 0.094),
-    "olive-900":     (0.125, 0.125, 0.060),
-    "success":       (0.305, 0.541, 0.322),
-    "warning":       (0.690, 0.540, 0.190),
-    "error":         (0.710, 0.270, 0.180),
-    "info":          (0.310, 0.500, 0.690),
-    "white":         (1.0, 1.0, 1.0),
+# ---- OKLch palette (values from tokens.json) ----
+# Each entry is an "oklch(L C h)" string where L is lightness [0..1],
+# C is chroma, h is hue in degrees.
+OKLCH = {
+    "bg":             "oklch(0.97 0.012 80)",
+    "surface":        "oklch(0.99 0.005 80)",
+    "surface-raised": "oklch(1.00 0.000 0)",
+    "border":         "oklch(0.89 0.012 80)",
+    "border-strong":  "oklch(0.82 0.015 75)",
+    "muted":          "oklch(0.48 0.015 60)",
+    "fg-subtle":      "oklch(0.35 0.018 60)",
+    "fg":             "oklch(0.20 0.020 60)",
+    "fg-strong":      "oklch(0.14 0.025 60)",
+    "olive-50":       "oklch(0.90 0.025 115)",
+    "olive-100":      "oklch(0.82 0.035 115)",
+    "olive-200":      "oklch(0.72 0.050 115)",
+    "olive-300":      "oklch(0.62 0.065 115)",
+    "olive-400":      "oklch(0.52 0.080 115)",
+    "olive-500":      "oklch(0.45 0.085 115)",
+    "olive-600":      "oklch(0.38 0.080 115)",
+    "olive-700":      "oklch(0.30 0.070 115)",
+    "olive-800":      "oklch(0.22 0.055 115)",
+    "olive-900":      "oklch(0.15 0.040 115)",
+    "success":        "oklch(0.55 0.100 145)",
+    "warning":        "oklch(0.65 0.100 85)",
+    "error":          "oklch(0.50 0.140 30)",
+    "info":           "oklch(0.55 0.080 240)",
 }
+
+
+def _parse_oklch(s: str):
+    """Parse 'oklch(L C h)' string into (L, C, h_deg) tuple of floats."""
+    s = s.strip()
+    # strip oklch(...)
+    inner = s[s.index("(") + 1:s.index(")")]
+    parts = inner.split()
+    return float(parts[0]), float(parts[1]), float(parts[2])
+
+
+def oklch_to_srgb(L: float, C: float, h: float):
+    """Convert OKLch to gamma-corrected sRGB, each channel in [0..1].
+
+    Implements the OKLch → OKLab → Linear sRGB → Gamma sRGB pipeline
+    using the matrices published by Björn Ottosson.
+    """
+    # 1. OKLch → OKLab
+    h_rad = math.radians(h)
+    a = C * math.cos(h_rad)
+    b = C * math.sin(h_rad)
+
+    # 2. OKLab → LMS' (cube-root space)
+    l_ = L + 0.3963377774 * a + 0.2158037573 * b
+    m_ = L - 0.1055613458 * a - 0.0638541728 * b
+    s_ = L - 0.0894841775 * a - 1.2914855480 * b
+
+    # 3. Cube → Linear LMS
+    l = l_ * l_ * l_
+    m = m_ * m_ * m_
+    s = s_ * s_ * s_
+
+    # 4. LMS → Linear sRGB (inverse of M1)
+    r_lin = 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s
+    g_lin = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s
+    b_lin = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+
+    # 5. Gamma encoding (sRGB piecewise)
+    def gamma_encode(v: float) -> float:
+        v = max(0.0, min(1.0, v))  # clamp out-of-gamut values
+        if v <= 0.0031308:
+            return 12.92 * v
+        return 1.055 * (v ** (1.0 / 2.4)) - 0.055
+
+    return (gamma_encode(r_lin), gamma_encode(g_lin), gamma_encode(b_lin))
+
+
+# Compute RGB lookup from the canonical OKLCH values.
+# 'white' is a special case (pure white has no OKLch representation beyond
+# oklch(100% 0 0) which already resolves to (1,1,1)).
+RGB = {}
+for _key, _oklch_str in OKLCH.items():
+    RGB[_key] = oklch_to_srgb(*_parse_oklch(_oklch_str))
+RGB["white"] = (1.0, 1.0, 1.0)
 
 
 def esc(s):
@@ -226,12 +281,12 @@ def build_reference():
     y = 130
     p.text(56, y, "NEUTRAL", "F2", 10, RGB["olive-500"]); y += 16
     neutrals = [
-        ("--ds-color-bg", "oklch(97% 0.012 80)", RGB["bg"]),
-        ("--ds-color-surface-raised", "oklch(100% 0 0)", RGB["surface-raised"]),
-        ("--ds-color-border", "oklch(89% 0.012 80)", RGB["border"]),
-        ("--ds-color-muted", "oklch(48% 0.015 60)", RGB["muted"]),
-        ("--ds-color-fg", "oklch(20% 0.02 60)", RGB["fg"]),
-        ("--ds-color-fg-strong", "oklch(14% 0.025 60)", RGB["fg-strong"]),
+        ("--ds-color-bg", OKLCH["bg"], RGB["bg"]),
+        ("--ds-color-surface-raised", OKLCH["surface-raised"], RGB["surface-raised"]),
+        ("--ds-color-border", OKLCH["border"], RGB["border"]),
+        ("--ds-color-muted", OKLCH["muted"], RGB["muted"]),
+        ("--ds-color-fg", OKLCH["fg"], RGB["fg"]),
+        ("--ds-color-fg-strong", OKLCH["fg-strong"], RGB["fg-strong"]),
     ]
     for name, val, col in neutrals:
         p.swatch_row(56, y, name, val, col)
@@ -239,11 +294,11 @@ def build_reference():
     y += 8
     p.text(56, y, "OLIVE GREEN  (accent = olive-400)", "F2", 10, RGB["olive-500"]); y += 16
     olive = [
-        ("--ds-color-olive-100", "oklch(82% 0.035 115)", RGB["olive-100"], False),
-        ("--ds-color-olive-300", "oklch(62% 0.065 115)", RGB["olive-300"], False),
-        ("--ds-color-olive-400  *", "oklch(52% 0.08 115)", RGB["olive-400"], True),
-        ("--ds-color-olive-600", "oklch(38% 0.08 115)", RGB["olive-600"], False),
-        ("--ds-color-olive-800", "oklch(22% 0.055 115)", RGB["olive-800"], False),
+        ("--ds-color-olive-100", OKLCH["olive-100"], RGB["olive-100"], False),
+        ("--ds-color-olive-300", OKLCH["olive-300"], RGB["olive-300"], False),
+        ("--ds-color-olive-400  *", OKLCH["olive-400"], RGB["olive-400"], True),
+        ("--ds-color-olive-600", OKLCH["olive-600"], RGB["olive-600"], False),
+        ("--ds-color-olive-800", OKLCH["olive-800"], RGB["olive-800"], False),
     ]
     for name, val, col, ring in olive:
         p.swatch_row(56, y, name, val, col, ring=ring)
@@ -252,10 +307,10 @@ def build_reference():
     y2 = 146
     p.text(320, y2, "SEMANTIC", "F2", 10, RGB["olive-500"]); y2 += 16
     sem = [
-        ("--ds-color-success", "oklch(55% 0.1 145)", RGB["success"]),
-        ("--ds-color-warning", "oklch(65% 0.1 85)", RGB["warning"]),
-        ("--ds-color-error", "oklch(50% 0.14 30)", RGB["error"]),
-        ("--ds-color-info", "oklch(55% 0.08 240)", RGB["info"]),
+        ("--ds-color-success", OKLCH["success"], RGB["success"]),
+        ("--ds-color-warning", OKLCH["warning"], RGB["warning"]),
+        ("--ds-color-error", OKLCH["error"], RGB["error"]),
+        ("--ds-color-info", OKLCH["info"], RGB["info"]),
     ]
     for name, val, col in sem:
         p.swatch_row(320, y2, name, val, col, w=120)
@@ -352,27 +407,27 @@ def build_color_card():
     y += 24
 
     p.text(56, y, "ACCENT", "F2", 10, RGB["olive-500"]); y += 16
-    p.swatch_row(56, y, "--ds-accent = --ds-color-olive-400", "oklch(52% 0.08 115)", RGB["olive-400"], w=180, ring=True)
+    p.swatch_row(56, y, "--ds-accent = --ds-color-olive-400", OKLCH["olive-400"], RGB["olive-400"], w=180, ring=True)
     y += 44
 
     p.text(56, y, "NEUTRALS", "F2", 10, RGB["olive-500"]); y += 16
-    for name, val, col in [
-        ("--ds-color-bg", "oklch(97% 0.012 80)", RGB["bg"]),
-        ("--ds-color-fg", "oklch(20% 0.02 60)", RGB["fg"]),
-        ("--ds-color-fg-strong", "oklch(14% 0.025 60)", RGB["fg-strong"]),
-        ("--ds-color-muted", "oklch(48% 0.015 60)", RGB["muted"]),
+    for name, key in [
+        ("--ds-color-bg", "bg"),
+        ("--ds-color-fg", "fg"),
+        ("--ds-color-fg-strong", "fg-strong"),
+        ("--ds-color-muted", "muted"),
     ]:
-        p.swatch_row(56, y, name, val, col, w=150)
+        p.swatch_row(56, y, name, OKLCH[key], RGB[key], w=150)
         y += 30
     y += 8
     p.text(56, y, "SEMANTIC", "F2", 10, RGB["olive-500"]); y += 16
-    for name, val, col in [
-        ("--ds-color-success", "oklch(55% 0.1 145)", RGB["success"]),
-        ("--ds-color-warning", "oklch(65% 0.1 85)", RGB["warning"]),
-        ("--ds-color-error", "oklch(50% 0.14 30)", RGB["error"]),
-        ("--ds-color-info", "oklch(55% 0.08 240)", RGB["info"]),
+    for name, key in [
+        ("--ds-color-success", "success"),
+        ("--ds-color-warning", "warning"),
+        ("--ds-color-error", "error"),
+        ("--ds-color-info", "info"),
     ]:
-        p.swatch_row(56, y, name, val, col, w=150)
+        p.swatch_row(56, y, name, OKLCH[key], RGB[key], w=150)
         y += 30
     footer(p, "Color Card")
     doc.add_page(p)
