@@ -931,6 +931,9 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--ds-space-6)}
 .ds-feature-card{background:var(--ds-color-surface-raised);border:1px solid var(--ds-color-border);border-radius:var(--ds-radius-2xl);padding:var(--ds-space-8);transition:transform var(--ds-duration-300) var(--ds-ease-out),box-shadow var(--ds-duration-300) var(--ds-ease-out),border-color var(--ds-duration-300)}
 .ds-feature-card:hover{transform:translateY(-4px);box-shadow:var(--ds-shadow-lg);border-color:var(--ds-color-border-strong)}
+@media(hover:none){
+  .ds-feature-card:hover{transform:none;box-shadow:var(--ds-shadow-lg);border-color:var(--ds-color-olive-400)}
+}
 .ds-feature-ico{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:var(--ds-radius-lg);background:var(--ds-accent-soft);color:var(--ds-accent);margin-bottom:var(--ds-space-5)}
 .ds-feature-ico svg{width:24px;height:24px;stroke-width:1.75}
 .ds-feature-card h3{font-family:var(--ds-font-display);font-size:var(--ds-text-h5);font-weight:var(--ds-weight-semibold);color:var(--ds-color-fg-strong);margin-bottom:var(--ds-space-3)}
@@ -939,7 +942,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 /* ===== Stats ===== */
 .ds-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--ds-space-6)}
 .ds-stat{text-align:center;padding:var(--ds-space-6) var(--ds-space-4);border-radius:var(--ds-radius-xl);background:var(--ds-color-surface);border:1px solid var(--ds-color-border-subtle)}
-.ds-stat-num{font-family:var(--ds-font-display);font-size:var(--ds-text-display);font-weight:var(--ds-weight-bold);line-height:1;color:var(--ds-accent);letter-spacing:var(--ds-tracking-tight)}
+.ds-stat-num{font-family:var(--ds-font-display);font-size:clamp(2.75rem,4.5vw + 0.5rem,3.25rem);font-weight:var(--ds-weight-bold);line-height:1;color:var(--ds-accent);letter-spacing:var(--ds-tracking-tight)}
 .ds-stat-label{display:block;margin-top:var(--ds-space-3);font-size:var(--ds-text-body-sm);color:var(--ds-color-muted)}
 
 /* ===== Compatibility chips ===== */
