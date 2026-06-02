@@ -714,6 +714,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 }
 @media(min-width:1024px){
   .ds-navbar-links{display:flex!important;opacity:1!important;visibility:visible!important;position:static!important;transform:none!important;flex-direction:row!important;background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;border:none!important;padding:0!important;width:auto!important;overflow:visible!important}
+  #ai .ds-grid-2 > :first-child{order:2}
+  #ai .ds-grid-2 > :last-child{order:1}
 }
 @media(max-width:374px){
   .ds-navbar-links{width:100vw;border-left:none}
