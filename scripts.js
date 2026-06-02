@@ -503,19 +503,28 @@ const TOKENS = [
 
   /* IntersectionObserver for active section */
   if (window.IntersectionObserver) {
+    var tocDebounceTimer = null;
     var obs = new IntersectionObserver(function(entries) {
       var activeId = null;
+      var firstTop = Infinity;
+      /* Pick topmost intersecting section (smallest getBoundingClientRect.top) */
       entries.forEach(function(entry) {
-        if (entry.isIntersecting) activeId = entry.target.getAttribute("id");
+        if (entry.isIntersecting) {
+          var top = entry.boundingClientRect.top;
+          if (top < firstTop) { firstTop = top; activeId = entry.target.getAttribute("id"); }
+        }
       });
       if (!activeId) return;
-      Array.prototype.forEach.call(links, function(link) {
-        var isActive = link.getAttribute("href") === "#" + activeId;
-        link.classList.toggle("ds-floating-toc-link--active", isActive);
-      });
+      clearTimeout(tocDebounceTimer);
+      tocDebounceTimer = setTimeout(function() {
+        Array.prototype.forEach.call(links, function(link) {
+          var isActive = link.getAttribute("href") === "#" + activeId;
+          link.classList.toggle("ds-floating-toc-link--active", isActive);
+        });
+      }, 16);
       /* Show/hide floating toc based on scroll position */
-      var firstTop = firstSection ? firstSection.getBoundingClientRect().bottom : 0;
-      toc.classList.toggle("ds-floating-toc--hidden", firstTop > 0);
+      var firstTopPos = firstSection ? firstSection.getBoundingClientRect().bottom : 0;
+      toc.classList.toggle("ds-floating-toc--hidden", firstTopPos > 0);
     }, { threshold: 0.1, rootMargin: "-80px 0px -40% 0px" });
 
     Array.prototype.forEach.call(sectionEls, function(sec) {
