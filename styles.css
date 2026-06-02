@@ -1067,7 +1067,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-footer-cols{grid-template-columns:1fr 1fr}
   .ds-hero-section{padding:var(--ds-space-24) 0 var(--ds-space-20)}
   .ds-hero-inner{max-width:760px}
-  .ds-hero-title{font-size:clamp(2.5rem,5vw + 1rem,4.5rem);line-height:1.1}
+  .ds-hero-title{font-size:clamp(3rem,5vw + 1rem,4.5rem);line-height:1.1}
 }
 @media(max-width:767px){
   .ds-hero-section{padding:var(--ds-space-20) 0 var(--ds-space-16)}
