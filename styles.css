@@ -1041,6 +1041,10 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-code-lang{font-family:var(--ds-font-mono);font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);color:color-mix(in oklch,var(--ds-color-fg-inverse) 70%,transparent);font-weight:600}
 .ds-code pre{margin:0;padding:var(--ds-space-5);overflow-x:auto;font-family:var(--ds-font-mono);font-size:var(--ds-text-body-sm);line-height:var(--ds-leading-relaxed);color:var(--ds-code-text)}
 .ds-code code{font-family:var(--ds-font-mono);white-space:pre}
+/* Defense-in-depth: explicitly reset any prose-context styles that might
+   leak into <code> inside <pre> (e.g. .ds-prose code). Higher specificity
+   guarantees the code-block context always wins. */
+.ds-prose .ds-code code,.ds-code code{background:transparent;padding:0;color:inherit;border-radius:0}
 .ds-code .token.comment,.ds-code .token.prolog,.ds-code .token.doctype,.ds-code .token.cdata{color:var(--ds-token-comment);font-style:italic}
 .ds-code .token.punctuation{color:var(--ds-token-punctuation)}
 .ds-code .token.property,.ds-code .token.attr-name{color:var(--ds-token-attr-name)}
@@ -1062,6 +1066,12 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-code .token.namespace{opacity:.8}
 .ds-code .token.regex{color:var(--ds-token-string)}
 .ds-code .token.parameter{color:var(--ds-token-variable)}
+.ds-code .token.coord{color:var(--ds-token-url)}
+.ds-code .token.unit{color:var(--ds-token-number)}
+.ds-code .token.color,.ds-code .token.hexcode,.ds-code .token["language-css"] .token.string{color:var(--ds-token-string)}
+.ds-code .token.attr-equals,.ds-code .token.tag-punctuation{color:var(--ds-token-punctuation)}
+.ds-code .token.title,.ds-code .token["function-variable"]{color:var(--ds-token-function)}
+.ds-code .token{color:inherit}
 /* Legacy tok-* classes (compat) */
 .ds-code .tok-c{color:var(--ds-token-comment)}
 .ds-code .tok-p{color:var(--ds-token-attr-name)}
@@ -1091,7 +1101,10 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-tabpanel.is-active{display:block}
 
 /* ===== Inline code base ===== */
-.ds-prose code,.ds-inline-code{font-family:var(--ds-font-mono);font-size:.9em;padding:.12em .4em;background:var(--ds-accent-muted);color:var(--ds-accent);border-radius:var(--ds-radius-sm)}
+/* Scope to text contexts only (p/li/td/blockquote/h*/dd/dt) so the olive-muted
+   background, padding, and color don't leak into <code> elements inside
+   <pre> blocks (which would break the uniform dark code-block background). */
+.ds-prose :not(pre) > code,.ds-prose code:not([class*="language-"]):not(pre *),.ds-inline-code{font-family:var(--ds-font-mono);font-size:.9em;padding:.12em .4em;background:var(--ds-accent-muted);color:var(--ds-accent);border-radius:var(--ds-radius-sm)}
 
 /* ===== Docs layout ===== */
 .ds-docs{display:grid;grid-template-columns:240px minmax(0,1fr);gap:var(--ds-space-12);align-items:start}

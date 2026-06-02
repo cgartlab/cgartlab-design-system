@@ -7,7 +7,10 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="styles.css?v=1.3.1">
 <!-- Prism.js syntax highlighting (CDN, no extra CSS — custom theme in styles.css) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"
+        integrity="sha384-xAgN7OCsK5s0d3G18tqRYrxy8hWsPA14E26TMh7Mi9ZM09vaz4EA0DBTl+80F5yC"
+        crossorigin="anonymous"
+        defer></script>
 </head>
 <body>
 <a href="#ds-main" class="ds-skip">跳至主要内容</a>
@@ -340,7 +343,14 @@
             <li><code>.ds-copy-btn[data-copy="#id"]</code> — 复制按钮（关联 <code>&lt;pre id="..."&gt;</code>）</li>
             <li><code>&lt;pre&gt;&lt;code class="language-*"&gt;</code> — Prism 高亮代码区</li>
           </ul>
-          <p>Prism.js 通过 CDN 加载（<code>prism.min.js</code>），零安装、零构建，与设计系统的纯静态哲学一致。</p>
+          <p>Prism.js 通过 cdnjs 加载（<code>prism@1.30.0</code>，含 SRI 完整性校验防 CDN 篡改），零安装、零构建，与设计系统的纯静态哲学一致。建议在自有项目中同样锁定版本号与 SRI：</p>
+          <figure class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-copy-btn" data-copy="#c-prism-cdn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button></div>
+            <pre id="c-prism-cdn"><code class="language-html">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"
+        integrity="sha384-xAgN7OCsK5s0d3G18tqRYrxy8hWsPA14E26TMh7Mi9ZM09vaz4EA0DBTl+80F5yC"
+        crossorigin="anonymous"
+        defer&gt;&lt;/script&gt;</code></pre>
+          </figure>
         </section>
 
         <section class="ds-doc-block" id="icons">
