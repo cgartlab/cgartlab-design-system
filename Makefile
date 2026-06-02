@@ -73,8 +73,6 @@ test: validate  ## 运行所有测试（当前等价于 validate）
 
 # ─── 清理 ──────────────────────────────────────────────────
 clean:  ## 清理临时文件
-	rm -rf test-reports/
-	rm -rf __pycache__/
-	find . -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
-	find . -type f -name '*.pyc' -delete 2>/dev/null || true
+	find . -name '*.pyc' -delete
+	find . -name '__pycache__' -type d -exec rm -rf {} +
 	@echo "✓ 已清理"
