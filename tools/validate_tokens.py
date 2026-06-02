@@ -29,11 +29,59 @@ TOKENS_JSON = ROOT / "tokens.json"
 STYLES_CSS = ROOT / "styles.css"
 
 CSS_VAR_DECL = re.compile(r"--ds-([a-z0-9-]+)\s*:\s*([^;]+);")
-ROOT_BLOCK_RE = re.compile(r":root\s*\{([^}]*)\}", re.MULTILINE)
-DARK_BLOCK_RE = re.compile(r'\[data-theme=["\']?dark["\']?\]\s*\{([^}]*)\}', re.MULTILINE)
 HEX_COLOR = re.compile(r"#[0-9a-fA-F]{3,8}\b")
 RGB_COLOR = re.compile(r"\brgb[a]?\s*\(", re.IGNORECASE)
 HSL_COLOR = re.compile(r"\bhsl[a]?\s*\(", re.IGNORECASE)
+
+
+def extract_block_by_selector(css: str, selector: str) -> str:
+    """Extract CSS block content for a given selector using brace-depth scanning.
+
+    Handles properly nested CSS (e.g. @media queries inside :root) by counting
+    brace depth instead of assuming a flat structure.
+    Returns the block content (without the selector + braces) or empty string
+    if the selector is not found.
+    """
+    # Find the selector start
+    idx = 0
+    while True:
+        # Find next occurrence of selector
+        pos = css.find(selector, idx)
+        if pos == -1:
+            return ""
+        # Verify it's at a word boundary (not inside another selector)
+        if pos > 0:
+            ch = css[pos - 1]
+            if ch.isalnum() or ch == "-":
+                idx = pos + 1
+                continue
+        # Verify it's followed by optional whitespace then {
+        rest = css[pos + len(selector):]
+        if not rest.startswith(" ") and not rest.startswith("\n") and not rest.startswith("\t"):
+            idx = pos + 1
+            continue
+        # Find the opening brace
+        brace_pos = rest.find("{")
+        if brace_pos == -1:
+            return ""
+        # Make sure there's no closing brace before it (shouldn't happen for valid match)
+        block_start = pos + len(selector) + brace_pos + 1
+        break
+
+    # Scan by brace depth to find the matching closing brace
+    depth = 1
+    i = block_start
+    while i < len(css) and depth > 0:
+        ch = css[i]
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+        i += 1
+
+    if depth == 0:
+        return css[block_start : i - 1]
+    return ""
 
 
 def extract_vars_from_block(block: str) -> dict[str, str]:
@@ -97,15 +145,15 @@ def main() -> int:
         return 1
 
     json_tokens = extract_vars_from_json(data)
-    root_match = ROOT_BLOCK_RE.search(css)
-    dark_match = DARK_BLOCK_RE.search(css)
+    root_vars_raw = extract_block_by_selector(css, ":root")
+    dark_vars_raw = extract_block_by_selector(css, '[data-theme="dark"]')
 
-    if not root_match:
+    if not root_vars_raw:
         print("[ERROR] styles.css 缺少 :root 块")
         return 1
 
-    root_vars = extract_vars_from_block(root_match.group(1))
-    dark_vars = extract_vars_from_block(dark_match.group(1)) if dark_match else {}
+    root_vars = extract_vars_from_block(root_vars_raw)
+    dark_vars = extract_vars_from_block(dark_vars_raw) if dark_vars_raw else {}
 
     has_error = False
     warning_count = 0
