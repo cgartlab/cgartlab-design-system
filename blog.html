@@ -99,9 +99,20 @@
 .blog-section { display: none; }
 .blog-section.active { display: block; }
 
+/* --- Hamburger toggle --- */
+.blog-nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: var(--ds-space-2); min-width: 44px; min-height: 44px; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+.blog-nav-toggle-bar { display: block; width: 24px; height: 2px; background: var(--ds-color-fg); border-radius: 1px; transition: transform var(--ds-duration-200) var(--ds-ease-out), opacity var(--ds-duration-150); }
+.blog-nav-toggle[aria-expanded="true"] .blog-nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.blog-nav-toggle[aria-expanded="true"] .blog-nav-toggle-bar:nth-child(2) { opacity: 0; }
+.blog-nav-toggle[aria-expanded="true"] .blog-nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* --- Responsive --- */
-@media (max-width: 768px) {
-  .blog-nav { flex-direction: column; gap: var(--ds-space-4); align-items: flex-start; }
+@media (max-width: 1023px) {
+  .blog-nav { position: relative; }
+  .blog-nav-toggle { display: flex; }
+  .blog-nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--ds-color-surface-raised); border-bottom: 1px solid var(--ds-color-border); padding: var(--ds-space-4); gap: 0; z-index: 100; box-shadow: var(--ds-shadow-md); }
+  .blog-nav-links.is-open { display: flex; }
+  .blog-nav-links a { padding: var(--ds-space-3) var(--ds-space-4); min-height: 44px; display: flex; align-items: center; font-size: var(--ds-text-body); }
   .blog-featured h1 { font-size: var(--ds-text-h2); }
   .blog-about-content { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
@@ -114,7 +125,12 @@
 <!-- Navigation -->
 <nav class="blog-nav blog-wrapper">
   <a href="javascript:void(0)" class="blog-nav-brand" onclick="showSection('home')">纸间</a>
-  <div class="blog-nav-links">
+  <button class="blog-nav-toggle" id="blog-nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="blog-nav-links">
+    <span class="blog-nav-toggle-bar"></span>
+    <span class="blog-nav-toggle-bar"></span>
+    <span class="blog-nav-toggle-bar"></span>
+  </button>
+  <div class="blog-nav-links" id="blog-nav-links">
     <a href="javascript:void(0)" class="active" onclick="showSection('home')" data-section="home">文章</a>
     <a href="javascript:void(0)" onclick="showSection('archive')" data-section="archive">归档</a>
     <a href="javascript:void(0)" onclick="showSection('about')" data-section="about">关于</a>
@@ -301,8 +317,27 @@ function showSection(id) {
   if (section) section.classList.add('active');
   const link = document.querySelector('[data-section="' + id + '"]');
   if (link) link.classList.add('active');
+  // Close mobile nav on section select
+  const toggle = document.getElementById('blog-nav-toggle');
+  const links = document.getElementById('blog-nav-links');
+  if (toggle && links) {
+    toggle.setAttribute('aria-expanded', 'false');
+    links.classList.remove('is-open');
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  const toggle = document.getElementById('blog-nav-toggle');
+  const links = document.getElementById('blog-nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      links.classList.toggle('is-open');
+    });
+  }
+});
 </script>
 <script src="scripts.js?v=1.3.1"></script>
 </body>
