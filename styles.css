@@ -1104,6 +1104,11 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-gradient-text{animation:none}
 }
 
+/* ===== Forced colors (Windows High Contrast Mode) ===== */
+@media(forced-colors:active){
+  .ds-gradient-text{background:Canvas;color:CanvasText;-webkit-text-fill-color:CanvasText;-webkit-background-clip:initial;background-clip:initial;animation:none}
+}
+
 /* ===== Print (extended) ===== */
 @media print{
   .ds-hero-actions,.ds-navbar-actions,.ds-footer-rich .ds-footer-bottom,.ds-copy-btn,.ds-code-bar{display:none!important}
