@@ -233,10 +233,10 @@ const TOKENS = [
 
 /* ===== Init: render icon grid ===== */
 (function() {
-  var grid = document.getElementById("icon-grid");
+  const grid = document.getElementById("icon-grid");
   if (!grid) return;
   ICONS.forEach(function(ic) {
-    var box = document.createElement("div");
+    const box = document.createElement("div");
     box.className = "ds-icon-box";
     box.innerHTML = ic.svg + "<span>" + ic.id + "</span>";
     box.title = ic.id;
@@ -246,13 +246,13 @@ const TOKENS = [
 
 /* ===== Init: render token table ===== */
 (function() {
-  var tb = document.getElementById("token-tbody");
+  const tb = document.getElementById("token-tbody");
   if (!tb) return;
   TOKENS.forEach(function(t) {
-    var tr = document.createElement("tr");
-    var td1 = document.createElement("td");
+    const tr = document.createElement("tr");
+    const td1 = document.createElement("td");
     td1.textContent = t[0];
-    var td2 = document.createElement("td");
+    const td2 = document.createElement("td");
     td2.textContent = t[1];
     tr.appendChild(td1);
     tr.appendChild(td2);
@@ -262,16 +262,16 @@ const TOKENS = [
 
 /* ===== Theme Switcher ===== */
 (function() {
-  var THEME_KEY = "ds-theme-mode";
-  var themes = ["system", "light", "dark"];
-  var labels = { system: "跟随系统", light: "浅色模式", dark: "暗色模式" };
+  const THEME_KEY = "ds-theme-mode";
+  const themes = ["system", "light", "dark"];
+  const labels = { system: "跟随系统", light: "浅色模式", dark: "暗色模式" };
 
   function getSystemPref() {
     return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }
 
   function applyTheme(mode) {
-    var html = document.documentElement;
+    const html = document.documentElement;
     if (mode === "system") {
       html.setAttribute("data-theme", getSystemPref());
       html.setAttribute("data-theme-mode", "system");
@@ -284,11 +284,11 @@ const TOKENS = [
   }
 
   function updateButton(mode) {
-    var btns = document.querySelectorAll(".ds-theme-toggle-btn");
-    var icons = ICONS.reduce(function(acc, ic) { acc[ic.id] = ic.svg; return acc; }, {});
+    const btns = document.querySelectorAll(".ds-theme-toggle-btn");
+    const icons = ICONS.reduce(function(acc, ic) { acc[ic.id] = ic.svg; return acc; }, {});
     Array.prototype.forEach.call(btns, function(btn) {
       if (!btn) return;
-      var iconEl = btn.querySelector(".theme-icon");
+      const iconEl = btn.querySelector(".theme-icon");
       if (mode === "dark") {
         iconEl.innerHTML = icons.moon;
         btn.setAttribute("aria-label", "暗色模式 · 点击切换");
@@ -303,9 +303,9 @@ const TOKENS = [
   }
 
   function cycleTheme() {
-    var btn = document.getElementById("theme-toggle-btn");
+    const btn = document.getElementById("theme-toggle-btn");
     if (!btn) return;
-    var label = btn.getAttribute("aria-label") || "";
+    const label = btn.getAttribute("aria-label") || "";
     if (label.indexOf("浅色") !== -1) {
       applyTheme("dark");
     } else if (label.indexOf("暗色") !== -1) {
@@ -322,12 +322,12 @@ const TOKENS = [
   window.cycleTheme = cycleTheme;
 
   function init() {
-    var saved;
+    let saved;
     try { saved = localStorage.getItem(THEME_KEY); } catch(e) {}
-    var initial = themes.indexOf(saved) !== -1 ? saved : "system";
+    const initial = themes.indexOf(saved) !== -1 ? saved : "system";
     applyTheme(initial);
 
-    var btns = document.querySelectorAll(".ds-theme-toggle-btn");
+    const btns = document.querySelectorAll(".ds-theme-toggle-btn");
     Array.prototype.forEach.call(btns, function(btn) {
       if (btn) btn.addEventListener("click", cycleTheme);
     });
@@ -349,14 +349,14 @@ const TOKENS = [
 /* ===== Slider sync ===== */
 (function() {
   function syncSlider(slider) {
-    var val = slider.value;
-    var wrap = slider.parentElement;
-    var fill = wrap && wrap.querySelector(".ds-slider-fill");
-    var valueSpan = document.getElementById(slider.dataset.valId);
+    const val = slider.value;
+    const wrap = slider.parentElement;
+    const fill = wrap && wrap.querySelector(".ds-slider-fill");
+    const valueSpan = document.getElementById(slider.dataset.valId);
     if (fill) fill.style.width = val + "%";
     if (valueSpan) valueSpan.textContent = val + "%";
   }
-  var sliders = document.querySelectorAll(".ds-slider");
+  const sliders = document.querySelectorAll(".ds-slider");
   Array.prototype.forEach.call(sliders, function(slider) {
     slider.addEventListener("input", function() { syncSlider(this); });
     slider.addEventListener("change", function() { syncSlider(this); });
@@ -366,16 +366,16 @@ const TOKENS = [
 
 /* ===== Mobile Navigation ===== */
 (function() {
-  var nav = document.querySelector(".ds-navbar");
-  var trigger = document.getElementById("mnav-trigger");
-  var panel = document.getElementById("mnav-panel");
-  var backdrop = document.getElementById("mnav-backdrop");
+  const nav = document.querySelector(".ds-navbar");
+  const trigger = document.getElementById("mnav-trigger");
+  const panel = document.getElementById("mnav-panel");
+  const backdrop = document.getElementById("mnav-backdrop");
   if (!trigger || !panel) return;
 
-  var isOpen = false;
-  var savedOverflow = "";
-  var savedTouchAction = "";
-  var lastFocused = null;
+  let isOpen = false;
+  let savedOverflow = "";
+  let savedTouchAction = "";
+  let lastFocused = null;
 
   function open(shouldFocusMenu) {
     if (isOpen) return;
@@ -402,7 +402,7 @@ const TOKENS = [
     // so pointer/touch users are not scroll-jumped.
     if (shouldFocusMenu) {
       setTimeout(function() {
-        var first = panel.querySelector(".ds-navbar-link");
+        const first = panel.querySelector(".ds-navbar-link");
         if (first) first.focus();
       }, 60);
     }
@@ -410,7 +410,7 @@ const TOKENS = [
 
   function close(options) {
     if (!isOpen) return;
-    var opts = options || {};
+    const opts = options || {};
     isOpen = false;
     document.body.style.overflow = savedOverflow;
     document.body.style.touchAction = savedTouchAction;
@@ -442,23 +442,23 @@ const TOKENS = [
     if (e.key === "Tab") {
       // Panel lives inside <nav>, so trapping across <nav> captures every visible
       // control (logo + trigger/X + links) and prevents focus escaping the modal.
-      var scope = nav || panel;
-      var els = scope.querySelectorAll('a[href], button:not([disabled])');
+      const scope = nav || panel;
+      const els = scope.querySelectorAll('a[href], button:not([disabled])');
       if (!els.length) return;
-      var first = els[0], last = els[els.length - 1];
+      const first = els[0], last = els[els.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
 
   // Auto-close when the layout crosses into the desktop breakpoint (--ds-bp-lg 1024px)
-  var mq = window.matchMedia("(min-width:1024px)");
+  const mq = window.matchMedia("(min-width:1024px)");
   function onResize(e) { if (e.matches && isOpen) close({ restoreFocus: false }); }
   if (mq.addEventListener) mq.addEventListener("change", onResize);
   else if (mq.addListener) mq.addListener(onResize);
 
   if (nav) {
-    var onScroll = function() { nav.classList.toggle("ds-navbar--scrolled", window.scrollY > 20); };
+    const onScroll = function() { nav.classList.toggle("ds-navbar--scrolled", window.scrollY > 20); };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
   }
@@ -466,18 +466,18 @@ const TOKENS = [
 
 /* ===== Floating TOC Generator ===== */
 (function() {
-  var list = document.getElementById("floating-toc-list");
-  var toc = document.querySelector(".ds-floating-toc");
+  const list = document.getElementById("floating-toc-list");
+  const toc = document.querySelector(".ds-floating-toc");
   if (!list || !toc) return;
 
-  var sections = [];
-  var sectionEls = document.querySelectorAll(".ds-section[id]");
+  const sections = [];
+  const sectionEls = document.querySelectorAll(".ds-section[id]");
   Array.prototype.forEach.call(sectionEls, function(sec) {
-    var id = sec.getAttribute("id");
-    var header = sec.querySelector(".ds-section-header");
+    const id = sec.getAttribute("id");
+    const header = sec.querySelector(".ds-section-header");
     if (!header) return;
-    var num = header.querySelector(".ds-caption");
-    var title = header.querySelector("h2");
+    const num = header.querySelector(".ds-caption");
+    const title = header.querySelector("h2");
     sections.push({
       id: id,
       num: num ? num.textContent.trim() : "",
@@ -488,9 +488,9 @@ const TOKENS = [
   if (sections.length === 0) { toc.style.display = "none"; return; }
 
   sections.forEach(function(s, i) {
-    var li = document.createElement("li");
+    const li = document.createElement("li");
     li.style.listStyle = "none";
-    var a = document.createElement("a");
+    const a = document.createElement("a");
     a.href = "#" + s.id;
     a.className = "ds-floating-toc-link";
     a.innerHTML = '<span class="ds-floating-toc-dot"></span><span class="ds-floating-toc-num">' + (i < 9 ? "0" + (i+1) : i+1) + '</span><span>' + s.title + '</span>';
@@ -498,19 +498,19 @@ const TOKENS = [
     list.appendChild(li);
   });
 
-  var links = list.querySelectorAll(".ds-floating-toc-link");
-  var firstSection = document.querySelector(".ds-section[id]");
+  const links = list.querySelectorAll(".ds-floating-toc-link");
+  const firstSection = document.querySelector(".ds-section[id]");
 
   /* IntersectionObserver for active section */
   if (window.IntersectionObserver) {
-    var tocDebounceTimer = null;
-    var obs = new IntersectionObserver(function(entries) {
-      var activeId = null;
-      var firstTop = Infinity;
+    let tocDebounceTimer = null;
+    const obs = new IntersectionObserver(function(entries) {
+      let activeId = null;
+      let firstTop = Infinity;
       /* Pick topmost intersecting section (smallest getBoundingClientRect.top) */
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
-          var top = entry.boundingClientRect.top;
+          const top = entry.boundingClientRect.top;
           if (top < firstTop) { firstTop = top; activeId = entry.target.getAttribute("id"); }
         }
       });
@@ -518,12 +518,12 @@ const TOKENS = [
       clearTimeout(tocDebounceTimer);
       tocDebounceTimer = setTimeout(function() {
         Array.prototype.forEach.call(links, function(link) {
-          var isActive = link.getAttribute("href") === "#" + activeId;
+          const isActive = link.getAttribute("href") === "#" + activeId;
           link.classList.toggle("ds-floating-toc-link--active", isActive);
         });
       }, 16);
       /* Show/hide floating toc based on scroll position */
-      var firstTopPos = firstSection ? firstSection.getBoundingClientRect().bottom : 0;
+      const firstTopPos = firstSection ? firstSection.getBoundingClientRect().bottom : 0;
       toc.classList.toggle("ds-floating-toc--hidden", firstTopPos > 0);
     }, { threshold: 0.1, rootMargin: "-80px 0px -40% 0px" });
 
@@ -534,8 +534,8 @@ const TOKENS = [
     /* Fallback: scroll listener */
     toc.classList.remove("ds-floating-toc--hidden");
     window.addEventListener("scroll", function() {
-      var scrollY = window.scrollY + 120;
-      var activeIdx = -1;
+      const scrollY = window.scrollY + 120;
+      let activeIdx = -1;
       Array.prototype.forEach.call(sectionEls, function(sec, i) {
         if (sec.offsetTop <= scrollY) activeIdx = i;
       });
@@ -549,7 +549,7 @@ const TOKENS = [
   Array.prototype.forEach.call(links, function(link) {
     link.addEventListener("click", function(e) {
       e.preventDefault();
-      var target = document.querySelector(this.getAttribute("href"));
+      const target = document.querySelector(this.getAttribute("href"));
       if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
@@ -564,14 +564,14 @@ const TOKENS = [
 
 /* ===== Scroll reveal ===== */
 (function() {
-  var els = document.querySelectorAll(".ds-reveal");
+  const els = document.querySelectorAll(".ds-reveal");
   if (!els.length) return;
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce || !("IntersectionObserver" in window)) {
     Array.prototype.forEach.call(els, function(el) { el.classList.add("is-visible"); });
     return;
   }
-  var obs = new IntersectionObserver(function(entries) {
+  const obs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
@@ -590,23 +590,23 @@ const TOKENS = [
 
   function getSourceText(btn) {
     if (btn.hasAttribute("data-copy-text")) return btn.getAttribute("data-copy-text");
-    var sel = btn.getAttribute("data-copy");
+    const sel = btn.getAttribute("data-copy");
     if (!sel) return "";
-    var src = document.querySelector(sel);
+    const src = document.querySelector(sel);
     if (!src) return "";
     if (src.value !== undefined && (src.tagName === "TEXTAREA" || src.tagName === "INPUT")) return src.value;
     return src.innerText || src.textContent || "";
   }
 
   document.addEventListener("click", function(e) {
-    var btn = e.target.closest ? e.target.closest("[data-copy],[data-copy-text]") : null;
+    const btn = e.target.closest ? e.target.closest("[data-copy],[data-copy-text]") : null;
     if (!btn) return;
     e.preventDefault();
-    var text = getSourceText(btn);
+    const text = getSourceText(btn);
     if (!text) return;
     copyText(text).then(function() {
-      var label = btn.querySelector(".ds-copy-label");
-      var original = label ? label.textContent : btn.getAttribute("data-label-original");
+      const label = btn.querySelector(".ds-copy-label");
+      const original = label ? label.textContent : btn.getAttribute("data-label-original");
       if (!label && !btn.getAttribute("data-label-original")) btn.setAttribute("data-label-original", btn.textContent.trim());
       btn.classList.add("is-copied");
       if (label) { label.textContent = "已复制"; }
@@ -621,18 +621,18 @@ const TOKENS = [
 
 /* ===== Functional tabs ===== */
 (function() {
-  var groups = document.querySelectorAll("[data-tabs]");
+  const groups = document.querySelectorAll("[data-tabs]");
   if (!groups.length) return;
   Array.prototype.forEach.call(groups, function(group) {
-    var tabs = group.querySelectorAll("[data-tab]");
-    var scope = group.getAttribute("data-tabs-scope");
-    var panelHost = scope ? document.querySelector(scope) : group.parentNode;
+    const tabs = group.querySelectorAll("[data-tab]");
+    const scope = group.getAttribute("data-tabs-scope");
+    const panelHost = scope ? document.querySelector(scope) : group.parentNode;
     function activate(name) {
       Array.prototype.forEach.call(tabs, function(t) {
         t.classList.toggle("ds-tab--active", t.getAttribute("data-tab") === name);
         t.setAttribute("aria-selected", t.getAttribute("data-tab") === name ? "true" : "false");
       });
-      var panels = (panelHost || document).querySelectorAll("[data-panel]");
+      const panels = (panelHost || document).querySelectorAll("[data-panel]");
       Array.prototype.forEach.call(panels, function(p) {
         p.classList.toggle("is-active", p.getAttribute("data-panel") === name);
       });
@@ -640,18 +640,18 @@ const TOKENS = [
     Array.prototype.forEach.call(tabs, function(t) {
       t.addEventListener("click", function() { activate(this.getAttribute("data-tab")); });
     });
-    var first = tabs[0];
+    const first = tabs[0];
     if (first) activate(first.getAttribute("data-tab"));
   });
 })();
 
 /* ===== Accordion ===== */
 (function() {
-  var headers = document.querySelectorAll(".ds-accordion-header");
+  const headers = document.querySelectorAll(".ds-accordion-header");
   if (!headers.length) return;
   Array.prototype.forEach.call(headers, function(h) {
     h.addEventListener("click", function() {
-      var item = this.closest(".ds-accordion-item");
+      const item = this.closest(".ds-accordion-item");
       if (item) item.classList.toggle("open");
     });
   });
@@ -659,15 +659,15 @@ const TOKENS = [
 
 /* ===== Docs sidebar active tracking ===== */
 (function() {
-  var menu = document.querySelector(".ds-docs-menu");
+  const menu = document.querySelector(".ds-docs-menu");
   if (!menu || !("IntersectionObserver" in window)) return;
-  var blocks = document.querySelectorAll(".ds-doc-block[id]");
+  const blocks = document.querySelectorAll(".ds-doc-block[id]");
   if (!blocks.length) return;
-  var links = menu.querySelectorAll("a");
-  var obs = new IntersectionObserver(function(entries) {
+  const links = menu.querySelectorAll("a");
+  const obs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (!entry.isIntersecting) return;
-      var id = entry.target.getAttribute("id");
+      const id = entry.target.getAttribute("id");
       Array.prototype.forEach.call(links, function(a) {
         a.classList.toggle("is-active", a.getAttribute("href") === "#" + id);
       });
@@ -677,7 +677,7 @@ const TOKENS = [
 
   Array.prototype.forEach.call(links, function(a) {
     a.addEventListener("click", function(e) {
-      var target = document.querySelector(this.getAttribute("href"));
+      const target = document.querySelector(this.getAttribute("href"));
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -688,7 +688,7 @@ const TOKENS = [
 
 /* ===== Current year stamp ===== */
 (function() {
-  var year = String(new Date().getFullYear());
-  var els = document.querySelectorAll(".ds-year");
+  const year = String(new Date().getFullYear());
+  const els = document.querySelectorAll(".ds-year");
   Array.prototype.forEach.call(els, function(el) { el.textContent = year; });
 })();
