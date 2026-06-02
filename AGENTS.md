@@ -237,6 +237,54 @@ xs → 2xl 共 6 级，暗色模式 opacity 提高以保持层次。
 - ❌ 暗色模式不要用纯黑 `#000` — 用暖灰 `oklch(15% ...)`
 - ❌ 强调色在暗色模式不要直接用浅色模式的值 — 需要亮化 5-10%
 
+## CODE STYLE（代码样式规范）
+
+### 代码块组件
+
+使用 `ds-code` 系列 class 构建代码块，搭配 **Prism.js** 做语法高亮。
+
+- `.ds-code` — 容器（暗背景、圆角、边框）
+- `.ds-code-bar` — 顶栏（语言标签 + 复制按钮）
+- `.ds-code-lang` — 语言标签（大写小字，mono 字族）
+- `.ds-copy-btn[data-copy="#id"]` — 复制按钮
+- `<pre><code class="language-*">` — Prism 高亮体
+
+### Prism 集成
+
+- 通过 CDN 加载 `prism.min.js`（零安装、零构建）
+- 语法主题由 `styles.css` 中的 `--ds-token-*` 变量驱动，与 OKLch 色彩体系一致
+- 推荐结构：`<figure class="ds-code"><div class="ds-code-bar">…</div><pre id="…"><code class="language-xxxx">…</code></pre></figure>`
+- Prism 自动识别 `<code>` 上的 `language-*` / `lang-*` class
+
+### 支持语言
+
+默认支持 HTML（含 SVG/XML）、CSS、JavaScript。更多语言需引入对应 Prism 组件。
+
+### 代码块令牌（`--ds-token-*`）
+
+| 令牌 | OKLch 值 | 描述 |
+|------|----------|------|
+| `--ds-code-bg` | `oklch(14% 0.025 60)` → `oklch(18% 0.01 75)`（暗色） | 代码块背景 |
+| `--ds-code-text` | `oklch(90% 0.015 85)` → `oklch(88% 0.01 85)`（暗色） | 基础文字色 |
+| `--ds-token-comment` | `oklch(55% 0.035 130)` | 注释 |
+| `--ds-token-keyword` | `oklch(78% 0.10 25)` | 关键字 |
+| `--ds-token-string` | `oklch(82% 0.10 130)` | 字符串 |
+| `--ds-token-function` | `oklch(85% 0.08 85)` | 函数/类名 |
+| `--ds-token-number` | `oklch(80% 0.09 60)` | 数字/布尔 |
+| `--ds-token-tag` | `oklch(78% 0.09 60)` | HTML 标签 |
+| `--ds-token-attr-name` | `oklch(75% 0.06 180)` | 属性名 |
+| `--ds-token-operator` | `oklch(70% 0.02 80)` | 运算符 |
+| `--ds-token-punctuation` | `oklch(65% 0.02 80)` | 标点 |
+
+> 代码块背景始终暗色（不随页面主题反转），语法颜色在两种主题下一致。
+
+### 代码高亮反模式
+
+- ❌ 在已有 Prism 的代码块中手动添加 `<span class="token-*">` — Prism 自动处理
+- ❌ 代码块使用纯色硬编码 — 必须使用 `--ds-token-*` 变量
+- ❌ 在暗色主题下代码块使用浅背景 — 代码块应始终暗色
+- ❌ 在 `<code>` 中写入未转义的 HTML — 必须用 `&lt;` `&amp;`
+
 ## 构建与部署
 
 **零运行时依赖 / 零构建。** 纯静态站点。GitHub Pages「Deploy from branch」直接托管 `main` 根目录，`.nojekyll` 关闭 Jekyll；`CNAME` 指向 `designsystem.cgartlab.com`。

@@ -145,7 +145,29 @@
   --ds-blur-md: 12px;
   --ds-blur-lg: 24px;
   --ds-blur-xl: 48px;
-  --d: 0ms;
+  /* ===== Code block tokens (always dark bg) ===== */
+  --ds-code-bg: oklch(14% 0.025 60);
+  --ds-code-bg-bar: oklch(16% 0.022 62);
+  --ds-code-text: oklch(90% 0.015 85);
+
+  /* ===== Syntax highlighting tokens (always on dark code bg) ===== */
+  --ds-token-comment: oklch(55% 0.035 130);
+  --ds-token-keyword: oklch(78% 0.10 25);
+  --ds-token-string: oklch(82% 0.10 130);
+  --ds-token-function: oklch(85% 0.08 85);
+  --ds-token-number: oklch(80% 0.09 60);
+  --ds-token-tag: oklch(78% 0.09 60);
+  --ds-token-attr-name: oklch(75% 0.06 180);
+  --ds-token-class: oklch(78% 0.07 200);
+  --ds-token-builtin: oklch(80% 0.09 60);
+  --ds-token-operator: oklch(70% 0.02 80);
+  --ds-token-punctuation: oklch(65% 0.02 80);
+  --ds-token-variable: oklch(85% 0.05 70);
+  --ds-token-selector: oklch(85% 0.08 85);
+  --ds-token-inserted: oklch(70% 0.10 145);
+  --ds-token-deleted: oklch(65% 0.14 30);
+  --ds-token-url: oklch(72% 0.08 200);
+
 }
 
 /* ===== Dark mode ===== */
@@ -197,6 +219,9 @@
     --ds-glass-bg: oklch(15% 0.008 75 / 0.55);
     --ds-glass-border: oklch(89% 0.012 80 / 0.08);
     --ds-glass-shadow: 0 4px 24px oklch(0% 0 0 / 0.25);
+    --ds-code-bg: oklch(18% 0.01 75);
+    --ds-code-bg-bar: oklch(20% 0.012 75);
+    --ds-code-text: oklch(88% 0.01 85);
   }
 }
 [data-theme="dark"] {
@@ -246,6 +271,9 @@
   --ds-glass-bg: oklch(15% 0.008 75 / 0.55);
   --ds-glass-border: oklch(89% 0.012 80 / 0.08);
   --ds-glass-shadow: 0 4px 24px oklch(0% 0 0 / 0.25);
+  --ds-code-bg: oklch(18% 0.01 75);
+  --ds-code-bg-bar: oklch(20% 0.012 75);
+  --ds-code-text: oklch(88% 0.01 85);
 }
 
 /* ===== Reset & Base ===== */
@@ -1008,16 +1036,38 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-step-body p{font-size:var(--ds-text-body-sm);color:var(--ds-color-muted);line-height:var(--ds-leading-relaxed)}
 
 /* ===== Code block + copy ===== */
-.ds-code{background:var(--ds-color-fg-strong);border-radius:var(--ds-radius-xl);overflow:hidden;border:1px solid var(--ds-color-border);box-shadow:var(--ds-shadow-sm);margin:0}
-.ds-code-bar{display:flex;align-items:center;justify-content:space-between;padding:var(--ds-space-3) var(--ds-space-4);background:color-mix(in oklch,var(--ds-color-fg-strong) 88%,var(--ds-color-white));border-bottom:1px solid color-mix(in oklch,var(--ds-color-white) 12%,transparent)}
+.ds-code{background:var(--ds-code-bg);border-radius:var(--ds-radius-xl);overflow:hidden;border:1px solid var(--ds-color-border);box-shadow:var(--ds-shadow-sm);margin:0}
+.ds-code-bar{display:flex;align-items:center;justify-content:space-between;padding:var(--ds-space-3) var(--ds-space-4);background:var(--ds-code-bg-bar);border-bottom:1px solid color-mix(in oklch,var(--ds-color-white) 12%,transparent)}
 .ds-code-lang{font-family:var(--ds-font-mono);font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);color:color-mix(in oklch,var(--ds-color-fg-inverse) 70%,transparent);font-weight:600}
-.ds-code pre{margin:0;padding:var(--ds-space-5);overflow-x:auto;font-family:var(--ds-font-mono);font-size:var(--ds-text-body-sm);line-height:var(--ds-leading-relaxed);color:oklch(90% 0.02 110)}
+.ds-code pre{margin:0;padding:var(--ds-space-5);overflow-x:auto;font-family:var(--ds-font-mono);font-size:var(--ds-text-body-sm);line-height:var(--ds-leading-relaxed);color:var(--ds-code-text)}
 .ds-code code{font-family:var(--ds-font-mono);white-space:pre}
-.ds-code .tok-c{color:oklch(62% 0.03 130)}/* comment */
-.ds-code .tok-p{color:oklch(78% 0.09 60)}/* property */
-.ds-code .tok-v{color:oklch(80% 0.07 200)}/* value */
-.ds-code .tok-k{color:oklch(78% 0.1 25)}/* keyword */
-.ds-code .tok-s{color:oklch(82% 0.1 130)}/* string */
+.ds-code .token.comment,.ds-code .token.prolog,.ds-code .token.doctype,.ds-code .token.cdata{color:var(--ds-token-comment);font-style:italic}
+.ds-code .token.punctuation{color:var(--ds-token-punctuation)}
+.ds-code .token.property,.ds-code .token.attr-name{color:var(--ds-token-attr-name)}
+.ds-code .token.tag{color:var(--ds-token-tag)}
+.ds-code .token.boolean,.ds-code .token.number,.ds-code .token.constant,.ds-code .token.symbol{color:var(--ds-token-number)}
+.ds-code .token.selector,.ds-code .token.attr-value{color:var(--ds-token-selector)}
+.ds-code .token.string,.ds-code .token.char{color:var(--ds-token-string)}
+.ds-code .token.builtin{color:var(--ds-token-builtin)}
+.ds-code .token.inserted{color:var(--ds-token-inserted)}
+.ds-code .token.deleted{color:var(--ds-token-deleted)}
+.ds-code .token.operator{color:var(--ds-token-operator)}
+.ds-code .token.entity,.ds-code .token.url{color:var(--ds-token-url)}
+.ds-code .token.variable{color:var(--ds-token-variable)}
+.ds-code .token.atrule,.ds-code .token.keyword{color:var(--ds-token-keyword)}
+.ds-code .token.function,.ds-code .token.class-name{color:var(--ds-token-function)}
+.ds-code .token.important{color:var(--ds-token-keyword);font-weight:700}
+.ds-code .token.bold{font-weight:700}
+.ds-code .token.italic{font-style:italic}
+.ds-code .token.namespace{opacity:.8}
+.ds-code .token.regex{color:var(--ds-token-string)}
+.ds-code .token.parameter{color:var(--ds-token-variable)}
+/* Legacy tok-* classes (compat) */
+.ds-code .tok-c{color:var(--ds-token-comment)}
+.ds-code .tok-p{color:var(--ds-token-attr-name)}
+.ds-code .tok-v{color:var(--ds-token-variable)}
+.ds-code .tok-k{color:var(--ds-token-keyword)}
+.ds-code .tok-s{color:var(--ds-token-string)}
 
 /* Copy button (generic) */
 .ds-copy-btn{display:inline-flex;align-items:center;gap:var(--ds-space-2);font-family:var(--ds-font-ui);font-size:var(--ds-text-caption);font-weight:600;padding:var(--ds-space-1) var(--ds-space-3);border-radius:var(--ds-radius-md);border:1px solid color-mix(in oklch,var(--ds-color-white) 18%,transparent);background:transparent;color:color-mix(in oklch,var(--ds-color-fg-inverse) 80%,transparent);cursor:pointer;transition:all var(--ds-duration-150);white-space:nowrap}
@@ -1162,8 +1212,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 @media print{
   .ds-hero-actions,.ds-navbar-actions,.ds-footer-rich .ds-footer-bottom,.ds-copy-btn,.ds-code-bar{display:none!important}
   .ds-reveal{opacity:1!important;transform:none!important}
-  .ds-code{border:1px solid #ccc;box-shadow:none}
-  .ds-code pre{color:#111}
+  .ds-code{border:1px solid #bbb;box-shadow:none;background:var(--ds-code-bg)!important}
+  .ds-code pre{color:var(--ds-code-text)!important}
 }
 
 
