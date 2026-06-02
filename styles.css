@@ -1066,6 +1066,12 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-code .token.namespace{opacity:.8}
 .ds-code .token.regex{color:var(--ds-token-string)}
 .ds-code .token.parameter{color:var(--ds-token-variable)}
+.ds-code .token.coord{color:var(--ds-token-url)}
+.ds-code .token.unit{color:var(--ds-token-number)}
+.ds-code .token.color,.ds-code .token.hexcode,.ds-code .token["language-css"] .token.string{color:var(--ds-token-string)}
+.ds-code .token.attr-equals,.ds-code .token.tag-punctuation{color:var(--ds-token-punctuation)}
+.ds-code .token.title,.ds-code .token["function-variable"]{color:var(--ds-token-function)}
+.ds-code .token{color:inherit}
 /* Legacy tok-* classes (compat) */
 .ds-code .tok-c{color:var(--ds-token-comment)}
 .ds-code .tok-p{color:var(--ds-token-attr-name)}
