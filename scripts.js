@@ -576,23 +576,7 @@ const TOKENS = [
 /* ===== Copy to clipboard ===== */
 (function() {
   function copyText(text) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text);
-    }
-    return new Promise(function(resolve, reject) {
-      try {
-        var ta = document.createElement("textarea");
-        ta.value = text;
-        ta.setAttribute("readonly", "");
-        ta.style.position = "absolute";
-        ta.style.left = "-9999px";
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        resolve();
-      } catch (e) { reject(e); }
-    });
+    return navigator.clipboard.writeText(text);
   }
 
   function getSourceText(btn) {
