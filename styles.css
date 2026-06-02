@@ -1038,7 +1038,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 /* ===== Code block + copy ===== */
 .ds-code{background:var(--ds-code-bg);border-radius:var(--ds-radius-xl);overflow:hidden;border:1px solid var(--ds-color-border);box-shadow:var(--ds-shadow-sm);margin:0}
 .ds-code-bar{display:flex;align-items:center;justify-content:space-between;padding:var(--ds-space-3) var(--ds-space-4);background:var(--ds-code-bg-bar);border-bottom:1px solid color-mix(in oklch,var(--ds-color-white) 12%,transparent)}
-.ds-code-lang{font-family:var(--ds-font-mono);font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);color:color-mix(in oklch,var(--ds-color-fg-inverse) 70%,transparent);font-weight:600}
+.ds-code-lang{font-family:var(--ds-font-mono);font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);color:color-mix(in oklch,var(--ds-code-text) 70%,transparent);font-weight:600}
 .ds-code pre{margin:0;padding:var(--ds-space-5);overflow-x:auto;font-family:var(--ds-font-mono);font-size:var(--ds-text-body-sm);line-height:var(--ds-leading-relaxed);color:var(--ds-code-text)}
 .ds-code code{font-family:var(--ds-font-mono);white-space:pre}
 /* Defense-in-depth: explicitly reset any prose-context styles that might
@@ -1080,8 +1080,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-code .tok-s{color:var(--ds-token-string)}
 
 /* Copy button (generic) */
-.ds-copy-btn{display:inline-flex;align-items:center;gap:var(--ds-space-2);font-family:var(--ds-font-ui);font-size:var(--ds-text-caption);font-weight:600;padding:var(--ds-space-1) var(--ds-space-3);border-radius:var(--ds-radius-md);border:1px solid color-mix(in oklch,var(--ds-color-white) 18%,transparent);background:transparent;color:color-mix(in oklch,var(--ds-color-fg-inverse) 80%,transparent);cursor:pointer;transition:all var(--ds-duration-150);white-space:nowrap}
-.ds-copy-btn:hover{background:color-mix(in oklch,var(--ds-color-white) 12%,transparent);color:var(--ds-color-fg-inverse)}
+.ds-copy-btn{display:inline-flex;align-items:center;gap:var(--ds-space-2);font-family:var(--ds-font-ui);font-size:var(--ds-text-caption);font-weight:600;padding:var(--ds-space-1) var(--ds-space-3);border-radius:var(--ds-radius-md);border:1px solid color-mix(in oklch,var(--ds-color-white) 18%,transparent);background:transparent;color:color-mix(in oklch,var(--ds-code-text) 80%,transparent);cursor:pointer;transition:all var(--ds-duration-150);white-space:nowrap}
+.ds-copy-btn:hover{background:color-mix(in oklch,var(--ds-color-white) 12%,transparent);color:var(--ds-code-text)}
 .ds-copy-btn svg{width:14px;height:14px}
 .ds-copy-btn.is-copied{color:oklch(80% 0.12 145);border-color:oklch(60% 0.12 145)}
 /* Copy button on light surfaces */
