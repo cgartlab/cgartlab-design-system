@@ -279,7 +279,7 @@ const TOKENS = [
       html.setAttribute("data-theme", mode);
       html.setAttribute("data-theme-mode", mode);
     }
-    try { localStorage.setItem(THEME_KEY, mode); } catch(e) {}
+    try { localStorage.setItem(THEME_KEY, mode); } catch(e) { void e; }
     updateButton(mode);
   }
 
@@ -321,7 +321,7 @@ const TOKENS = [
 
   function init() {
     let saved;
-    try { saved = localStorage.getItem(THEME_KEY); } catch(e) {}
+    try { saved = localStorage.getItem(THEME_KEY); } catch(e) { void e; }
     const initial = themes.indexOf(saved) !== -1 ? saved : "system";
     applyTheme(initial);
 
@@ -613,7 +613,7 @@ const TOKENS = [
         btn.classList.remove("is-copied");
         if (label && original) label.textContent = original;
       }, 1800);
-    }).catch(function() {});
+    }).catch(function() { void 0; });
   });
 })();
 
