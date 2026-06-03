@@ -53,3 +53,5 @@ build/
 out/
 .tmp/
 .cache/
+# oh-my-openagent runtime cache/state — never commit
+.omo/
