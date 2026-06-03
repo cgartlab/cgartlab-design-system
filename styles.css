@@ -41,11 +41,6 @@
   --ds-font-body: "Noto Sans SC", "Source Han Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --ds-font-mono: "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono SC", ui-monospace, monospace;
   --ds-font-ui: "Noto Sans SC", "Source Han Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --ds-letter-spacing-cjk: 0.04em;
-  --ds-letter-spacing-cjk-heading: 0.06em;
-  --ds-letter-spacing-latin: 0.015em;
-  --ds-letter-spacing-mono: 0;
-  --ds-word-spacing-cjk: 0.05em;
   --ds-cjk-line-height: 1.7;
   --ds-text-caption: 0.75rem;
   --ds-text-body-sm: 0.875rem;
@@ -954,7 +949,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 
 /* Animated hero mark (line draw) */
 .ds-logo-hero{width:96px;height:96px;border-radius:var(--ds-radius-2xl);background:linear-gradient(140deg,var(--ds-color-olive-200),var(--ds-accent) 48%,var(--ds-color-olive-600));color:var(--ds-color-white);display:inline-flex;align-items:center;justify-content:center;box-shadow:var(--ds-shadow-xl);position:relative;overflow:hidden;transition:transform var(--ds-duration-500) var(--ds-ease-spring),box-shadow var(--ds-duration-500) var(--ds-ease-out)}
-.ds-logo-hero::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 90% at 28% 18%,rgba(255,255,255,.42),rgba(255,255,255,0) 60%);pointer-events:none}
+.ds-logo-hero::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 90% at 28% 18%,oklch(100% 0 0 / 0.42),oklch(100% 0 0 / 0) 60%);pointer-events:none}
 .ds-logo-hero::after{content:"";position:absolute;inset:-6px;border-radius:inherit;background:conic-gradient(from 180deg at 50% 50%,transparent 0deg,oklch(52% 0.08 115 / .25) 90deg,transparent 180deg);filter:blur(18px);opacity:.6;z-index:-1;pointer-events:none;animation:ds-logo-halo 6s var(--ds-ease-in-out) infinite}
 .ds-logo-hero:hover{transform:translateY(-2px) scale(1.02);box-shadow:var(--ds-shadow-2xl)}
 .ds-logo-hero svg{width:60px;height:60px;position:relative;z-index:1}
@@ -1037,8 +1032,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 
 /* ===== Code block + copy ===== */
 .ds-code{background:var(--ds-code-bg);border-radius:var(--ds-radius-xl);overflow:hidden;border:1px solid var(--ds-color-border);box-shadow:var(--ds-shadow-sm);margin:0}
-.ds-code-bar{display:flex;align-items:center;justify-content:space-between;padding:var(--ds-space-3) var(--ds-space-4);background:var(--ds-code-bg-bar);border-bottom:1px solid color-mix(in oklch,var(--ds-color-white) 12%,transparent)}
-.ds-code-lang{font-family:var(--ds-font-mono);font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);color:color-mix(in oklch,var(--ds-color-fg-inverse) 70%,transparent);font-weight:600}
+.ds-code-bar{display:flex;align-items:center;justify-content:space-between;padding:var(--ds-space-3) var(--ds-space-4);background:var(--ds-color-surface-overlay);border-bottom:1px solid var(--ds-color-border-subtle)}
+.ds-code-lang{font-family:var(--ds-font-mono);font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);color:var(--ds-color-muted);font-weight:600}
 .ds-code pre{margin:0;padding:var(--ds-space-5);overflow-x:auto;font-family:var(--ds-font-mono);font-size:var(--ds-text-body-sm);line-height:var(--ds-leading-relaxed);color:var(--ds-code-text)}
 .ds-code code{font-family:var(--ds-font-mono);white-space:pre}
 /* Defense-in-depth: explicitly reset any prose-context styles that might
@@ -1080,8 +1075,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-code .tok-s{color:var(--ds-token-string)}
 
 /* Copy button (generic) */
-.ds-copy-btn{display:inline-flex;align-items:center;gap:var(--ds-space-2);font-family:var(--ds-font-ui);font-size:var(--ds-text-caption);font-weight:600;padding:var(--ds-space-1) var(--ds-space-3);border-radius:var(--ds-radius-md);border:1px solid color-mix(in oklch,var(--ds-color-white) 18%,transparent);background:transparent;color:color-mix(in oklch,var(--ds-color-fg-inverse) 80%,transparent);cursor:pointer;transition:all var(--ds-duration-150);white-space:nowrap}
-.ds-copy-btn:hover{background:color-mix(in oklch,var(--ds-color-white) 12%,transparent);color:var(--ds-color-fg-inverse)}
+.ds-copy-btn{display:inline-flex;align-items:center;gap:var(--ds-space-2);font-family:var(--ds-font-ui);font-size:var(--ds-text-caption);font-weight:600;padding:var(--ds-space-1) var(--ds-space-3);border-radius:var(--ds-radius-md);border:1px solid var(--ds-color-border-subtle);background:transparent;color:var(--ds-color-muted);cursor:pointer;transition:all var(--ds-duration-150);white-space:nowrap}
+.ds-copy-btn:hover{background:color-mix(in oklch,var(--ds-color-white) 12%,transparent);color:var(--ds-color-fg)}
 .ds-copy-btn svg{width:14px;height:14px}
 .ds-copy-btn.is-copied{color:oklch(80% 0.12 145);border-color:oklch(60% 0.12 145)}
 /* Copy button on light surfaces */
@@ -1231,7 +1226,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 @media print{
   .ds-hero-actions,.ds-navbar-actions,.ds-footer-rich .ds-footer-bottom,.ds-copy-btn,.ds-code-bar{display:none!important}
   .ds-reveal{opacity:1!important;transform:none!important}
-  .ds-code{border:1px solid #bbb;box-shadow:none;background:var(--ds-code-bg)!important}
+  .ds-code{border:1px solid oklch(79% 0 0);box-shadow:none;background:var(--ds-code-bg)!important}
   .ds-code pre{color:var(--ds-code-text)!important}
 }
 
@@ -1248,7 +1243,7 @@ a.ds-feature-card:focus-visible{outline:2px solid var(--ds-accent);outline-offse
 
 
 /* ===== Brand constants (theme-independent) ===== */
-:root{--ds-brand-paper:#f7f4ee;--ds-brand-ink:#211f1b}
+:root{--ds-brand-paper:oklch(96.8% 0.009 85);--ds-brand-ink:oklch(24% 0.008 85)}
 .ds-brand-preview{display:flex;align-items:center;justify-content:center;padding:var(--ds-space-6);border-radius:var(--ds-radius-lg);border:1px solid var(--ds-color-border-subtle);min-height:104px}
 .ds-brand-preview img{max-width:100%;height:auto;max-height:56px}
 .ds-brand-preview--paper{background:var(--ds-brand-paper)}
