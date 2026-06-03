@@ -1088,7 +1088,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-prompt-head{display:flex;align-items:center;justify-content:space-between;gap:var(--ds-space-4);padding:var(--ds-space-4) var(--ds-space-5);border-bottom:1px solid var(--ds-color-border-subtle);background:var(--ds-color-surface)}
 .ds-prompt-title{font-family:var(--ds-font-ui);font-size:var(--ds-text-body-sm);font-weight:600;color:var(--ds-color-fg);display:flex;align-items:center;gap:var(--ds-space-2)}
 .ds-prompt-title svg{width:18px;height:18px;color:var(--ds-accent)}
-.ds-prompt-body{max-height:min(75vh,720px);overflow-y:auto;padding:var(--ds-space-5);margin:0;font-family:var(--ds-font-mono);font-size:var(--ds-text-body-sm);line-height:var(--ds-leading-relaxed);color:var(--ds-color-fg-subtle);white-space:pre-wrap;word-break:break-word;background:var(--ds-color-surface);scrollbar-gutter:stable}
+.ds-prompt-body{max-height:min(75vh,720px);overflow-y:auto;padding:var(--ds-space-5);margin:0;font-family:var(--ds-font-mono);font-size:var(--ds-text-body-sm);line-height:var(--ds-leading-relaxed);color:var(--ds-color-fg-subtle);white-space:pre-wrap;word-break:break-word;background:var(--ds-color-surface);scrollbar-gutter:stable;overscroll-behavior:contain}
 .ds-prompt-foot{padding:var(--ds-space-3) var(--ds-space-5);border-top:1px solid var(--ds-color-border-subtle);font-size:var(--ds-text-caption);color:var(--ds-color-muted);display:flex;justify-content:space-between;align-items:center;gap:var(--ds-space-3)}
 
 /* ===== Functional tab panels ===== */
@@ -1177,7 +1177,11 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 /* ===== Responsive (extended) ===== */
 @media(max-width:1023px){
   .ds-docs{grid-template-columns:1fr;gap:var(--ds-space-8)}
-  .ds-docs-aside{position:static;top:auto;border:1px solid var(--ds-color-border-subtle);border-radius:var(--ds-radius-xl);padding:var(--ds-space-4);background:var(--ds-color-surface)}
+  .ds-docs-aside{position:static;top:auto;border:1px solid var(--ds-color-border-subtle);border-radius:var(--ds-radius-xl);padding:0;background:var(--ds-color-surface)}
+  .ds-docs-aside-details summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;padding:var(--ds-space-3) var(--ds-space-4);min-height:44px;user-select:none}
+  .ds-docs-aside-details summary::-webkit-details-marker{display:none}
+  .ds-docs-aside-details[open] .ds-docs-aside-chevron{transform:rotate(180deg)}
+  .ds-docs-aside-details .ds-docs-menu{padding:0 var(--ds-space-4) var(--ds-space-3)}
   .ds-footer-cols{grid-template-columns:1fr 1fr}
   .ds-footer-brand{grid-column:1 / -1}
   .ds-hero-section{padding:var(--ds-space-24) 0 var(--ds-space-20)}
@@ -1197,6 +1201,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-hero-meta{padding-top:var(--ds-space-5);font-size:11px;letter-spacing:var(--ds-tracking-wide)}
   .ds-stat-num{font-size:var(--ds-text-h1)}
   .ds-footer-cols{grid-template-columns:1fr;gap:var(--ds-space-8)}
+  /* P0 #95: mobile scroll trap fix — remove fixed height, let content flow */
+  .ds-prompt-body{max-height:none;overflow-y:visible}
   .ds-navbar-cta span{display:none}
 }
 @media(max-width:639px){
@@ -1245,6 +1251,12 @@ a.ds-feature-card:focus-visible{outline:2px solid var(--ds-accent);outline-offse
 
 .ds-justify-start{justify-content:flex-start}
 
+/* Desktop: restore docs-aside details as neutral wrapper */
+@media(min-width:1024px){
+  .ds-docs-aside-details{display:contents}
+  .ds-docs-aside-details>summary{display:none}
+  .ds-docs-aside-details .ds-docs-menu{padding:0}
+}
 
 /* ===== Skip to content (a11y) ===== */
 .ds-skip{position:absolute;top:-100%;left:var(--ds-space-4);padding:var(--ds-space-3) var(--ds-space-5);background:var(--ds-accent);color:var(--ds-color-white);border-radius:var(--ds-radius-md);font-size:var(--ds-text-body-sm);font-weight:600;z-index:9999;text-decoration:none;transition:top var(--ds-duration-200)}
