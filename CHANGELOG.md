@@ -5,6 +5,30 @@
 
 ## [未发布]
 
+### 修复
+
+#### Prism 代码块主题适配与暗色模式可见性
+- `.ds-code-bar` 改为跟随页面主题（亮/暗色自适应，原先恒为暗底）
+- `.ds-code-lang` / `.ds-copy-btn` 改用语义令牌（暗色模式文字不再不可见）
+- 防止 inline-code 样式泄漏到代码块
+- Prism 升级 1.29.0 → 1.30.0 + 引入 SRI 完整性校验
+- `docs.html` 移动端侧栏简化为常驻目录（去除 `<details>` 折叠）
+- `blog.html` 移除小屏汉堡菜单（改为垂直堆叠）
+
+#### 反模式清理
+- `styles.css` 5 处 hex/rgba 迁移到 OKLch：`.ds-logo-hero` 高光 / 打印边框 / 品牌常量
+- `styles.css` 5 行死代码 `--ds-letter-spacing-*` / `--ds-word-spacing-cjk` 删除（遗留自 `--ds-tracking-*` 重命名前）
+- `scripts.js` 3 处空 catch 块改为 `void e;` / `void 0;`（localStorage 读/写 + clipboard.writeText）
+
+### 变更
+
+#### 命名验证器白名单扩展
+- `tools/validate_naming.py` 的 `VALID_CATEGORIES` 新增 7 个合法类别：`code` / `token` / `cjk` / `reveal` / `draw` / `stack` / `brand`（均为项目已使用但验证器历史遗漏的合法 CSS 变量类别）
+
+#### CI 治理
+- 在 v1.3.x 治理层（6 验证器）落地后，main 分支首次实现所有 6 个 GitHub Actions 验证器 exit 0（4 pass clean，2 pass with warns，`ci.yml` 已正确将 exit 2 映射为 exit 0）
+- `Makefile` 的 `validate` 目标改写为退出码聚合器：仅 exit 1 视为失败，exit 0/2 视为通过，与 `ci.yml` 语义对齐；本地 `make validate` 首次真正"绿"（输出 `✓ 全部验证通过`）；单个 `make validate-X` 调用保持原验证器自然退出码不变
+
 ### 新增（进行中）
 
 #### 图标 sprite 生成（icons.svg）

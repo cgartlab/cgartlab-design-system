@@ -20,9 +20,37 @@ help:  ## 显示帮助
 	  awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 # ─── 验证 ──────────────────────────────────────────────────
-validate: validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links  ## 全部验证
-	@echo ""
-	@echo "✓ 全部验证通过"
+# AGENTS.md 退出码契约：0 = pass / 1 = 阻塞错误 / 2 = 仅警告（非阻塞）
+# ci.yml 已将 exit 2 映射为 0；本地 `make validate` 也应如此——逐个运行所有验证器，
+# 仅在出现 exit 1 时失败，exit 0/2 视为通过。
+validate:  ## 全部验证（聚合 6 个验证器；exit 1 阻塞，exit 0/2 通过）
+	@fail=0; \
+	for t in validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links; do \
+	  $(MAKE) -s $$t > /tmp/ds-validate-$$t.raw 2>&1; \
+	  ec=$$?; \
+	  grep -v '^make\[' /tmp/ds-validate-$$t.raw > /tmp/ds-validate-$$t.log 2>/dev/null || true; \
+	  rm -f /tmp/ds-validate-$$t.raw; \
+	  case $$ec in \
+	    0) ;; \
+	    1) echo "  ✗ $$t FAILED (exit 1, blocking)"; \
+	       sed 's/^/    /' /tmp/ds-validate-$$t.log; \
+	       fail=1 ;; \
+	    2) echo "  ⚠ $$t warnings (exit 2, non-blocking)"; \
+	       sed 's/^/    /' /tmp/ds-validate-$$t.log ;; \
+	    *) echo "  ? $$t exit $$ec (unexpected)"; \
+	       sed 's/^/    /' /tmp/ds-validate-$$t.log; \
+	       fail=1 ;; \
+	  esac; \
+	done; \
+	rm -f /tmp/ds-validate-*.log; \
+	if [ $$fail -eq 0 ]; then \
+	  echo ""; \
+	  echo "✓ 全部验证通过"; \
+	else \
+	  echo ""; \
+	  echo "✗ 验证失败（上方 ✗ 项为阻塞错误）"; \
+	  exit 1; \
+	fi
 
 validate-tokens:  ## 校验 tokens.json ↔ styles.css 一致性
 	$(PYTHON) tools/validate_tokens.py

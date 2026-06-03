@@ -23,6 +23,7 @@ VALID_CATEGORIES = {
     "color", "font", "text", "weight", "leading", "tracking",
     "space", "radius", "shadow", "duration", "ease", "bp", "z",
     "blur", "glass", "accent", "opacity", "size",
+    "code", "token", "cjk", "reveal", "draw", "stack", "brand",
 }
 
 BEM_CLASS = re.compile(r'\bclass="([^"]+)"')
