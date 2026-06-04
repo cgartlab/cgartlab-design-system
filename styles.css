@@ -876,6 +876,19 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-timeline-item{padding-left:var(--ds-space-12)}
   .ds-timeline::before{left:14px}.ds-timeline-dot{left:5px;width:16px;height:16px}
   .ds-form-row{grid-template-columns:1fr}
+  /* P1 issue-96/issue-99: Responsive hero/display overrides for all pages */
+  .ds-hero{font-size:clamp(2rem,8vw,2.25rem)}.ds-display{font-size:clamp(1.75rem,7vw,2rem)}
+  /* P1 issue-97: Mobile TOC — bottom anchor bar replacing hidden floating TOC */
+  .ds-floating-toc{display:none}.ds-mobile-toc{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:var(--ds-space-1);padding:var(--ds-space-2) var(--ds-space-4);background:var(--ds-glass-bg);-webkit-backdrop-filter:blur(var(--ds-blur-md));backdrop-filter:blur(var(--ds-blur-md));border-top:1px solid var(--ds-color-border-subtle);position:fixed;bottom:0;left:0;right:0;z-index:var(--ds-z-sticky);white-space:nowrap}
+  .ds-mobile-toc a{display:inline-flex;align-items:center;gap:4px;padding:var(--ds-space-2) var(--ds-space-3);border-radius:var(--ds-radius-lg);font-size:var(--ds-text-caption);color:var(--ds-color-muted);text-decoration:none;font-family:var(--ds-font-ui);flex-shrink:0}
+  .ds-mobile-toc a:hover{background:var(--ds-accent-soft);color:var(--ds-accent)}.ds-mobile-toc a--active{color:var(--ds-accent);font-weight:600;background:var(--ds-accent-muted)}
+  .ds-mobile-toc a .ds-toc-num{font-family:var(--ds-font-mono);color:var(--ds-color-border-strong);margin-right:2px}
+  /* P1 issue-108: Mobile nav drawer — smaller text on very small screens */
+  .ds-navbar-link{min-height:36px;font-size:var(--ds-text-body-sm)}
+  /* P1 issue-98: Tab labels — allow wrapping on small screens */
+  .ds-tab{white-space:normal;font-size:var(--ds-text-caption)}
+  /* P3 issue-104: Color swatch density — smaller swatches on very small screens */
+  .ds-swatch-color{height:48px}.ds-swatch-info{font-size:var(--ds-text-caption)}
 }
 @media(min-width:640px)and(max-width:1023px){
   .ds-grid-4{grid-template-columns:repeat(2,1fr)}
@@ -1130,7 +1143,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-prose figure{margin:0 0 var(--ds-space-6)}
 
 /* ===== Download cards ===== */
-.ds-dl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--ds-space-6)}
+.ds-dl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:var(--ds-space-6)}
 .ds-dl-card{display:flex;flex-direction:column;gap:var(--ds-space-4);background:var(--ds-color-surface-raised);border:1px solid var(--ds-color-border);border-radius:var(--ds-radius-2xl);padding:var(--ds-space-7);transition:transform var(--ds-duration-300) var(--ds-ease-out),box-shadow var(--ds-duration-300)}
 .ds-dl-card:hover{transform:translateY(-3px);box-shadow:var(--ds-shadow-md)}
 .ds-dl-top{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--ds-space-3)}
