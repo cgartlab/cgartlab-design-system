@@ -2,19 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main, dev/*, fix/*, write/*, release/**]
+    branches: [main]
   pull_request:
     branches: [main]
-  schedule:
-    - cron: "0 0 * * 1"
   workflow_dispatch:
 
 permissions:
   contents: read
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   validate:
@@ -27,7 +21,9 @@ jobs:
         with:
           python-version: "3.11"
       - name: Make scripts executable
-        run: chmod +x tools/validate_*.py
+        run: |
+          chmod +x tools/validate_*.py
+          echo "Scripts are executable"
       - id: tokens
         run: python3 tools/validate_tokens.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
       - id: naming
