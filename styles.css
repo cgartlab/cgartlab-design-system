@@ -1,4 +1,4 @@
-/* ===== CGArtLab Design System v1.3.1 — Tokens & Styles ===== */
+/* ===== EDIC Design System v1.4.0 — Tokens & Styles ===== */
 
 :root {
   --ds-color-bg: oklch(97% 0.012 80);
@@ -911,7 +911,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 
 
 /* =========================================================================
-   CGArtLab Design System v1.1 — Site Shell, Motion & Extended Components
+   EDIC Design System v1.1 — Site Shell, Motion & Extended Components
    Appended layer. Fully token-driven. Powers the showcase website
    (index / handbook / docs / prompts / downloads) and is the canonical
    reference any consumer can copy.

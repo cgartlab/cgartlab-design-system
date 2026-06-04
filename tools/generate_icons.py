@@ -131,7 +131,7 @@ def build_sprite(icons: list[dict]) -> str:
 
     return f'''<?xml version="1.0" encoding="UTF-8"?>
 <!--
-  icons.svg — CGArtLab Design System 图标 sprite
+  icons.svg — EDIC Design System 图标 sprite
   {len(icons)} 枚线性 SVG 图标（24×24 viewBox），可独立引用。
 
   ⚠ 由 tools/generate_icons.py 从 scripts.js 的 ICONS 数组自动生成。

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Generate real, downloadable sample PDFs for the CGArtLab Design System.
+Generate real, downloadable sample PDFs for the EDIC Design System.
 
 No third-party dependencies: this writes valid PDF 1.7 by hand (Helvetica /
 Helvetica-Bold / Courier built-in fonts + filled rectangles for swatches).
@@ -11,8 +11,8 @@ Text is ASCII (token names + OKLch values), which suits a reference card.
 （由 stamp_version.py 与 HTML/MD 文件保持一致）。
 
 Outputs (relative to repo root):
-    assets/downloads/cgartlab-ds-reference.pdf   (multi-page reference)
-    assets/downloads/cgartlab-ds-color-card.pdf  (one-page color card)
+    assets/downloads/edic-ds-reference.pdf   (multi-page reference)
+    assets/downloads/edic-ds-color-card.pdf  (one-page color card)
 
 Run:  python tools/generate_pdfs.py
 """
@@ -234,12 +234,12 @@ def header(p, title, subtitle):
     p.text(56, 46, title, "F2", 22, RGB["white"])
     p.text(56, 70, subtitle, "F3", 9.5, RGB["olive-50"])
     # leaf glyph hint
-    p.text(p.w - 90, 58, "CGArtLab", "F2", 11, RGB["white"])
+    p.text(p.w - 90, 58, "EDIC", "F2", 11, RGB["white"])
 
 
 def footer(p, page_label):
     p.line(56, 40, p.w - 56, 40, RGB["border"], 0.6)
-    p.text(56, 36, f"CGArtLab Design System  -  Editorial x Olive Green  -  v{VERSION}", "F3", 7.5, RGB["muted"])
+    p.text(56, 36, f"EDIC Design System  -  Editorial x Olive Green  -  v{VERSION}", "F3", 7.5, RGB["muted"])
     p.text(p.w - 110, 36, page_label, "F3", 7.5, RGB["muted"])
 
 
@@ -252,7 +252,7 @@ def build_reference():
     p.rect(0, p.h - 280, p.w, 280, RGB["olive-400"])
     p.rect(56, p.h - 150, 64, 64, RGB["white"])
     p.text(70, 120, "CG", "F2", 30, RGB["olive-500"])
-    p.text(56, 200, "CGArtLab", "F2", 40, RGB["white"])
+    p.text(56, 200, "EDIC", "F2", 40, RGB["white"])
     p.text(56, 244, "Design System", "F2", 40, RGB["olive-50"])
     p.text(56, 300, "Editorial x Olive Green  -  Quick Reference", "F3", 12, RGB["fg-strong"])
     p.text(56, 330, "OKLch tokens / dark-mode ready / framework-agnostic", "F1", 11, RGB["muted"])
@@ -392,7 +392,7 @@ def build_color_card():
     doc = PDFDoc()
     p = Page()
     p.rect(0, 0, p.w, p.h, RGB["bg"])
-    header(p, "Color Card", "OKLch palette - CGArtLab Design System")
+    header(p, "Color Card", "OKLch palette - EDIC Design System")
     # big olive ramp
     y = 130
     p.text(56, y, "OLIVE RAMP  50 -> 900", "F2", 10, RGB["olive-500"]); y += 16
@@ -438,9 +438,9 @@ def main():
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     out_dir = os.path.join(root, "assets", "downloads")
     os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "cgartlab-ds-reference.pdf"), "wb") as f:
+    with open(os.path.join(out_dir, "edic-ds-reference.pdf"), "wb") as f:
         f.write(build_reference())
-    with open(os.path.join(out_dir, "cgartlab-ds-color-card.pdf"), "wb") as f:
+    with open(os.path.join(out_dir, "edic-ds-color-card.pdf"), "wb") as f:
         f.write(build_color_card())
     print("Generated PDFs in", out_dir)
 

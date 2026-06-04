@@ -1,7 +1,7 @@
-# CGArtLab Design System
+# EDIC Design System
 
-> 编辑主义 × 橄榄绿 — 一套以 **OKLch** 与 **设计令牌** 驱动的开源设计系统。
-> 框架无关、暗色就绪、中英文混排优化，并为 AI Agent 提供即用的提示词与 Skill。
+> 同时面向人类和 Agent 的编辑主义设计系统 — 为纷繁的数字内容建立温暖而克制的秩序。
+> 基于 **OKLch** 与 **设计令牌**，框架无关、暗色就绪、中英文混排优化。
 
 🌐 **网站：** https://designsystem.cgartlab.com
 
@@ -10,7 +10,7 @@
 [![暗色模式](https://img.shields.io/badge/dark%20mode-ready-7d7a42)](https://designsystem.cgartlab.com/docs.html#dark)
 [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-7d7a42)](./.github/workflows/ci.yml)
 [![CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-7d7a42)](https://creativecommons.org/licenses/by/4.0/)
-[![v1.3.1](https://img.shields.io/badge/version-1.3.1-7d7a42)](./CHANGELOG.md)
+[![v1.4.0](https://img.shields.io/badge/version-1.4.0-7d7a42)](./CHANGELOG.md)
 
 ---
 
@@ -43,7 +43,7 @@
 | 页面 | 说明 |
 |------|------|
 | `blog.html` | 纸间 · 评论博客 — 长文排版与文章目录示范 |
-| `company.html` | CGArtLab 公司官网 — 生产级落地页示例 |
+| `company.html` | EDIC 公司官网 — 生产级落地页示例 |
 | `resume.html` | 简历模板 — 可打印为 PDF 的 A4 简历 |
 | `report.html` | A4 报告规范 — 多页报告/白皮书的版式模板 |
 
@@ -60,7 +60,7 @@ LICENSE                          # CC BY 4.0 完整许可证文本
 assets/brand/                     # Logo（浅底 / 深底 / mark）
 assets/downloads/                 # 生成的示例 PDF
 prompts/                          # system-prompt.md · quick-prompt.md
-skills/cgartlab-design-system/    # SKILL.md（Agent 技能包）
+skills/edic-design-system/    # SKILL.md（Agent 技能包）
 docs/                             # 流程文档（VERSIONING / COMPONENT-DEVELOPMENT / TESTING / RELEASE-CHECKLIST）
 tools/                            # 验证脚本（validate_*.py）+ PDF 生成器
 tests/                            # 验证工具自检夹具
@@ -113,7 +113,7 @@ scripts/                          # 本地开发辅助（dev.sh / dev.ps1 / pre-
 
 - **可自由使用** — 可用于个人或商业项目
 - **可自由修改** — 可根据需要修改和定制
-- **须署名** — 使用时需保留 CGArtLab 设计系统的署名
+- **须署名** — 使用时需保留 EDIC 设计系统的署名
 - **衍生作品可选择许可证** — 修改后的版本可采用任何许可证（不要求保持 CC BY 4.0）
 
 详见 [使用条款](https://designsystem.cgartlab.com/terms.html)。
@@ -169,4 +169,4 @@ CI 在 PR / push / 每周一自动跑全部验证：[`.github/workflows/ci.yml`]
 
 ---
 
-© CGArtLab · 探索数字艺术的边界
+© EDIC · 为纷繁的数字内容建立温暖而克制的秩序

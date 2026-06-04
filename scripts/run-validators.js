@@ -41,7 +41,7 @@ function runOne(script, args = []) {
 }
 
 function main() {
-  console.log("CGArtLab Design System — 验证运行器");
+  console.log("EDIC Design System — 验证运行器");
   console.log("Python:", PYTHON, "\n");
 
   let hasFail = false;

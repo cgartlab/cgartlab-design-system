@@ -1,26 +1,28 @@
-# cgartlab Design System — 知识库
+# EDIC Design System — 知识库
 
 **生成时间:** 2026-05-14
 **Updated:** 2026-06-01
 **分层**: 基础设施 (Infrastructure) — 设计系统
-**状态:** v1.3.1 — 设计令牌 + 组件手册 + 图标库 + 暗色模式 + 展示网站 + AI 提示词/Skill + 品牌 Logo + 动效系统 + **完整工程治理层（CI/验证/流程文档）** 已完成
+**状态:** v1.4.0 — 设计令牌 + 组件手册 + 图标库 + 暗色模式 + 展示网站 + AI 提示词/Skill + 品牌 Logo + 动效系统 + **完整工程治理层（CI/验证/流程文档）** + **品牌重塑为 EDIC（Editorial Design Interface for Content）** 已完成
+
+> **v1.4.0 新增（2026-06-04）**: **品牌重塑为 EDIC（Editorial Design Interface for Content）** — 新定位为同时面向人类和 Agent 的编辑主义设计系统，新理念是为纷繁的数字内容建立温暖而克制的秩序。包名 `cgartlab-design-system` → `edic-design-system`，目录 `skills/cgartlab-design-system/` → `skills/edic-design-system/`，二维码 `cgartlabcom_qrcode.svg` → `ediccom_qrcode.svg`。GitHub 仓库、域名与 URL 引用保持不变（管理员操作延后到后续 PR）。
 
 > **v1.3.x 新增（2026-06-01）**: 在 v1.1 视觉层之上补齐**工程治理层**——`.editorconfig` / `.gitattributes` / `.github/` 完整模板、`CONTRIBUTING.md` / `CHANGELOG.md` / `CODE_OF_CONDUCT.md` / `SECURITY.md` / `LICENSE`、流程文档（`docs/VERSIONING.md` / `COMPONENT-DEVELOPMENT.md` / `TESTING.md` / `RELEASE-CHECKLIST.md`）、6 个 Python 验证脚本（`tools/validate_*.py`）、CI 流水线（`ci.yml` + `release.yml`）、本地开发辅助（`Makefile` + `scripts/dev.*` + `.nvmrc`）、测试夹具（`tests/fixtures/`）。保持项目**零运行时依赖**原貌，仅添加开发期工具。
 
-> **v1.1 关键特性**: 设计系统已升级为一个**多页静态展示网站**（首页 / 视觉手册 / 使用文档 / 提示词 / 下载），网站本身严格遵循设计系统规范，可经 GitHub Pages 公开访问（`designsystem.cgartlab.com`）。新增品牌 Logo、CSS/SVG 动效系统、滚动揭示、复制交互，以及可复制给任意 Agent 的系统提示词与 Skill 技能包，并生成真实示例 PDF。`company.html`（CGArtLab 公司官网示例）是首个采用 `--ds-*` 令牌的生产级页面。
+> **v1.1 关键特性**: 设计系统已升级为一个**多页静态展示网站**（首页 / 视觉手册 / 使用文档 / 提示词 / 下载），网站本身严格遵循设计系统规范，可经 GitHub Pages 公开访问（`designsystem.cgartlab.com`）。新增品牌 Logo、CSS/SVG 动效系统、滚动揭示、复制交互，以及可复制给任意 Agent 的系统提示词与 Skill 技能包，并生成真实示例 PDF。`company.html`（EDIC 公司官网示例）是首个采用 `--ds-*` 令牌的生产级页面。
 
 ## OVERVIEW
 
-CGArtLab 设计系统。编辑主义 × 橄榄绿 — 温暖、自信、精致。基于 OKLch 色彩系统、衬线 Display + 无衬线 Body 经典搭配。
+EDIC 设计系统。编辑主义 — 温暖、克制、秩序。基于 OKLch 色彩系统、衬线 Display + 无衬线 Body 经典搭配。
 
-**视觉气质:** Editorial / 杂志感 + Warm / 温暖友好
+**视觉气质:** Editorial / 杂志感 + Warm / 温暖克制 + Restrained / 秩序井然
 **目标平台:** Penpot 设计工具（SVG 拖入即用）
 **色系:** 暖白纸色基底 + 橄榄绿强调色 + 语义色（success/warning/error/info）
 
 ## 已完成交付物
 
 ```
-cgartlab-design-system/
+edic-design-system/
 ├── index.html          # 网站首页（亮点 · 兼容性 · AI 协作 · 系统组成 · 真实示例）
 ├── handbook.html       # 视觉手册（色彩/字体/间距/组件/图标/效果/令牌 — live 展示）
 ├── docs.html           # 使用文档（安装/令牌/主题/排版/组件/动效/可访问性/定制/FAQ）
@@ -42,7 +44,7 @@ cgartlab-design-system/
 ├── assets/downloads/   # 生成的示例 PDF（reference / color-card）
 │
 ├── prompts/            # system-prompt.md · quick-prompt.md
-├── skills/cgartlab-design-system/SKILL.md   # Agent 技能包
+├── skills/edic-design-system/SKILL.md   # Agent 技能包
 │
 ├── tools/              # 验证脚本（纯 Python stdlib，零依赖）
 │   ├── validate_tokens.py     # tokens.json ↔ styles.css 一致性
@@ -98,7 +100,7 @@ cgartlab-design-system/
 
 ### 品牌 Logo（v1.3 重绘 — 45° 钢笔头 monogram）
 
-- 精致钢笔头（fountain-pen nib）monogram，笔尖朝左下 45°，呼应 CGArtLab「书写 / 创作 / 编辑主义」的理念。整个图形**仅由两根封闭曲线绘制**——笔尖轮廓（笔缝为尖端处的开放凹口）+ 透气孔圆。
+- 精致钢笔头（fountain-pen nib）monogram，笔尖朝左下 45°，呼应 EDIC「编辑、秩序、克制」的理念。整个图形**仅由两根封闭曲线绘制**——笔尖轮廓（笔缝为尖端处的开放凹口）+ 透气孔圆。
 - 实现为单一复合路径（轮廓 + 透气孔，`evenodd`），`transform="rotate(45 16 16)"` 旋转到 45°；笔缝由轮廓在笔尖处的凹口表达，透气孔与笔缝相连成「钥匙孔」，均为负空间。
 - 渐变色板取自 OKLch 橄榄色阶（olive-200…600）的 hex 近似值，保证各端（favicon / og:image / 社交抓取）稳定渲染；站点 CSS 仍用 OKLch 令牌。
 - `logo-mark.svg`：纯 `currentColor` 单一复合路径（两条封闭曲线），深浅主题自适配，作最简归一。
@@ -115,7 +117,7 @@ cgartlab-design-system/
 
 - `prompts/system-prompt.md` — 完整系统提示词（最严格）。
 - `prompts/quick-prompt.md` — 精简提示词（对话开场白）。
-- `skills/cgartlab-design-system/SKILL.md` — Skill 技能包（持久化）。
+- `skills/edic-design-system/SKILL.md` — Skill 技能包（持久化）。
 - 三者在 `prompts.html` 提供一键复制与各家工具（ChatGPT/Claude/Cursor/Kiro/Copilot…）接入位置。
 
 ### handbook.html — 视觉手册

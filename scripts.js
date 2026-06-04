@@ -1,4 +1,4 @@
-/* ===== CGArtLab Design System v1.3.1 — Icon Grid & Token Table ===== */
+/* ===== EDIC Design System v1.4.0 — Icon Grid & Token Table ===== */
 
 const ICONS = [
   {id:"archive",svg:'<svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>'},
@@ -565,7 +565,7 @@ const TOKENS = [
 
 
 /* =========================================================================
-   CGArtLab Design System v1.1 — Site interactions
+   EDIC Design System v1.1 — Site interactions
    Scroll reveal · Copy to clipboard · Tabs · Accordion · Docs nav · Year
    All blocks are self-guarding; safe to load on every page.
    ========================================================================= */

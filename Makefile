@@ -1,4 +1,4 @@
-# Makefile — CGArtLab Design System
+# Makefile — EDIC Design System
 # 跨平台任务编排（GNU Make）
 # 用法：make <target>
 
@@ -11,7 +11,7 @@ NODE ?= node
 PORT ?= 8000
 
 help:  ## 显示帮助
-	@echo "CGArtLab Design System — Makefile"
+	@echo "EDIC Design System — Makefile"
 	@echo ""
 	@echo "用法：make <target>"
 	@echo ""

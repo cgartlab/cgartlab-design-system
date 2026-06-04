@@ -1,6 +1,6 @@
 # 贡献指南（Contributing Guide）
 
-> 感谢你有兴趣贡献 CGArtLab 设计系统！本文档说明提交流程、规范与质量要求。
+> 感谢你有兴趣贡献 EDIC 设计系统！本文档说明提交流程、规范与质量要求。
 
 ## 行为准则
 
@@ -107,7 +107,7 @@ make serve             # 本地预览
 - ✅ 命名遵循 `--ds-{category}-{name}[-{modifier}]`
 - ❌ 禁止硬编码 `#fff`、`#000`、`16px` 等魔法值
 
-详见 [`docs/COMPONENT-DEVELOPMENT.md`](./docs/COMPONENT-DEVELOPMENT.md#令牌规范) 与 [SKILL.md](./skills/cgartlab-design-system/SKILL.md)。
+详见 [`docs/COMPONENT-DEVELOPMENT.md`](./docs/COMPONENT-DEVELOPMENT.md#令牌规范) 与 [SKILL.md](./skills/edic-design-system/SKILL.md)。
 
 ### 组件
 
@@ -141,7 +141,7 @@ make serve             # 本地预览
 ## 目录结构（参考）
 
 ```
-cgartlab-design-system/
+edic-design-system/
 ├── index.html / handbook.html / docs.html / prompts.html / downloads.html / terms.html
 ├── blog.html / company.html / resume.html / report.html   # 真实示例
 ├── styles.css         # 令牌 + 暗色 + 组件 + 动效

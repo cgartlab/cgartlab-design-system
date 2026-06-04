@@ -1,0 +1,1022 @@
+%PDF-1.7
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 4 /Kids [7 0 R 9 0 R 11 0 R 13 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+6 0 obj
+<< /Length 1668 >>
+stream
+0.9781 0.9584 0.9267 rg
+0.00 0.00 595.28 841.89 re f
+0.4054 0.4328 0.2099 rg
+0.00 561.89 595.28 280.00 re f
+1.0000 1.0000 1.0000 rg
+56.00 691.89 64.00 64.00 re f
+BT
+/F2 30.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 70.00 721.89 Tm
+(CG) Tj
+ET
+BT
+/F2 40.00 Tf
+1.0000 1.0000 1.0000 rg
+1 0 0 1 56.00 641.89 Tm
+(EDIC) Tj
+ET
+BT
+/F2 40.00 Tf
+0.8668 0.8795 0.8070 rg
+1 0 0 1 56.00 597.89 Tm
+(Design System) Tj
+ET
+BT
+/F3 12.00 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 541.89 Tm
+(Editorial x Olive Green  -  Quick Reference) Tj
+ET
+BT
+/F1 11.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 511.89 Tm
+(OKLch tokens / dark-mode ready / framework-agnostic) Tj
+ET
+BT
+/F2 10.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 56.00 411.89 Tm
+(WHAT'S INSIDE) Tj
+ET
+BT
+/F1 11.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 385.89 Tm
+(01  Color tokens - neutral, olive ramp, semantic) Tj
+ET
+BT
+/F1 11.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 359.89 Tm
+(02  Typography - families and type scale) Tj
+ET
+BT
+/F1 11.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 333.89 Tm
+(03  Spacing, radius and shadow scales) Tj
+ET
+BT
+/F1 11.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 307.89 Tm
+(04  Component class catalog) Tj
+ET
+BT
+/F2 11.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 56.00 151.89 Tm
+(200+ design tokens   -   25 components   -   100 icons) Tj
+ET
+BT
+/F3 10.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 129.89 Tm
+(designsystem.cgartlab.com) Tj
+ET
+0.8741 0.8549 0.8238 RG
+0.60 w
+56.00 40.00 m 539.28 40.00 l S
+BT
+/F3 7.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 805.89 Tm
+(EDIC Design System  -  Editorial x Olive Green  -  v1.4.0) Tj
+ET
+BT
+/F3 7.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 485.28 805.89 Tm
+(Page 1 / 4) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 5551 >>
+stream
+0.9781 0.9584 0.9267 rg
+0.00 0.00 595.28 841.89 re f
+0.4054 0.4328 0.2099 rg
+0.00 745.89 595.28 96.00 re f
+BT
+/F2 22.00 Tf
+1.0000 1.0000 1.0000 rg
+1 0 0 1 56.00 795.89 Tm
+(01  Color Tokens) Tj
+ET
+BT
+/F3 9.50 Tf
+0.8668 0.8795 0.8070 rg
+1 0 0 1 56.00 771.89 Tm
+(All colors defined in OKLch for perceptual uniformity) Tj
+ET
+BT
+/F2 11.00 Tf
+1.0000 1.0000 1.0000 rg
+1 0 0 1 505.28 783.89 Tm
+(EDIC) Tj
+ET
+BT
+/F2 10.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 56.00 711.89 Tm
+(NEUTRAL) Tj
+ET
+0.9781 0.9584 0.9267 rg
+56.00 673.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 673.89 150.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 686.89 Tm
+(--ds-color-bg) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 676.89 Tm
+(oklch\(0.97 0.012 80\)) Tj
+ET
+1.0000 1.0000 1.0000 rg
+56.00 643.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 643.89 150.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 656.89 Tm
+(--ds-color-surface-raised) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 646.89 Tm
+(oklch\(1.00 0.000 0\)) Tj
+ET
+0.8741 0.8549 0.8238 rg
+56.00 613.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 613.89 150.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 626.89 Tm
+(--ds-color-border) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 616.89 Tm
+(oklch\(0.89 0.012 80\)) Tj
+ET
+0.3931 0.3600 0.3345 rg
+56.00 583.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 583.89 150.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 596.89 Tm
+(--ds-color-muted) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 586.89 Tm
+(oklch\(0.48 0.015 60\)) Tj
+ET
+0.1132 0.0781 0.0501 rg
+56.00 553.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 553.89 150.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 566.89 Tm
+(--ds-color-fg) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 556.89 Tm
+(oklch\(0.20 0.020 60\)) Tj
+ET
+0.0649 0.0264 0.0064 rg
+56.00 523.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 523.89 150.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 536.89 Tm
+(--ds-color-fg-strong) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 526.89 Tm
+(oklch\(0.14 0.025 60\)) Tj
+ET
+BT
+/F2 10.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 56.00 507.89 Tm
+(OLIVE GREEN  \(accent = olive-400\)) Tj
+ET
+0.7642 0.7812 0.6814 rg
+56.00 469.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 469.89 150.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 482.89 Tm
+(--ds-color-olive-100) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 472.89 Tm
+(oklch\(0.82 0.035 115\)) Tj
+ET
+0.5198 0.5456 0.3665 rg
+56.00 439.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 439.89 150.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 452.89 Tm
+(--ds-color-olive-300) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 442.89 Tm
+(oklch\(0.62 0.065 115\)) Tj
+ET
+0.4054 0.4328 0.2099 rg
+56.00 409.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 409.89 150.00 22.00 re S
+0.3291 0.3550 0.1095 RG
+1.4 w
+54.00 407.89 154.00 26.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 422.89 Tm
+(--ds-color-olive-400  *) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 412.89 Tm
+(oklch\(0.52 0.080 115\)) Tj
+ET
+0.2560 0.2782 0.0371 rg
+56.00 379.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 379.89 150.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 392.89 Tm
+(--ds-color-olive-600) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 382.89 Tm
+(oklch\(0.38 0.080 115\)) Tj
+ET
+0.1022 0.1143 0.0000 rg
+56.00 349.89 150.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+56.00 349.89 150.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 218.00 362.89 Tm
+(--ds-color-olive-800) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 218.00 352.89 Tm
+(oklch\(0.22 0.055 115\)) Tj
+ET
+BT
+/F2 10.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 320.00 695.89 Tm
+(SEMANTIC) Tj
+ET
+0.2877 0.5052 0.2972 rg
+320.00 657.89 120.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+320.00 657.89 120.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 452.00 670.89 Tm
+(--ds-color-success) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 452.00 660.89 Tm
+(oklch\(0.55 0.100 145\)) Tj
+ET
+0.6711 0.5417 0.2548 rg
+320.00 627.89 120.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+320.00 627.89 120.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 452.00 640.89 Tm
+(--ds-color-warning) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 452.00 630.89 Tm
+(oklch\(0.65 0.100 85\)) Tj
+ET
+0.6427 0.2358 0.1842 rg
+320.00 597.89 120.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+320.00 597.89 120.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 452.00 610.89 Tm
+(--ds-color-error) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 452.00 600.89 Tm
+(oklch\(0.50 0.140 30\)) Tj
+ET
+0.2608 0.4693 0.6104 rg
+320.00 567.89 120.00 22.00 re f
+0.7919 0.7644 0.7281 RG
+0.6 w
+320.00 567.89 120.00 22.00 re S
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 452.00 580.89 Tm
+(--ds-color-info) Tj
+ET
+BT
+/F3 8.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 452.00 570.89 Tm
+(oklch\(0.55 0.080 240\)) Tj
+ET
+0.8741 0.8549 0.8238 RG
+0.60 w
+56.00 40.00 m 539.28 40.00 l S
+BT
+/F3 7.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 805.89 Tm
+(EDIC Design System  -  Editorial x Olive Green  -  v1.4.0) Tj
+ET
+BT
+/F3 7.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 485.28 805.89 Tm
+(Page 2 / 4) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 3981 >>
+stream
+0.9781 0.9584 0.9267 rg
+0.00 0.00 595.28 841.89 re f
+0.4054 0.4328 0.2099 rg
+0.00 745.89 595.28 96.00 re f
+BT
+/F2 22.00 Tf
+1.0000 1.0000 1.0000 rg
+1 0 0 1 56.00 795.89 Tm
+(02  Typography) Tj
+ET
+BT
+/F3 9.50 Tf
+0.8668 0.8795 0.8070 rg
+1 0 0 1 56.00 771.89 Tm
+(Serif display + sans body + mono code) Tj
+ET
+BT
+/F2 11.00 Tf
+1.0000 1.0000 1.0000 rg
+1 0 0 1 505.28 783.89 Tm
+(EDIC) Tj
+ET
+BT
+/F2 10.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 56.00 707.89 Tm
+(FONT FAMILIES) Tj
+ET
+BT
+/F2 10.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 685.89 Tm
+(Display) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 685.89 Tm
+(Iowan Old Style / Charter / Georgia / serif) Tj
+ET
+BT
+/F2 10.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 663.89 Tm
+(Body & UI) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 663.89 Tm
+(Noto Sans SC / -apple-system / system-ui / sans-serif) Tj
+ET
+BT
+/F2 10.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 641.89 Tm
+(Mono) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 641.89 Tm
+(JetBrains Mono / IBM Plex Mono / monospace) Tj
+ET
+BT
+/F2 10.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 56.00 605.89 Tm
+(TYPE SCALE \(rem\)) Tj
+ET
+BT
+/F2 26.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 581.89 Tm
+(Editorial Olive) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 360.00 581.89 Tm
+(--ds-text-hero) Tj
+ET
+BT
+/F3 9.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 500.00 581.89 Tm
+(4.5 rem) Tj
+ET
+BT
+/F2 23.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 546.89 Tm
+(Editorial Olive) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 360.00 546.89 Tm
+(--ds-text-display) Tj
+ET
+BT
+/F3 9.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 500.00 546.89 Tm
+(3.75 rem) Tj
+ET
+BT
+/F2 20.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 514.89 Tm
+(Editorial Olive) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 360.00 514.89 Tm
+(--ds-text-h1) Tj
+ET
+BT
+/F3 9.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 500.00 514.89 Tm
+(3 rem) Tj
+ET
+BT
+/F2 17.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 485.89 Tm
+(Editorial Olive) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 360.00 485.89 Tm
+(--ds-text-h2) Tj
+ET
+BT
+/F3 9.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 500.00 485.89 Tm
+(2.25 rem) Tj
+ET
+BT
+/F2 15.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 459.89 Tm
+(Editorial Olive) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 360.00 459.89 Tm
+(--ds-text-h3) Tj
+ET
+BT
+/F3 9.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 500.00 459.89 Tm
+(1.875 rem) Tj
+ET
+BT
+/F2 13.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 435.89 Tm
+(Editorial Olive) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 360.00 435.89 Tm
+(--ds-text-h4) Tj
+ET
+BT
+/F3 9.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 500.00 435.89 Tm
+(1.5 rem) Tj
+ET
+BT
+/F2 12.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 413.89 Tm
+(Editorial Olive) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 360.00 413.89 Tm
+(--ds-text-lead) Tj
+ET
+BT
+/F3 9.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 500.00 413.89 Tm
+(1.25 rem) Tj
+ET
+BT
+/F2 11.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 392.89 Tm
+(Editorial Olive) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 360.00 392.89 Tm
+(--ds-text-body) Tj
+ET
+BT
+/F3 9.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 500.00 392.89 Tm
+(1 rem) Tj
+ET
+BT
+/F2 10.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 372.89 Tm
+(Editorial Olive) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 360.00 372.89 Tm
+(--ds-text-body-sm) Tj
+ET
+BT
+/F3 9.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 500.00 372.89 Tm
+(0.875 rem) Tj
+ET
+BT
+/F2 9.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 353.89 Tm
+(Editorial Olive) Tj
+ET
+BT
+/F3 9.00 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 360.00 353.89 Tm
+(--ds-text-caption) Tj
+ET
+BT
+/F3 9.00 Tf
+0.2560 0.2782 0.0371 rg
+1 0 0 1 500.00 353.89 Tm
+(0.75 rem) Tj
+ET
+0.8741 0.8549 0.8238 RG
+0.60 w
+56.00 40.00 m 539.28 40.00 l S
+BT
+/F3 7.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 805.89 Tm
+(EDIC Design System  -  Editorial x Olive Green  -  v1.4.0) Tj
+ET
+BT
+/F3 7.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 485.28 805.89 Tm
+(Page 3 / 4) Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Length 4569 >>
+stream
+0.9781 0.9584 0.9267 rg
+0.00 0.00 595.28 841.89 re f
+0.4054 0.4328 0.2099 rg
+0.00 745.89 595.28 96.00 re f
+BT
+/F2 22.00 Tf
+1.0000 1.0000 1.0000 rg
+1 0 0 1 56.00 795.89 Tm
+(03 / 04  Spacing & Components) Tj
+ET
+BT
+/F3 9.50 Tf
+0.8668 0.8795 0.8070 rg
+1 0 0 1 56.00 771.89 Tm
+(4px base scale + class catalog) Tj
+ET
+BT
+/F2 11.00 Tf
+1.0000 1.0000 1.0000 rg
+1 0 0 1 505.28 783.89 Tm
+(EDIC) Tj
+ET
+BT
+/F2 10.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 56.00 707.89 Tm
+(SPACING SCALE \(4px base\)) Tj
+ET
+0.5198 0.5456 0.3665 rg
+150.00 678.89 4.00 10.00 re f
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 679.89 Tm
+(--ds-space-1) Tj
+ET
+BT
+/F3 8.50 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 162.00 679.89 Tm
+(4px) Tj
+ET
+0.5198 0.5456 0.3665 rg
+150.00 660.89 8.00 10.00 re f
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 661.89 Tm
+(--ds-space-2) Tj
+ET
+BT
+/F3 8.50 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 166.00 661.89 Tm
+(8px) Tj
+ET
+0.5198 0.5456 0.3665 rg
+150.00 642.89 12.00 10.00 re f
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 643.89 Tm
+(--ds-space-3) Tj
+ET
+BT
+/F3 8.50 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 170.00 643.89 Tm
+(12px) Tj
+ET
+0.5198 0.5456 0.3665 rg
+150.00 624.89 16.00 10.00 re f
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 625.89 Tm
+(--ds-space-4) Tj
+ET
+BT
+/F3 8.50 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 174.00 625.89 Tm
+(16px) Tj
+ET
+0.5198 0.5456 0.3665 rg
+150.00 606.89 24.00 10.00 re f
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 607.89 Tm
+(--ds-space-6) Tj
+ET
+BT
+/F3 8.50 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 182.00 607.89 Tm
+(24px) Tj
+ET
+0.5198 0.5456 0.3665 rg
+150.00 588.89 32.00 10.00 re f
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 589.89 Tm
+(--ds-space-8) Tj
+ET
+BT
+/F3 8.50 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 190.00 589.89 Tm
+(32px) Tj
+ET
+0.5198 0.5456 0.3665 rg
+150.00 570.89 48.00 10.00 re f
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 571.89 Tm
+(--ds-space-12) Tj
+ET
+BT
+/F3 8.50 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 206.00 571.89 Tm
+(48px) Tj
+ET
+0.5198 0.5456 0.3665 rg
+150.00 552.89 64.00 10.00 re f
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 553.89 Tm
+(--ds-space-16) Tj
+ET
+BT
+/F3 8.50 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 222.00 553.89 Tm
+(64px) Tj
+ET
+BT
+/F2 10.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 56.00 533.89 Tm
+(RADIUS) Tj
+ET
+BT
+/F3 9.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 517.89 Tm
+(sm 2  -  md 4  -  lg 8  -  xl 12  -  2xl 16  -  full) Tj
+ET
+BT
+/F2 10.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 56.00 497.89 Tm
+(SHADOW) Tj
+ET
+BT
+/F3 9.00 Tf
+0.1132 0.0781 0.0501 rg
+1 0 0 1 56.00 481.89 Tm
+(xs  -  sm  -  md  -  lg  -  xl  -  2xl) Tj
+ET
+BT
+/F2 10.00 Tf
+0.3291 0.3550 0.1095 rg
+1 0 0 1 56.00 453.89 Tm
+(COMPONENT CLASS CATALOG) Tj
+ET
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 433.89 Tm
+(Buttons) Tj
+ET
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 433.89 Tm
+(ds-btn  --primary / --secondary / --ghost  --sm / --lg) Tj
+ET
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 415.89 Tm
+(Cards) Tj
+ET
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 415.89 Tm
+(ds-card  --hoverable / --flat   ds-glass-card) Tj
+ET
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 397.89 Tm
+(Forms) Tj
+ET
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 397.89 Tm
+(ds-input  ds-label  ds-select  ds-toggle  ds-form-*) Tj
+ET
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 379.89 Tm
+(Feedback) Tj
+ET
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 379.89 Tm
+(ds-badge--*  ds-alert--*  ds-toast) Tj
+ET
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 361.89 Tm
+(Navigation) Tj
+ET
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 361.89 Tm
+(ds-navbar  ds-tabs/ds-tab  ds-breadcrumb  ds-pagination) Tj
+ET
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 343.89 Tm
+(Data) Tj
+ET
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 343.89 Tm
+(ds-table  ds-progress  ds-avatar  ds-chip) Tj
+ET
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 325.89 Tm
+(Type) Tj
+ET
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 325.89 Tm
+(ds-display  ds-h1..h4  ds-caption  ds-eyebrow  ds-lead) Tj
+ET
+BT
+/F2 9.50 Tf
+0.0649 0.0264 0.0064 rg
+1 0 0 1 56.00 307.89 Tm
+(Motion) Tj
+ET
+BT
+/F3 8.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 150.00 307.89 Tm
+(ds-reveal \(--left/--right/--scale\)  ds-anim-float) Tj
+ET
+0.8741 0.8549 0.8238 RG
+0.60 w
+56.00 40.00 m 539.28 40.00 l S
+BT
+/F3 7.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 56.00 805.89 Tm
+(EDIC Design System  -  Editorial x Olive Green  -  v1.4.0) Tj
+ET
+BT
+/F3 7.50 Tf
+0.3931 0.3600 0.3345 rg
+1 0 0 1 485.28 805.89 Tm
+(Page 4 / 4) Tj
+ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 12 0 R >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000141 00000 n 
+0000000211 00000 n 
+0000000286 00000 n 
+0000000354 00000 n 
+0000002074 00000 n 
+0000002226 00000 n 
+0000007829 00000 n 
+0000007981 00000 n 
+0000012015 00000 n 
+0000012169 00000 n 
+0000016791 00000 n 
+trailer
+<< /Size 14 /Root 1 0 R >>
+startxref
+16945
+%%EOF
