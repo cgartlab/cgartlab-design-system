@@ -528,7 +528,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-breadcrumb-current{color:var(--ds-color-fg);font-weight:600}
 
 /* ===== Table ===== */
-.ds-table-wrap{overflow-x:auto;max-width:100%}
+.ds-table-wrap{overflow-x:auto;overflow-y:visible;max-width:100%}
+.ds-table-wrap[tabindex="0"]:focus{outline:2px solid var(--ds-accent);outline-offset:2px}
 .ds-table{width:100%;border-collapse:collapse;font-size:var(--ds-text-body-sm)}
 .ds-table th{text-align:left;padding:var(--ds-space-3) var(--ds-space-4);font-weight:600;color:var(--ds-color-muted);text-transform:uppercase;font-size:var(--ds-text-caption);letter-spacing:var(--ds-tracking-wider);border-bottom:1px solid var(--ds-color-border)}
 .ds-table td{padding:var(--ds-space-3) var(--ds-space-4);border-bottom:1px solid var(--ds-color-border-subtle)}
