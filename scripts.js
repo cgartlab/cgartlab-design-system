@@ -501,12 +501,14 @@ const TOKENS = [
     sections.forEach(function(s, i) {
       const a = document.createElement("a");
       a.href = "#" + s.id;
+      a.className = "ds-mobile-toc-link";
       a.innerHTML = '<span class="ds-toc-num">' + (i < 9 ? "0" + (i+1) : i+1) + '</span><span>' + s.title + '</span>';
       mobileList.appendChild(a);
     });
   }
 
   const links = list.querySelectorAll(".ds-floating-toc-link");
+  const mobileLinks = mobileList ? mobileList.querySelectorAll(".ds-mobile-toc-link") : [];
   const firstSection = document.querySelector(".ds-section[id]");
 
   /* IntersectionObserver for active section */
@@ -529,6 +531,13 @@ const TOKENS = [
           const isActive = link.getAttribute("href") === "#" + activeId;
           link.classList.toggle("ds-floating-toc-link--active", isActive);
         });
+        Array.prototype.forEach.call(mobileLinks, function(link) {
+          const isActive = link.getAttribute("href") === "#" + activeId;
+          link.classList.toggle("ds-toc-link--active", isActive);
+          if (isActive && link.scrollIntoView) {
+            link.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+          }
+        });
       }, 16);
       /* Show/hide floating toc based on scroll position */
       const firstTopPos = firstSection ? firstSection.getBoundingClientRect().bottom : 0;
@@ -548,13 +557,26 @@ const TOKENS = [
         if (sec.offsetTop <= scrollY) activeIdx = i;
       });
       Array.prototype.forEach.call(links, function(link, i) {
-        link.classList.toggle("ds-floating-toc-link--active", i === activeIdx);
+          link.classList.toggle("ds-floating-toc-link--active", i === activeIdx);
+        });
+      Array.prototype.forEach.call(mobileLinks, function(link, i) {
+          link.classList.toggle("ds-toc-link--active", i === activeIdx);
+          if (i === activeIdx && link.scrollIntoView) {
+            link.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+          }
+        });
       });
-    });
   }
 
   /* Smooth scroll for TOC links */
   Array.prototype.forEach.call(links, function(link) {
+    link.addEventListener("click", function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+  Array.prototype.forEach.call(mobileLinks, function(link) {
     link.addEventListener("click", function(e) {
       e.preventDefault();
       const target = document.querySelector(this.getAttribute("href"));
