@@ -889,6 +889,11 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-tab{white-space:normal;font-size:var(--ds-text-caption)}
   /* P3 issue-104: Color swatch density — smaller swatches on very small screens */
   .ds-swatch-color{height:48px}.ds-swatch-info{font-size:var(--ds-text-caption)}
+  /* P2 issue-106: ds-table-mini rows — wrap on small screens */
+  .ds-table-mini .ds-table-mini-row{flex-wrap:wrap;gap:var(--ds-space-2)}
+  /* P2 issue-106: ds-type-label meta span — break-word for token descriptors, but keep <code> whole */
+  .ds-type-label .ds-type-label-meta{overflow-wrap:break-word;word-break:break-word}
+  .ds-type-label .ds-type-label-meta code{word-break:keep-all}
 }
 @media(min-width:640px)and(max-width:1023px){
   .ds-grid-4{grid-template-columns:repeat(2,1fr)}
