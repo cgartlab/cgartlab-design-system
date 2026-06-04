@@ -7,6 +7,7 @@
   3. 类别前缀在白名单内
   4. 反模式：as any / @ts-expect-error / @ts-ignore / 空 catch
   5. JS 顶层禁用 `var`（推荐 const/let）
+  6. Dangling BEM 修饰符：`.class element--modifier`（element 是裸标签而非带 . 的 class）
 """
 from __future__ import annotations
 
@@ -37,6 +38,12 @@ ANTI_PATTERNS = [
     (re.compile(r"@ts-nocheck"), "禁止 `@ts-nocheck`"),
     (re.compile(r"catch\s*\([^)]*\)\s*\{\s*\}"), "禁止空 catch 块"),
 ]
+
+# 匹配 '.class element--modifier' 模式。第 2 组首字符强制为字母，
+# 自动排除 '.class .class--modifier'（如 .foo .bar--active 不会误报）。
+DANGLING_BEM_MODIFIER_PATTERN = re.compile(
+    r"\.([a-z][a-z0-9-]*)\s+([a-z][a-z0-9-]*)--([a-z][a-z0-9-]*)\s*[,:{]"
+)
 
 
 def is_valid_bem_class(cls: str) -> tuple[bool, str]:
@@ -99,6 +106,70 @@ def check_anti_patterns(paths: list[Path]) -> list[str]:
             for match in pattern.finditer(text):
                 line_no = text[: match.start()].count("\n") + 1
                 issues.append(f"{path.name}:{line_no} {msg}")
+    return issues
+
+
+def _strip_block_comments(line: str) -> str:
+    """移除一行内 /* ... */ 块注释内容（保留注释外字符）。
+
+    简化处理：取 /* 之前 + */ 之后拼接。同一行多个注释块不支持（CSS 罕见）。
+    """
+    if "/*" not in line:
+        return line
+    before, _, rest = line.partition("/*")
+    if "*/" in rest:
+        after = rest.split("*/", 1)[1]
+        return before + after
+    return before
+
+
+def check_dangling_bem_modifier(css_paths: list[Path]) -> list[str]:
+    """检测 dangling BEM 修饰符：'.class element--modifier'。
+
+    反例：.ds-mobile-toc a--active { ... }
+    正例：.ds-mobile-toc-link--active { ... }
+         或 .ds-mobile-toc .ds-link--active { ... }
+    """
+    issues: list[str] = []
+    for path in css_paths:
+        if not path.exists():
+            continue
+        try:
+            text = path.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+
+        in_block_comment = False
+        for line_num, raw_line in enumerate(text.splitlines(), 1):
+            line = raw_line
+            if in_block_comment:
+                if "*/" in line:
+                    in_block_comment = False
+                    line = line.split("*/", 1)[1]
+                else:
+                    continue
+
+            if "/*" in line:
+                line = _strip_block_comments(line)
+                if "/*" in raw_line and "*/" not in raw_line:
+                    in_block_comment = True
+
+            if "//" in line:
+                line = line.split("//", 1)[0]
+
+            if not line.strip():
+                continue
+
+            for match in DANGLING_BEM_MODIFIER_PATTERN.finditer(line):
+                class_name = match.group(1)
+                tag = match.group(2)
+                modifier = match.group(3)
+                issues.append(
+                    f"{path.name}:{line_num} Dangling BEM modifier: "
+                    f"'.{class_name} {tag}--{modifier}'。"
+                    f"修饰符应附加在带类的元素上（如 .{class_name}-{tag}--{modifier}），"
+                    f"而非裸元素选择器。"
+                )
     return issues
 
 
@@ -227,10 +298,19 @@ def main() -> int:
     var_issues = check_var_in_js()
     warnings.extend(var_issues)
 
+    # Dangling BEM 修饰符
+    cli_paths = [Path(p) for p in sys.argv[1:]]
+    css_cli_paths = [p for p in cli_paths if p.suffix == ".css"]
+    dangling_targets = css_cli_paths if css_cli_paths else [CSS_FILE]
+    dangling_issues = check_dangling_bem_modifier(dangling_targets)
+    errors.extend(dangling_issues)
+
     print(f"─── 命名规范检查 ───")
     print(f"扫描 HTML  : {len(html_files)} 个")
     print(f"扫描 CSS   : {CSS_FILE.name}")
     print(f"扫描 JS    : {JS_FILE.name}")
+    if css_cli_paths:
+        print(f"CLI 路径   : {[str(p) for p in css_cli_paths]}")
     print()
     if errors:
         for issue in errors:

@@ -1,0 +1,35 @@
+/* tests/fixtures/naming/toc-dangling-modifier.css
+ * Sample for the dangling BEM modifier check in tools/validate_naming.py.
+ * "should be flagged" lines exercise positive cases;
+ * "should NOT be flagged" lines exercise negative cases.
+ */
+
+/* === Dangling BEM modifier — should be flagged (exit 1) === */
+.ds-mobile-toc a--active{color:var(--ds-accent);font-weight:600;background:var(--ds-accent-muted)}
+.ds-foo div--highlighted{font-weight:bold;background:yellow}
+.ds-bar li--selected{color:green;border-left:3px solid var(--ds-accent)}
+
+/* === Valid BEM — should NOT be flagged === */
+.ds-foo-link--active{color:red}
+.ds-card--hoverable{box-shadow:var(--ds-shadow-md)}
+.ds-nav-link--current{font-weight:600}
+.ds-foo .ds-bar--active{color:green}
+.ds-toc .ds-toc-link--current{color:var(--ds-accent)}
+.ds-foo a:hover{color:blue}
+.ds-foo a:focus-visible{outline:2px solid var(--ds-accent)}
+.ds-foo button:disabled{opacity:0.5}
+.ds-foo a[target="_blank"]{font-weight:bold}
+.ds-foo input[type="checkbox"]{margin-right:var(--ds-space-2)}
+.ds-foo a.ds-link{text-decoration:underline}
+.ds-foo div.ds-card{background:var(--ds-color-surface)}
+
+/* === Edge cases — should NOT be flagged === */
+.ds-foo,.ds-bar--active{color:red}
+.ds-foo.ds-bar--active{color:red}
+.ds-foo a{display:inline-block}
+
+/* === Multi-line block comment — contents should be ignored === */
+/* .ds-mobile-toc a--active-from-comment{color:red}
+   .ds-foo div--also-commented{font-weight:bold}
+   .ds-bar li--me-too{display:none} */
+.ds-real{color:black}

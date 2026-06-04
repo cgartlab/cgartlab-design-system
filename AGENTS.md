@@ -3,9 +3,9 @@
 **生成时间:** 2026-05-14
 **Updated:** 2026-06-01
 **分层**: 基础设施 (Infrastructure) — 设计系统
-**状态:** v1.4.0 — 设计令牌 + 组件手册 + 图标库 + 暗色模式 + 展示网站 + AI 提示词/Skill + 品牌 Logo + 动效系统 + **完整工程治理层（CI/验证/流程文档）** + **品牌重塑为 EDIC（Editorial Design Interface for Content）** 已完成
+**状态:** v1.4.1 — 设计令牌 + 组件手册 + 图标库 + 暗色模式 + 展示网站 + AI 提示词/Skill + 品牌 Logo + 动效系统 + **完整工程治理层（CI/验证/流程文档）** + **品牌重塑为 EDIC（Editorial Design Interface for Content）** 已完成
 
-> **v1.4.0 新增（2026-06-04）**: **品牌重塑为 EDIC（Editorial Design Interface for Content）** — 新定位为同时面向人类和 Agent 的编辑主义设计系统，新理念是为纷繁的数字内容建立温暖而克制的秩序。包名 `cgartlab-design-system` → `edic-design-system`，目录 `skills/cgartlab-design-system/` → `skills/edic-design-system/`，二维码 `cgartlabcom_qrcode.svg` → `ediccom_qrcode.svg`。GitHub 仓库、域名与 URL 引用保持不变（管理员操作延后到后续 PR）。
+> **v1.4.1 新增（2026-06-04）**: **品牌重塑为 EDIC（Editorial Design Interface for Content）** — 新定位为同时面向人类和 Agent 的编辑主义设计系统，新理念是为纷繁的数字内容建立温暖而克制的秩序。包名 `cgartlab-design-system` → `edic-design-system`，目录 `skills/cgartlab-design-system/` → `skills/edic-design-system/`，二维码 `cgartlabcom_qrcode.svg` → `ediccom_qrcode.svg`。GitHub 仓库、域名与 URL 引用保持不变（管理员操作延后到后续 PR）。
 
 > **v1.3.x 新增（2026-06-01）**: 在 v1.1 视觉层之上补齐**工程治理层**——`.editorconfig` / `.gitattributes` / `.github/` 完整模板、`CONTRIBUTING.md` / `CHANGELOG.md` / `CODE_OF_CONDUCT.md` / `SECURITY.md` / `LICENSE`、流程文档（`docs/VERSIONING.md` / `COMPONENT-DEVELOPMENT.md` / `TESTING.md` / `RELEASE-CHECKLIST.md`）、6 个 Python 验证脚本（`tools/validate_*.py`）、CI 流水线（`ci.yml` + `release.yml`）、本地开发辅助（`Makefile` + `scripts/dev.*` + `.nvmrc`）、测试夹具（`tests/fixtures/`）。保持项目**零运行时依赖**原貌，仅添加开发期工具。
 
