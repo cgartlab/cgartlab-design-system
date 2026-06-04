@@ -2,10 +2,10 @@
 <html lang="zh-CN"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agent 提示词与 Skill · CGArtLab Design System</title>
-<meta name="description" content="复制可直接给任意 AI Agent 使用的系统提示词、精简提示词与 Skill 技能包，让 ChatGPT、Claude、Cursor、Kiro 等立刻按 CGArtLab 设计系统输出合规的界面、文档与素材。">
+<title>Agent 提示词与 Skill · EDIC Design System</title>
+<meta name="description" content="复制可直接给任意 AI Agent 使用的系统提示词、精简提示词与 Skill 技能包，让 ChatGPT、Claude、Cursor、Kiro 等立刻按 EDIC 设计系统输出合规的界面、文档与素材。">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="styles.css?v=1.3.1">
+<link rel="stylesheet" href="styles.css?v=1.4.0">
 </head>
 <body>
 <a href="#ds-main" class="ds-skip">跳至主要内容</a>
@@ -15,11 +15,11 @@
 <!-- Site Navbar -->
 <nav class="ds-navbar" role="navigation" aria-label="主导航">
   <div class="ds-navbar-inner">
-    <a href="index.html" class="ds-logo" aria-label="CGArtLab Design System 首页">
+    <a href="index.html" class="ds-logo" aria-label="EDIC Design System 首页">
       <span class="ds-logo-mark">
         <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" transform="rotate(45 16 16)" d="M11 8C13.5 6.6 18.5 6.6 21 8C23.2 11 22 19 16.1 26.6L16.5 14C16.5 13.5 15.5 13.5 15.5 14L15.9 26.6C10 19 8.8 11 11 8ZM14.3 11.8a1.7 1.7 0 1 0 3.4 0a1.7 1.7 0 1 0 -3.4 0Z"/></svg>
       </span>
-      <span class="ds-logo-text"><span class="ds-logo-word">CGArtLab</span><span class="ds-logo-sub">Design System</span></span>
+      <span class="ds-logo-text"><span class="ds-logo-word">EDIC</span><span class="ds-logo-sub">Design System</span></span>
     </a>
     <button class="ds-mnav-trigger" id="mnav-trigger" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mnav-panel">
       <span class="ds-mnav-trigger-bar"></span>
@@ -48,7 +48,7 @@
   <div class="ds-wrapper">
     <span class="ds-eyebrow ds-block ds-mb-4 ds-reveal">AI 协作</span>
     <h1 class="ds-display ds-hero ds-mb-4 ds-reveal ds-text-balance" style="--d:60ms">提示词与 Skill</h1>
-    <p class="ds-lead ds-measure ds-reveal" style="--d:120ms">复制下面任意一段，粘贴给你的 Agent——它立刻就会用 CGArtLab 的令牌、组件与排版规范，产出风格统一的界面、文档与素材。无需安装，无需训练。</p>
+    <p class="ds-lead ds-measure ds-reveal" style="--d:120ms">复制下面任意一段，粘贴给你的 Agent——它立刻就会用 EDIC 的令牌、组件与排版规范，产出风格统一的界面、文档与素材。无需安装，无需训练。</p>
   </div>
 </header>
 
@@ -77,7 +77,7 @@
         </div>
         <div class="ds-alert ds-alert--info ds-mt-8" role="note">
           <svg class="ds-alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          <div><div class="ds-alert-title">小贴士</div>若 Agent 能读取仓库文件，直接让它阅读 <code>skills/cgartlab-design-system/SKILL.md</code> 与 <code>tokens.json</code> 效果最佳。</div>
+          <div><div class="ds-alert-title">小贴士</div>若 Agent 能读取仓库文件，直接让它阅读 <code>skills/edic-design-system/SKILL.md</code> 与 <code>tokens.json</code> 效果最佳。</div>
         </div>
       </div>
     </div>
@@ -108,9 +108,9 @@
               <span class="ds-prompt-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>system-prompt.md</span>
               <button class="ds-copy-btn ds-copy-btn--light" data-copy="#p-full" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制全文</span></button>
             </div>
-            <pre class="ds-prompt-body" id="p-full"># CGArtLab 设计系统 — Agent 执行规范（系统提示词）
+            <pre class="ds-prompt-body" id="p-full"># EDIC 设计系统 — Agent 执行规范（系统提示词）
 
-你是 CGArtLab 设计系统的执行者。无论被要求产出 UI 组件、整页界面、营销落地页、文档、邮件还是数据报告，你的所有视觉产出都必须严格遵循下述规范。优先使用设计令牌（CSS 变量），绝不硬编码魔法数字。
+你是 EDIC 设计系统的执行者。无论被要求产出 UI 组件、整页界面、营销落地页、文档、邮件还是数据报告，你的所有视觉产出都必须严格遵循下述规范。优先使用设计令牌（CSS 变量），绝不硬编码魔法数字。
 
 ## 1. 设计气质
 · 风格：编辑主义（Editorial，杂志感、克制留白、衬线标题）× 橄榄绿（温暖、自信、不浮躁）。
@@ -178,7 +178,7 @@
 · 默认浅色，并保证在 [data-theme="dark"] 下同样成立。
 · 不确定时，倾向更克制、更留白、更接近编辑主义的方案。
 
-收到本规范后，请仅回复：「已对齐 CGArtLab 设计系统，请下达需求。」然后等待具体任务。</pre>
+收到本规范后，请仅回复：「已对齐 EDIC 设计系统，请下达需求。」然后等待具体任务。</pre>
             <div class="ds-prompt-foot"><span>最严格 · 适合作为系统/项目级指令</span><a href="prompts/system-prompt.md" class="ds-text-accent" download>下载 .md →</a></div>
           </div>
         </div>
@@ -190,7 +190,7 @@
               <span class="ds-prompt-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>quick-prompt.txt</span>
               <button class="ds-copy-btn ds-copy-btn--light" data-copy="#p-quick" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制</span></button>
             </div>
-            <pre class="ds-prompt-body" id="p-quick">你是 CGArtLab 设计系统的执行者。所有输出严格遵循：
+            <pre class="ds-prompt-body" id="p-quick">你是 EDIC 设计系统的执行者。所有输出严格遵循：
 
 · 风格：编辑主义 × 橄榄绿，暖白纸色基底，克制留白。
 · 颜色：一律用 OKLch。强调色 --ds-accent = oklch(52% 0.08 115)；
@@ -212,20 +212,20 @@
         <div class="ds-tabpanel" data-panel="skill" id="skill">
           <div class="ds-prompt">
             <div class="ds-prompt-head">
-              <span class="ds-prompt-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>skills/cgartlab-design-system/SKILL.md</span>
+              <span class="ds-prompt-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>skills/edic-design-system/SKILL.md</span>
               <button class="ds-copy-btn ds-copy-btn--light" data-copy="#p-skill" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ds-copy-label">复制全文</span></button>
             </div>
             <pre class="ds-prompt-body" id="p-skill">---
-name: cgartlab-design-system
-description: 让产出严格遵循 CGArtLab 设计系统（Editorial × Olive Green、OKLch 令牌、
-  暗色就绪、中英混排）。当用户要求为 CGArtLab 构建/设计/重构任何界面、文档或素材，
+name: edic-design-system
+description: 让产出严格遵循 EDIC 设计系统（Editorial × Olive Green、OKLch 令牌、
+  暗色就绪、中英混排）。当用户要求为 EDIC 构建/设计/重构任何界面、文档或素材，
   或明确点名此设计系统时启用。输出令牌驱动、可访问、框架无关的 HTML/CSS。
 ---
 
-# CGArtLab Design System Skill
+# EDIC Design System Skill
 
 启用本 Skill 时，你产出的每一件视觉物料——组件、页面、落地区块、文档、邮件、报告
-——都必须符合 CGArtLab 设计系统。优先使用设计令牌（CSS 变量），绝不硬编码魔法数字。
+——都必须符合 EDIC 设计系统。优先使用设计令牌（CSS 变量），绝不硬编码魔法数字。
 
 ## 设计气质
 · 编辑主义 × 橄榄绿：杂志级克制、大量留白、衬线标题 + 无衬线正文、暖白纸色基底、
@@ -285,7 +285,7 @@ description: 让产出严格遵循 CGArtLab 设计系统（Editorial × Olive Gr
 · 视觉手册与 live 令牌：https://designsystem.cgartlab.com/handbook.html
 · 使用文档：https://designsystem.cgartlab.com/docs.html
 · 结构化令牌：tokens.json</pre>
-            <div class="ds-prompt-foot"><span>持久化 · 放入 Agent 的 skills 目录</span><a href="skills/cgartlab-design-system/SKILL.md" class="ds-text-accent" download>下载 SKILL.md →</a></div>
+            <div class="ds-prompt-foot"><span>持久化 · 放入 Agent 的 skills 目录</span><a href="skills/edic-design-system/SKILL.md" class="ds-text-accent" download>下载 SKILL.md →</a></div>
           </div>
         </div>
       </div>
@@ -319,11 +319,11 @@ description: 让产出严格遵循 CGArtLab 设计系统（Editorial × Olive Gr
   <div class="ds-wrapper">
     <div class="ds-footer-cols">
       <div class="ds-footer-brand">
-        <a href="index.html" class="ds-logo" aria-label="CGArtLab Design System">
+        <a href="index.html" class="ds-logo" aria-label="EDIC Design System">
           <span class="ds-logo-mark">
             <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" transform="rotate(45 16 16)" d="M11 8C13.5 6.6 18.5 6.6 21 8C23.2 11 22 19 16.1 26.6L16.5 14C16.5 13.5 15.5 13.5 15.5 14L15.9 26.6C10 19 8.8 11 11 8ZM14.3 11.8a1.7 1.7 0 1 0 3.4 0a1.7 1.7 0 1 0 -3.4 0Z"/></svg>
           </span>
-          <span class="ds-logo-text"><span class="ds-logo-word">CGArtLab</span><span class="ds-logo-sub">Design System</span></span>
+          <span class="ds-logo-text"><span class="ds-logo-word">EDIC</span><span class="ds-logo-sub">Design System</span></span>
         </a>
         <p>编辑主义 × 橄榄绿。一套以 OKLch 与设计令牌驱动的设计系统，让人与 AI 都能输出一致、优雅、可访问的界面与文档。</p>
       </div>
@@ -347,7 +347,7 @@ description: 让产出严格遵循 CGArtLab 设计系统（Editorial × Olive Gr
       <div class="ds-footer-col">
         <h4>关于</h4>
         <ul class="ds-footer-links">
-          <li><a href="https://cgartlab.com" target="_blank" rel="noopener">CGArtLab.com</a></li>
+          <li><a href="https://cgartlab.com" target="_blank" rel="noopener">EDIC.com</a></li>
           <li><a href="https://github.com/cgartlab/cgartlab-design-system" target="_blank" rel="noopener">GitHub 仓库</a></li>
           <li><a href="terms.html">使用条款</a></li>
           <li><a href="downloads.html#examples">真实示例</a></li>
@@ -355,16 +355,16 @@ description: 让产出严格遵循 CGArtLab 设计系统（Editorial × Olive Gr
       </div>
     </div>
     <div class="ds-footer-bottom">
-      <span>© <span class="ds-year">2026</span> CGArtLab · 探索数字艺术的边界</span>
+      <span>© <span class="ds-year">2026</span> EDIC · 探索数字艺术的边界</span>
       <div class="ds-cluster">
-        <span class="ds-mono" data-ds-version>v1.3.1</span>
+        <span class="ds-mono" data-ds-version>v1.4.0</span>
         <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--ds-accent);text-decoration:none" title="本设计系统采用 CC BY 4.0 许可证">CC BY 4.0</a>
       </div>
     </div>
   </div>
 </footer>
 
-<script src="scripts.js?v=1.3.1"></script>
+<script src="scripts.js?v=1.4.0"></script>
 <button id="theme-toggle-btn-fixed" class="ds-theme-toggle-btn ds-theme-toggle-btn--fixed" type="button" aria-label="跟随系统 · 点击切换">
   <span class="theme-icon"></span>
 </button>

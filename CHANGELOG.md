@@ -3,6 +3,32 @@
 本项目所有显著变更记录于此。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本 2.0.0](https://semver.org/lang/zh-CN/)（设计系统适配版，见 [docs/VERSIONING.md](./docs/VERSIONING.md)）。
 
+## [1.4.0] — 2026-06-04
+
+### Changed
+
+- **Brand rename**: CGArtLab Design System → **EDIC Design System** (**E**ditorial **D**esign **I**nterface for **C**ontent)
+- **New positioning**: 同时面向人类和 Agent 的编辑主义设计系统
+- **New philosophy**: 为纷繁的数字内容建立温暖而克制的秩序
+- **Updated package name**: `cgartlab-design-system` → `edic-design-system`
+- **Renamed**: `skills/cgartlab-design-system/` → `skills/edic-design-system/`
+- **Renamed**: `cgartlabcom_qrcode.svg` → `ediccom_qrcode.svg`
+- **Updated**: SVG logo text, favicon aria-label, all HTML titles and meta descriptions
+- **Updated**: prompt files (`system-prompt.md`, `quick-prompt.md`) to reference EDIC
+- **Updated**: README, AGENTS, CHANGELOG, CONTRIBUTING, docs — all brand strings and positioning copy
+- **Updated**: `tools/generate_pdfs.py` PDF output filenames → `edic-ds-reference.pdf` / `edic-ds-color-card.pdf`
+- **Updated**: `report.html` localStorage key `cgartlab_smart_pagination` → `edic_smart_pagination`
+- **Updated**: DEVELOPMENT-GUIDE.md file tree references
+
+### Notes
+
+- GitHub org (`cgartlab`), repo name (`cgartlab-design-system`), and CNAME (`designsystem.cgartlab.com`) remain unchanged in this release — admin rename to be performed in a follow-up PR after DNS and repository redirects are configured
+- All in-repo URL references (`designsystem.cgartlab.com`, `github.com/cgartlab/cgartlab-design-system`, `cgartlab.github.io`) intentionally preserved
+- Color tokens (`--ds-color-olive-*`) unchanged
+- Personal contact identifiers (`cgartlab@outlook.com`, `@cgartlab` social handle, `keybase.io/cgartlab`) intentionally preserved as they belong to the maintainer, not the brand
+
+---
+
 ## [未发布]
 
 ### 修复
@@ -60,7 +86,7 @@
 - **下载中心 `downloads.html`**：示例 PDF（reference / color-card）/ 令牌 / 样式表 / 品牌素材 / 真实示例
 - **真实示例页面**：
   - `blog.html` — 纸间 · 评论博客（长文排版示范）
-  - `company.html` — CGArtLab 公司官网（首个生产级页面）
+  - `company.html` — EDIC 公司官网（首个生产级页面）
   - `resume.html` — 可打印 PDF 的 A4 简历
   - `report.html` — 多页报告 / 白皮书版式
 - **品牌 Logo**（v1.3 重绘 — 45° 钢笔头 monogram）：
@@ -75,7 +101,7 @@
 - **AI 协作交付物**：
   - `prompts/system-prompt.md`（完整系统提示词）
   - `prompts/quick-prompt.md`（精简开场白）
-  - `skills/cgartlab-design-system/SKILL.md`（Agent Skill 技能包）
+  - `skills/edic-design-system/SKILL.md`（Agent Skill 技能包）
 - **暗色模式完善**：
   - 浮动切换按钮（右下角毛玻璃）
   - 暖灰基底 `oklch(15% 0.008 75)`
@@ -136,7 +162,8 @@
 - **修复 (Fixed)** — Bug 修复
 - **安全 (Security)** — 漏洞修复
 
-[未发布]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.3.1...HEAD
+[未发布]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.1.0...v1.3.1
 [1.1.0]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/cgartlab/cgartlab-design-system/releases/tag/v1.0.0

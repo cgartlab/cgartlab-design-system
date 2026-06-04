@@ -1,6 +1,6 @@
 # 组件开发指南（Component Development Guide）
 
-> 配套 [SKILL.md](../../skills/cgartlab-design-system/SKILL.md) 使用 — SKILL 是 AI 的快速参考，
+> 配套 [SKILL.md](../../skills/edic-design-system/SKILL.md) 使用 — SKILL 是 AI 的快速参考，
 > 本文是人类的完整工作流。
 
 ## 工作流概览
@@ -236,7 +236,7 @@ draft → proposal → in-development → review → stable → deprecated → r
 
 ## 9. 进阶：贡献给上游
 
-当你想贡献一个组件给 CGArtLab 设计系统：
+当你想贡献一个组件给 EDIC 设计系统：
 
 1. 先在 Issue 讨论设计方向
 2. 维护者同意后，开 `dev-xxx` 分支开发
