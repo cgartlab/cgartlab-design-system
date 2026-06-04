@@ -1,7 +1,7 @@
 # EDIC Design System — 知识库
 
 **生成时间:** 2026-05-14
-**Updated:** 2026-06-01
+**Updated:** 2026-06-04
 **分层**: 基础设施 (Infrastructure) — 设计系统
 **状态:** v1.4.2 — 设计令牌 + 组件手册 + 图标库 + 暗色模式 + 展示网站 + AI 提示词/Skill + 品牌 Logo + 动效系统 + **完整工程治理层（CI/验证/流程文档）** + **品牌重塑为 EDIC（Editorial Design Interface for Content）** 已完成
 
