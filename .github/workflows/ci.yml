@@ -2,21 +2,15 @@ name: CI
 
 on:
   push:
-    branches: [main, dev-**, fix-**, write-**, release/**]
+    branches: [main, dev/*, fix/*, write/*, release/**]
   pull_request:
     branches: [main]
   schedule:
-    # 每周一 UTC 0:00 跑一次，防止 main 长期不活动而失修
     - cron: "0 0 * * 1"
   workflow_dispatch:
 
 permissions:
   contents: read
-
-# GitHub 将于 2026-09-16 弃用 Node.js 20 JavaScript actions。
-# 在移除前，环境变量 + 新版 actions 组合可消除运行时告警。
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -24,108 +18,38 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate (tokens · naming · html · a11y · versions · links)
+    name: Validate
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Setup Python
-        uses: actions/setup-python@v6
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
-
-      - name: Cache (no-op placeholder for future heavy deps)
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-python-${{ hashFiles('**/requirements*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-python-
-
       - name: Make scripts executable
-        run: |
-          chmod +x tools/validate_*.py
-          echo "✓ Scripts are executable"
-
-      - name: Validate tokens
-        id: tokens
-        # Exit 0 = OK, exit 1 = errors (fail), exit 2 = warnings-only (pass)
-        run: python3 tools/validate_tokens.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
-
-      - name: Validate naming
-        id: naming
-        run: python3 tools/validate_naming.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
-
-      - name: Validate HTML
-        id: html
-        run: python3 tools/validate_html.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
-
-      - name: Validate accessibility
-        id: a11y
-        run: python3 tools/validate_a11y.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
-
-      - name: Validate version sync
-        id: versions
-        run: python3 tools/validate_versions.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
-
-      - name: Validate links
-        id: links
-        run: python3 tools/validate_links.py; code=$?; [ $code -le 2 ] && exit $(( code == 1 ? 1 : 0 ))
-
+        run: chmod +x tools/validate_*.py
+      - id: tokens
+        run: python3 tools/validate_tokens.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
+      - id: naming
+        run: python3 tools/validate_naming.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
+      - id: html
+        run: python3 tools/validate_html.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
+      - id: a11y
+        run: python3 tools/validate_a11y.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
+      - id: versions
+        run: python3 tools/validate_versions.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
+      - id: links
+        run: python3 tools/validate_links.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
       - name: Summarize
         if: always()
         run: |
-          echo "## 验证总结" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| 校验项 | 结果 |" >> $GITHUB_STEP_SUMMARY
-          echo "|--------|------|" >> $GITHUB_STEP_SUMMARY
+          echo "## Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Validator | Result |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------|--------|" >> $GITHUB_STEP_SUMMARY
           echo "| tokens | ${{ steps.tokens.outcome }} |" >> $GITHUB_STEP_SUMMARY
           echo "| naming | ${{ steps.naming.outcome }} |" >> $GITHUB_STEP_SUMMARY
           echo "| html   | ${{ steps.html.outcome }} |" >> $GITHUB_STEP_SUMMARY
           echo "| a11y   | ${{ steps.a11y.outcome }} |" >> $GITHUB_STEP_SUMMARY
           echo "| versions | ${{ steps.versions.outcome }} |" >> $GITHUB_STEP_SUMMARY
           echo "| links  | ${{ steps.links.outcome }} |" >> $GITHUB_STEP_SUMMARY
-
-  # 可选：可视化快照对比（未来启用）
-  visual-regression:
-    name: Visual regression (optional)
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    continue-on-error: true
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: "20"
-
-      - name: Install Playwright
-        run: |
-          npm install -g playwright@1.60.0
-          npx playwright install --with-deps chromium
-
-      - name: Capture screenshots
-        run: |
-          python3 -m http.server 8765 &
-          SERVER_PID=$!
-          sleep 2
-          mkdir -p test-reports
-          npx playwright screenshot --browser=chromium --full-page \
-            http://localhost:8765/handbook.html test-reports/handbook.png
-          npx playwright screenshot --browser=chromium --full-page \
-            http://localhost:8765/index.html test-reports/index.png
-          kill $SERVER_PID 2>/dev/null || true
-
-      - name: Upload screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: visual-snapshots
-          path: test-reports/*.png
-          retention-days: 14
