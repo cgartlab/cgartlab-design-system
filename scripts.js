@@ -496,6 +496,16 @@ const TOKENS = [
     list.appendChild(li);
   });
 
+  const mobileList = document.getElementById("mobile-toc-list");
+  if (mobileList) {
+    sections.forEach(function(s, i) {
+      const a = document.createElement("a");
+      a.href = "#" + s.id;
+      a.innerHTML = '<span class="ds-toc-num">' + (i < 9 ? "0" + (i+1) : i+1) + '</span><span>' + s.title + '</span>';
+      mobileList.appendChild(a);
+    });
+  }
+
   const links = list.querySelectorAll(".ds-floating-toc-link");
   const firstSection = document.querySelector(".ds-section[id]");
 
