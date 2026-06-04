@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, dev/**, fix/**, write/**, release/**]
+    branches: [main, dev/*, fix/*, write/*, release/**]
   pull_request:
     branches: [main]
   schedule:
