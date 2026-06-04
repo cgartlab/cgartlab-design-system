@@ -5,7 +5,7 @@
 <title>视觉手册 · EDIC Design System</title>
 <meta name="description" content="EDIC 设计系统视觉手册 — 色彩、字体、间距、组件、图标与令牌的完整 live 展示。">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="styles.css?v=1.4.1">
+<link rel="stylesheet" href="styles.css?v=1.4.2">
 </head>
 <body>
 <a href="#ds-main" class="ds-skip">跳至主要内容</a>
@@ -50,14 +50,12 @@
 <div class="ds-mnav-backdrop" id="mnav-backdrop" aria-hidden="true"></div>
 
 <main id="ds-main" tabindex="-1">
-<!-- Floating TOC -->
-<nav class="ds-floating-toc ds-floating-toc--hidden" aria-label="页面目录">
-  <div class="ds-floating-toc-label">目录</div>
-  <ol class="ds-floating-toc-list" id="floating-toc-list"></ol>
-</nav>
-
-<nav class="ds-mobile-toc" aria-label="页面目录">
-  <ol id="mobile-toc-list"></ol>
+<!-- Page navigation (unified TOC) — desktop floating rail / mobile disclosure -->
+<nav class="ds-pagenav ds-pagenav--rail ds-pagenav--hidden" aria-label="页面目录" data-pagenav-generate=".ds-section[id]">
+  <details class="ds-pagenav-disclosure">
+    <summary class="ds-pagenav-summary"><span>目录</span><svg class="ds-pagenav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg></summary>
+    <ol class="ds-pagenav-list"></ol>
+  </details>
 </nav>
 
 <section class="ds-cover">
@@ -784,13 +782,13 @@
     <div class="ds-footer-bottom">
       <span>© <span class="ds-year">2026</span> EDIC · 探索数字艺术的边界</span>
       <div class="ds-cluster">
-        <span class="ds-mono" data-ds-version>v1.4.1</span>
+        <span class="ds-mono" data-ds-version>v1.4.2</span>
         <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--ds-accent);text-decoration:none" title="本设计系统采用 CC BY 4.0 许可证">CC BY 4.0</a>
       </div>
     </div>
   </div>
 </footer>
-<script src="scripts.js?v=1.4.1"></script>
+<script src="scripts.js?v=1.4.2"></script>
 <button id="theme-toggle-btn-fixed" class="ds-theme-toggle-btn ds-theme-toggle-btn--fixed" type="button" aria-label="跟随系统 · 点击切换">
   <span class="theme-icon"></span>
 </button>

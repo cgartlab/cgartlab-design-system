@@ -462,125 +462,105 @@ const TOKENS = [
   }
 })();
 
-/* ===== Floating TOC Generator ===== */
+/* ===== Page Navigation (unified TOC) controller =====
+   Drives every .ds-pagenav: optional link generation from page sections,
+   scroll-spy active state, smooth in-page scrolling, and mobile auto-collapse.
+   Works for both .ds-section[id] (handbook) and .ds-doc-block[id] (docs). */
 (function() {
-  const list = document.getElementById("floating-toc-list");
-  const toc = document.querySelector(".ds-floating-toc");
-  if (!list || !toc) return;
+  const navs = document.querySelectorAll(".ds-pagenav");
+  if (!navs.length) return;
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mqMobile = window.matchMedia ? window.matchMedia("(max-width: 1023px)") : null;
 
-  const sections = [];
-  const sectionEls = document.querySelectorAll(".ds-section[id]");
-  Array.prototype.forEach.call(sectionEls, function(sec) {
-    const id = sec.getAttribute("id");
-    const header = sec.querySelector(".ds-section-header");
-    if (!header) return;
-    const num = header.querySelector(".ds-caption");
-    const title = header.querySelector("h2");
-    sections.push({
-      id: id,
-      num: num ? num.textContent.trim() : "",
-      title: title ? title.textContent.trim() : id
+  Array.prototype.forEach.call(navs, function(nav) {
+    const list = nav.querySelector(".ds-pagenav-list");
+    if (!list) return;
+    const disclosure = nav.querySelector(".ds-pagenav-disclosure");
+    const isRail = nav.classList.contains("ds-pagenav--rail");
+
+    /* Optional generation from page sections */
+    const genSel = nav.getAttribute("data-pagenav-generate");
+    if (genSel) {
+      let n = 0;
+      Array.prototype.forEach.call(document.querySelectorAll(genSel), function(sec) {
+        const id = sec.getAttribute("id");
+        if (!id) return;
+        const header = sec.querySelector(".ds-section-header");
+        const titleEl = (header || sec).querySelector("h2");
+        n += 1;
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = "#" + id;
+        a.className = "ds-pagenav-link";
+        a.innerHTML = '<span class="ds-pagenav-num">' + (n < 10 ? "0" + n : n) + '</span><span class="ds-pagenav-text"></span>';
+        a.querySelector(".ds-pagenav-text").textContent = titleEl ? titleEl.textContent.trim() : id;
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    }
+
+    const links = Array.prototype.slice.call(list.querySelectorAll(".ds-pagenav-link"));
+    if (!links.length) { nav.style.display = "none"; return; }
+    const targets = links.map(function(a) {
+      const href = a.getAttribute("href") || "";
+      return href.charAt(0) === "#" ? document.getElementById(href.slice(1)) : null;
     });
-  });
 
-  if (sections.length === 0) { toc.style.display = "none"; return; }
+    function setActive(id) {
+      links.forEach(function(a) {
+        const on = a.getAttribute("href") === "#" + id;
+        a.classList.toggle("ds-pagenav-link--active", on);
+        if (on && a.scrollIntoView) a.scrollIntoView({ block: "nearest" });
+      });
+    }
 
-  sections.forEach(function(s, i) {
-    const li = document.createElement("li");
-    li.style.listStyle = "none";
-    const a = document.createElement("a");
-    a.href = "#" + s.id;
-    a.className = "ds-floating-toc-link";
-    a.innerHTML = '<span class="ds-floating-toc-dot"></span><span class="ds-floating-toc-num">' + (i < 9 ? "0" + (i+1) : i+1) + '</span><span>' + s.title + '</span>';
-    li.appendChild(a);
-    list.appendChild(li);
-  });
+    /* Scroll-spy: highlight the topmost section in view */
+    if ("IntersectionObserver" in window) {
+      let debounce = null;
+      const obs = new IntersectionObserver(function(entries) {
+        let topId = null, topY = Infinity;
+        entries.forEach(function(en) {
+          if (en.isIntersecting && en.boundingClientRect.top < topY) {
+            topY = en.boundingClientRect.top;
+            topId = en.target.getAttribute("id");
+          }
+        });
+        if (!topId) return;
+        clearTimeout(debounce);
+        debounce = setTimeout(function() { setActive(topId); }, 16);
+      }, { threshold: 0, rootMargin: "-72px 0px -55% 0px" });
+      targets.forEach(function(t) { if (t) obs.observe(t); });
+    }
 
-  const mobileList = document.getElementById("mobile-toc-list");
-  if (mobileList) {
-    sections.forEach(function(s, i) {
-      const a = document.createElement("a");
-      a.href = "#" + s.id;
-      a.className = "ds-mobile-toc-link";
-      a.innerHTML = '<span class="ds-toc-num">' + (i < 9 ? "0" + (i+1) : i+1) + '</span><span>' + s.title + '</span>';
-      mobileList.appendChild(a);
-    });
-  }
+    /* Rail reveal: hidden over the hero, slides in once content is reached */
+    if (isRail) {
+      const firstTarget = targets.find(function(t) { return !!t; });
+      const updateReveal = function() {
+        const past = firstTarget ? firstTarget.getBoundingClientRect().top <= 80 : true;
+        nav.classList.toggle("ds-pagenav--hidden", !past);
+      };
+      if ("IntersectionObserver" in window) {
+        window.addEventListener("scroll", updateReveal, { passive: true });
+        updateReveal();
+      } else {
+        nav.classList.remove("ds-pagenav--hidden");
+      }
+    }
 
-  const links = list.querySelectorAll(".ds-floating-toc-link");
-  const mobileLinks = mobileList ? mobileList.querySelectorAll(".ds-mobile-toc-link") : [];
-  const firstSection = document.querySelector(".ds-section[id]");
-
-  /* IntersectionObserver for active section */
-  if (window.IntersectionObserver) {
-    let tocDebounceTimer = null;
-    const obs = new IntersectionObserver(function(entries) {
-      let activeId = null;
-      let firstTop = Infinity;
-      /* Pick topmost intersecting section (smallest getBoundingClientRect.top) */
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          const top = entry.boundingClientRect.top;
-          if (top < firstTop) { firstTop = top; activeId = entry.target.getAttribute("id"); }
+    /* Smooth in-page scroll + close the disclosure on mobile after picking */
+    links.forEach(function(a) {
+      a.addEventListener("click", function(e) {
+        const href = this.getAttribute("href") || "";
+        if (href.charAt(0) !== "#") return;
+        const target = document.getElementById(href.slice(1));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+        if (window.history && history.replaceState) history.replaceState(null, "", href);
+        if (disclosure && disclosure.hasAttribute("open") && mqMobile && mqMobile.matches) {
+          disclosure.removeAttribute("open");
         }
       });
-      if (!activeId) return;
-      clearTimeout(tocDebounceTimer);
-      tocDebounceTimer = setTimeout(function() {
-        Array.prototype.forEach.call(links, function(link) {
-          const isActive = link.getAttribute("href") === "#" + activeId;
-          link.classList.toggle("ds-floating-toc-link--active", isActive);
-        });
-        Array.prototype.forEach.call(mobileLinks, function(link) {
-          const isActive = link.getAttribute("href") === "#" + activeId;
-          link.classList.toggle("ds-toc-link--active", isActive);
-          if (isActive && link.scrollIntoView) {
-            link.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-          }
-        });
-      }, 16);
-      /* Show/hide floating toc based on scroll position */
-      const firstTopPos = firstSection ? firstSection.getBoundingClientRect().bottom : 0;
-      toc.classList.toggle("ds-floating-toc--hidden", firstTopPos > 0);
-    }, { threshold: 0.1, rootMargin: "-80px 0px -40% 0px" });
-
-    Array.prototype.forEach.call(sectionEls, function(sec) {
-      obs.observe(sec);
-    });
-  } else {
-    /* Fallback: scroll listener */
-    toc.classList.remove("ds-floating-toc--hidden");
-    window.addEventListener("scroll", function() {
-      const scrollY = window.scrollY + 120;
-      let activeIdx = -1;
-      Array.prototype.forEach.call(sectionEls, function(sec, i) {
-        if (sec.offsetTop <= scrollY) activeIdx = i;
-      });
-      Array.prototype.forEach.call(links, function(link, i) {
-          link.classList.toggle("ds-floating-toc-link--active", i === activeIdx);
-        });
-      Array.prototype.forEach.call(mobileLinks, function(link, i) {
-          link.classList.toggle("ds-toc-link--active", i === activeIdx);
-          if (i === activeIdx && link.scrollIntoView) {
-            link.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-          }
-        });
-      });
-  }
-
-  /* Smooth scroll for TOC links */
-  Array.prototype.forEach.call(links, function(link) {
-    link.addEventListener("click", function(e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  });
-  Array.prototype.forEach.call(mobileLinks, function(link) {
-    link.addEventListener("click", function(e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
 })();
@@ -683,35 +663,6 @@ const TOKENS = [
     h.addEventListener("click", function() {
       const item = this.closest(".ds-accordion-item");
       if (item) item.classList.toggle("open");
-    });
-  });
-})();
-
-/* ===== Docs sidebar active tracking ===== */
-(function() {
-  const menu = document.querySelector(".ds-docs-menu");
-  if (!menu || !("IntersectionObserver" in window)) return;
-  const blocks = document.querySelectorAll(".ds-doc-block[id]");
-  if (!blocks.length) return;
-  const links = menu.querySelectorAll("a");
-  const obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (!entry.isIntersecting) return;
-      const id = entry.target.getAttribute("id");
-      Array.prototype.forEach.call(links, function(a) {
-        a.classList.toggle("is-active", a.getAttribute("href") === "#" + id);
-      });
-    });
-  }, { threshold: 0.1, rootMargin: "-80px 0px -65% 0px" });
-  Array.prototype.forEach.call(blocks, function(b) { obs.observe(b); });
-
-  Array.prototype.forEach.call(links, function(a) {
-    a.addEventListener("click", function(e) {
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
     });
   });
 })();
