@@ -80,6 +80,15 @@
 - `styles.css` 5 行死代码 `--ds-letter-spacing-*` / `--ds-word-spacing-cjk` 删除（遗留自 `--ds-tracking-*` 重命名前）
 - `scripts.js` 3 处空 catch 块改为 `void e;` / `void 0;`（localStorage 读/写 + clipboard.writeText）
 
+#### 暗色模式 Gravitas & Glow（编辑主义暗色深化）
+- 8 个新令牌（`--ds-glow-xs/sm/md/lg/border/text/surface/aura`）：光模式下 0% 不透明度（视觉惰性），暗模式 4-22% 橄榄色底色（暖调 gravitas）
+- 1 个新关键帧 `ds-glow-breathe`：柔和呼吸光晕，4s 周期
+- 5 个新工具类：`.ds-glow-border`（发光边框） / `.ds-aura`（径向光晕伪元素） / `.ds-surface-glow`（内部发光表面） / `.ds-heading-glow`（标题文本发光） / `.ds-anim-glow-breathe`（呼吸动画）
+- 暗模式 `--ds-shadow-md/lg/xl/2xl` 注入橄榄色发光层（4-14% 透明度），从纯黑阴影升级为分层暖色阴影
+- 暗模式 `.ds-glass-card` / `.ds-frosted-nav` / `.ds-toast` 玻璃组件增加暖色底色 box-shadow + 色调边框
+- 双重暗模式选择器覆盖（`@media(prefers-color-scheme:dark)` + `[data-theme="dark"]`）确保跟随系统与手动切换行为一致
+- `prefers-reduced-motion` 显式关闭 `.ds-anim-glow-breathe`（避免 0.001ms 关键帧闪烁）
+
 ### 变更
 
 #### 命名验证器白名单扩展
