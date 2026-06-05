@@ -29,6 +29,28 @@
 
 ---
 
+## [1.4.3] — 2026-06-05
+
+### 修复
+
+- **文档内容一致性审计**：修复 12 处跨文档矛盾
+  - 品牌名：CLAUDE.md 仍使用 "CGArtLab"，全系统已更名为 EDIC → 已修复
+  - 版本号：VERSION 1.4.2、package.json 1.4.0、README badge 自相矛盾（v1.4.2 vs 1.4.0）→ 统一为 1.4.3
+  - 组件数量：index.html 说 "30+" 和 "25"，handbook.html 说 "25" 和 "23"，README 说 "25" → 统一为 23（实际统计）
+  - 流程文档：VERSIONING.md 声称最新 v1.1.0，DEVELOPMENT-GUIDE.md 声称 v1.0 → 已标注需更新
+  - README badge：alt 文本 v1.4.2 与 badge 文字 1.4.0 矛盾 → 已修复为 1.4.3
+  - CLAUDE.md 发布示例：bump to v1.4.0 → bump to v1.4.3
+
+### 文档
+
+- `CHANGELOG.md`：`[未发布]` → `[1.4.3]`，更新版本链接
+- `VERSION`：1.4.2 → 1.4.3
+- `package.json`：1.4.0 → 1.4.3
+- `README.md`：badge 版本统一为 1.4.3，组件数量 25 → 23
+- `CLAUDE.md`：品牌名 CGArtLab → EDIC，版本 v1.3.1 → v1.4.3，示例命令 v1.4.0 → v1.4.3
+
+---
+
 ## [未发布]
 
 ### 新增
@@ -183,7 +205,7 @@
 - **修复 (Fixed)** — Bug 修复
 - **安全 (Security)** — 漏洞修复
 
-[未发布]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.4.0...HEAD
+[1.4.3]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.4.0...v1.4.3
 [1.4.0]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.1.0...v1.3.1
 [1.1.0]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.0.0...v1.1.0
