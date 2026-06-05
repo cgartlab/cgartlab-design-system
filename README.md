@@ -3,7 +3,7 @@
 > 同时面向人类和 Agent 的编辑主义设计系统 — 为纷繁的数字内容建立温暖而克制的秩序。
 > 基于 **OKLch** 与 **设计令牌**，框架无关、暗色就绪、中英文混排优化。
 
-🌐 **网站：** https://designsystem.cgartlab.com
+🌐 **网站：** https://edic.cgartlab.com
 
 [![纯静态](https://img.shields.io/badge/build-zero%20dependencies-7d7a42)](https://designsystem.cgartlab.com)
 [![OKLch](https://img.shields.io/badge/color-OKLch-7d7a42)](https://designsystem.cgartlab.com/docs.html#color)
