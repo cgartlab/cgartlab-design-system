@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="CGArtLab Design System">
-  <title>CGArtLab Design System</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="EDIC Design System">
+  <title>EDIC Design System</title>
   <!-- Refined fountain-pen nib at 45 deg (tip down-left). Exactly two closed curves: the nib outline (slit = open notch at the tip) + the breather-hole circle; evenodd. Hex stops approximate the OKLch olive ramp. -->
   <defs>
     <linearGradient id="cg-nib" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">

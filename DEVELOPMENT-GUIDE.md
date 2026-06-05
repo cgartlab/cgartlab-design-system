@@ -1,6 +1,6 @@
-# CGArtLab Design System — 极度详细的网站开发指南
+# EDIC Design System — 极度详细的网站开发指南
 
-**版本:** v1.0  
+**版本:** v1.4.3  
 **生成日期:** 2026-05-28  
 **适用对象:** 任何大模型 AI 助手 / 前端开发者 / 设计师
 
@@ -87,7 +87,7 @@
 ### 2.1 文件清单
 
 ```
-cgartlab-design-system/
+edic-design-system/
 ├── index.html              # 主页面（731行）— 设计系统视觉目录
 ├── styles.css              # 样式表（677行）— Token + 组件CSS + 响应式
 ├── scripts.js              # 脚本（427行）— 图标渲染 + 令牌表 + 交互
@@ -97,8 +97,8 @@ cgartlab-design-system/
 ├── company.html            # 公司页面
 ├── resume.html             # 简历页面
 ├── report.html             # 报告页面
-├── cgartlab-design-system.html  # 设计系统详情页
-├── cgartlabcom_qrcode.svg  # 二维码 SVG
+├── edic-design-system.html  # 设计系统详情页
+├── ediccom_qrcode.svg  # 二维码 SVG
 ├── opencode.json           # OpenCode 配置
 └── *.artifact.json         # Artifact 元数据文件
 ```
@@ -1411,7 +1411,7 @@ timeline, contact-form, toast, glass-card, glass-btn
 
 ```json
 {
-  "name": "CGArtLab Design Tokens",
+  "name": "EDIC Design Tokens",
   "version": "1.0.0",
   "tokens": {
     "colors": {
@@ -1467,4 +1467,4 @@ timeline, contact-form, toast, glass-card, glass-btn
 
 ---
 
-*本文档基于项目源代码 v1.0 自动生成，如代码有更新请同步维护本指南。*
+*本文档基于项目源代码 v1.4.3 自动生成，如代码有更新请同步维护本指南。*

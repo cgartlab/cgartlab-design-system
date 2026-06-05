@@ -1,4 +1,4 @@
-# CGArtLab Design System — Pull Request
+# EDIC Design System — Pull Request
 
 感谢你的贡献！请认真填写以下各项，有助于快速评审。
 

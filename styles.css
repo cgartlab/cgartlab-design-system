@@ -1,4 +1,4 @@
-/* ===== CGArtLab Design System v1.3.1 — Tokens & Styles ===== */
+/* ===== EDIC Design System v1.4.0 — Tokens & Styles ===== */
 
 :root {
   --ds-color-bg: oklch(97% 0.012 80);
@@ -41,11 +41,6 @@
   --ds-font-body: "Noto Sans SC", "Source Han Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --ds-font-mono: "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono SC", ui-monospace, monospace;
   --ds-font-ui: "Noto Sans SC", "Source Han Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --ds-letter-spacing-cjk: 0.04em;
-  --ds-letter-spacing-cjk-heading: 0.06em;
-  --ds-letter-spacing-latin: 0.015em;
-  --ds-letter-spacing-mono: 0;
-  --ds-word-spacing-cjk: 0.05em;
   --ds-cjk-line-height: 1.7;
   --ds-text-caption: 0.75rem;
   --ds-text-body-sm: 0.875rem;
@@ -533,7 +528,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-breadcrumb-current{color:var(--ds-color-fg);font-weight:600}
 
 /* ===== Table ===== */
-.ds-table-wrap{overflow-x:auto;max-width:100%}
+.ds-table-wrap{overflow-x:auto;overflow-y:visible;max-width:100%}
+.ds-table-wrap[tabindex="0"]:focus{outline:2px solid var(--ds-accent);outline-offset:2px}
 .ds-table{width:100%;border-collapse:collapse;font-size:var(--ds-text-body-sm)}
 .ds-table th{text-align:left;padding:var(--ds-space-3) var(--ds-space-4);font-weight:600;color:var(--ds-color-muted);text-transform:uppercase;font-size:var(--ds-text-caption);letter-spacing:var(--ds-tracking-wider);border-bottom:1px solid var(--ds-color-border)}
 .ds-table td{padding:var(--ds-space-3) var(--ds-space-4);border-bottom:1px solid var(--ds-color-border-subtle)}
@@ -801,21 +797,32 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 @media(prefers-reduced-motion:reduce){
   .ds-mnav-trigger-bar,.ds-mnav-backdrop,.ds-navbar-links{transition:none!important}
 }
-/* ===== Floating TOC ===== */
-.ds-floating-toc{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:var(--ds-z-dropdown);display:flex;flex-direction:column;gap:var(--ds-space-3);padding:var(--ds-space-4) var(--ds-space-3);background:var(--ds-glass-bg);-webkit-backdrop-filter:blur(var(--ds-blur-md));backdrop-filter:blur(var(--ds-blur-md));border:1px solid var(--ds-glass-border);border-radius:var(--ds-radius-2xl);box-shadow:var(--ds-glass-shadow),var(--ds-shadow-md);transition:opacity .4s,transform .4s}
-.ds-floating-toc--hidden{opacity:0;pointer-events:none;transform:translateY(-50%) translateX(20px)}
-.ds-floating-toc-label{font-size:10px;text-transform:uppercase;letter-spacing:var(--ds-tracking-widest);color:var(--ds-color-muted);font-weight:600;text-align:center;padding-bottom:var(--ds-space-2);border-bottom:1px solid var(--ds-color-border-subtle);margin-bottom:var(--ds-space-1)}
-.ds-floating-toc-list{list-style:none;display:flex;flex-direction:column;gap:var(--ds-space-1)}
-.ds-floating-toc-link{display:flex;align-items:center;gap:var(--ds-space-2);text-decoration:none;color:var(--ds-color-muted);font-size:var(--ds-text-caption);padding:var(--ds-space-1) var(--ds-space-2);border-radius:var(--ds-radius-lg);transition:all .2s;white-space:nowrap}
-.ds-floating-toc-link:hover{color:var(--ds-color-fg);background:var(--ds-accent-soft)}
-.ds-floating-toc-dot{width:6px;height:6px;border-radius:50%;background:var(--ds-color-border);flex-shrink:0;transition:all .3s}
-.ds-floating-toc-link--active{color:var(--ds-accent);font-weight:600}
-.ds-floating-toc-link--active .ds-floating-toc-dot{background:var(--ds-accent);box-shadow:0 0 0 3px color-mix(in oklch,var(--ds-accent) 20%,transparent)}
-.ds-floating-toc-num{font-family:var(--ds-font-mono);font-size:10px;color:var(--ds-color-border-strong);min-width:16px;text-align:right}
+/* ===== Page Navigation (unified TOC) — canonical "on this page" component =====
+   One component, two desktop presentations + one shared mobile disclosure.
+   - Default (in-flow): vertical list, hosted by a sticky container (docs sidebar).
+   - .ds-pagenav--rail: floating glass card pinned to the right edge (handbook).
+   - <=1023px: native <details> disclosure ("目录" bar that expands a vertical list).
+   Desktop reveals the list by neutralising <details> with display:contents on the
+   disclosure; mobile restores native block display so the closed state hides it. */
+.ds-pagenav{font-family:var(--ds-font-ui)}
+.ds-pagenav-disclosure{display:contents}
+.ds-pagenav-summary{display:flex;align-items:center;gap:var(--ds-space-2);list-style:none;cursor:default;font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);font-weight:600;color:var(--ds-color-muted);padding:0 var(--ds-space-3);margin-bottom:var(--ds-space-3)}
+.ds-pagenav-summary::-webkit-details-marker{display:none}
+.ds-pagenav-chevron{display:none;flex-shrink:0;color:var(--ds-color-muted)}
+.ds-pagenav-list{list-style:none;display:flex;flex-direction:column;gap:2px;margin:0;padding:0}
+.ds-pagenav-link{display:flex;align-items:center;gap:var(--ds-space-2);padding:var(--ds-space-2) var(--ds-space-3);border-radius:var(--ds-radius-md);text-decoration:none;font-size:var(--ds-text-body-sm);color:var(--ds-color-muted);border-left:2px solid transparent;transition:color var(--ds-duration-150),background var(--ds-duration-150),border-color var(--ds-duration-150)}
+.ds-pagenav-link:hover{color:var(--ds-color-fg);background:var(--ds-color-surface)}
+.ds-pagenav-link:focus-visible{outline:2px solid var(--ds-accent);outline-offset:2px}
+.ds-pagenav-link--active{color:var(--ds-accent);font-weight:600;background:var(--ds-accent-muted);border-left-color:var(--ds-accent)}
+.ds-pagenav-num{font-family:var(--ds-font-mono);font-size:10px;color:var(--ds-color-border-strong);min-width:18px;text-align:right;flex-shrink:0}
+.ds-pagenav-link--active .ds-pagenav-num{color:var(--ds-accent)}
+.ds-pagenav-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-@media(max-width:1023px){
-  .ds-floating-toc{display:none}
-}
+/* Floating rail variant (handbook) — inset glass card, full radius, subtle reveal */
+.ds-pagenav--rail{position:fixed;right:var(--ds-space-6);top:50%;transform:translateY(-50%);z-index:var(--ds-z-dropdown);width:208px;max-height:76vh;overflow-y:auto;padding:var(--ds-space-5) var(--ds-space-4);background:var(--ds-glass-bg);-webkit-backdrop-filter:blur(var(--ds-blur-md));backdrop-filter:blur(var(--ds-blur-md));border:1px solid var(--ds-glass-border);border-radius:var(--ds-radius-2xl);box-shadow:var(--ds-glass-shadow),var(--ds-shadow-md);transition:opacity var(--ds-duration-500) var(--ds-ease-out),transform var(--ds-duration-500) var(--ds-ease-out)}
+.ds-pagenav--rail::-webkit-scrollbar{width:4px}
+.ds-pagenav--rail::-webkit-scrollbar-thumb{background:var(--ds-color-border);border-radius:var(--ds-radius-full)}
+.ds-pagenav--rail.ds-pagenav--hidden{opacity:0;pointer-events:none;transform:translateY(-50%) translateX(12px)}
 
 /* ===== Timeline Component ===== */
 .ds-timeline{position:relative;display:flex;flex-direction:column;gap:0;padding:var(--ds-space-6) 0}
@@ -871,7 +878,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 [data-theme="dark"] .ds-bg-blob{opacity:.04}
 
 /* ===== Responsive optimizations ===== */
-@media(max-width:639px){
+@media(max-width:1023px){
   .ds-cover h1{font-size:2.25rem;letter-spacing:0}.ds-cover .ds-subtitle{font-size:var(--ds-text-h5)}
   .ds-section{padding:var(--ds-space-12) 0}
   .ds-wrapper{padding:0 var(--ds-space-4)}
@@ -881,6 +888,26 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-timeline-item{padding-left:var(--ds-space-12)}
   .ds-timeline::before{left:14px}.ds-timeline-dot{left:5px;width:16px;height:16px}
   .ds-form-row{grid-template-columns:1fr}
+  /* P1 issue-96/issue-99: Responsive hero/display overrides for all pages */
+  .ds-hero{font-size:clamp(2rem,8vw,2.25rem)}.ds-display{font-size:clamp(1.75rem,7vw,2rem)}
+  /* issue-97/handbook: unified page-nav disclosure for <=1023px (replaces bottom scroll bar) */
+  .ds-pagenav--rail{position:static;right:auto;top:auto;transform:none;width:auto;max-height:none;overflow:visible;opacity:1;pointer-events:auto;padding:0;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;border:none;box-shadow:none;margin:var(--ds-space-4) var(--ds-space-4) 0}
+  .ds-pagenav-disclosure{display:block;background:var(--ds-color-surface);border:1px solid var(--ds-color-border-subtle);border-radius:var(--ds-radius-xl);overflow:hidden}
+  .ds-pagenav-summary{cursor:pointer;justify-content:space-between;min-height:44px;padding:var(--ds-space-3) var(--ds-space-4);margin-bottom:0;font-size:var(--ds-text-body-sm);font-weight:600;color:var(--ds-color-fg);text-transform:none;letter-spacing:normal;user-select:none}
+  .ds-pagenav-chevron{display:block;transition:transform var(--ds-duration-200) var(--ds-ease-out)}
+  .ds-pagenav-disclosure[open] .ds-pagenav-chevron{transform:rotate(180deg)}
+  .ds-pagenav-list{padding:0 var(--ds-space-2) var(--ds-space-2);gap:0}
+  /* P1 issue-108: Mobile nav drawer — smaller text on very small screens */
+  .ds-navbar-link{min-height:36px;font-size:var(--ds-text-body-sm)}
+  /* P1 issue-98: Tab labels — allow wrapping on small screens */
+  .ds-tab{white-space:normal;font-size:var(--ds-text-caption)}
+  /* P3 issue-104: Color swatch density — smaller swatches on very small screens */
+  .ds-swatch-color{height:48px}.ds-swatch-info{font-size:var(--ds-text-caption)}
+  /* P2 issue-106: ds-table-mini rows — wrap on small screens */
+  .ds-table-mini .ds-table-mini-row{flex-wrap:wrap;gap:var(--ds-space-2)}
+  /* P2 issue-106: ds-type-label meta span — break-word for token descriptors, but keep <code> whole */
+  .ds-type-label .ds-type-label-meta{overflow-wrap:break-word;word-break:break-word}
+  .ds-type-label .ds-type-label-meta code{word-break:keep-all}
 }
 @media(min-width:640px)and(max-width:1023px){
   .ds-grid-4{grid-template-columns:repeat(2,1fr)}
@@ -892,13 +919,13 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 
 /* ===== Print ===== */
 @media print{
-  .ds-navbar,.ds-floating-toc,.ds-edge-decor,.ds-bg-blob,.ds-theme-toggle-btn{display:none!important}
+  .ds-navbar,.ds-pagenav,.ds-edge-decor,.ds-bg-blob,.ds-theme-toggle-btn{display:none!important}
   .ds-section{break-inside:avoid;padding:var(--ds-space-12) 0}
 }
 
 
 /* =========================================================================
-   CGArtLab Design System v1.1 — Site Shell, Motion & Extended Components
+   EDIC Design System v1.1 — Site Shell, Motion & Extended Components
    Appended layer. Fully token-driven. Powers the showcase website
    (index / handbook / docs / prompts / downloads) and is the canonical
    reference any consumer can copy.
@@ -954,7 +981,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 
 /* Animated hero mark (line draw) */
 .ds-logo-hero{width:96px;height:96px;border-radius:var(--ds-radius-2xl);background:linear-gradient(140deg,var(--ds-color-olive-200),var(--ds-accent) 48%,var(--ds-color-olive-600));color:var(--ds-color-white);display:inline-flex;align-items:center;justify-content:center;box-shadow:var(--ds-shadow-xl);position:relative;overflow:hidden;transition:transform var(--ds-duration-500) var(--ds-ease-spring),box-shadow var(--ds-duration-500) var(--ds-ease-out)}
-.ds-logo-hero::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 90% at 28% 18%,rgba(255,255,255,.42),rgba(255,255,255,0) 60%);pointer-events:none}
+.ds-logo-hero::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 90% at 28% 18%,oklch(100% 0 0 / 0.42),oklch(100% 0 0 / 0) 60%);pointer-events:none}
 .ds-logo-hero::after{content:"";position:absolute;inset:-6px;border-radius:inherit;background:conic-gradient(from 180deg at 50% 50%,transparent 0deg,oklch(52% 0.08 115 / .25) 90deg,transparent 180deg);filter:blur(18px);opacity:.6;z-index:-1;pointer-events:none;animation:ds-logo-halo 6s var(--ds-ease-in-out) infinite}
 .ds-logo-hero:hover{transform:translateY(-2px) scale(1.02);box-shadow:var(--ds-shadow-2xl)}
 .ds-logo-hero svg{width:60px;height:60px;position:relative;z-index:1}
@@ -1037,8 +1064,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 
 /* ===== Code block + copy ===== */
 .ds-code{background:var(--ds-code-bg);border-radius:var(--ds-radius-xl);overflow:hidden;border:1px solid var(--ds-color-border);box-shadow:var(--ds-shadow-sm);margin:0}
-.ds-code-bar{display:flex;align-items:center;justify-content:space-between;padding:var(--ds-space-3) var(--ds-space-4);background:var(--ds-code-bg-bar);border-bottom:1px solid color-mix(in oklch,var(--ds-color-white) 12%,transparent)}
-.ds-code-lang{font-family:var(--ds-font-mono);font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);color:color-mix(in oklch,var(--ds-color-fg-inverse) 70%,transparent);font-weight:600}
+.ds-code-bar{display:flex;align-items:center;justify-content:space-between;padding:var(--ds-space-3) var(--ds-space-4);background:var(--ds-color-surface-overlay);border-bottom:1px solid var(--ds-color-border-subtle)}
+.ds-code-lang{font-family:var(--ds-font-mono);font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);color:var(--ds-color-muted);font-weight:600}
 .ds-code pre{margin:0;padding:var(--ds-space-5);overflow-x:auto;font-family:var(--ds-font-mono);font-size:var(--ds-text-body-sm);line-height:var(--ds-leading-relaxed);color:var(--ds-code-text)}
 .ds-code code{font-family:var(--ds-font-mono);white-space:pre}
 /* Defense-in-depth: explicitly reset any prose-context styles that might
@@ -1080,8 +1107,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-code .tok-s{color:var(--ds-token-string)}
 
 /* Copy button (generic) */
-.ds-copy-btn{display:inline-flex;align-items:center;gap:var(--ds-space-2);font-family:var(--ds-font-ui);font-size:var(--ds-text-caption);font-weight:600;padding:var(--ds-space-1) var(--ds-space-3);border-radius:var(--ds-radius-md);border:1px solid color-mix(in oklch,var(--ds-color-white) 18%,transparent);background:transparent;color:color-mix(in oklch,var(--ds-color-fg-inverse) 80%,transparent);cursor:pointer;transition:all var(--ds-duration-150);white-space:nowrap}
-.ds-copy-btn:hover{background:color-mix(in oklch,var(--ds-color-white) 12%,transparent);color:var(--ds-color-fg-inverse)}
+.ds-copy-btn{display:inline-flex;align-items:center;gap:var(--ds-space-2);font-family:var(--ds-font-ui);font-size:var(--ds-text-caption);font-weight:600;padding:var(--ds-space-1) var(--ds-space-3);border-radius:var(--ds-radius-md);border:1px solid var(--ds-color-border-subtle);background:transparent;color:var(--ds-color-muted);cursor:pointer;transition:all var(--ds-duration-150);white-space:nowrap}
+.ds-copy-btn:hover{background:color-mix(in oklch,var(--ds-color-white) 12%,transparent);color:var(--ds-color-fg)}
 .ds-copy-btn svg{width:14px;height:14px}
 .ds-copy-btn.is-copied{color:oklch(80% 0.12 145);border-color:oklch(60% 0.12 145)}
 /* Copy button on light surfaces */
@@ -1109,11 +1136,6 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 /* ===== Docs layout ===== */
 .ds-docs{display:grid;grid-template-columns:240px minmax(0,1fr);gap:var(--ds-space-12);align-items:start}
 .ds-docs-aside{position:sticky;top:88px;align-self:start}
-.ds-docs-aside-title{font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);font-weight:600;color:var(--ds-color-muted);margin-bottom:var(--ds-space-3);padding-left:var(--ds-space-3)}
-.ds-docs-menu{list-style:none;display:flex;flex-direction:column;gap:2px;margin:0 0 var(--ds-space-6)}
-.ds-docs-menu a{display:block;padding:var(--ds-space-2) var(--ds-space-3);border-radius:var(--ds-radius-md);font-size:var(--ds-text-body-sm);color:var(--ds-color-muted);text-decoration:none;border-left:2px solid transparent;transition:all var(--ds-duration-150)}
-.ds-docs-menu a:hover{color:var(--ds-color-fg);background:var(--ds-color-surface)}
-.ds-docs-menu a.is-active{color:var(--ds-accent);font-weight:600;border-left-color:var(--ds-accent);background:var(--ds-accent-muted)}
 .ds-docs-main{min-width:0}
 .ds-doc-block{scroll-margin-top:88px;margin-bottom:var(--ds-space-16)}
 .ds-doc-block:last-child{margin-bottom:0}
@@ -1234,7 +1256,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 @media print{
   .ds-hero-actions,.ds-navbar-actions,.ds-footer-rich .ds-footer-bottom,.ds-copy-btn,.ds-code-bar{display:none!important}
   .ds-reveal{opacity:1!important;transform:none!important}
-  .ds-code{border:1px solid #bbb;box-shadow:none;background:var(--ds-code-bg)!important}
+  .ds-code{border:1px solid oklch(79% 0 0);box-shadow:none;background:var(--ds-code-bg)!important}
   .ds-code pre{color:var(--ds-code-text)!important}
 }
 
@@ -1251,20 +1273,13 @@ a.ds-feature-card:focus-visible{outline:2px solid var(--ds-accent);outline-offse
 
 
 /* ===== Brand constants (theme-independent) ===== */
-:root{--ds-brand-paper:#f7f4ee;--ds-brand-ink:#211f1b}
+:root{--ds-brand-paper:oklch(96.8% 0.009 85);--ds-brand-ink:oklch(24% 0.008 85)}
 .ds-brand-preview{display:flex;align-items:center;justify-content:center;padding:var(--ds-space-6);border-radius:var(--ds-radius-lg);border:1px solid var(--ds-color-border-subtle);min-height:104px}
 .ds-brand-preview img{max-width:100%;height:auto;max-height:56px}
 .ds-brand-preview--paper{background:var(--ds-brand-paper)}
 .ds-brand-preview--ink{background:var(--ds-brand-ink)}
 
 .ds-justify-start{justify-content:flex-start}
-
-/* Desktop: restore docs-aside details as neutral wrapper */
-@media(min-width:1024px){
-  .ds-docs-aside-details{display:contents}
-  .ds-docs-aside-details>summary{display:none}
-  .ds-docs-aside-details .ds-docs-menu{padding:0}
-}
 
 /* ===== Skip to content (a11y) ===== */
 .ds-skip{position:absolute;top:-100%;left:var(--ds-space-4);padding:var(--ds-space-3) var(--ds-space-5);background:var(--ds-accent);color:var(--ds-color-white);border-radius:var(--ds-radius-md);font-size:var(--ds-text-body-sm);font-weight:600;z-index:9999;text-decoration:none;transition:top var(--ds-duration-200)}

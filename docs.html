@@ -2,10 +2,10 @@
 <html lang="zh-CN"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>使用文档 · CGArtLab Design System</title>
-<meta name="description" content="CGArtLab 设计系统使用文档：安装引入、设计令牌、色彩主题、暗色模式、排版、组件、动效、图标、可访问性、定制扩展与 FAQ。">
+<title>使用文档 · EDIC Design System</title>
+<meta name="description" content="EDIC 设计系统使用文档：安装引入、设计令牌、色彩主题、暗色模式、排版、组件、动效、图标、可访问性、定制扩展与 FAQ。">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="styles.css?v=1.3.1">
+<link rel="stylesheet" href="styles.css?v=1.4.3">
 <!-- Prism.js syntax highlighting (CDN, no extra CSS — custom theme in styles.css) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"
         integrity="sha384-xAgN7OCsK5s0d3G18tqRYrxy8hWsPA14E26TMh7Mi9ZM09vaz4EA0DBTl+80F5yC"
@@ -18,11 +18,11 @@
 <!-- Site Navbar -->
 <nav class="ds-navbar" role="navigation" aria-label="主导航">
   <div class="ds-navbar-inner">
-    <a href="index.html" class="ds-logo" aria-label="CGArtLab Design System 首页">
+    <a href="index.html" class="ds-logo" aria-label="EDIC Design System 首页">
       <span class="ds-logo-mark">
         <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" transform="rotate(45 16 16)" d="M11 8C13.5 6.6 18.5 6.6 21 8C23.2 11 22 19 16.1 26.6L16.5 14C16.5 13.5 15.5 13.5 15.5 14L15.9 26.6C10 19 8.8 11 11 8ZM14.3 11.8a1.7 1.7 0 1 0 3.4 0a1.7 1.7 0 1 0 -3.4 0Z"/></svg>
       </span>
-      <span class="ds-logo-text"><span class="ds-logo-word">CGArtLab</span><span class="ds-logo-sub">Design System</span></span>
+      <span class="ds-logo-text"><span class="ds-logo-word">EDIC</span><span class="ds-logo-sub">Design System</span></span>
     </a>
     <button class="ds-mnav-trigger" id="mnav-trigger" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mnav-panel">
       <span class="ds-mnav-trigger-bar"></span>
@@ -51,7 +51,7 @@
   <div class="ds-wrapper">
     <span class="ds-eyebrow ds-block ds-mb-4">使用文档</span>
     <h1 class="ds-display ds-hero ds-mb-4">使用文档</h1>
-    <p class="ds-lead ds-measure">从零开始把 CGArtLab 设计系统接入任意项目——纯静态、零依赖、令牌驱动。下面的每个片段都可直接复制。</p>
+    <p class="ds-lead ds-measure">从零开始把 EDIC 设计系统接入任意项目——纯静态、零依赖、令牌驱动。下面的每个片段都可直接复制。</p>
   </div>
 </header>
 
@@ -89,7 +89,7 @@
 
         <section class="ds-doc-block" id="intro">
           <h2>简介与设计哲学</h2>
-          <p>CGArtLab 设计系统是一套<strong>纯静态、零构建</strong>的设计系统：所有视觉决策都被沉淀为 CSS 自定义属性（设计令牌），组件以语义化的 <code>ds-*</code> class 暴露。它的气质是<strong>编辑主义 × 橄榄绿</strong>——杂志般克制的排版、温暖的暖白纸色基底，以及自信而不喧哗的橄榄绿强调色。</p>
+          <p>EDIC 设计系统是一套<strong>纯静态、零构建</strong>的设计系统：所有视觉决策都被沉淀为 CSS 自定义属性（设计令牌），组件以语义化的 <code>ds-*</code> class 暴露。它的气质是<strong>编辑主义 × 橄榄绿</strong>——杂志般克制的排版、温暖的暖白纸色基底，以及自信而不喧哗的橄榄绿强调色。</p>
           <ul>
             <li><strong>令牌优先</strong>：先改变量，再谈样式。不写魔法数字。</li>
             <li><strong>框架无关</strong>：一份 <code>styles.css</code> 可用于原生 HTML、React、Vue、Svelte、邮件与打印。</li>
@@ -110,11 +110,11 @@
     &lt;meta charset="UTF-8"&gt;
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
     &lt;link rel="icon" type="image/svg+xml" href="favicon.svg"&gt;
-    &lt;link rel="stylesheet" href="styles.css?v=1.3.1"&gt;
+    &lt;link rel="stylesheet" href="styles.css?v=1.4.3"&gt;
   &lt;/head&gt;
   &lt;body&gt;
     &lt;!-- 你的内容 --&gt;
-    &lt;script src="scripts.js?v=1.3.1"&gt;&lt;/script&gt;
+    &lt;script src="scripts.js?v=1.4.3"&gt;&lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
           </figure>
@@ -222,7 +222,7 @@
   &lt;p&gt;使用令牌的卡片，悬停浮起。&lt;/p&gt;
 &lt;/article&gt;</code></pre>
           </figure>
-          <p>全部 25 个组件的 live 形态、变体与状态，请见<a href="handbook.html#components">视觉手册 · 组件库</a>。</p>
+          <p>全部 23 个组件的 live 形态、变体与状态，请见<a href="handbook.html#components">视觉手册 · 组件库</a>。</p>
 
           <h3>响应式导航 · Mobile Drawer</h3>
           <p>导航栏 <code>.ds-navbar</code> 在桌面端为水平毛玻璃浮动导航，在移动端与平板（&lt;1024px）自动转为右侧滑出抽屉。整套移动端导航严格遵循已有设计令牌。</p>
@@ -433,16 +433,16 @@
   <div class="ds-wrapper">
     <div class="ds-footer-cols">
       <div class="ds-footer-brand">
-        <a href="index.html" class="ds-logo" aria-label="CGArtLab Design System">
+        <a href="index.html" class="ds-logo" aria-label="EDIC Design System">
           <span class="ds-logo-mark">
             <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" transform="rotate(45 16 16)" d="M11 8C13.5 6.6 18.5 6.6 21 8C23.2 11 22 19 16.1 26.6L16.5 14C16.5 13.5 15.5 13.5 15.5 14L15.9 26.6C10 19 8.8 11 11 8ZM14.3 11.8a1.7 1.7 0 1 0 3.4 0a1.7 1.7 0 1 0 -3.4 0Z"/></svg>
           </span>
-          <span class="ds-logo-text"><span class="ds-logo-word">CGArtLab</span><span class="ds-logo-sub">Design System</span></span>
+          <span class="ds-logo-text"><span class="ds-logo-word">EDIC</span><span class="ds-logo-sub">Design System</span></span>
         </a>
         <p>编辑主义 × 橄榄绿。一套以 OKLch 与设计令牌驱动的设计系统，让人与 AI 都能输出一致、优雅、可访问的界面与文档。</p>
       </div>
       <div class="ds-footer-col">
-        <h4>系统</h4>
+        <h3>系统</h3>
         <ul class="ds-footer-links">
           <li><a href="handbook.html">视觉手册</a></li>
           <li><a href="docs.html">使用文档</a></li>
@@ -461,7 +461,7 @@
       <div class="ds-footer-col">
         <h4>关于</h4>
         <ul class="ds-footer-links">
-          <li><a href="https://cgartlab.com" target="_blank" rel="noopener">CGArtLab.com</a></li>
+          <li><a href="https://cgartlab.com" target="_blank" rel="noopener">EDIC.com</a></li>
           <li><a href="https://github.com/cgartlab/cgartlab-design-system" target="_blank" rel="noopener">GitHub 仓库</a></li>
           <li><a href="terms.html">使用条款</a></li>
           <li><a href="downloads.html#examples">真实示例</a></li>
@@ -469,16 +469,16 @@
       </div>
     </div>
     <div class="ds-footer-bottom">
-      <span>© <span class="ds-year">2026</span> CGArtLab · 探索数字艺术的边界</span>
+      <span>© <span class="ds-year">2026</span> EDIC · 探索数字艺术的边界</span>
       <div class="ds-cluster">
-        <span class="ds-mono" data-ds-version>v1.3.1</span>
+        <span class="ds-mono" data-ds-version>v1.4.3</span>
         <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--ds-accent);text-decoration:none" title="本设计系统采用 CC BY 4.0 许可证">CC BY 4.0</a>
       </div>
     </div>
   </div>
 </footer>
 
-<script src="scripts.js?v=1.3.1"></script>
+<script src="scripts.js?v=1.4.3"></script>
 <button id="theme-toggle-btn-fixed" class="ds-theme-toggle-btn ds-theme-toggle-btn--fixed" type="button" aria-label="跟随系统 · 点击切换">
   <span class="theme-icon"></span>
 </button>

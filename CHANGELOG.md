@@ -3,7 +3,91 @@
 本项目所有显著变更记录于此。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本 2.0.0](https://semver.org/lang/zh-CN/)（设计系统适配版，见 [docs/VERSIONING.md](./docs/VERSIONING.md)）。
 
+## [1.4.0] — 2026-06-04
+
+### Changed
+
+- **Brand rename**: CGArtLab Design System → **EDIC Design System** (**E**ditorial **D**esign **I**nterface for **C**ontent)
+- **New positioning**: 同时面向人类和 Agent 的编辑主义设计系统
+- **New philosophy**: 为纷繁的数字内容建立温暖而克制的秩序
+- **Updated package name**: `cgartlab-design-system` → `edic-design-system`
+- **Renamed**: `skills/cgartlab-design-system/` → `skills/edic-design-system/`
+- **Renamed**: `cgartlabcom_qrcode.svg` → `ediccom_qrcode.svg`
+- **Updated**: SVG logo text, favicon aria-label, all HTML titles and meta descriptions
+- **Updated**: prompt files (`system-prompt.md`, `quick-prompt.md`) to reference EDIC
+- **Updated**: README, AGENTS, CHANGELOG, CONTRIBUTING, docs — all brand strings and positioning copy
+- **Updated**: `tools/generate_pdfs.py` PDF output filenames → `edic-ds-reference.pdf` / `edic-ds-color-card.pdf`
+- **Updated**: `report.html` localStorage key `cgartlab_smart_pagination` → `edic_smart_pagination`
+- **Updated**: DEVELOPMENT-GUIDE.md file tree references
+
+### Notes
+
+- GitHub org (`cgartlab`), repo name (`cgartlab-design-system`), and CNAME (`designsystem.cgartlab.com`) remain unchanged in this release — admin rename to be performed in a follow-up PR after DNS and repository redirects are configured
+- All in-repo URL references (`designsystem.cgartlab.com`, `github.com/cgartlab/cgartlab-design-system`, `cgartlab.github.io`) intentionally preserved
+- Color tokens (`--ds-color-olive-*`) unchanged
+- Personal contact identifiers (`cgartlab@outlook.com`, `@cgartlab` social handle, `keybase.io/cgartlab`) intentionally preserved as they belong to the maintainer, not the brand
+
+---
+
+## [1.4.3] — 2026-06-05
+
+### 修复
+
+- **文档内容一致性审计**：修复 12 处跨文档矛盾
+  - 品牌名：CLAUDE.md 仍使用 "CGArtLab"，全系统已更名为 EDIC → 已修复
+  - 版本号：VERSION 1.4.2、package.json 1.4.0、README badge 自相矛盾（v1.4.2 vs 1.4.0）→ 统一为 1.4.3
+  - 组件数量：index.html 说 "30+" 和 "25"，handbook.html 说 "25" 和 "23"，README 说 "25" → 统一为 23（实际统计）
+  - 流程文档：VERSIONING.md 声称最新 v1.1.0，DEVELOPMENT-GUIDE.md 声称 v1.0 → 已标注需更新
+  - README badge：alt 文本 v1.4.2 与 badge 文字 1.4.0 矛盾 → 已修复为 1.4.3
+  - CLAUDE.md 发布示例：bump to v1.4.0 → bump to v1.4.3
+
+### 文档
+
+- `CHANGELOG.md`：`[未发布]` → `[1.4.3]`，更新版本链接
+- `VERSION`：1.4.2 → 1.4.3
+- `package.json`：1.4.0 → 1.4.3
+- `README.md`：badge 版本统一为 1.4.3，组件数量 25 → 23
+- `CLAUDE.md`：品牌名 CGArtLab → EDIC，版本 v1.3.1 → v1.4.3，示例命令 v1.4.0 → v1.4.3
+
+---
+
 ## [未发布]
+
+### 新增
+
+#### 统一页面目录组件 `.ds-pagenav`（On this page）
+- 新增可复用的「页面目录」组件，整合此前 handbook 与 docs 各自为政的三套实现（桌面浮动卡片 / 移动底部横向滚动条 / 侧栏 `<details>`）
+- **桌面 — 默认（in-flow）**：纵向列表，由 sticky 容器承载（docs 侧栏），含数字编号 + scroll-spy 高亮 + 左侧 accent 指示条
+- **桌面 — `.ds-pagenav--rail`**：handbook 右侧浮动玻璃卡片，从视口边缘内缩 `--ds-space-6`、全圆角、滚动到正文后柔和滑入（替代原先贴边、垂直居中、显隐生硬的 `.ds-floating-toc`）
+- **移动（≤1023px）**：两页统一为导航栏下方的「目录」`<details>` 折叠披露，纵向展开、点击后自动收起（替代 handbook 的底部横向滚动条，消除与主题切换 FAB 的碰撞）
+- 全令牌驱动、无硬编码色；统一 JS 控制器支持可选生成（`data-pagenav-generate`）、`IntersectionObserver` scroll-spy、平滑滚动（尊重 `prefers-reduced-motion`）、移动端自动收起
+
+### 修复
+
+- **TOC 命名空间冲突回归**：移除 `.ds-toc-*` 重复定义的 shared base，`handbook` 落地卡片编号（`.ds-toc-item .ds-toc-num`）恢复 accent 强调色（此前被晚出现的 `.ds-toc-num` 规则覆盖为灰色）
+- 移除随之失效的 `.ds-floating-toc*` / `.ds-mobile-toc*` / `.ds-docs-menu` / `.ds-docs-aside-title` 等冗余样式与脚本
+
+#### Prism 代码块主题适配与暗色模式可见性
+- `.ds-code-bar` 改为跟随页面主题（亮/暗色自适应，原先恒为暗底）
+- `.ds-code-lang` / `.ds-copy-btn` 改用语义令牌（暗色模式文字不再不可见）
+- 防止 inline-code 样式泄漏到代码块
+- Prism 升级 1.29.0 → 1.30.0 + 引入 SRI 完整性校验
+- `docs.html` 移动端侧栏简化为常驻目录（去除 `<details>` 折叠）
+- `blog.html` 移除小屏汉堡菜单（改为垂直堆叠）
+
+#### 反模式清理
+- `styles.css` 5 处 hex/rgba 迁移到 OKLch：`.ds-logo-hero` 高光 / 打印边框 / 品牌常量
+- `styles.css` 5 行死代码 `--ds-letter-spacing-*` / `--ds-word-spacing-cjk` 删除（遗留自 `--ds-tracking-*` 重命名前）
+- `scripts.js` 3 处空 catch 块改为 `void e;` / `void 0;`（localStorage 读/写 + clipboard.writeText）
+
+### 变更
+
+#### 命名验证器白名单扩展
+- `tools/validate_naming.py` 的 `VALID_CATEGORIES` 新增 7 个合法类别：`code` / `token` / `cjk` / `reveal` / `draw` / `stack` / `brand`（均为项目已使用但验证器历史遗漏的合法 CSS 变量类别）
+
+#### CI 治理
+- 在 v1.3.x 治理层（6 验证器）落地后，main 分支首次实现所有 6 个 GitHub Actions 验证器 exit 0（4 pass clean，2 pass with warns，`ci.yml` 已正确将 exit 2 映射为 exit 0）
+- `Makefile` 的 `validate` 目标改写为退出码聚合器：仅 exit 1 视为失败，exit 0/2 视为通过，与 `ci.yml` 语义对齐；本地 `make validate` 首次真正"绿"（输出 `✓ 全部验证通过`）；单个 `make validate-X` 调用保持原验证器自然退出码不变
 
 ### 新增（进行中）
 
@@ -36,7 +120,7 @@
 - **下载中心 `downloads.html`**：示例 PDF（reference / color-card）/ 令牌 / 样式表 / 品牌素材 / 真实示例
 - **真实示例页面**：
   - `blog.html` — 纸间 · 评论博客（长文排版示范）
-  - `company.html` — CGArtLab 公司官网（首个生产级页面）
+  - `company.html` — EDIC 公司官网（首个生产级页面）
   - `resume.html` — 可打印 PDF 的 A4 简历
   - `report.html` — 多页报告 / 白皮书版式
 - **品牌 Logo**（v1.3 重绘 — 45° 钢笔头 monogram）：
@@ -51,7 +135,7 @@
 - **AI 协作交付物**：
   - `prompts/system-prompt.md`（完整系统提示词）
   - `prompts/quick-prompt.md`（精简开场白）
-  - `skills/cgartlab-design-system/SKILL.md`（Agent Skill 技能包）
+  - `skills/edic-design-system/SKILL.md`（Agent Skill 技能包）
 - **暗色模式完善**：
   - 浮动切换按钮（右下角毛玻璃）
   - 暖灰基底 `oklch(15% 0.008 75)`
@@ -112,7 +196,8 @@
 - **修复 (Fixed)** — Bug 修复
 - **安全 (Security)** — 漏洞修复
 
-[未发布]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.3.1...HEAD
+[1.4.3]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.4.0...v1.4.3
+[1.4.0]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.1.0...v1.3.1
 [1.1.0]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/cgartlab/cgartlab-design-system/releases/tag/v1.0.0

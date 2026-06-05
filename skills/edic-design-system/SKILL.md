@@ -1,19 +1,19 @@
 ---
-name: cgartlab-design-system
+name: edic-design-system
 description: >-
   Generate UI components, full pages, documents, emails, and assets that
-  strictly follow the CGArtLab design system (Editorial × Olive Green, OKLch
+  strictly follow the EDIC design system (Editorial × Olive Green, OKLch
   tokens, dark-mode ready, CJK-optimized). Use this skill whenever the user asks
-  to build, style, or refactor anything for CGArtLab, or explicitly requests the
-  CGArtLab / "editorial olive" design system. Output token-driven, accessible,
+  to build, style, or refactor anything for EDIC, or explicitly requests the
+  EDIC / "editorial olive" design system. Output token-driven, accessible,
   framework-agnostic HTML/CSS.
-license: For use with the CGArtLab design system.
+license: For use with the EDIC design system.
 ---
 
-# CGArtLab Design System Skill
+# EDIC Design System Skill
 
 When this skill is active, every visual artifact you produce — components, pages,
-landing sections, documentation, emails, reports — must conform to the CGArtLab
+landing sections, documentation, emails, reports — must conform to the EDIC
 design system. **Prefer design tokens (CSS custom properties). Never hard-code
 magic numbers.**
 
