@@ -3,13 +3,15 @@
 **生成时间:** 2026-05-14
 **Updated:** 2026-06-04
 **分层**: 基础设施 (Infrastructure) — 设计系统
-**状态:** v1.4.2 — 设计令牌 + 组件手册 + 图标库 + 暗色模式 + 展示网站 + AI 提示词/Skill + 品牌 Logo + 动效系统 + **完整工程治理层（CI/验证/流程文档）** + **品牌重塑为 EDIC（Editorial Design Interface for Content）** 已完成
+**状态:** v1.4.3 — 设计令牌 + 组件手册 + 图标库 + 暗色模式 + 展示网站 + AI 提示词/Skill + 品牌 Logo + 动效系统 + **完整工程治理层（CI/验证/流程文档）** + **品牌重塑为 EDIC（Editorial Design Interface for Content）** 已完成
 
-> **v1.4.2 新增（2026-06-04）**: **品牌重塑为 EDIC（Editorial Design Interface for Content）** — 新定位为同时面向人类和 Agent 的编辑主义设计系统，新理念是为纷繁的数字内容建立温暖而克制的秩序。包名 `cgartlab-design-system` → `edic-design-system`，目录 `skills/cgartlab-design-system/` → `skills/edic-design-system/`，二维码 `cgartlabcom_qrcode.svg` → `ediccom_qrcode.svg`。GitHub 仓库、域名与 URL 引用保持不变（管理员操作延后到后续 PR）。
+> **v1.4.3 新增（2026-06-05）**: **文档一致性审计与修复** — 修复 12 处跨文档矛盾：品牌名（CLAUDE.md 仍用 CGArtLab）、版本号（README badge 自相矛盾）、组件数量（23/25/30+ 混用）、流程文档版本（VERSIONING.md 声称 v1.1.0、DEVELOPMENT-GUIDE.md 声称 v1.0）、Stamp 同步（?v=1.4.2 → ?v=1.4.3）。
 
 > **v1.3.x 新增（2026-06-01）**: 在 v1.1 视觉层之上补齐**工程治理层**——`.editorconfig` / `.gitattributes` / `.github/` 完整模板、`CONTRIBUTING.md` / `CHANGELOG.md` / `CODE_OF_CONDUCT.md` / `SECURITY.md` / `LICENSE`、流程文档（`docs/VERSIONING.md` / `COMPONENT-DEVELOPMENT.md` / `TESTING.md` / `RELEASE-CHECKLIST.md`）、6 个 Python 验证脚本（`tools/validate_*.py`）、CI 流水线（`ci.yml` + `release.yml`）、本地开发辅助（`Makefile` + `scripts/dev.*` + `.nvmrc`）、测试夹具（`tests/fixtures/`）。保持项目**零运行时依赖**原貌，仅添加开发期工具。
 
 > **v1.1 关键特性**: 设计系统已升级为一个**多页静态展示网站**（首页 / 视觉手册 / 使用文档 / 提示词 / 下载），网站本身严格遵循设计系统规范，可经 GitHub Pages 公开访问（`designsystem.cgartlab.com`）。新增品牌 Logo、CSS/SVG 动效系统、滚动揭示、复制交互，以及可复制给任意 Agent 的系统提示词与 Skill 技能包，并生成真实示例 PDF。`company.html`（EDIC 公司官网示例）是首个采用 `--ds-*` 令牌的生产级页面。
+
+> **v1.4.0 品牌重塑**: CGArtLab Design System → **EDIC Design System**（Editorial Design Interface for Content），包名、技能目录、二维码、PDF 文件名等全部品牌字符串更新。
 
 ## OVERVIEW
 
@@ -29,7 +31,7 @@ edic-design-system/
 ├── prompts.html        # Agent 提示词与 Skill（完整/精简/Skill 三版，含各家接入位置）
 ├── downloads.html      # 下载（示例 PDF · 令牌 · 样式表 · 品牌素材 · 真实示例）
 ├── terms.html          # 使用条款（CC BY 4.0）
-├── styles.css          # 独立样式表（:root 令牌 + 暗色 + 全部组件 + v1.1 动效/站点壳）
+├── styles.css          # 独立样式表（:root 令牌 + 暗色 + 全部组件 + 动效/站点壳）
 ├── scripts.js          # 独立脚本（图标渲染 + 令牌表 + 暗色 + 滚动揭示 + 复制 + 标签页）
 ├── tokens.json         # 结构化令牌数据（颜色/字体/间距/圆角）
 ├── favicon.svg         # 站点图标（45° 钢笔头 monogram · 双封闭曲线）
@@ -70,13 +72,13 @@ edic-design-system/
 │   ├── fixtures/css/           # styles-sample
 │   └── snapshots/              # 视觉回归占位
 │
-├── docs/               # 流程文档（v1.2）
+├── docs/               # 流程文档（v1.4）
 │   ├── VERSIONING.md           # SemVer 适配设计系统的版本策略
 │   ├── COMPONENT-DEVELOPMENT.md # 组件开发完整工作流
 │   ├── TESTING.md              # 测试策略与各 validate_*.py 规范
 │   └── RELEASE-CHECKLIST.md    # 发布流程检查清单
 │
-├── .github/            # GitHub 集成（v1.2）
+├── .github/            # GitHub 集成（v1.4）
 │   ├── ISSUE_TEMPLATE/         # bug / feature / component / token / icon / docs / discussion
 │   ├── PULL_REQUEST_TEMPLATE.md
 │   ├── CODEOWNERS              # 路径 → 维护者团队映射
@@ -84,7 +86,7 @@ edic-design-system/
 │       ├── ci.yml              # 主验证流水线（PR / push 触发）
 │       └── release.yml         # Tag 触发：构建 PDF + 创建 GitHub Release
 │
-├── 治理文件（v1.2）
+├── 治理文件（v1.4）
 │   ├── CONTRIBUTING.md         # 贡献流程
 │   ├── CHANGELOG.md            # 版本历史（Keep a Changelog 格式）
 │   ├── CODE_OF_CONDUCT.md      # 行为准则（Contributor Covenant 2.1）
@@ -98,7 +100,7 @@ edic-design-system/
 └── 真实示例：blog.html · company.html · resume.html · report.html
 ```
 
-### 品牌 Logo（v1.3 重绘 — 45° 钢笔头 monogram）
+### 品牌 Logo（45° 钢笔头 monogram）
 
 - 精致钢笔头（fountain-pen nib）monogram，笔尖朝左下 45°，呼应 EDIC「编辑、秩序、克制」的理念。整个图形**仅由两根封闭曲线绘制**——笔尖轮廓（笔缝为尖端处的开放凹口）+ 透气孔圆。
 - 实现为单一复合路径（轮廓 + 透气孔，`evenodd`），`transform="rotate(45 16 16)"` 旋转到 45°；笔缝由轮廓在笔尖处的凹口表达，透气孔与笔缝相连成「钥匙孔」，均为负空间。
@@ -107,7 +109,7 @@ edic-design-system/
 - `logo.svg`（浅底锁版）/ `logo-on-dark.svg`（深底，笔头提亮）/ `favicon.svg`（透明底）为完整彩色版：橄榄渐变笔头。
 - 站点内导航/页脚 `.ds-logo-mark` 仍以橄榄渐变瓷砖（olive-300→accent→olive-600）作 CSS 容器承载白色笔头图形（笔缝/透气孔为负空间透出渐变）；Hero `.ds-logo-hero` 为三段渐变 + `::before` 柔光泽面，笔头先描边绘制再淡入填充。
 
-### 动效系统（v1.1）
+### 动效系统
 
 - 关键帧：`ds-fade-up/in/down`、`ds-zoom-in`、`ds-float`、`ds-spin-slow`、`ds-pulse-*`、`ds-gradient-pan`、`ds-draw`（SVG 描边）。
 - 滚动揭示：`.ds-reveal`(+`--left/--right/--scale`，错峰用内联 `--d`)，IntersectionObserver 驱动。
@@ -178,7 +180,7 @@ edic-design-system/
 | 文件 | 说明 |
 |------|------|
 | `index.html` | 网站首页，仅 HTML 结构，引用外部 `styles.css?v=*` / `scripts.js?v=*` |
-| `styles.css` | `:root` 令牌 + 暗色模式 + 全部组件 + v1.1 站点壳/动效/导航 |
+| `styles.css` | `:root` 令牌 + 暗色模式 + 全部组件 + 动效/站点壳/导航 |
 | `scripts.js` | 100 图标渲染 + 令牌表 + 暗色切换 + 滚动揭示 + 复制 + 移动端导航 |
 
 > 资源通过 `?v=x.y.z` 查询串做缓存刷新（纯静态、无构建）。**改动 `styles.css`/`scripts.js` 后，务必在所有 HTML 中同步 bump 该版本号**，否则浏览器/CDN 会继续命中旧缓存。
@@ -296,7 +298,7 @@ xs → 2xl 共 6 级，暗色模式 opacity 提高以保持层次。
 > 详细见 `docs/VERSIONING.md` 中"资源版本号同步"一节。
 
 - 这是有意为之的设计取舍——保持框架无关、零运行时依赖。请勿引入打包/转译步骤。
-- **v1.2 新增**：引入轻量**开发期**工具链（Python 验证脚本 + Makefile + Node 包装器），不影响运行时。
+- **v1.4**：引入轻量**开发期**工具链（Python 验证脚本 + Makefile + Node 包装器），不影响运行时。
 - 唯一运行时脚本 `tools/generate_pdfs.py` 为手动运行的示例 PDF 生成器，不在任何自动链路中（但 `release.yml` 会在 tag 触发时跑）。
 - 缓存刷新：见上文「文件大小」备注（手动 bump `?v=`，由 `validate_versions.py` 自动校验）。
 - **CI**：[`.github/workflows/ci.yml`](./.github/workflows/ci.yml) 在 PR / push / 每周一自动跑全部 6 个验证脚本。
@@ -333,7 +335,7 @@ xs → 2xl 共 6 级，暗色模式 opacity 提高以保持层次。
 - 强调色 Olive Green 可无障碍替换（改 `--ds-color-olive-*` 和 `--ds-accent` 系）
 - 参考优秀设计系统：Monocle（排版克制）、Stripe（温暖 utility）、Mercury（精致沉稳）
 
-## 工程治理（v1.2 新增）
+## 工程治理
 
 ### 本地开发快速开始
 

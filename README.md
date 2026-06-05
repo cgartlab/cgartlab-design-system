@@ -10,7 +10,7 @@
 [![暗色模式](https://img.shields.io/badge/dark%20mode-ready-7d7a42)](https://designsystem.cgartlab.com/docs.html#dark)
 [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-7d7a42)](./.github/workflows/ci.yml)
 [![CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-7d7a42)](https://creativecommons.org/licenses/by/4.0/)
-[![v1.4.2](https://img.shields.io/badge/version-1.4.0-7d7a42)](./CHANGELOG.md)
+[![v1.4.3](https://img.shields.io/badge/version-1.4.3-7d7a42)](./CHANGELOG.md)
 
 ---
 
@@ -20,7 +20,7 @@
 - **200+ 设计令牌** — 色彩 / 字体 / 间距 / 圆角 / 阴影 / 动效 / 层级，改一个变量全局更新。
 - **编辑主义排版** — 衬线 Display + 无衬线 Body，针对中英混排优化字距与行高。
 - **三种主题模式** — 支持跟随系统 / 手动浅色 / 手动暗色，导航栏按钮一键切换，移动端浮动按钮。
-- **25 核心组件 · 100 图标** — 语义化 `ds-*` class，1.5 px 线性 SVG 图标。
+- **23 核心组件 · 100 图标** — 语义化 `ds-*` class，1.5 px 线性 SVG 图标。
 - **动效系统** — 统一时长 / 缓动令牌、滚动揭示、SVG 描边，尊重 `prefers-reduced-motion`。
 - **框架无关** — 没有构建工具、没有运行时依赖，可用于原生 HTML、React、Vue、Svelte、邮件与打印。
 - **AI 就绪** — 一份提示词 / Skill，让任意 Agent 立刻按规范产出。
