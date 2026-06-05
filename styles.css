@@ -1194,7 +1194,10 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-prose figure{margin:0 0 var(--ds-space-6)}
 
 /* ===== Download cards ===== */
-.ds-dl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:var(--ds-space-6)}
+.ds-dl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--ds-space-6)}
+.ds-dl-grid--two-rows{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){.ds-dl-grid--two-rows{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.ds-dl-grid--two-rows{grid-template-columns:1fr}}
 .ds-dl-card{display:flex;flex-direction:column;gap:var(--ds-space-4);background:var(--ds-color-surface-raised);border:1px solid var(--ds-color-border);border-radius:var(--ds-radius-2xl);padding:var(--ds-space-7);transition:transform var(--ds-duration-300) var(--ds-ease-out),box-shadow var(--ds-duration-300)}
 .ds-dl-card:hover{transform:translateY(-3px);box-shadow:var(--ds-shadow-md)}
 .ds-dl-top{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--ds-space-3)}
@@ -1241,7 +1244,11 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 /* ===== Responsive (extended) ===== */
 @media(max-width:1023px){
   .ds-docs{grid-template-columns:1fr;gap:var(--ds-space-8)}
-  .ds-docs-aside{position:static;top:auto}
+  .ds-docs-aside{position:static;top:auto;border:1px solid var(--ds-color-border-subtle);border-radius:var(--ds-radius-xl);padding:0;background:var(--ds-color-surface)}
+  .ds-docs-aside-details summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;padding:var(--ds-space-3) var(--ds-space-4);min-height:44px;user-select:none}
+  .ds-docs-aside-details summary::-webkit-details-marker{display:none}
+  .ds-docs-aside-details[open] .ds-docs-aside-chevron{transform:rotate(180deg)}
+  .ds-docs-aside-details .ds-docs-menu{padding:0 var(--ds-space-4) var(--ds-space-3)}
   .ds-footer-cols{grid-template-columns:1fr 1fr}
   .ds-footer-brand{grid-column:1 / -1}
   .ds-hero-section{padding:var(--ds-space-24) 0 var(--ds-space-20)}

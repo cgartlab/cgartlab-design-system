@@ -125,17 +125,17 @@
 
 <!-- Navigation -->
 <nav class="blog-nav blog-wrapper">
-<a href="#" class="blog-nav-brand" data-section="home">纸间</a>
-<button class="blog-nav-toggle" id="blog-nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="blog-nav-links">
-  <span class="blog-nav-toggle-bar"></span>
-  <span class="blog-nav-toggle-bar"></span>
-  <span class="blog-nav-toggle-bar"></span>
-</button>
-<div class="blog-nav-links" id="blog-nav-links">
-<a href="#" class="active" data-section="home">文章</a>
-<a href="#" data-section="archive">归档</a>
-<a href="#" data-section="about">关于</a>
-</div>
+  <a href="javascript:void(0)" class="blog-nav-brand" onclick="showSection('home')">纸间</a>
+  <button class="blog-nav-toggle" id="blog-nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="blog-nav-links">
+    <span class="blog-nav-toggle-bar"></span>
+    <span class="blog-nav-toggle-bar"></span>
+    <span class="blog-nav-toggle-bar"></span>
+  </button>
+  <div class="blog-nav-links" id="blog-nav-links">
+    <a href="javascript:void(0)" class="active" onclick="showSection('home')" data-section="home">文章</a>
+    <a href="javascript:void(0)" onclick="showSection('archive')" data-section="archive">归档</a>
+    <a href="javascript:void(0)" onclick="showSection('about')" data-section="about">关于</a>
+  </div>
 </nav>
 
 <!-- ===== HOME ===== -->
@@ -322,7 +322,8 @@ document.addEventListener('click', function(e) {
   document.querySelectorAll('[data-section]').forEach(l => l.classList.remove('active'));
   const section = document.getElementById('section-' + id);
   if (section) section.classList.add('active');
-  link.classList.add('active');
+  const link = document.querySelector('[data-section="' + id + '"]');
+  if (link) link.classList.add('active');
   // Close mobile nav on section select
   const toggle = document.getElementById('blog-nav-toggle');
   const links = document.getElementById('blog-nav-links');
