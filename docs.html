@@ -59,29 +59,28 @@
   <div class="ds-wrapper">
     <div class="ds-docs">
       <!-- Sidebar -->
-      <aside class="ds-docs-aside" aria-label="文档目录">
-        <details class="ds-docs-aside-details">
-          <summary class="ds-docs-aside-title">
-            目录
-            <svg class="ds-docs-aside-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
-          </summary>
-          <ul class="ds-docs-menu">
-            <li><a href="#intro">简介与哲学</a></li>
-            <li><a href="#install">安装与引入</a></li>
-            <li><a href="#tokens">使用设计令牌</a></li>
-            <li><a href="#color">色彩与语义</a></li>
-            <li><a href="#dark">暗色模式</a></li>
-            <li><a href="#typography">排版规范</a></li>
-            <li><a href="#spacing">间距与布局</a></li>
-            <li><a href="#components">组件用法</a></li>
-            <li><a href="#motion">动效与揭示</a></li>
-            <li><a href="#code-style">代码样式</a></li>
-            <li><a href="#icons">图标用法</a></li>
-            <li><a href="#accessibility">可访问性</a></li>
-            <li><a href="#customize">定制与扩展</a></li>
-            <li><a href="#faq">常见问题</a></li>
-          </ul>
-        </details>
+      <aside class="ds-docs-aside">
+        <nav class="ds-pagenav" aria-label="文档目录">
+          <details class="ds-pagenav-disclosure" open>
+            <summary class="ds-pagenav-summary"><span>目录</span><svg class="ds-pagenav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg></summary>
+            <ol class="ds-pagenav-list">
+              <li><a class="ds-pagenav-link" href="#intro"><span class="ds-pagenav-num">01</span><span class="ds-pagenav-text">简介与哲学</span></a></li>
+              <li><a class="ds-pagenav-link" href="#install"><span class="ds-pagenav-num">02</span><span class="ds-pagenav-text">安装与引入</span></a></li>
+              <li><a class="ds-pagenav-link" href="#tokens"><span class="ds-pagenav-num">03</span><span class="ds-pagenav-text">使用设计令牌</span></a></li>
+              <li><a class="ds-pagenav-link" href="#color"><span class="ds-pagenav-num">04</span><span class="ds-pagenav-text">色彩与语义</span></a></li>
+              <li><a class="ds-pagenav-link" href="#dark"><span class="ds-pagenav-num">05</span><span class="ds-pagenav-text">暗色模式</span></a></li>
+              <li><a class="ds-pagenav-link" href="#typography"><span class="ds-pagenav-num">06</span><span class="ds-pagenav-text">排版规范</span></a></li>
+              <li><a class="ds-pagenav-link" href="#spacing"><span class="ds-pagenav-num">07</span><span class="ds-pagenav-text">间距与布局</span></a></li>
+              <li><a class="ds-pagenav-link" href="#components"><span class="ds-pagenav-num">08</span><span class="ds-pagenav-text">组件用法</span></a></li>
+              <li><a class="ds-pagenav-link" href="#motion"><span class="ds-pagenav-num">09</span><span class="ds-pagenav-text">动效与揭示</span></a></li>
+              <li><a class="ds-pagenav-link" href="#code-style"><span class="ds-pagenav-num">10</span><span class="ds-pagenav-text">代码样式</span></a></li>
+              <li><a class="ds-pagenav-link" href="#icons"><span class="ds-pagenav-num">11</span><span class="ds-pagenav-text">图标用法</span></a></li>
+              <li><a class="ds-pagenav-link" href="#accessibility"><span class="ds-pagenav-num">12</span><span class="ds-pagenav-text">可访问性</span></a></li>
+              <li><a class="ds-pagenav-link" href="#customize"><span class="ds-pagenav-num">13</span><span class="ds-pagenav-text">定制与扩展</span></a></li>
+              <li><a class="ds-pagenav-link" href="#faq"><span class="ds-pagenav-num">14</span><span class="ds-pagenav-text">常见问题</span></a></li>
+            </ol>
+          </details>
+        </nav>
       </aside>
 
       <!-- Content -->
@@ -471,7 +470,7 @@
     <div class="ds-footer-bottom">
       <span>© <span class="ds-year">2026</span> EDIC · 探索数字艺术的边界</span>
       <div class="ds-cluster">
-        <span class="ds-mono" data-ds-version>v1.4.3</span>
+        <span class="ds-mono" data-ds-version>v1.5.0</span>
         <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--ds-accent);text-decoration:none" title="本设计系统采用 CC BY 4.0 许可证">CC BY 4.0</a>
       </div>
     </div>
