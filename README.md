@@ -10,7 +10,7 @@
 [![暗色模式](https://img.shields.io/badge/dark%20mode-ready-7d7a42)](https://designsystem.cgartlab.com/docs.html#dark)
 [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-7d7a42)](./.github/workflows/ci.yml)
 [![CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-7d7a42)](https://creativecommons.org/licenses/by/4.0/)
-[![v1.4.2](https://img.shields.io/badge/version-1.4.0-7d7a42)](./CHANGELOG.md)
+[![v1.5.0](https://img.shields.io/badge/version-1.4.0-7d7a42)](./CHANGELOG.md)
 
 ---
 

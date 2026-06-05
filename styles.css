@@ -140,6 +140,19 @@
   --ds-blur-md: 12px;
   --ds-blur-lg: 24px;
   --ds-blur-xl: 48px;
+  /* ===== Gravitas & Glow (editorial dark-mode presence) =====
+     Light mode defaults are 0% opacity — the tokens are defined for
+     uniform utility class references, but visually inert. Dark mode
+     overrides (below) raise the opacity to give dark surfaces a
+     warm, luminous undertone without flashiness. */
+  --ds-glow-xs: 0 0 12px oklch(52% 0.08 115 / 0%);
+  --ds-glow-sm: 0 0 16px oklch(52% 0.08 115 / 0%);
+  --ds-glow-md: 0 0 24px oklch(52% 0.08 115 / 0%);
+  --ds-glow-lg: 0 0 48px oklch(52% 0.08 115 / 0%);
+  --ds-glow-border: oklch(52% 0.08 115 / 0%);
+  --ds-glow-text: 0 0 24px oklch(52% 0.08 115 / 0%);
+  --ds-glow-surface: inset 0 1px 0 oklch(52% 0.08 115 / 0%);
+  --ds-glow-aura: radial-gradient(ellipse at center,oklch(57% 0.065 115 / 0%) 0%,transparent 70%);
   /* ===== Code block tokens (always dark bg) ===== */
   --ds-code-bg: oklch(14% 0.025 60);
   --ds-code-bg-bar: oklch(16% 0.022 62);
@@ -206,10 +219,10 @@
     --ds-color-info-bg: oklch(22% 0.025 240);
     --ds-shadow-xs: 0 1px 2px oklch(0% 0 0 / 30%);
     --ds-shadow-sm: 0 1px 3px oklch(0% 0 0 / 35%), 0 1px 2px oklch(0% 0 0 / 25%);
-    --ds-shadow-md: 0 4px 6px oklch(0% 0 0 / 35%), 0 2px 4px oklch(0% 0 0 / 25%);
-    --ds-shadow-lg: 0 10px 15px oklch(0% 0 0 / 40%), 0 4px 6px oklch(0% 0 0 / 25%);
-    --ds-shadow-xl: 0 20px 25px oklch(0% 0 0 / 40%), 0 8px 10px oklch(0% 0 0 / 25%);
-    --ds-shadow-2xl: 0 25px 50px oklch(0% 0 0 / 50%);
+    --ds-shadow-md: 0 4px 6px oklch(0% 0 0 / 35%), 0 2px 4px oklch(0% 0 0 / 25%), 0 0 16px oklch(57% 0.065 115 / 4%);
+    --ds-shadow-lg: 0 10px 15px oklch(0% 0 0 / 40%), 0 4px 6px oklch(0% 0 0 / 25%), 0 0 24px oklch(57% 0.065 115 / 8%);
+    --ds-shadow-xl: 0 20px 25px oklch(0% 0 0 / 40%), 0 8px 10px oklch(0% 0 0 / 25%), 0 0 32px oklch(57% 0.065 115 / 12%);
+    --ds-shadow-2xl: 0 25px 50px oklch(0% 0 0 / 50%), 0 0 48px oklch(57% 0.065 115 / 14%);
     --ds-shadow-inner: inset 0 2px 4px oklch(0% 0 0 / 25%);
     --ds-glass-bg: oklch(15% 0.008 75 / 0.55);
     --ds-glass-border: oklch(89% 0.012 80 / 0.08);
@@ -217,6 +230,16 @@
     --ds-code-bg: oklch(18% 0.01 75);
     --ds-code-bg-bar: oklch(20% 0.012 75);
     --ds-code-text: oklch(88% 0.01 85);
+    /* Dark-mode gravitas & glow: warm olive undertone on shadow
+       depths and a subtle luminous edge. Stays a whisper, never neon. */
+    --ds-glow-xs: 0 0 12px oklch(57% 0.065 115 / 4%);
+    --ds-glow-sm: 0 0 16px oklch(57% 0.065 115 / 8%);
+    --ds-glow-md: 0 0 24px oklch(57% 0.065 115 / 12%);
+    --ds-glow-lg: 0 0 48px oklch(57% 0.065 115 / 18%);
+    --ds-glow-border: oklch(57% 0.065 115 / 22%);
+    --ds-glow-text: 0 0 24px oklch(57% 0.065 115 / 10%);
+    --ds-glow-surface: inset 0 1px 0 oklch(57% 0.065 115 / 8%);
+    --ds-glow-aura: radial-gradient(ellipse at center,oklch(57% 0.065 115 / 10%) 0%,transparent 70%);
   }
 }
 [data-theme="dark"] {
@@ -258,10 +281,10 @@
   --ds-color-info-bg: oklch(22% 0.025 240);
   --ds-shadow-xs: 0 1px 2px oklch(0% 0 0 / 30%);
   --ds-shadow-sm: 0 1px 3px oklch(0% 0 0 / 35%), 0 1px 2px oklch(0% 0 0 / 25%);
-  --ds-shadow-md: 0 4px 6px oklch(0% 0 0 / 35%), 0 2px 4px oklch(0% 0 0 / 25%);
-  --ds-shadow-lg: 0 10px 15px oklch(0% 0 0 / 40%), 0 4px 6px oklch(0% 0 0 / 25%);
-  --ds-shadow-xl: 0 20px 25px oklch(0% 0 0 / 40%), 0 8px 10px oklch(0% 0 0 / 25%);
-  --ds-shadow-2xl: 0 25px 50px oklch(0% 0 0 / 50%);
+  --ds-shadow-md: 0 4px 6px oklch(0% 0 0 / 35%), 0 2px 4px oklch(0% 0 0 / 25%), 0 0 16px oklch(57% 0.065 115 / 4%);
+  --ds-shadow-lg: 0 10px 15px oklch(0% 0 0 / 40%), 0 4px 6px oklch(0% 0 0 / 25%), 0 0 24px oklch(57% 0.065 115 / 8%);
+  --ds-shadow-xl: 0 20px 25px oklch(0% 0 0 / 40%), 0 8px 10px oklch(0% 0 0 / 25%), 0 0 32px oklch(57% 0.065 115 / 12%);
+  --ds-shadow-2xl: 0 25px 50px oklch(0% 0 0 / 50%), 0 0 48px oklch(57% 0.065 115 / 14%);
   --ds-shadow-inner: inset 0 2px 4px oklch(0% 0 0 / 25%);
   --ds-glass-bg: oklch(15% 0.008 75 / 0.55);
   --ds-glass-border: oklch(89% 0.012 80 / 0.08);
@@ -269,6 +292,17 @@
   --ds-code-bg: oklch(18% 0.01 75);
   --ds-code-bg-bar: oklch(20% 0.012 75);
   --ds-code-text: oklch(88% 0.01 85);
+  /* Dark-mode gravitas & glow (manual [data-theme="dark"]): mirror
+     the @media values so token resolution is identical regardless
+     of which selector triggered dark mode. */
+  --ds-glow-xs: 0 0 12px oklch(57% 0.065 115 / 4%);
+  --ds-glow-sm: 0 0 16px oklch(57% 0.065 115 / 8%);
+  --ds-glow-md: 0 0 24px oklch(57% 0.065 115 / 12%);
+  --ds-glow-lg: 0 0 48px oklch(57% 0.065 115 / 18%);
+  --ds-glow-border: oklch(57% 0.065 115 / 22%);
+  --ds-glow-text: 0 0 24px oklch(57% 0.065 115 / 10%);
+  --ds-glow-surface: inset 0 1px 0 oklch(57% 0.065 115 / 8%);
+  --ds-glow-aura: radial-gradient(ellipse at center,oklch(57% 0.065 115 / 10%) 0%,transparent 70%);
 }
 
 /* ===== Reset & Base ===== */
@@ -951,6 +985,9 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 @keyframes ds-gradient-pan{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 @keyframes ds-draw{from{stroke-dashoffset:var(--ds-draw-len,240)}to{stroke-dashoffset:0}}
 @keyframes ds-blink{0%,100%{opacity:1}50%{opacity:0}}
+/* Editorial gravitas: slow, soft glow pulse that draws the eye without
+   the "neon sign" feel. Light-mode opacity is 0% so this is dark-mode-only. */
+@keyframes ds-glow-breathe{0%,100%{box-shadow:var(--ds-glow-xs)}50%{box-shadow:var(--ds-glow-md)}}
 
 /* ===== Scroll reveal ===== */
 .ds-reveal{opacity:0;transform:translateY(var(--ds-reveal-distance));transition:opacity var(--ds-reveal-duration) var(--ds-reveal-ease),transform var(--ds-reveal-duration) var(--ds-reveal-ease);transition-delay:var(--d,0ms);will-change:opacity,transform}
@@ -1238,6 +1275,10 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
   .ds-reveal{opacity:1!important;transform:none!important}
   .ds-gradient-text{animation:none}
+  /* Gravitas & Glow: kill the breathe keyframes explicitly so the
+     shadow doesn't flicker between xs/md keyframe states at 0.001ms.
+     Static glows (border, aura, surface) are fine — they're not animated. */
+  .ds-anim-glow-breathe{animation:none!important}
 }
 
 /* ===== Forced colors (Windows High Contrast Mode) ===== */
@@ -1263,6 +1304,49 @@ a.ds-feature-card:focus-visible{outline:2px solid var(--ds-accent);outline-offse
 .ds-cta-h2{font-family:var(--ds-font-display);font-size:var(--ds-text-h2);font-weight:var(--ds-weight-bold);color:var(--ds-color-fg-strong);letter-spacing:var(--ds-tracking-tight);line-height:var(--ds-leading-snug)}
 
 .ds-pt-0{padding-top:0}
+
+
+/* =========================================================================
+   CGArtLab Design System v1.5.0 — Gravitas & Glow
+   Dark-mode editorial presence: warm olive undertone on shadow depths,
+   luminous borders, soft auras, and inner-surface glow. Light mode
+   stays restrained (0% opacity tokens, classes visually inert).
+   All rules are scoped to a single purpose: subtle gravitas, never neon.
+   ========================================================================= */
+
+/* --- ds-glow-border: subtle luminous accent edge (dark-mode-only) --- */
+.ds-glow-border{position:relative;border-color:var(--ds-color-border);transition:border-color var(--ds-duration-300) var(--ds-ease-out),box-shadow var(--ds-duration-300) var(--ds-ease-out)}
+[data-theme="dark"] .ds-glow-border{border-color:var(--ds-glow-border);box-shadow:0 0 0 1px var(--ds-glow-border),var(--ds-glow-xs)}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme]) .ds-glow-border{border-color:var(--ds-glow-border);box-shadow:0 0 0 1px var(--ds-glow-border),var(--ds-glow-xs)}
+}
+
+/* --- ds-aura: soft radial light behind element (dark-mode-only) ---
+   Best on hero cards, spotlighted metrics, "you are here" callouts.
+   The consumer doesn't need to set position:relative — the class does. */
+.ds-aura{position:relative;isolation:isolate}
+.ds-aura::before{content:"";position:absolute;inset:-20%;background:var(--ds-glow-aura);filter:blur(40px);z-index:-1;pointer-events:none;opacity:0;transition:opacity var(--ds-duration-500) var(--ds-ease-out)}
+[data-theme="dark"] .ds-aura::before{opacity:1}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme]) .ds-aura::before{opacity:1}
+}
+
+/* --- ds-surface-glow: dark-mode surface with inner luminous treatment --- */
+.ds-surface-glow{background:linear-gradient(180deg,var(--ds-color-surface-raised),var(--ds-color-surface-overlay));box-shadow:var(--ds-shadow-sm),var(--ds-glow-surface);transition:box-shadow var(--ds-duration-300) var(--ds-ease-out)}
+.ds-surface-glow:hover{box-shadow:var(--ds-shadow-md),var(--ds-glow-surface)}
+
+/* --- ds-heading-glow: editorial gravitas for primary headings (dark-only) --- */
+.ds-heading-glow{text-shadow:var(--ds-glow-text);transition:text-shadow var(--ds-duration-300) var(--ds-ease-out)}
+.ds-heading-glow:hover{text-shadow:0 0 32px oklch(57% 0.065 115 / 16%)}
+
+/* --- Dark-mode glass enhancement: warm undertone on frosted surfaces --- */
+[data-theme="dark"] .ds-glass-card,[data-theme="dark"] .ds-frosted-nav,[data-theme="dark"] .ds-toast{box-shadow:var(--ds-glass-shadow),var(--ds-shadow-md),0 0 32px oklch(57% 0.065 115 / 8%);border-color:color-mix(in oklch,var(--ds-glow-border) 50%,transparent)}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme]) .ds-glass-card,:root:not([data-theme]) .ds-frosted-nav,:root:not([data-theme]) .ds-toast{box-shadow:var(--ds-glass-shadow),var(--ds-shadow-md),0 0 32px oklch(57% 0.065 115 / 8%);border-color:color-mix(in oklch,var(--ds-glow-border) 50%,transparent)}
+}
+
+/* --- ds-anim-glow-breathe: continuous motion utility (paired w/ reduced-motion kill) --- */
+.ds-anim-glow-breathe{animation:ds-glow-breathe 4s var(--ds-ease-in-out) infinite}
 
 
 /* ===== Brand constants (theme-independent) ===== */
