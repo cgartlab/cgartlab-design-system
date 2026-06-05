@@ -51,6 +51,42 @@
 
 ---
 
+## [1.5.0] — 2026-06-05
+
+### 新增
+
+#### 统一页面目录组件 `.ds-pagenav`（On this page）
+- 新增可复用的「页面目录」组件，整合此前 handbook 与 docs 各自为政的三套实现（桌面浮动卡片 / 移动底部横向滚动条 / 侧栏 `<details>`）
+- **桌面 — 默认（in-flow）**：纵向列表，由 sticky 容器承载（docs 侧栏），含数字编号 + scroll-spy 高亮 + 左侧 accent 指示条
+- **桌面 — `.ds-pagenav--rail`**：handbook 右侧浮动玻璃卡片，从视口边缘内缩 `--ds-space-6`、全圆角、滚动到正文后柔和滑入（替代原先贴边、垂直居中、显隐生硬的 `.ds-floating-toc`）
+- **移动（≤1023px）**：两页统一为导航栏下方的「目录」`<details>` 折叠披露，纵向展开、点击后自动收起（替代 handbook 的底部横向滚动条，消除与主题切换 FAB 的碰撞）
+- 全令牌驱动、无硬编码色；统一 JS 控制器支持可选生成（`data-pagenav-generate`）、`IntersectionObserver` scroll-spy、平滑滚动（尊重 `prefers-reduced-motion`）、移动端自动收起
+
+### 修复
+
+- **TOC 命名空间冲突回归**：移除 `.ds-toc-*` 重复定义的 shared base，`handbook` 落地卡片编号（`.ds-toc-item .ds-toc-num`）恢复 accent 强调色（此前被晚出现的 `.ds-toc-num` 规则覆盖为灰色）
+- 移除随之失效的 `.ds-floating-toc*` / `.ds-mobile-toc*` / `.ds-docs-menu` / `.ds-docs-aside-title` 等冗余样式与脚本
+
+#### Prism 代码块主题适配与暗色模式可见性
+- `.ds-code-bar` 改为跟随页面主题（亮/暗色自适应，原先恒为暗底）
+- `.ds-code-lang` / `.ds-copy-btn` 改用语义令牌（暗色模式文字不再不可见）
+- 防止 inline-code 样式泄漏到代码块
+- Prism 升级 1.29.0 → 1.30.0 + 引入 SRI 完整性校验
+- `docs.html` 移动端侧栏简化为常驻目录（去除 `<details>` 折叠）
+- `blog.html` 移除小屏汉堡菜单（改为垂直堆叠）
+
+#### 反模式清理
+- `styles.css` 5 处 hex/rgba 迁移到 OKLch：`.ds-logo-hero` 高光 / 打印边框 / 品牌常量
+- `styles.css` 5 行死代码 `--ds-letter-spacing-*` / `--ds-word-spacing-cjk` 删除（遗留自 `--ds-tracking-*` 重命名前）
+- `scripts.js` 3 处空 catch 块改为 `void e;` / `void 0;`（localStorage 读/写 + clipboard.writeText）
+
+### 变更
+
+#### 命名验证器白名单扩展
+- `tools/validate_naming.py` 的 `VALID_CATEGORIES` 新增 7 个合法类别：`code` / `token` / `cjk` / `reveal` / `draw` / `stack` / `brand`（均为项目已使用但验证器历史遗漏的合法 CSS 变量类别）
+
+---
+
 ## [未发布]
 
 ### 新增
@@ -205,6 +241,7 @@
 - **修复 (Fixed)** — Bug 修复
 - **安全 (Security)** — 漏洞修复
 
+[1.5.0]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.4.3...v1.5.0
 [1.4.3]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.4.0...v1.4.3
 [1.4.0]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/cgartlab/cgartlab-design-system/compare/v1.1.0...v1.3.1
