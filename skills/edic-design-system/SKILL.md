@@ -75,16 +75,73 @@ h4 1.5 · h3 1.875 · h2 2.25 · h1 3 · display 3.75 · hero 4.5.
   `--ds-ease-spring`. Always honor `prefers-reduced-motion: reduce`.
 
 ## Component class catalog
-- Layout: `ds-wrapper` `ds-section` `ds-stack` `ds-cluster` `ds-grid-2/3` `ds-feature-grid`
-- Buttons: `ds-btn` + `--primary/--secondary/--ghost` + `--sm/--lg`
-- Cards: `ds-card` + `--hoverable/--flat`; glass `ds-glass-card`
-- Forms: `ds-input` `ds-label` `ds-select` `ds-checkbox` `ds-radio` `ds-toggle` `ds-form-*`
-- Feedback: `ds-badge--{accent|success|warning|error}`, `ds-alert--{info|success|warning|error}`, `ds-toast`
-- Navigation: `ds-navbar` `ds-tabs/ds-tab` `ds-breadcrumb` `ds-pagination` `ds-nav-item`
-- Data: `ds-table` `ds-progress` `ds-avatar` `ds-chip`
-- Overlay: `ds-modal` `ds-tooltip` `ds-dropdown`
-- Type: `ds-display` `ds-h1..h4` `ds-caption` `ds-eyebrow` `ds-lead` `ds-serif` `ds-mono`
-- Motion: `ds-reveal` (+`--left/--right/--scale`, stagger via inline `--d`), `ds-anim-float/spin-slow/pulse`
+- **Layout**: `ds-wrapper` `ds-section` `ds-stack` (+ `--sm/--lg`) `ds-cluster` `ds-grid-2/3` `ds-feature-grid` `ds-prose`
+- **Buttons**: `ds-btn` + `--primary/--secondary/--ghost` + `--sm/--lg`
+- **Cards**: `ds-card` + `--hoverable/--flat`; glass `ds-glass-card`
+- **Forms**: `ds-input` (`--error`) `ds-label` `ds-select` `ds-checkbox` `ds-radio` `ds-toggle` `ds-form-*`
+- **Feedback**: `ds-badge` (`--accent/--success/--warning/--error`) `ds-alert` (`--info/--success/--warning/--error`) `ds-toast`
+- **Navigation**: `ds-navbar` `ds-tabs/ds-tab` `ds-breadcrumb` `ds-pagination` `ds-nav-item`
+- **Data**: `ds-table` `ds-progress` `ds-avatar` `ds-chip`
+- **Overlay**: `ds-modal` `ds-tooltip` `ds-dropdown`
+- **Type**: `ds-display` `ds-h1..h4` `ds-caption` `ds-eyebrow` `ds-lead` `ds-serif` `ds-mono`
+- **Motion**: `ds-reveal` (+ `--left/--right/--scale`, stagger via inline `--d`), `ds-anim-float/spin-slow/pulse/fade-in/rise/glow-breathe`
+
+### Extended Navigation
+- `ds-pagenav` (`--rail`, `--hidden`), `ds-pagenav-disclosure`, `ds-pagenav-summary`, `ds-pagenav-chevron`, `ds-pagenav-list`, `ds-pagenav-link` (`--active`), `ds-pagenav-num`, `ds-pagenav-text`
+- `ds-mnav-trigger` (+ `ds-mnav-trigger-bar` `ds-mnav-backdrop`)
+- `ds-theme-toggle-btn` (`--fixed`)
+
+### Accordion
+- `ds-accordion`, `ds-accordion-item`, `ds-accordion-header`, `ds-accordion-arrow`, `ds-accordion-content`
+
+### Date / Calendar
+- `ds-date-group`, `ds-date-wrap`, `ds-date-input`, `ds-date-icon`, `ds-date-calendar`
+- `ds-cal-header`, `ds-cal-nav`, `ds-cal-month-year`, `ds-cal-month`, `ds-cal-year`
+- `ds-cal-weekdays`, `ds-cal-grid-new`, `ds-cal-day`, `ds-cal-today`, `ds-cal-selected`, `ds-cal-muted`
+- `ds-cal-footer`, `ds-cal-btn` (`--primary`)
+
+### Slider
+- `ds-slider-group`, `ds-slider-label-row`, `ds-slider-value`, `ds-slider-track-wrap`, `ds-slider-track`, `ds-slider-fill`, `ds-slider`, `ds-slider-labels`
+
+### Glass & Overlay
+- `ds-overlay-sample`, `ds-overlay-bg`, `ds-overlay-layer`, `ds-overlay-strong`, `ds-overlay-light`, `ds-overlay-label`
+- `ds-glass-card` (`--sm`, `--lg`), `ds-glass-meta`, `ds-glass-btn` (+ `ds-glass-btn-row`)
+- `ds-frosted-nav`
+- `ds-toast-group`, `ds-toast-icon`, `ds-toast-text`, `ds-toast-close`
+
+### Gravitas & Glow (dark-mode accent, 0% opacity in light)
+- `ds-glow-border`, `ds-aura`, `ds-surface-glow`, `ds-heading-glow`
+- `ds-anim-glow-breathe` (4s keyframe)
+
+### CJK Typography
+- `ds-text-cjk`, `ds-text-cjk-heading`, `ds-text-mixed`
+- `ds-text-indent`, `ds-hanging-punctuation`, `ds-text-emphasis`, `ds-text-highlight`
+- `ds-quote-cjk`, `ds-no-orphan`, `ds-num-unit`
+
+### Article TOC
+- `ds-toc-article`, `ds-toc-article-title`, `ds-toc-list`
+- `ds-toc-link` (`--active`, `--h3`), `ds-toc-indicator`, `ds-toc-badge`
+
+### Timeline
+- `ds-timeline`, `ds-timeline-item`, `ds-timeline-dot`, `ds-timeline-content`
+- `ds-timeline-date`, `ds-timeline-title`, `ds-timeline-tag`
+
+### Code Block (Prism)
+- `ds-code`, `ds-code-bar`, `ds-code-lang`, `ds-copy-btn` (`--light`)
+
+### Brand / Logo
+- `ds-logo`, `ds-logo-mark`, `ds-logo-text`, `ds-logo-word`, `ds-logo-sub`, `ds-logo-hero`
+
+### Site Shell
+- `ds-hero-section`, `ds-hero-inner`, `ds-hero-badge`, `ds-hero-title`, `ds-hero-lead`, `ds-hero-actions`, `ds-hero-meta`, `ds-gradient-text`
+- `ds-stat-grid`, `ds-stat`, `ds-stat-num`, `ds-stat-label`
+- `ds-steps`, `ds-step`, `ds-step-num`, `ds-step-body`
+- `ds-compat-grid`, `ds-compat-item`
+- `ds-docs` `ds-doc-block`
+- `ds-dl-grid`, `ds-dl-card`, `ds-dl-top`, `ds-dl-ico`, `ds-dl-meta`, `ds-dl-actions`
+- `ds-footer-rich`, `ds-footer-cols`, `ds-footer-brand`, `ds-footer-col`, `ds-footer-links`, `ds-footer-bottom`
+- `ds-edge-decor` (`--tl/--tr/--bl/--br`), `ds-bg-blob` (`--1/--2/--3`)
+- `ds-skip` (#ds-main for a11y skip link)
 
 ## Output expectations
 - Produce complete, runnable HTML fragments assuming `styles.css` (and optional
