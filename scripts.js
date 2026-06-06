@@ -432,7 +432,7 @@ const TOKENS = [
     if (savedOverflow) {
       document.body.style.overflow = savedOverflow;
     } else {
-      document.body.style.removeProperty('overflow');
+      document.body.style.removeProperty("overflow");
     }
     if (savedTouchAction) {
       document.body.style.touchAction = savedTouchAction;
@@ -444,8 +444,6 @@ const TOKENS = [
     } else {
       document.body.style.removeProperty("position");
     }
-    // Restore scroll position to prevent iOS rubber-banding rollback
-    window.scrollTo(0, savedScrollY);
     // Close any open details element
     const details = panel && panel.querySelector("details[open]");
     if (details) details.removeAttribute("open");
@@ -458,6 +456,14 @@ const TOKENS = [
     trigger.classList.remove("is-open");
     trigger.setAttribute("aria-expanded", "false");
     trigger.setAttribute("aria-label", "打开导航菜单");
+    // Restore scroll position AFTER the browser has settled from removing position:fixed.
+    // On iOS Safari, removing position:fixed triggers native scroll restoration,
+    // so we defer scrollTo by one rAF frame to override it.
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        window.scrollTo(0, savedScrollY);
+      });
+    });
     if (opts.restoreFocus !== false && lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
