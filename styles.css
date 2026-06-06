@@ -945,6 +945,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-type-label + p{max-width:100%;overflow-wrap:break-word;word-break:break-word}
   /* .ds-section--tight mobile padding */
   .ds-section--tight{padding:var(--ds-space-12) 0}
+  /* fix(handbook/mobile): hidden pagenav still occupies vertical space — remove from layout */
+  .ds-pagenav--rail.ds-pagenav--hidden{display:none}
 }
 @media(min-width:640px)and(max-width:1023px){
   .ds-grid-4{grid-template-columns:repeat(2,1fr)}
