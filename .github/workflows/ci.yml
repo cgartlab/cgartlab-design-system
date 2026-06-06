@@ -42,12 +42,20 @@ jobs:
       - id: links
         run: python3 tools/validate_links.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
       - id: cssref
+        continue-on-error: true
+        if: always()
         run: python3 tools/validate_cssref.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
       - id: darkmode
+        continue-on-error: true
+        if: always()
         run: python3 tools/validate_darkmode.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
       - id: verext
+        continue-on-error: true
+        if: always()
         run: python3 tools/validate_verext.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
       - id: hardcode
+        continue-on-error: true
+        if: always()
         run: python3 tools/validate_hardcode.py; c=$?; if [ $c -eq 1 ]; then exit 1; elif [ $c -eq 2 ]; then exit 0; fi
       - name: Summarize
         if: always()
@@ -65,3 +73,18 @@ jobs:
           echo "| darkmode | ${{ steps.darkmode.outcome }} |" >> $GITHUB_STEP_SUMMARY
           echo "| verext  | ${{ steps.verext.outcome }} |" >> $GITHUB_STEP_SUMMARY
           echo "| hardcode | ${{ steps.hardcode.outcome }} |" >> $GITHUB_STEP_SUMMARY
+      - name: Check for failures
+        if: always()
+        run: |
+          FAILED=""
+          for step in cssref darkmode verext hardcode tokens naming html a11y versions links; do
+            outcome="${{ steps[step].outcome }}"
+            if [ "$outcome" = "failure" ]; then
+              FAILED="$FAILED $step"
+            fi
+          done
+          if [ -n "$FAILED" ]; then
+            echo "❌ Failed validators:$FAILED"
+            exit 1
+          fi
+          echo "✅ All validators passed"

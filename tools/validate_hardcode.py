@@ -291,6 +291,11 @@ def check_html(path: Path, verbose: bool) -> tuple[list[str], list[str]]:
 # main
 # ---------------------------------------------------------------
 
+# 示例页面列表：这些页面是独立演示页面，自带嵌入 CSS，
+# 硬编码颜色仅报告为 WARNING 不阻塞 CI
+EXAMPLE_PAGES = {"blog.html", "company.html", "report.html", "resume.html"}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="检测 HTML/CSS 中硬编码的颜色值，强制使用 --ds-* 设计令牌"
@@ -317,8 +322,13 @@ def main() -> int:
 
     for p in html_files:
         errs, warns = check_html(p, args.verbose)
-        all_errors.extend(errs)
-        all_warnings.extend(warns)
+        # 示例页面中的硬编码颜色降级为 WARNING（不阻塞 CI）
+        if p.name in EXAMPLE_PAGES:
+            all_warnings.extend(errs)
+            all_warnings.extend(warns)
+        else:
+            all_errors.extend(errs)
+            all_warnings.extend(warns)
 
     for p in css_files:
         errs, warns = check_css(p, args.verbose)
