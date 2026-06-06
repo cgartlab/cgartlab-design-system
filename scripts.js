@@ -397,11 +397,9 @@ const TOKENS = [
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-modal", "true");
     panel.setAttribute("aria-label", "导航菜单");
-    // Set inert on nav content to prevent focus escaping when drawer is open
-    if (nav) {
-      nav.setAttribute("inert", "");
-      nav.setAttribute("aria-hidden", "true");
-    }
+    // Block pointer events only on main content area, not on the navbar/menu
+    const main = document.getElementById("ds-main") || document.querySelector("main");
+    if (main) main.style.pointerEvents = "none";
     if (backdrop) backdrop.classList.add("is-open");
     trigger.classList.add("is-open");
     trigger.setAttribute("aria-expanded", "true");
@@ -420,22 +418,17 @@ const TOKENS = [
     if (!isOpen) return;
     const opts = options || {};
     isOpen = false;
-    // Remove inert from nav
-    if (nav) {
-      nav.removeAttribute("inert");
-      nav.removeAttribute("aria-hidden");
-    }
+    // Remove pointer-events block from main content
+    const main = document.getElementById("ds-main") || document.querySelector("main");
+    if (main) main.style.pointerEvents = "";
     // Restore body styles first (body stays in normal flow - no layout shift)
     if (savedOverflow) {
       document.documentElement.style.overflow = savedOverflow;
     } else {
       document.documentElement.style.removeProperty("overflow");
     }
-    if (savedTouchAction) {
-      document.documentElement.style.touchAction = savedTouchAction;
-    } else {
-      document.documentElement.style.removeProperty("touchAction");
-    }
+    // Explicitly set touchAction to restore default behavior (not just removeProperty)
+    document.documentElement.style.touchAction = savedTouchAction || "";
     // Close any open details element
     const details = panel && panel.querySelector("details[open]");
     if (details) details.removeAttribute("open");
@@ -555,7 +548,7 @@ const TOKENS = [
       links.forEach(function(a) {
         const on = a.getAttribute("href") === "#" + id;
         a.classList.toggle("ds-pagenav-link--active", on);
-        if (on && a.scrollIntoView) a.scrollIntoView({ block: "nearest" });
+        // Don't scroll the link into view - let user control their scroll position
       });
       // Update aria-live region for screen reader announcement
       let liveRegion = nav.querySelector(".ds-pagenav-live");
