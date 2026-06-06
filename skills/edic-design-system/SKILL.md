@@ -82,7 +82,7 @@ h4 1.5 · h3 1.875 · h2 2.25 · h1 3 · display 3.75 · hero 4.5.
 - **Feedback**: `ds-badge` (`--accent/--success/--warning/--error`) `ds-alert` (`--info/--success/--warning/--error`) `ds-toast`
 - **Navigation**: `ds-navbar` `ds-tabs/ds-tab` `ds-breadcrumb` `ds-pagination` `ds-nav-item`
 - **Data**: `ds-table` `ds-progress` `ds-avatar` `ds-chip`
-- **Overlay**: `ds-modal` `ds-tooltip` `ds-dropdown`
+- **Overlay**: `ds-modal` `ds-tooltip-demo` `ds-dropdown`
 - **Type**: `ds-display` `ds-h1..h4` `ds-caption` `ds-eyebrow` `ds-lead` `ds-serif` `ds-mono`
 - **Motion**: `ds-reveal` (+ `--left/--right/--scale`, stagger via inline `--d`), `ds-anim-float/spin-slow/pulse/fade-in/rise/glow-breathe`
 

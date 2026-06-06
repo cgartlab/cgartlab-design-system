@@ -246,5 +246,5 @@ draft → proposal → in-development → review → stable → deprecated → r
 
 ---
 
-*本指南与 [DEVELOPMENT-GUIDE.md](../../DEVELOPMENT-GUIDE.md) 互补：
+*本指南与 [DEVELOPMENT-GUIDE.md](../DEVELOPMENT-GUIDE.md) 互补：
 DEVELOPMENT-GUIDE.md 是技术参考（已实现的细节），本文是开发流程。*

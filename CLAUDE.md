@@ -16,7 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 | File | Role |
 |------|------|
-| `styles.css` | All design tokens (`:root` + `[data-theme="dark"]`), 25+ components, animations, site shell |
+| `styles.css` | All design tokens (`:root` + `[data-theme="dark"]`), 23 components, animations, site shell |
 | `scripts.js` | Icon rendering, token table rendering, theme toggle, scroll reveal, copy actions, tab panels |
 | `tokens.json` | Structured JSON of all design tokens — source of truth for programmatic consumption |
 
@@ -149,7 +149,7 @@ git tag v1.5.0 && git push origin v1.5.0
 | `docs/TESTING.md` | Testing strategy per validator |
 | `DEVELOPMENT-GUIDE.md` | Deep technical reference (CSS architecture, token system, rendering) |
 | `AGENTS.md` | Project knowledge base, component catalog, AI prompt/Skill references |
-| `skills/cgartlab-design-system/SKILL.md` | Claude Code skill — strict design system compliance rules |
+| `skills/edic-design-system/SKILL.md` | Claude Code skill — strict design system compliance rules |
 
 ## Pending Work
 
