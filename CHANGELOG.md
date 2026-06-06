@@ -3,6 +3,17 @@
 本项目所有显著变更记录于此。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本 2.0.0](https://semver.org/lang/zh-CN/)（设计系统适配版，见 [docs/VERSIONING.md](./docs/VERSIONING.md)）。
 
+## [1.5.1] — 2026-06-06
+
+### 修复
+
+- **手册/文档页面异常回滚（issue #135）**：统一目录组件 `.ds-pagenav` 的 scroll-spy 在高亮当前章节时，对激活的目录链接调用了原生 `Element.scrollIntoView({block:"nearest"})`。该 API 会滚动**所有**可滚动祖先（含整个页面窗口），当目录处于正常文档流时（移动端折叠面板 / docs 侧栏），向下滚动会被反复拽回顶部，表现为"卡住无法下滑"和异常回滚。
+  - 移动端现象：目录展开时无法继续下滑、目录收起时正常 —— 因为收起的 `<details>` 内链接 `display:none`，`scrollIntoView` 对隐藏元素无效。
+  - 影响页面：`handbook.html`、`docs.html`、`terms.html`、`prompts.html`（均使用 `.ds-pagenav`）。
+  - 修复：新增 `revealInNavScroller()`，仅在目录**自身**存在内部滚动容器（桌面浮动 rail）时调整其 `scrollTop`，绝不触碰页面/窗口滚动位置。
+
+---
+
 ## [1.4.0] — 2026-06-04
 
 ### Changed
@@ -89,9 +100,18 @@
 
 ## [未发布]
 
-### 新增
+### 修复
 
-#### 代码样式规范（Prism.js 语法高亮主题）
+#### 移动端滚动锁定无法释放（站点级）
+- **根因**：移动端汉堡菜单关闭时，`close()` 用 `style.removeProperty("touchAction")`（驼峰写法）尝试清除锁定样式 —— `removeProperty` 要求 kebab-case（`touch-action`），故该调用为空操作，`touch-action:none` 永久残留在 `<html>` 上。一旦在移动端开/关过一次菜单，整页（及所有页面）的触摸滚动即被禁用，且会覆盖后代元素的 `touch-action:pan-y`。这正是「手册页目录展开后无法下滑」「多个页面无法滚动」的根源。
+- **修复**：改用业界标准的 `body{position:fixed;top:-Ypx;width:100%}` 滚动锁定方案，关闭时清除内联样式并 `scrollTo` 回原位。该方案在 iOS Safari 上可靠，且不冻结抽屉自身滚动、不会遗留无法释放的锁。
+- 移除 `.ds-pagenav-disclosure` / `.ds-pagenav-list` 上为绕过该 bug 而堆叠的 `touch-action:pan-y` / `overscroll-behavior:contain` / `-webkit-overflow-scrolling` 等无效 hack。
+- 修复 docs/terms 移动端侧栏「双层边框」：`.ds-docs-aside` 不再重复绘制卡片边框（由 `.ds-pagenav-disclosure` 承载）。
+
+#### 页脚「网站地图」死链（6 个页面）
+- 统一页脚的 `index.html#sitemap` 锚点在 `index.html` 中不存在，导致 `validate-links` 阻塞性报错；为 `index.html` 页脚链接分区补充 `id="sitemap"`。
+
+
 - 新增完整 Prism.js 语法高亮系统，定制橄榄绿编辑风格主题
 - **CSS 令牌变量**：`--ds-token-comment` / `--ds-token-keyword` / `--ds-token-string` / `--ds-token-function` / `--ds-token-number` / `--ds-token-tag` / `--ds-token-attr-name` / `--ds-token-operator` / `--ds-token-punctuation` / `--ds-token-variable` / `--ds-token-selector` / `--ds-token-builtin` 等 16 种
 - **代码块变量**：`--ds-code-bg`（背景）/ `--ds-code-text`（文字色）/ `--ds-code-bg-bar`（语言栏背景）

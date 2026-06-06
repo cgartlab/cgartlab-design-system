@@ -1,4 +1,4 @@
-/* ===== EDIC Design System v1.5.0 — Tokens & Styles ===== */
+/* ===== EDIC Design System v1.5.1 — Tokens & Styles ===== */
 
 :root {
   --ds-color-bg: oklch(97% 0.012 80);
@@ -1258,7 +1258,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 /* ===== Responsive (extended) ===== */
 @media(max-width:1023px){
   .ds-docs{grid-template-columns:1fr;gap:var(--ds-space-8)}
-  .ds-docs-aside{position:static;top:auto;border:1px solid var(--ds-color-border-subtle);border-radius:var(--ds-radius-xl);padding:0;background:var(--ds-color-surface)}
+  .ds-docs-aside{position:static;top:auto}
   /* Unified pagenav disclosure on mobile */
   .ds-pagenav-disclosure{display:block;background:var(--ds-color-surface);border:1px solid var(--ds-color-border-subtle);border-radius:var(--ds-radius-xl);overflow:visible;-webkit-overflow-scrolling:auto;overscroll-behavior:auto;touch-action:auto;transition:border-color var(--ds-duration-200) var(--ds-ease-out)}
   .ds-pagenav-summary{cursor:pointer;justify-content:space-between;min-height:44px;padding:var(--ds-space-3) var(--ds-space-4);margin-bottom:0;font-size:var(--ds-text-body-sm);font-weight:600;color:var(--ds-color-fg);text-transform:none;letter-spacing:normal;user-select:none;touch-action:manipulation}

@@ -1,4 +1,4 @@
-/* ===== EDIC Design System v1.5.0 — Icon Grid & Token Table ===== */
+/* ===== EDIC Design System v1.5.1 — Icon Grid & Token Table ===== */
 
 const ICONS = [
   {id:"archive",svg:'<svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>'},
@@ -374,8 +374,6 @@ const TOKENS = [
 
   let isOpen = false;
   let savedScrollY = 0;
-  let savedOverflow = "";
-  let savedTouchAction = "";
   let lastFocused = null;
 
   function open(shouldFocusMenu) {
@@ -383,13 +381,16 @@ const TOKENS = [
     isOpen = true;
     lastFocused = document.activeElement;
     // Save current scroll position before locking
-    savedScrollY = window.scrollY;
-    savedOverflow = document.documentElement.style.overflow;
-    savedTouchAction = document.documentElement.style.touchAction;
-    // Lock background scroll using overflow:hidden on documentElement.
-    // This keeps body in normal flow - no layout shift when closing.
-    document.documentElement.style.overflow = "hidden";
-    document.documentElement.style.touchAction = "none";
+    savedScrollY = window.scrollY || window.pageYOffset || 0;
+    // Lock background scroll with the canonical body-fixed technique. This is the
+    // only approach that reliably stops touch scrolling on iOS Safari, and unlike
+    // touch-action:none on <html> it neither freezes the drawer's own scroll nor
+    // leaves the page stuck (it is released by simply clearing inline styles).
+    document.body.style.position = "fixed";
+    document.body.style.top = "-" + savedScrollY + "px";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
     if (nav) nav.classList.add("is-menu-open");
     panel.classList.add("is-open");
     // The drawer locks scroll, traps focus and dims the page — i.e. it behaves as a
@@ -441,15 +442,8 @@ const TOKENS = [
     trigger.classList.remove("is-open");
     trigger.setAttribute("aria-expanded", "false");
     trigger.setAttribute("aria-label", "打开导航菜单");
-    // Wait for layout to stabilize, then restore scroll position.
-    // iOS Safari needs this delay to finish layout calculations before we scroll.
-    setTimeout(function() {
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          window.scrollTo(0, savedScrollY);
-        });
-      });
-    }, 100);
+    // Body is back in normal flow now; restore the exact scroll position.
+    window.scrollTo(0, savedScrollY);
     if (opts.restoreFocus !== false && lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
@@ -543,6 +537,34 @@ const TOKENS = [
       const href = a.getAttribute("href") || "";
       return href.charAt(0) === "#" ? document.getElementById(href.slice(1)) : null;
     });
+
+    // Reveal the active link ONLY within the TOC's own scroll container
+    // (e.g. the desktop floating rail with overflow-y:auto). Never call
+    // Element.scrollIntoView here: the native API walks every scrollable
+    // ancestor up to the document, so when the TOC sits in normal flow
+    // (mobile disclosure / docs sidebar) it yanks the whole page back up —
+    // the "异常回滚" scroll-back bug (issue #135). Adjusting scrollTop on an
+    // internal scroller keeps the page scroll position untouched.
+    function revealInNavScroller(linkEl) {
+      let el = linkEl.parentElement;
+      while (el) {
+        const oy = window.getComputedStyle(el).overflowY;
+        const scrollable = (oy === "auto" || oy === "scroll") && el.scrollHeight > el.clientHeight + 1;
+        if (scrollable) {
+          const cRect = el.getBoundingClientRect();
+          const lRect = linkEl.getBoundingClientRect();
+          if (lRect.top < cRect.top) {
+            el.scrollTop -= (cRect.top - lRect.top) + 8;
+          } else if (lRect.bottom > cRect.bottom) {
+            el.scrollTop += (lRect.bottom - cRect.bottom) + 8;
+          }
+          return;
+        }
+        if (el === nav) break;
+        el = el.parentElement;
+      }
+      // No internal scroll container → do nothing (page scroll stays put).
+    }
 
     function setActive(id) {
       links.forEach(function(a) {
