@@ -373,20 +373,27 @@ const TOKENS = [
   if (!trigger || !panel) return;
 
   let isOpen = false;
+  let savedScrollY = 0;
   let savedOverflow = "";
   let savedTouchAction = "";
+  let savedPosition = "";
   let lastFocused = null;
 
   function open(shouldFocusMenu) {
     if (isOpen) return;
     isOpen = true;
     lastFocused = document.activeElement;
-    // Lock background scroll. touch-action is required for iOS Safari, where
-    // body{overflow:hidden} alone does not stop touch scrolling / rubber-banding.
+    // Save current scroll position and body styles before locking
+    savedScrollY = window.scrollY;
     savedOverflow = document.body.style.overflow;
     savedTouchAction = document.body.style.touchAction;
+    savedPosition = document.body.style.position;
+    // Lock background scroll using position:fixed + top trick for iOS Safari.
+    // overflow:hidden alone does not stop touch scrolling / rubber-banding on iOS.
     document.body.style.overflow = "hidden";
     document.body.style.touchAction = "none";
+    document.body.style.position = "fixed";
+    document.body.style.top = "-" + savedScrollY + "px";
     if (nav) nav.classList.add("is-menu-open");
     panel.classList.add("is-open");
     // The drawer locks scroll, traps focus and dims the page — i.e. it behaves as a
@@ -430,8 +437,15 @@ const TOKENS = [
     if (savedTouchAction) {
       document.body.style.touchAction = savedTouchAction;
     } else {
-      document.body.style.removeProperty('touchAction');
+      document.body.style.removeProperty("touchAction");
     }
+    if (savedPosition) {
+      document.body.style.position = savedPosition;
+    } else {
+      document.body.style.removeProperty("position");
+    }
+    // Restore scroll position to prevent iOS rubber-banding rollback
+    window.scrollTo(0, savedScrollY);
     // Close any open details element
     const details = panel && panel.querySelector("details[open]");
     if (details) details.removeAttribute("open");
