@@ -77,12 +77,16 @@ jobs:
         if: always()
         run: |
           FAILED=""
-          for step in cssref darkmode verext hardcode tokens naming html a11y versions links; do
-            outcome="${{ steps[step].outcome }}"
-            if [ "$outcome" = "failure" ]; then
-              FAILED="$FAILED $step"
-            fi
-          done
+          if [ "${{ steps.cssref.outcome }}" = "failure" ]; then FAILED="$FAILED cssref"; fi
+          if [ "${{ steps.darkmode.outcome }}" = "failure" ]; then FAILED="$FAILED darkmode"; fi
+          if [ "${{ steps.verext.outcome }}" = "failure" ]; then FAILED="$FAILED verext"; fi
+          if [ "${{ steps.hardcode.outcome }}" = "failure" ]; then FAILED="$FAILED hardcode"; fi
+          if [ "${{ steps.tokens.outcome }}" = "failure" ]; then FAILED="$FAILED tokens"; fi
+          if [ "${{ steps.naming.outcome }}" = "failure" ]; then FAILED="$FAILED naming"; fi
+          if [ "${{ steps.html.outcome }}" = "failure" ]; then FAILED="$FAILED html"; fi
+          if [ "${{ steps.a11y.outcome }}" = "failure" ]; then FAILED="$FAILED a11y"; fi
+          if [ "${{ steps.versions.outcome }}" = "failure" ]; then FAILED="$FAILED versions"; fi
+          if [ "${{ steps.links.outcome }}" = "failure" ]; then FAILED="$FAILED links"; fi
           if [ -n "$FAILED" ]; then
             echo "❌ Failed validators:$FAILED"
             exit 1
