@@ -89,9 +89,18 @@
 
 ## [未发布]
 
-### 新增
+### 修复
 
-#### 代码样式规范（Prism.js 语法高亮主题）
+#### 移动端滚动锁定无法释放（站点级）
+- **根因**：移动端汉堡菜单关闭时，`close()` 用 `style.removeProperty("touchAction")`（驼峰写法）尝试清除锁定样式 —— `removeProperty` 要求 kebab-case（`touch-action`），故该调用为空操作，`touch-action:none` 永久残留在 `<html>` 上。一旦在移动端开/关过一次菜单，整页（及所有页面）的触摸滚动即被禁用，且会覆盖后代元素的 `touch-action:pan-y`。这正是「手册页目录展开后无法下滑」「多个页面无法滚动」的根源。
+- **修复**：改用业界标准的 `body{position:fixed;top:-Ypx;width:100%}` 滚动锁定方案，关闭时清除内联样式并 `scrollTo` 回原位。该方案在 iOS Safari 上可靠，且不冻结抽屉自身滚动、不会遗留无法释放的锁。
+- 移除 `.ds-pagenav-disclosure` / `.ds-pagenav-list` 上为绕过该 bug 而堆叠的 `touch-action:pan-y` / `overscroll-behavior:contain` / `-webkit-overflow-scrolling` 等无效 hack。
+- 修复 docs/terms 移动端侧栏「双层边框」：`.ds-docs-aside` 不再重复绘制卡片边框（由 `.ds-pagenav-disclosure` 承载）。
+
+#### 页脚「网站地图」死链（6 个页面）
+- 统一页脚的 `index.html#sitemap` 锚点在 `index.html` 中不存在，导致 `validate-links` 阻塞性报错；为 `index.html` 页脚链接分区补充 `id="sitemap"`。
+
+
 - 新增完整 Prism.js 语法高亮系统，定制橄榄绿编辑风格主题
 - **CSS 令牌变量**：`--ds-token-comment` / `--ds-token-keyword` / `--ds-token-string` / `--ds-token-function` / `--ds-token-number` / `--ds-token-tag` / `--ds-token-attr-name` / `--ds-token-operator` / `--ds-token-punctuation` / `--ds-token-variable` / `--ds-token-selector` / `--ds-token-builtin` 等 16 种
 - **代码块变量**：`--ds-code-bg`（背景）/ `--ds-code-text`（文字色）/ `--ds-code-bg-bar`（语言栏背景）

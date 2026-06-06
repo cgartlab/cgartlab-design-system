@@ -374,8 +374,6 @@ const TOKENS = [
 
   let isOpen = false;
   let savedScrollY = 0;
-  let savedOverflow = "";
-  let savedTouchAction = "";
   let lastFocused = null;
 
   function open(shouldFocusMenu) {
@@ -383,13 +381,16 @@ const TOKENS = [
     isOpen = true;
     lastFocused = document.activeElement;
     // Save current scroll position before locking
-    savedScrollY = window.scrollY;
-    savedOverflow = document.documentElement.style.overflow;
-    savedTouchAction = document.documentElement.style.touchAction;
-    // Lock background scroll using overflow:hidden on documentElement.
-    // This keeps body in normal flow - no layout shift when closing.
-    document.documentElement.style.overflow = "hidden";
-    document.documentElement.style.touchAction = "none";
+    savedScrollY = window.scrollY || window.pageYOffset || 0;
+    // Lock background scroll with the canonical body-fixed technique. This is the
+    // only approach that reliably stops touch scrolling on iOS Safari, and unlike
+    // touch-action:none on <html> it neither freezes the drawer's own scroll nor
+    // leaves the page stuck (it is released by simply clearing inline styles).
+    document.body.style.position = "fixed";
+    document.body.style.top = "-" + savedScrollY + "px";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
     if (nav) nav.classList.add("is-menu-open");
     panel.classList.add("is-open");
     // The drawer locks scroll, traps focus and dims the page — i.e. it behaves as a
@@ -425,17 +426,12 @@ const TOKENS = [
       nav.removeAttribute("inert");
       nav.removeAttribute("aria-hidden");
     }
-    // Restore body styles first (body stays in normal flow - no layout shift)
-    if (savedOverflow) {
-      document.documentElement.style.overflow = savedOverflow;
-    } else {
-      document.documentElement.style.removeProperty("overflow");
-    }
-    if (savedTouchAction) {
-      document.documentElement.style.touchAction = savedTouchAction;
-    } else {
-      document.documentElement.style.removeProperty("touchAction");
-    }
+    // Release the scroll lock by clearing the inline styles set in open().
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
     // Close any open details element
     const details = panel && panel.querySelector("details[open]");
     if (details) details.removeAttribute("open");
@@ -448,15 +444,8 @@ const TOKENS = [
     trigger.classList.remove("is-open");
     trigger.setAttribute("aria-expanded", "false");
     trigger.setAttribute("aria-label", "打开导航菜单");
-    // Wait for layout to stabilize, then restore scroll position.
-    // iOS Safari needs this delay to finish layout calculations before we scroll.
-    setTimeout(function() {
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          window.scrollTo(0, savedScrollY);
-        });
-      });
-    }, 100);
+    // Body is back in normal flow now; restore the exact scroll position.
+    window.scrollTo(0, savedScrollY);
     if (opts.restoreFocus !== false && lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
