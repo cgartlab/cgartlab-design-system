@@ -122,6 +122,17 @@
 - **Prism.js 版本**：1.30.0（含 SRI 完整性校验）
 - **应用范围**：仅 `docs.html` 有代码块（其他页面检查后确认无需处理）
 
+#### 代码样式规范（Prism.js 语法高亮主题）
+- 新增完整 Prism.js 语法高亮系统，定制橄榄绿编辑风格主题
+- **CSS 令牌变量**：`--ds-token-comment` / `--ds-token-keyword` / `--ds-token-string` / `--ds-token-function` / `--ds-token-number` / `--ds-token-tag` / `--ds-token-attr-name` / `--ds-token-operator` / `--ds-token-punctuation` / `--ds-token-variable` / `--ds-token-selector` / `--ds-token-builtin` 等 16 种
+- **代码块变量**：`--ds-code-bg`（背景）/ `--ds-code-text`（文字色）/ `--ds-code-bg-bar`（语言栏背景）
+- **Prism 主题**：12 条 `.token.*` 规则覆盖所有语法高亮场景
+- **暗色模式**：代码块背景始终保持暗色（不受页面主题影响），确保可读性
+- **向后兼容**：保留 `.tok-*` 类（`.tok-c/p/v/k/s`），指向对应的 `--ds-token-*` 变量
+- **文档更新**：`docs.html` 新增「代码样式」章节，说明使用方式和令牌对照表
+- **Prism.js 版本**：1.30.0（含 SRI 完整性校验）
+- **应用范围**：仅 `docs.html` 有代码块（其他页面检查后确认无需处理）
+
 #### 统一页面目录组件 `.ds-pagenav`（On this page）
 - 新增可复用的「页面目录」组件，整合此前 handbook 与 docs 各自为政的三套实现（桌面浮动卡片 / 移动底部横向滚动条 / 侧栏 `<details>`）
 - **桌面 — 默认（in-flow）**：纵向列表，由 sticky 容器承载（docs 侧栏），含数字编号 + scroll-spy 高亮 + 左侧 accent 指示条
