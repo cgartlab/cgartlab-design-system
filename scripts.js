@@ -429,6 +429,11 @@ const TOKENS = [
       nav.removeAttribute("inert");
       nav.removeAttribute("aria-hidden");
     }
+    // First, set scroll position BEFORE removing position:fixed.
+    // This way Safari's native scroll restoration (triggered by removing fixed)
+    // will be overridden by our explicit scrollTo.
+    window.scrollTo(0, savedScrollY);
+    // Then remove the fixed positioning
     if (savedOverflow) {
       document.body.style.overflow = savedOverflow;
     } else {
@@ -456,14 +461,6 @@ const TOKENS = [
     trigger.classList.remove("is-open");
     trigger.setAttribute("aria-expanded", "false");
     trigger.setAttribute("aria-label", "打开导航菜单");
-    // Restore scroll position AFTER the browser has settled from removing position:fixed.
-    // On iOS Safari, removing position:fixed triggers native scroll restoration,
-    // so we defer scrollTo by one rAF frame to override it.
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        window.scrollTo(0, savedScrollY);
-      });
-    });
     if (opts.restoreFocus !== false && lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
