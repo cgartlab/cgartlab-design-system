@@ -930,6 +930,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-hero{font-size:clamp(2rem,8vw,2.25rem)}.ds-display{font-size:clamp(1.75rem,7vw,2rem)}
   /* issue-97/handbook: unified page-nav disclosure for <=1023px (replaces bottom scroll bar) */
   .ds-pagenav--rail{position:static;right:auto;top:auto;transform:none;width:100%;max-height:none;overflow:visible;opacity:1;pointer-events:auto;padding:0;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;border:none;box-shadow:none;margin:var(--ds-space-4) 0 0}
+  /* Handbook TOC section: add top margin on mobile for visual separation from cover */
+  .ds-docs{margin-top:var(--ds-space-6)}
   /* P1 issue-108: Mobile nav drawer — smaller text on very small screens */
   .ds-navbar-link{min-height:36px;font-size:var(--ds-text-body-sm)}
   /* P1 issue-98: Tab labels — allow wrapping on small screens */
