@@ -289,6 +289,13 @@
   --ds-glass-bg: oklch(15% 0.008 75 / 0.55);
   --ds-glass-border: oklch(89% 0.012 80 / 0.08);
   --ds-glass-shadow: 0 4px 24px oklch(0% 0 0 / 0.25);
+  /* ===== Overlay & Blur (dark mode) ===== */
+  --ds-color-overlay: oklch(15% 0.008 75 / 0.5);
+  --ds-color-overlay-light: oklch(15% 0.008 75 / 0.2);
+  --ds-blur-sm: 4px;
+  --ds-blur-md: 12px;
+  --ds-blur-lg: 24px;
+  --ds-blur-xl: 48px;
   --ds-code-bg: oklch(18% 0.01 75);
   --ds-code-bg-bar: oklch(20% 0.012 75);
   --ds-code-text: oklch(88% 0.01 85);
@@ -1218,8 +1225,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 /* ===== Rich footer ===== */
 .ds-footer-rich{background:var(--ds-color-surface);border-top:1px solid var(--ds-color-border);padding:var(--ds-space-16) 0 var(--ds-space-8)}
 .ds-footer-cols{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:var(--ds-space-10);margin-bottom:var(--ds-space-12)}
-.ds-footer-brand p{font-size:var(--ds-text-body-sm);color:var(--ds-color-muted);line-height:var(--ds-leading-relaxed);margin-top:var(--ds-space-4);max-width:32ch}
-.ds-footer-col h4{font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);font-weight:600;color:var(--ds-color-muted);margin-bottom:var(--ds-space-4)}
+.ds-footer-brand p{font-size:var(--ds-text-body-sm);color:var(--ds-color-muted);line-height:var(--ds-leading-relaxed);margin-top:var(--ds-space-4);max-width:36ch}
+.ds-footer-col-heading{font-size:var(--ds-text-caption);text-transform:uppercase;letter-spacing:var(--ds-tracking-wider);font-weight:600;color:var(--ds-color-muted);margin-bottom:var(--ds-space-4)}
 .ds-footer-links{list-style:none;display:flex;flex-direction:column;gap:var(--ds-space-3)}
 .ds-footer-links a{font-size:var(--ds-text-body-sm);color:var(--ds-color-fg-subtle);text-decoration:none;transition:color var(--ds-duration-150)}
 .ds-footer-links a:hover{color:var(--ds-accent)}
@@ -1253,11 +1260,11 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-docs{grid-template-columns:1fr;gap:var(--ds-space-8)}
   .ds-docs-aside{position:static;top:auto;border:1px solid var(--ds-color-border-subtle);border-radius:var(--ds-radius-xl);padding:0;background:var(--ds-color-surface)}
   /* Unified pagenav disclosure on mobile */
-  .ds-pagenav-disclosure{display:block;background:var(--ds-color-surface);border:1px solid var(--ds-color-border-subtle);border-radius:var(--ds-radius-xl);overflow:visible;-webkit-overflow-scrolling:auto;overscroll-behavior:contain;touch-action:pan-y;transition:border-color var(--ds-duration-200) var(--ds-ease-out)}
+  .ds-pagenav-disclosure{display:block;background:var(--ds-color-surface);border:1px solid var(--ds-color-border-subtle);border-radius:var(--ds-radius-xl);overflow:visible;-webkit-overflow-scrolling:auto;overscroll-behavior:auto;touch-action:auto;transition:border-color var(--ds-duration-200) var(--ds-ease-out)}
   .ds-pagenav-summary{cursor:pointer;justify-content:space-between;min-height:44px;padding:var(--ds-space-3) var(--ds-space-4);margin-bottom:0;font-size:var(--ds-text-body-sm);font-weight:600;color:var(--ds-color-fg);text-transform:none;letter-spacing:normal;user-select:none;touch-action:manipulation}
   .ds-pagenav-chevron{display:block;transition:transform var(--ds-duration-200) var(--ds-ease-out)}
   .ds-pagenav-disclosure[open] .ds-pagenav-chevron{transform:rotate(180deg)}
-  .ds-pagenav-list{padding:0 var(--ds-space-2) var(--ds-space-2);gap:0;touch-action:pan-y;overscroll-behavior:contain}
+  .ds-pagenav-list{padding:0 var(--ds-space-2) var(--ds-space-2);gap:0;touch-action:auto;overscroll-behavior:auto}
   .ds-footer-cols{grid-template-columns:1fr 1fr}
   .ds-footer-brand{grid-column:1 / -1}
   .ds-hero-section{padding:var(--ds-space-24) 0 var(--ds-space-20)}
@@ -1373,6 +1380,9 @@ a.ds-feature-card:focus-visible{outline:2px solid var(--ds-accent);outline-offse
 .ds-brand-preview--ink{background:var(--ds-brand-ink)}
 
 .ds-justify-start{justify-content:flex-start}
+
+/* ===== Screen reader only (a11y) ===== */
+.ds-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 /* ===== Skip to content (a11y) ===== */
 .ds-skip{position:absolute;top:-100%;left:var(--ds-space-4);padding:var(--ds-space-3) var(--ds-space-5);background:var(--ds-accent);color:var(--ds-color-white);border-radius:var(--ds-radius-md);font-size:var(--ds-text-body-sm);font-weight:600;z-index:9999;text-decoration:none;transition:top var(--ds-duration-200)}
