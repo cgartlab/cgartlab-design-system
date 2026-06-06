@@ -66,17 +66,9 @@
 </nav>
 <section class="ds-section ds-toc">
   <div class="ds-wrapper">
-    <div class="ds-toc-grid">
-      <a href="#colors" class="ds-toc-item"><span class="ds-toc-num">01</span><h2>色彩系统</h2><p>中性色 · 橄榄绿 · 语义色</p></a>
-      <a href="#typography" class="ds-toc-item"><span class="ds-toc-num">02</span><h3>字体系统</h3><p>字族 · 比例尺 · 行距</p></a>
-      <a href="#spacing" class="ds-toc-item"><span class="ds-toc-num">03</span><h3>间距 &amp; 尺寸</h3><p>间距比例 · 圆角 · 阴影</p></a>
-      <a href="#components" class="ds-toc-item"><span class="ds-toc-num">04</span><h3>组件库</h3><p>23 个核心 UI 组件</p></a>
-      <a href="#icons" class="ds-toc-item"><span class="ds-toc-num">05</span><h3>图标库</h3><p>100 枚 SVG 图标</p></a>
-      <a href="#effects" class="ds-toc-item"><span class="ds-toc-num">06</span><h3>Overlay &amp; Blur</h3><p>玻璃 · 遮罩 · 透明度</p></a>
-      <a href="#tokens" class="ds-toc-item"><span class="ds-toc-num">07</span><h3>令牌索引</h3><p>所有 CSS 自定义属性</p></a>
-      <a href="#timeline" class="ds-toc-item"><span class="ds-toc-num">08</span><h3>时间轴</h3><p>Timeline 组件</p></a>
-      <a href="#contact" class="ds-toc-item"><span class="ds-toc-num">09</span><h3>联系表单</h3><p>Contact Form 组件</p></a>
-    </div>
+    <nav class="ds-pagenav ds-pagenav--grid" aria-label="页面目录" data-pagenav-generate=".ds-section[id]">
+      <ol class="ds-toc-grid ds-pagenav-list"></ol>
+    </nav>
   </div>
 </section>
 <section class="ds-section" id="colors">
@@ -367,16 +359,16 @@
       <div class="ds-component-preview" style="flex-direction:column;align-items:stretch;">
         <div class="ds-accordion">
           <div class="ds-accordion-item open">
-            <div class="ds-accordion-header" onclick="this.parentElement.classList.toggle('open')"><span>What is this design system?</span><span class="ds-accordion-arrow">▾</span></div>
-            <div class="ds-accordion-content">Design tokens and components for EDIC. OKLch color, editorial type, olive green accent.</div>
+            <div class="ds-accordion-header" aria-expanded="true" aria-controls="accordion-panel-1"><span>What is this design system?</span><span class="ds-accordion-arrow">▾</span></div>
+            <div class="ds-accordion-content" id="accordion-panel-1" aria-hidden="false">Design tokens and components for EDIC. OKLch color, editorial type, olive green accent.</div>
           </div>
           <div class="ds-accordion-item">
-            <div class="ds-accordion-header" onclick="this.parentElement.classList.toggle('open')"><span>Import to Penpot?</span><span class="ds-accordion-arrow">▾</span></div>
-            <div class="ds-accordion-content">Import icons.svg and component SVGs via drag-and-drop.</div>
+            <div class="ds-accordion-header" aria-expanded="false" aria-controls="accordion-panel-2"><span>Import to Penpot?</span><span class="ds-accordion-arrow">▾</span></div>
+            <div class="ds-accordion-content" id="accordion-panel-2" aria-hidden="true">Import icons.svg and component SVGs via drag-and-drop.</div>
           </div>
           <div class="ds-accordion-item">
-            <div class="ds-accordion-header" onclick="this.parentElement.classList.toggle('open')"><span>Customize colors?</span><span class="ds-accordion-arrow">▾</span></div>
-            <div class="ds-accordion-content">Edit the :root CSS variables. The entire system updates.</div>
+            <div class="ds-accordion-header" aria-expanded="false" aria-controls="accordion-panel-3"><span>Customize colors?</span><span class="ds-accordion-arrow">▾</span></div>
+            <div class="ds-accordion-content" id="accordion-panel-3" aria-hidden="true">Edit the :root CSS variables. The entire system updates.</div>
           </div>
         </div>
       </div>
