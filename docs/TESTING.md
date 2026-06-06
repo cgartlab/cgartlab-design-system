@@ -28,6 +28,10 @@
 | `validate_a11y.py` | 基础可访问性（alt / aria / 标题层级） | Python 3.11+ | stdlib |
 | `validate_versions.py` | 资源 `?v=` 与最新版本号同步 | Python 3.11+ | stdlib |
 | `validate_links.py` | 内部链接、锚点、CSS / JS 引用有效性 | Python 3.11+ | stdlib |
+| `validate_cssref.py` | HTML class → CSS 定义交叉引用验证 | Python 3.11+ | stdlib |
+| `validate_darkmode.py` | 暗色模式 token 完整性验证 | Python 3.11+ | stdlib |
+| `validate_verext.py` | tokens.json / package.json 版本一致性 | Python 3.11+ | stdlib |
+| `validate_hardcode.py` | 硬编码颜色检测（强制使用 token） | Python 3.11+ | stdlib |
 | **CI 自动化** | 上述全部 | GitHub Actions | 无（除 Python） |
 
 > 工具都是**纯 Python stdlib**，无 `pip install` 需求，保持项目"零运行时依赖"特性。
@@ -44,7 +48,11 @@ python3 tools/validate_naming.py && \
 python3 tools/validate_html.py && \
 python3 tools/validate_a11y.py && \
 python3 tools/validate_versions.py && \
-python3 tools/validate_links.py
+python3 tools/validate_links.py && \
+python3 tools/validate_cssref.py && \
+python3 tools/validate_darkmode.py && \
+python3 tools/validate_verext.py && \
+python3 tools/validate_hardcode.py
 ```
 
 ### 单项校验
@@ -56,6 +64,10 @@ make validate-html
 make validate-a11y
 make validate-versions
 make validate-links
+make validate-cssref
+make validate-darkmode
+make validate-verext
+make validate-hardcode
 ```
 
 ### 在 CI 中
@@ -166,6 +178,85 @@ python3 tools/stamp_version.py --diff    # 预览 diff
 - ✅ 跨页锚点（`href="page.html#xxx"`）目标存在
 - ✅ `assets/...` 引用文件存在
 - ⚠️ 外链仅做格式校验（不实际 HTTP 请求）
+
+### 8. `validate_cssref.py`
+
+**目标**：确保 HTML 中使用的 `ds-*` class 在 `styles.css` 中有对应样式定义。
+
+**规则**：
+
+- ✅ HTML 中每个 `ds-*` class 必须在 CSS 中有同名选择器
+- ✅ 排除 Prism.js 动态类（`language-*`、`prism-*`、`token-*`）
+- ✅ 排除 JS 钩子类（`querySelector('.xxx')` 引用的类）
+- ✅ 排除 `<pre><code>` 和 `.ds-code` 代码块中的示例类名
+- ✅ 支持复合选择器、`@media` 嵌套、后代选择器的类名提取
+
+**示例输出**：
+
+```
+[ERROR] handbook.html:67 未定义的 class: ds-toc
+[ERROR] handbook.html:657 未定义的 class: ds-body-sm
+```
+
+### 9. `validate_darkmode.py`
+
+**目标**：确保每个颜色/前景/边框/背景 token 在暗色模式中有对应 override。
+
+**规则**：
+
+- ✅ 提取 `:root` 中所有 `--ds-color-*`、`--ds-fg-*`、`--ds-surface-*`、`--ds-border-*` token
+- ✅ 与 `[data-theme="dark"]` 块中的 token 集合比对
+- ✅ 缺失的 override → WARNING
+- ✅ 检测暗色模式中使用纯黑 `oklch(0% 0 0)` → ERROR
+- ✅ 排除不需要暗色覆盖的类别（shadow/duration/easing/breakpoints/spacing 等）
+- ✅ 检测 orphan dark token（只在暗色块中存在，不在 `:root` 中）→ WARNING
+
+**示例输出**：
+
+```
+[WARN] :root has --ds-color-overlay but [data-theme="dark"] is missing its override
+[WARN] :root has --ds-blur-lg but [data-theme="dark"] is missing its override
+```
+
+### 10. `validate_verext.py`
+
+**目标**：扩展版本一致性校验，覆盖 `validate_versions.py` 未检查的文件。
+
+**规则**：
+
+- ✅ `tokens.json` 的 `version` 字段必须匹配 `VERSION` 文件
+- ✅ `package.json` 的 `version` 字段必须匹配 `VERSION` 文件
+- ✅ `scripts.js` 是否包含 `?v=` 版本查询串（自身引用）
+- ✅ `scripts.js` 中声明的版本常量是否与 `VERSION` 一致
+
+**示例输出**：
+
+```
+[ERROR] tokens.json version='1.4.0'，与 VERSION '1.5.0' 不一致
+[WARN] scripts.js 自身未使用 ?v= 版本查询串
+```
+
+### 11. `validate_hardcode.py`
+
+**目标**：检测 HTML / CSS 中硬编码的颜色值，强制使用 `--ds-*` 设计令牌。
+
+**规则**：
+
+- ❌ 禁止在 CSS 规则中直接使用 `oklch()`、hex、`rgb()`、`hsl()`
+- ❌ 禁止在 HTML `style=` 属性中硬编码颜色（WARNING）
+- ✅ `--ds-*` 变量定义中的颜色值跳过（它们是 token 定义）
+- ✅ `<pre><code>` / `<code>` 代码块中的示例颜色跳过
+- ✅ `var(--ds-*)` 引用跳过（引用 token 是正确的）
+- ✅ 动画 `@keyframes` 中的颜色跳过（不强制 token）
+- ⚠️ SVG `fill=` / `stroke=` 属性中的硬编码颜色 → WARNING
+
+**示例输出**：
+
+```
+[ERROR] report.html:59 bare oklch(48% 0.015 60) — use --ds-* token
+[ERROR] resume.html:16 bare oklch(96.8% 0.008 95) — use --ds-* token
+[WARN] report.html:2094 inline style contains bare oklch(75% 0.012 75) — use --ds-* token
+```
 
 ## 测试夹具
 

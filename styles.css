@@ -409,6 +409,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-section-header{margin-bottom:var(--ds-space-12);max-width:600px}
 .ds-section-header .ds-h2{margin-bottom:var(--ds-space-3)}
 .ds-section-header p{color:var(--ds-color-muted);font-size:var(--ds-text-body-lg)}
+.ds-toc{scroll-margin-top:var(--ds-space-24)}
+.ds-body-sm{font-size:var(--ds-text-body-sm)}
 
 /* ===== Color Swatches ===== */
 .ds-swatch{display:flex;flex-direction:column;gap:var(--ds-space-2)}
@@ -492,7 +494,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-toggle-track{width:36px;height:20px;background:var(--ds-color-border-strong);border-radius:var(--ds-radius-full);transition:background .2s;position:relative}
 .ds-toggle input{display:none}
 .ds-toggle input:checked+.ds-toggle-track{background:var(--ds-accent)}
-.ds-toggle-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;background:white;border-radius:50%;transition:transform .2s}
+.ds-toggle-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;background:var(--ds-color-white);border-radius:50%;transition:transform .2s}
 .ds-toggle input:checked+.ds-toggle-track .ds-toggle-thumb{transform:translateX(16px)}
 
 /* ===== Chip ===== */

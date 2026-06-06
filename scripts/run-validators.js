@@ -21,6 +21,10 @@ const VALIDATORS = [
   "validate_a11y.py",
   "validate_versions.py",
   "validate_links.py",
+  "validate_cssref.py",
+  "validate_darkmode.py",
+  "validate_verext.py",
+  "validate_hardcode.py",
 ];
 
 const STAMPERS = [
