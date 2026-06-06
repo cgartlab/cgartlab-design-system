@@ -122,7 +122,6 @@
 - **Prism.js 版本**：1.30.0（含 SRI 完整性校验）
 - **应用范围**：仅 `docs.html` 有代码块（其他页面检查后确认无需处理）
 
-#### 代码样式规范（Prism.js 语法高亮主题）
 - 新增完整 Prism.js 语法高亮系统，定制橄榄绿编辑风格主题
 - **CSS 令牌变量**：`--ds-token-comment` / `--ds-token-keyword` / `--ds-token-string` / `--ds-token-function` / `--ds-token-number` / `--ds-token-tag` / `--ds-token-attr-name` / `--ds-token-operator` / `--ds-token-punctuation` / `--ds-token-variable` / `--ds-token-selector` / `--ds-token-builtin` 等 16 种
 - **代码块变量**：`--ds-code-bg`（背景）/ `--ds-code-text`（文字色）/ `--ds-code-bg-bar`（语言栏背景）

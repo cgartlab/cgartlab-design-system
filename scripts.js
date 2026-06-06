@@ -374,8 +374,6 @@ const TOKENS = [
 
   let isOpen = false;
   let savedScrollY = 0;
-  let savedOverflow = "";
-  let savedTouchAction = "";
   let lastFocused = null;
 
   function open(shouldFocusMenu) {
