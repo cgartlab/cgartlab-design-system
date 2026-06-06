@@ -374,6 +374,8 @@ const TOKENS = [
 
   let isOpen = false;
   let savedScrollY = 0;
+  let savedOverflow = "";
+  let savedTouchAction = "";
   let lastFocused = null;
 
   function open(shouldFocusMenu) {
@@ -382,15 +384,12 @@ const TOKENS = [
     lastFocused = document.activeElement;
     // Save current scroll position before locking
     savedScrollY = window.scrollY || window.pageYOffset || 0;
-    // Lock background scroll with the canonical body-fixed technique. This is the
-    // only approach that reliably stops touch scrolling on iOS Safari, and unlike
-    // touch-action:none on <html> it neither freezes the drawer's own scroll nor
-    // leaves the page stuck (it is released by simply clearing inline styles).
-    document.body.style.position = "fixed";
-    document.body.style.top = "-" + savedScrollY + "px";
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
+    // Lock background scroll with overflow:hidden instead of position:fixed
+    // (position:fixed causes scroll restoration issues on some browsers)
+    savedOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    savedTouchAction = document.documentElement.style.touchAction;
+    document.documentElement.style.touchAction = "none";
     if (nav) nav.classList.add("is-menu-open");
     panel.classList.add("is-open");
     // The drawer locks scroll, traps focus and dims the page — i.e. it behaves as a
