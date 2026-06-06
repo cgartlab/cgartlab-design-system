@@ -3,7 +3,7 @@
 Editorial Design Interface for Content. A framework-agnostic design system for building warm, restrained, ordered interfaces — with OKLch color science and design tokens.
 
 **Site:** https://edic.cgartlab.com
-**Version:** v1.5.0
+**Version:** v1.5.1
 **License:** CC BY 4.0
 
 ---

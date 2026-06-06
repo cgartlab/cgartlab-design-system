@@ -3,6 +3,17 @@
 本项目所有显著变更记录于此。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本 2.0.0](https://semver.org/lang/zh-CN/)（设计系统适配版，见 [docs/VERSIONING.md](./docs/VERSIONING.md)）。
 
+## [1.5.1] — 2026-06-06
+
+### 修复
+
+- **手册/文档页面异常回滚（issue #135）**：统一目录组件 `.ds-pagenav` 的 scroll-spy 在高亮当前章节时，对激活的目录链接调用了原生 `Element.scrollIntoView({block:"nearest"})`。该 API 会滚动**所有**可滚动祖先（含整个页面窗口），当目录处于正常文档流时（移动端折叠面板 / docs 侧栏），向下滚动会被反复拽回顶部，表现为"卡住无法下滑"和异常回滚。
+  - 移动端现象：目录展开时无法继续下滑、目录收起时正常 —— 因为收起的 `<details>` 内链接 `display:none`，`scrollIntoView` 对隐藏元素无效。
+  - 影响页面：`handbook.html`、`docs.html`、`terms.html`、`prompts.html`（均使用 `.ds-pagenav`）。
+  - 修复：新增 `revealInNavScroller()`，仅在目录**自身**存在内部滚动容器（桌面浮动 rail）时调整其 `scrollTop`，绝不触碰页面/窗口滚动位置。
+
+---
+
 ## [1.4.0] — 2026-06-04
 
 ### Changed
