@@ -269,13 +269,13 @@ python3 tools/stamp_version.py --diff    # 预览 diff
 
 ## 未来工作
 
-### 短期（v1.2）
+### 短期（v1.5）
 
 - [ ] `validate_a11y.py` 集成 `axe-core`（通过 `npx @axe-core/cli`）
 - [ ] HTML 校验工具改用 `html5lib`（更严格）
 - [ ] 视觉回归测试：Playwright 截图对比（GitHub Actions 跑）
 
-### 中期（v1.3+）
+### 中期（v1.6+）
 
 - [ ] 引入 Storybook-like 组件 playground
 - [ ] 视觉测试：Chromatic / Percy（需付费，留作可选）

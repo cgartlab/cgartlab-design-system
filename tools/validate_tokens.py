@@ -108,6 +108,8 @@ def extract_vars_from_json(data: dict) -> dict[str, str]:
                 out["--ds-" + path] = val
             elif isinstance(val, list):
                 out["--ds-" + path] = " · ".join(val)
+            elif isinstance(val, (int, float)):
+                out["--ds-" + path] = str(val)
 
     walk(tokens)
     return out

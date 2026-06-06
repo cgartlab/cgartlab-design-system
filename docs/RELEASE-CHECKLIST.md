@@ -54,7 +54,7 @@
   - 内容：从 `CHANGELOG.md` 复制
   - 附件：上传 `assets/downloads/*.pdf`（如有变更）
 - [ ] 验证 GitHub Pages 自动部署成功（Settings → Pages → 部署历史）
-- [ ] 访问 https://designsystem.cgartlab.com 确认正常
+- [ ] 访问 https://edic.cgartlab.com 确认正常
 - [ ] 在社交渠道（可选）发布公告
 
 ## 发布后（T+1 天）

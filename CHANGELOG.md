@@ -22,8 +22,8 @@
 
 ### Notes
 
-- GitHub org (`cgartlab`), repo name (`cgartlab-design-system`), and CNAME (`designsystem.cgartlab.com`) remain unchanged in this release — admin rename to be performed in a follow-up PR after DNS and repository redirects are configured
-- All in-repo URL references (`designsystem.cgartlab.com`, `github.com/cgartlab/cgartlab-design-system`, `cgartlab.github.io`) intentionally preserved
+- GitHub org (`cgartlab`), repo name (`cgartlab-design-system`), and CNAME (`edic.cgartlab.com`) remain unchanged in this release — admin rename to be performed in a follow-up PR after DNS and repository redirects are configured
+- All in-repo URL references (`edic.cgartlab.com`, `github.com/cgartlab/cgartlab-design-system`, `cgartlab.github.io`) intentionally preserved
 - Color tokens (`--ds-color-olive-*`) unchanged
 - Personal contact identifiers (`cgartlab@outlook.com`, `@cgartlab` social handle, `keybase.io/cgartlab`) intentionally preserved as they belong to the maintainer, not the brand
 
@@ -217,7 +217,7 @@
 - 暗色模式（`[data-theme="dark"]`）
 - 浮动目录（IntersectionObserver 驱动）
 - 移动端导航抽屉
-- GitHub Pages 部署（CNAME `designsystem.cgartlab.com`、`.nojekyll`）
+- GitHub Pages 部署（CNAME `edic.cgartlab.com`、`.nojekyll`）
 
 ### 文档
 

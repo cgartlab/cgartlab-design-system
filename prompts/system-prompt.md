@@ -33,6 +33,7 @@
 --ds-color-olive-400: oklch(52% 0.08 115)     /* === --ds-accent === */
 --ds-accent-hover: var(--ds-color-olive-500)
 --ds-accent-soft:  var(--ds-color-olive-100)
+--ds-accent-muted: var(--ds-color-olive-50)
 ```
 语义色（各有 `-bg` 浅底变体）：
 ```
@@ -55,20 +56,22 @@ error   oklch(50% 0.14 30) · info    oklch(55% 0.08 240)
 ## 5. 间距 / 圆角 / 阴影 / 动效
 - 间距：4px 基准，`--ds-space-1..32`（4→128px）。
 - 圆角：sm 2 · md 4 · lg 8 · xl 12 · 2xl 16 · full。核心 8–16px。
-- 阴影：`--ds-shadow-xs..2xl`（暗色下加深以保层次）。
+- 阴影：`--ds-shadow-xs..2xl`（暗色下加深以保层次），含 `--ds-shadow-inner`（内阴影）。
 - 动效：时长 `--ds-duration-150..500`；缓动 `--ds-ease-out: cubic-bezier(.16,1,.3,1)`、`--ds-ease-spring`。务必尊重 `prefers-reduced-motion: reduce`。
 
 ## 6. 组件 class 目录
-- 布局：`ds-wrapper` `ds-section` `ds-stack` `ds-cluster` `ds-grid-2/3` `ds-feature-grid`
+- 布局：`ds-wrapper` `ds-section` `ds-stack`(+`--sm/--lg`) `ds-cluster` `ds-grid-2/3` `ds-feature-grid` `ds-prose`
 - 按钮：`ds-btn` + `--primary/--secondary/--ghost` + `--sm/--lg`
-- 卡片：`ds-card` + `--hoverable/--flat`；毛玻璃 `ds-glass-card`
-- 表单：`ds-input` `ds-label` `ds-select` `ds-checkbox` `ds-radio` `ds-toggle` `ds-form-*`
+- 卡片：`ds-card` + `--hoverable/--flat`；毛玻璃 `ds-glass-card`(`--sm/--lg`)
+- 表单：`ds-input`(`--error`) `ds-label` `ds-select` `ds-checkbox` `ds-radio` `ds-toggle` `ds-form-*`
 - 反馈：`ds-badge--{accent|success|warning|error}`、`ds-alert--{info|success|warning|error}`、`ds-toast`
-- 导航：`ds-navbar` `ds-tabs/ds-tab` `ds-breadcrumb` `ds-pagination` `ds-nav-item`
+- 导航：`ds-navbar` `ds-tabs/ds-tab` `ds-breadcrumb` `ds-pagination` `ds-nav-item` `ds-pagenav`(`--rail/--hidden`) `ds-mnav-trigger`
 - 数据：`ds-table` `ds-progress` `ds-avatar` `ds-chip`
-- 覆盖层：`ds-modal` `ds-tooltip` `ds-dropdown`
+- 覆盖层：`ds-modal` `ds-tooltip-demo` `ds-dropdown`
 - 排版：`ds-display` `ds-h1..h4` `ds-caption` `ds-eyebrow` `ds-lead` `ds-serif` `ds-mono`
-- 动效：`ds-reveal`(+`--left/--right/--scale`，错峰用内联 `--d`)、`ds-anim-float/spin-slow/pulse`
+- 动效：`ds-reveal`(+`--left/--right/--scale`，错峰用内联 `--d`)、`ds-anim-float/spin-slow/pulse/fade-in/rise/glow-breathe`
+- 进阶：`ds-timeline`、`ds-accordion`、`ds-date-group`、`ds-slider-group`
+- 发光（暗色）：`ds-glow-border` `ds-aura` `ds-surface-glow` `ds-heading-glow`
 
 ## 7. 输出要求
 - 默认产出完整、可直接运行的 HTML 片段，假定页面已引入 `styles.css`（与可选 `scripts.js`）。

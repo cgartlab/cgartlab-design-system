@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://designsystem.cgartlab.com/sitemap.xml
+Sitemap: https://edic.cgartlab.com/sitemap.xml
