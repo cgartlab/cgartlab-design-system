@@ -374,6 +374,8 @@ const TOKENS = [
 
   let isOpen = false;
   let savedScrollY = 0;
+  let savedOverflow = "";
+  let savedTouchAction = "";
   let lastFocused = null;
 
   function open(shouldFocusMenu) {
@@ -382,15 +384,12 @@ const TOKENS = [
     lastFocused = document.activeElement;
     // Save current scroll position before locking
     savedScrollY = window.scrollY || window.pageYOffset || 0;
-    // Lock background scroll with the canonical body-fixed technique. This is the
-    // only approach that reliably stops touch scrolling on iOS Safari, and unlike
-    // touch-action:none on <html> it neither freezes the drawer's own scroll nor
-    // leaves the page stuck (it is released by simply clearing inline styles).
-    document.body.style.position = "fixed";
-    document.body.style.top = "-" + savedScrollY + "px";
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
+    // Lock background scroll with overflow:hidden instead of position:fixed
+    // (position:fixed causes scroll restoration issues on some browsers)
+    savedOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    savedTouchAction = document.documentElement.style.touchAction;
+    document.documentElement.style.touchAction = "none";
     if (nav) nav.classList.add("is-menu-open");
     panel.classList.add("is-open");
     // The drawer locks scroll, traps focus and dims the page — i.e. it behaves as a
@@ -398,11 +397,9 @@ const TOKENS = [
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-modal", "true");
     panel.setAttribute("aria-label", "导航菜单");
-    // Set inert on nav content to prevent focus escaping when drawer is open
-    if (nav) {
-      nav.setAttribute("inert", "");
-      nav.setAttribute("aria-hidden", "true");
-    }
+    // Block pointer events only on main content area, not on the navbar/menu
+    const main = document.getElementById("ds-main") || document.querySelector("main");
+    if (main) main.style.pointerEvents = "none";
     if (backdrop) backdrop.classList.add("is-open");
     trigger.classList.add("is-open");
     trigger.setAttribute("aria-expanded", "true");
@@ -421,17 +418,17 @@ const TOKENS = [
     if (!isOpen) return;
     const opts = options || {};
     isOpen = false;
-    // Remove inert from nav
-    if (nav) {
-      nav.removeAttribute("inert");
-      nav.removeAttribute("aria-hidden");
+    // Remove pointer-events block from main content
+    const main = document.getElementById("ds-main") || document.querySelector("main");
+    if (main) main.style.pointerEvents = "";
+    // Restore body styles first (body stays in normal flow - no layout shift)
+    if (savedOverflow) {
+      document.documentElement.style.overflow = savedOverflow;
+    } else {
+      document.documentElement.style.removeProperty("overflow");
     }
-    // Release the scroll lock by clearing the inline styles set in open().
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.left = "";
-    document.body.style.right = "";
-    document.body.style.width = "";
+    // Explicitly set touchAction to restore default behavior (not just removeProperty)
+    document.documentElement.style.touchAction = savedTouchAction || "";
     // Close any open details element
     const details = panel && panel.querySelector("details[open]");
     if (details) details.removeAttribute("open");
@@ -572,7 +569,7 @@ const TOKENS = [
       links.forEach(function(a) {
         const on = a.getAttribute("href") === "#" + id;
         a.classList.toggle("ds-pagenav-link--active", on);
-        if (on) revealInNavScroller(a);
+        // Don't scroll the link into view - let user control their scroll position
       });
       // Update aria-live region for screen reader announcement
       let liveRegion = nav.querySelector(".ds-pagenav-live");
