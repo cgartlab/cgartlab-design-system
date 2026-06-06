@@ -274,12 +274,14 @@ const TOKENS = [
     const html = document.documentElement;
     if (mode === "system") {
       html.setAttribute("data-theme", getSystemPref());
+      html.removeAttribute("data-theme-mode");
       html.setAttribute("data-theme-mode", "system");
     } else {
       html.setAttribute("data-theme", mode);
+      html.removeAttribute("data-theme-mode");
       html.setAttribute("data-theme-mode", mode);
     }
-    try { localStorage.setItem(THEME_KEY, mode); } catch(e) { void e; }
+    try { localStorage.setItem(THEME_KEY, mode); } catch(e) { console.warn("[EDIC] Theme preference could not be saved (localStorage blocked)"); }
     updateButton(mode);
   }
 
@@ -321,7 +323,7 @@ const TOKENS = [
 
   function init() {
     let saved;
-    try { saved = localStorage.getItem(THEME_KEY); } catch(e) { void e; }
+    try { saved = localStorage.getItem(THEME_KEY); } catch(e) { console.warn("[EDIC] Theme preference could not be read (localStorage blocked)"); }
     const initial = themes.indexOf(saved) !== -1 ? saved : "system";
     applyTheme(initial);
 
@@ -392,6 +394,11 @@ const TOKENS = [
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-modal", "true");
     panel.setAttribute("aria-label", "导航菜单");
+    // Set inert on nav content to prevent focus escaping when drawer is open
+    if (nav) {
+      nav.setAttribute("inert", "");
+      nav.setAttribute("aria-hidden", "true");
+    }
     if (backdrop) backdrop.classList.add("is-open");
     trigger.classList.add("is-open");
     trigger.setAttribute("aria-expanded", "true");
@@ -410,8 +417,24 @@ const TOKENS = [
     if (!isOpen) return;
     const opts = options || {};
     isOpen = false;
-    document.body.style.overflow = savedOverflow;
-    document.body.style.touchAction = savedTouchAction;
+    // Remove inert from nav
+    if (nav) {
+      nav.removeAttribute("inert");
+      nav.removeAttribute("aria-hidden");
+    }
+    if (savedOverflow) {
+      document.body.style.overflow = savedOverflow;
+    } else {
+      document.body.style.removeProperty('overflow');
+    }
+    if (savedTouchAction) {
+      document.body.style.touchAction = savedTouchAction;
+    } else {
+      document.body.style.removeProperty('touchAction');
+    }
+    // Close any open details element
+    const details = panel && panel.querySelector("details[open]");
+    if (details) details.removeAttribute("open");
     if (nav) nav.classList.remove("is-menu-open");
     panel.classList.remove("is-open");
     panel.removeAttribute("role");
@@ -454,11 +477,20 @@ const TOKENS = [
   function onResize(e) { if (e.matches && isOpen) close({ restoreFocus: false }); }
   if (mq.addEventListener) mq.addEventListener("change", onResize);
   else if (mq.addListener) mq.addListener(onResize);
+  // Cleanup on page unload
+  window.addEventListener("unload", function() {
+    if (mq.removeEventListener) mq.removeEventListener("change", onResize);
+    else if (mq.removeListener) mq.removeListener(onResize);
+  });
 
   if (nav) {
     const onScroll = function() { nav.classList.toggle("ds-navbar--scrolled", window.scrollY > 20); };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+    // Cleanup on page unload
+    window.addEventListener("unload", function() {
+      window.removeEventListener("scroll", onScroll);
+    });
   }
 })();
 
@@ -512,6 +544,17 @@ const TOKENS = [
         a.classList.toggle("ds-pagenav-link--active", on);
         if (on && a.scrollIntoView) a.scrollIntoView({ block: "nearest" });
       });
+      // Update aria-live region for screen reader announcement
+      let liveRegion = nav.querySelector(".ds-pagenav-live");
+      if (!liveRegion) {
+        liveRegion = document.createElement("div");
+        liveRegion.className = "ds-sr-only ds-pagenav-live";
+        liveRegion.setAttribute("aria-live", "polite");
+        liveRegion.setAttribute("aria-atomic", "true");
+        nav.appendChild(liveRegion);
+      }
+      liveRegion.textContent = "";
+      window.setTimeout(function() { liveRegion.textContent = "当前: " + id; }, 50);
     }
 
     /* Scroll-spy: highlight the topmost section in view */
@@ -528,8 +571,10 @@ const TOKENS = [
         if (!topId) return;
         clearTimeout(debounce);
         debounce = setTimeout(function() { setActive(topId); }, 16);
-      }, { threshold: 0, rootMargin: "-72px 0px -55% 0px" });
+      }, { threshold: 0, rootMargin: "-20% 0px -70% 0px" });
       targets.forEach(function(t) { if (t) obs.observe(t); });
+      // Cleanup on page unload
+      window.addEventListener("unload", function() { obs.disconnect(); });
     }
 
     /* Rail reveal: hidden over the hero, slides in once content is reached */
@@ -556,7 +601,9 @@ const TOKENS = [
         if (!target) return;
         e.preventDefault();
         target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-        if (window.history && history.replaceState) history.replaceState(null, "", href);
+        if (!reduceMotion && window.history && history.replaceState) {
+          history.replaceState(null, "", href);
+        }
         if (disclosure && disclosure.hasAttribute("open") && mqMobile && mqMobile.matches) {
           disclosure.removeAttribute("open");
         }
@@ -590,6 +637,8 @@ const TOKENS = [
     });
   }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
   Array.prototype.forEach.call(els, function(el) { obs.observe(el); });
+  // Cleanup on page unload to prevent memory leaks
+  window.addEventListener("unload", function() { obs.disconnect(); });
 })();
 
 /* ===== Copy to clipboard ===== */
@@ -616,16 +665,26 @@ const TOKENS = [
     if (!text) return;
     copyText(text).then(function() {
       const label = btn.querySelector(".ds-copy-label");
-      const original = label ? label.textContent : btn.getAttribute("data-label-original");
+      const original = label ? label.textContent : btn.getAttribute("data-label-original") || btn.textContent.trim();
       if (!label && !btn.getAttribute("data-label-original")) btn.setAttribute("data-label-original", btn.textContent.trim());
       btn.classList.add("is-copied");
-      if (label) { label.textContent = "已复制"; }
+      const copiedText = label ? (btn.dataset.copiedLabel || "已复制") : "已复制";
+      if (label) { label.textContent = copiedText; }
       else { btn.setAttribute("data-was", btn.innerHTML); }
       window.setTimeout(function() {
         btn.classList.remove("is-copied");
         if (label && original) label.textContent = original;
       }, 1800);
-    }).catch(function() { void 0; });
+    }).catch(function() {
+      // Show error state on button
+      const label = btn.querySelector(".ds-copy-label");
+      if (label) label.textContent = "复制失败";
+      btn.classList.add("is-error");
+      window.setTimeout(function() {
+        btn.classList.remove("is-error");
+        if (label && original) label.textContent = original;
+      }, 2000);
+    });
   });
 })();
 
@@ -649,6 +708,12 @@ const TOKENS = [
     }
     Array.prototype.forEach.call(tabs, function(t) {
       t.addEventListener("click", function() { activate(this.getAttribute("data-tab")); });
+      t.addEventListener("keydown", function(e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          activate(this.getAttribute("data-tab"));
+        }
+      });
     });
     const first = tabs[0];
     if (first) activate(first.getAttribute("data-tab"));
@@ -660,9 +725,34 @@ const TOKENS = [
   const headers = document.querySelectorAll(".ds-accordion-header");
   if (!headers.length) return;
   Array.prototype.forEach.call(headers, function(h) {
+    // Initialize ARIA attributes on first load
+    const item = h.closest(".ds-accordion-item");
+    if (item) {
+      const panel = item.querySelector(".ds-accordion-content");
+      const panelId = panel ? panel.id || (panel.id = "ds-accordion-panel-" + Math.random().toString(36).slice(2)) : null;
+      h.setAttribute("aria-expanded", item.classList.contains("open") ? "true" : "false");
+      if (panel) panel.setAttribute("aria-hidden", item.classList.contains("open") ? "false" : "true");
+      if (panelId) h.setAttribute("aria-controls", panelId);
+    }
     h.addEventListener("click", function() {
       const item = this.closest(".ds-accordion-item");
-      if (item) item.classList.toggle("open");
+      if (!item) return;
+      const isOpen = item.classList.toggle("open");
+      this.setAttribute("aria-expanded", String(isOpen));
+      const panel = item.querySelector(".ds-accordion-content");
+      if (panel) panel.setAttribute("aria-hidden", String(!isOpen));
+    });
+    // Keyboard activation: Enter and Space
+    h.addEventListener("keydown", function(e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        const item = this.closest(".ds-accordion-item");
+        if (!item) return;
+        const isOpen = item.classList.toggle("open");
+        this.setAttribute("aria-expanded", String(isOpen));
+        const panel = item.querySelector(".ds-accordion-content");
+        if (panel) panel.setAttribute("aria-hidden", String(!isOpen));
+      }
     });
   });
 })();

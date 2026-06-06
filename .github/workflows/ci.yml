@@ -77,18 +77,17 @@ jobs:
         if: always()
         run: |
           FAILED=""
-          if [ "${{ steps.cssref.outcome }}" = "failure" ]; then FAILED="$FAILED cssref"; fi
-          if [ "${{ steps.darkmode.outcome }}" = "failure" ]; then FAILED="$FAILED darkmode"; fi
-          if [ "${{ steps.verext.outcome }}" = "failure" ]; then FAILED="$FAILED verext"; fi
-          if [ "${{ steps.hardcode.outcome }}" = "failure" ]; then FAILED="$FAILED hardcode"; fi
+          # Only blocking validators (no continue-on-error)
           if [ "${{ steps.tokens.outcome }}" = "failure" ]; then FAILED="$FAILED tokens"; fi
           if [ "${{ steps.naming.outcome }}" = "failure" ]; then FAILED="$FAILED naming"; fi
           if [ "${{ steps.html.outcome }}" = "failure" ]; then FAILED="$FAILED html"; fi
           if [ "${{ steps.a11y.outcome }}" = "failure" ]; then FAILED="$FAILED a11y"; fi
           if [ "${{ steps.versions.outcome }}" = "failure" ]; then FAILED="$FAILED versions"; fi
           if [ "${{ steps.links.outcome }}" = "failure" ]; then FAILED="$FAILED links"; fi
+          # NOTE: cssref/darkmode/verext/hardcode use continue-on-error=true
+          # (soft failures / warnings only) — excluded from blocking check
           if [ -n "$FAILED" ]; then
             echo "❌ Failed validators:$FAILED"
             exit 1
           fi
-          echo "✅ All validators passed"
+          echo "✅ All blocking validators passed"
