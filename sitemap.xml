@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://designsystem.cgartlab.com/</loc><priority>1.0</priority></url>
-  <url><loc>https://designsystem.cgartlab.com/handbook.html</loc><priority>0.9</priority></url>
-  <url><loc>https://designsystem.cgartlab.com/docs.html</loc><priority>0.8</priority></url>
-  <url><loc>https://designsystem.cgartlab.com/prompts.html</loc><priority>0.8</priority></url>
-  <url><loc>https://designsystem.cgartlab.com/downloads.html</loc><priority>0.7</priority></url>
-  <url><loc>https://designsystem.cgartlab.com/blog.html</loc><priority>0.6</priority></url>
-  <url><loc>https://designsystem.cgartlab.com/company.html</loc><priority>0.6</priority></url>
-  <url><loc>https://designsystem.cgartlab.com/resume.html</loc><priority>0.5</priority></url>
-  <url><loc>https://designsystem.cgartlab.com/report.html</loc><priority>0.5</priority></url>
+  <url><loc>https://edic.cgartlab.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://edic.cgartlab.com/handbook.html</loc><priority>0.9</priority></url>
+  <url><loc>https://edic.cgartlab.com/docs.html</loc><priority>0.8</priority></url>
+  <url><loc>https://edic.cgartlab.com/prompts.html</loc><priority>0.8</priority></url>
+  <url><loc>https://edic.cgartlab.com/downloads.html</loc><priority>0.7</priority></url>
+  <url><loc>https://edic.cgartlab.com/blog.html</loc><priority>0.6</priority></url>
+  <url><loc>https://edic.cgartlab.com/company.html</loc><priority>0.6</priority></url>
+  <url><loc>https://edic.cgartlab.com/resume.html</loc><priority>0.5</priority></url>
+  <url><loc>https://edic.cgartlab.com/report.html</loc><priority>0.5</priority></url>
 </urlset>

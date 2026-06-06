@@ -9,7 +9,7 @@
 
 > **v1.3.x 新增（2026-06-01）**: 在 v1.1 视觉层之上补齐**工程治理层**——`.editorconfig` / `.gitattributes` / `.github/` 完整模板、`CONTRIBUTING.md` / `CHANGELOG.md` / `CODE_OF_CONDUCT.md` / `SECURITY.md` / `LICENSE`、流程文档（`docs/VERSIONING.md` / `COMPONENT-DEVELOPMENT.md` / `TESTING.md` / `RELEASE-CHECKLIST.md`）、6 个 Python 验证脚本（`tools/validate_*.py`）、CI 流水线（`ci.yml` + `release.yml`）、本地开发辅助（`Makefile` + `scripts/dev.*` + `.nvmrc`）、测试夹具（`tests/fixtures/`）。保持项目**零运行时依赖**原貌，仅添加开发期工具。
 
-> **v1.1 关键特性**: 设计系统已升级为一个**多页静态展示网站**（首页 / 视觉手册 / 使用文档 / 提示词 / 下载），网站本身严格遵循设计系统规范，可经 GitHub Pages 公开访问（`designsystem.cgartlab.com`）。新增品牌 Logo、CSS/SVG 动效系统、滚动揭示、复制交互，以及可复制给任意 Agent 的系统提示词与 Skill 技能包，并生成真实示例 PDF。`company.html`（EDIC 公司官网示例）是首个采用 `--ds-*` 令牌的生产级页面。
+> **v1.1 关键特性**: 设计系统已升级为一个**多页静态展示网站**（首页 / 视觉手册 / 使用文档 / 提示词 / 下载），网站本身严格遵循设计系统规范，可经 GitHub Pages 公开访问（`edic.cgartlab.com`）。新增品牌 Logo、CSS/SVG 动效系统、滚动揭示、复制交互，以及可复制给任意 Agent 的系统提示词与 Skill 技能包，并生成真实示例 PDF。`company.html`（EDIC 公司官网示例）是首个采用 `--ds-*` 令牌的生产级页面。
 
 > **v1.4.0 品牌重塑**: CGArtLab Design System → **EDIC Design System**（Editorial Design Interface for Content），包名、技能目录、二维码、PDF 文件名等全部品牌字符串更新。
 
@@ -93,7 +93,7 @@ edic-design-system/
 │   ├── SECURITY.md             # 漏洞披露策略
 │   └── LICENSE                 # CC BY 4.0 完整许可证文本
 │
-├── CNAME · .nojekyll   # GitHub Pages（自定义域名 designsystem.cgartlab.com）
+├── CNAME · .nojekyll   # GitHub Pages（自定义域名 edic.cgartlab.com）
 ├── README.md           # 仓库说明 + 部署指南
 ├── AGENTS.md           # 本文件
 │
@@ -291,7 +291,7 @@ xs → 2xl 共 6 级，暗色模式 opacity 提高以保持层次。
 
 ## 构建与部署
 
-**零运行时依赖 / 零构建。** 纯静态站点。GitHub Pages「Deploy from branch」直接托管 `main` 根目录，`.nojekyll` 关闭 Jekyll；`CNAME` 指向 `designsystem.cgartlab.com`。
+**零运行时依赖 / 零构建。** 纯静态站点。GitHub Pages「Deploy from branch」直接托管 `main` 根目录，`.nojekyll` 关闭 Jekyll；`CNAME` 指向 `edic.cgartlab.com`。
 
 > 唯一**开发时**依赖：Python 3.11+（验证工具）和 Node 20+（可选 `npx serve`）。**生产部署无需任何依赖**。
 >

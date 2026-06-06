@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **EDIC Design System** (formerly CGArtLab) — Editorial × Olive Green, a zero-runtime-dependency static design system driven by OKLch color science and design tokens. Current version: **v1.5.0**.
 
-- **Website:** https://designsystem.cgartlab.com
+- **Website:** https://edic.cgartlab.com
 - **License:** CC BY 4.0
 - **Tech:** Pure HTML + CSS (Custom Properties + OKLch) + Vanilla JS — no build tools, no framework
 

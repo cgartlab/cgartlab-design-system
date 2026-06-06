@@ -5,9 +5,9 @@
 
 🌐 **网站：** https://edic.cgartlab.com
 
-[![纯静态](https://img.shields.io/badge/build-zero%20dependencies-7d7a42)](https://designsystem.cgartlab.com)
-[![OKLch](https://img.shields.io/badge/color-OKLch-7d7a42)](https://designsystem.cgartlab.com/docs.html#color)
-[![暗色模式](https://img.shields.io/badge/dark%20mode-ready-7d7a42)](https://designsystem.cgartlab.com/docs.html#dark)
+[![纯静态](https://img.shields.io/badge/build-zero%20dependencies-7d7a42)](https://edic.cgartlab.com)
+[![OKLch](https://img.shields.io/badge/color-OKLch-7d7a42)](https://edic.cgartlab.com/docs.html#color)
+[![暗色模式](https://img.shields.io/badge/dark%20mode-ready-7d7a42)](https://edic.cgartlab.com/docs.html#dark)
 [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-7d7a42)](./.github/workflows/ci.yml)
 [![CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-7d7a42)](https://creativecommons.org/licenses/by/4.0/)
 [![v1.5.0](https://img.shields.io/badge/version-1.5.0-7d7a42)](./CHANGELOG.md)
@@ -86,7 +86,7 @@ scripts/                          # 本地开发辅助（dev.sh / dev.ps1 / pre-
 </html>
 ```
 
-更多见 [使用文档](https://designsystem.cgartlab.com/docs.html)。
+更多见 [使用文档](https://edic.cgartlab.com/docs.html)。
 
 ## 🎨 主题切换
 
@@ -104,7 +104,7 @@ scripts/                          # 本地开发辅助（dev.sh / dev.ps1 / pre-
 
 ## 🤖 让 AI 遵循本系统
 
-前往 [提示词页](https://designsystem.cgartlab.com/prompts.html) 复制 **系统提示词**、**精简提示词** 或 **Skill**，
+前往 [提示词页](https://edic.cgartlab.com/prompts.html) 复制 **系统提示词**、**精简提示词** 或 **Skill**，
 粘贴到 ChatGPT / Claude / Cursor / Kiro 等任意 Agent，即可让其按规范产出界面、文档与素材。
 
 ## 📄 许可证
@@ -116,7 +116,7 @@ scripts/                          # 本地开发辅助（dev.sh / dev.ps1 / pre-
 - **须署名** — 使用时需保留 EDIC 设计系统的署名
 - **衍生作品可选择许可证** — 修改后的版本可采用任何许可证（不要求保持 CC BY 4.0）
 
-详见 [使用条款](https://designsystem.cgartlab.com/terms.html)。
+详见 [使用条款](https://edic.cgartlab.com/terms.html)。
 
 ## 🛠️ 重新生成示例 PDF
 
@@ -159,11 +159,11 @@ CI 在 PR / push / 每周一自动跑全部验证：[`.github/workflows/ci.yml`]
 
 ## 🌍 部署到 GitHub Pages（自定义域名）
 
-本仓库已包含 `CNAME`（`designsystem.cgartlab.com`）与 `.nojekyll`。
+本仓库已包含 `CNAME`（`edic.cgartlab.com`）与 `.nojekyll`。
 
 1. **Settings → Pages**：Source 选择 `Deploy from a branch`，分支 `main`，目录 `/ (root)`。
 2. **DNS**：在 `cgartlab.com` 解析处为 `designsystem` 添加一条 `CNAME` 记录，指向 `cgartlab.github.io`。
-3. 等待证书签发后，访问 https://designsystem.cgartlab.com 。
+3. 等待证书签发后，访问 https://edic.cgartlab.com 。
 
 > 仓库根目录即站点根目录，所有链接均为相对路径，开箱即可在 Pages 上运行。
 
