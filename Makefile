@@ -4,7 +4,7 @@
 
 SHELL := /bin/sh
 .DEFAULT_GOAL := help
-.PHONY: help validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links stamp-version serve clean serve-py serve-node generate-pdfs icons icons-check test
+.PHONY: help validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links validate-cssref validate-darkmode validate-verext validate-hardcode stamp-version serve clean serve-py serve-node generate-pdfs icons icons-check test
 
 PYTHON ?= python3
 NODE ?= node
@@ -23,10 +23,11 @@ help:  ## 显示帮助
 # AGENTS.md 退出码契约：0 = pass / 1 = 阻塞错误 / 2 = 仅警告（非阻塞）
 # ci.yml 已将 exit 2 映射为 0；本地 `make validate` 也应如此——逐个运行所有验证器，
 # 仅在出现 exit 1 时失败，exit 0/2 视为通过。
-validate:  ## 全部验证（聚合 6 个验证器；exit 1 阻塞，exit 0/2 通过）
+validate:  ## 全部验证（聚合 10 个验证器；exit 1 阻塞，exit 0/2 通过）
 	@fail=0; \
-	for t in validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links; do \
-	  $(MAKE) -s $$t > /tmp/ds-validate-$$t.raw 2>&1; \
+	for t in validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links validate-cssref validate-darkmode validate-verext validate-hardcode; do \
+	  script="tools/validate_$$(echo $$t | sed 's/^validate-//').py"; \
+	  $(PYTHON) $$script > /tmp/ds-validate-$$t.raw 2>&1; \
 	  ec=$$?; \
 	  grep -v '^make\[' /tmp/ds-validate-$$t.raw > /tmp/ds-validate-$$t.log 2>/dev/null || true; \
 	  rm -f /tmp/ds-validate-$$t.raw; \
@@ -69,6 +70,18 @@ validate-versions:  ## 校验资源 ?v= 版本号同步
 
 validate-links:  ## 校验链接与引用
 	$(PYTHON) tools/validate_links.py
+
+validate-cssref:  ## 校验 HTML class 在 styles.css 中有定义
+	$(PYTHON) tools/validate_cssref.py
+
+validate-darkmode:  ## 校验暗色模式 token 完整性
+	$(PYTHON) tools/validate_darkmode.py
+
+validate-verext:  ## 校验 tokens.json / package.json 版本一致性
+	$(PYTHON) tools/validate_verext.py
+
+validate-hardcode:  ## 校验硬编码颜色值（应使用 --ds-* token）
+	$(PYTHON) tools/validate_hardcode.py
 
 stamp-version:  ## 将 VERSION 同步到所有 HTML / MD 资源
 	$(PYTHON) tools/stamp_version.py

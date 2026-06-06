@@ -29,6 +29,10 @@ case "$cmd" in
   validate-a11y)     python3 tools/validate_a11y.py ;;
   validate-versions) python3 tools/validate_versions.py ;;
   validate-links)    python3 tools/validate_links.py ;;
+  validate-cssref)   python3 tools/validate_cssref.py ;;
+  validate-darkmode) python3 tools/validate_darkmode.py ;;
+  validate-verext)   python3 tools/validate_verext.py ;;
+  validate-hardcode) python3 tools/validate_hardcode.py ;;
 
   stamp|stamp-version)
     echo "→ 将 VERSION 同步到所有 HTML / MD 资源"
@@ -78,6 +82,10 @@ CGArtLab Design System — dev 辅助脚本
   validate-a11y      校验可访问性
   validate-versions  校验版本号
   validate-links     校验链接
+  validate-cssref    校验 HTML class 在 CSS 中有定义
+  validate-darkmode  校验暗色模式 token 完整性
+  validate-verext    校验扩展版本一致性
+  validate-hardcode  校验硬编码颜色
   pdfs               生成示例 PDF
   icons              生成 icons.svg（SVG sprite）
   icons-check        校验 icons.svg 与 ICONS 是否同步

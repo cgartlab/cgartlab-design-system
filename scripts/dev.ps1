@@ -34,6 +34,10 @@ switch ($Command) {
         Run-Validate "validate_a11y.py"
         Run-Validate "validate_versions.py"
         Run-Validate "validate_links.py"
+        Run-Validate "validate_cssref.py"
+        Run-Validate "validate_darkmode.py"
+        Run-Validate "validate_verext.py"
+        Run-Validate "validate_hardcode.py"
         Write-Host ""
         Write-Host "✓ 全部验证完成" -ForegroundColor Green
     }
@@ -44,6 +48,10 @@ switch ($Command) {
     "validate-a11y"     { & python "$Root/tools/validate_a11y.py" }
     "validate-versions" { & python "$Root/tools/validate_versions.py" }
     "validate-links"    { & python "$Root/tools/validate_links.py" }
+    "validate-cssref"   { & python "$Root/tools/validate_cssref.py" }
+    "validate-darkmode" { & python "$Root/tools/validate_darkmode.py" }
+    "validate-verext"   { & python "$Root/tools/validate_verext.py" }
+    "validate-hardcode" { & python "$Root/tools/validate_hardcode.py" }
 
     { @("pdfs", "generate-pdfs") -contains $_ } {
         Write-Host "→ 生成示例 PDF" -ForegroundColor Green
@@ -83,6 +91,10 @@ CGArtLab Design System — dev 辅助脚本
   validate-a11y      校验可访问性
   validate-versions  校验版本号
   validate-links     校验链接
+  validate-cssref    校验 HTML class 在 CSS 中有定义
+  validate-darkmode  校验暗色模式 token 完整性
+  validate-verext    校验扩展版本一致性
+  validate-hardcode  校验硬编码颜色
   stamp              将 VERSION 同步到所有 HTML / MD 资源
   stamp-check        检查 stamp 状态（CI 用）
   pdfs               生成示例 PDF
