@@ -1,4 +1,4 @@
-/* ===== EDIC Design System v1.5.0 — Icon Grid & Token Table ===== */
+/* ===== EDIC Design System v1.5.2 — Icon Grid & Token Table ===== */
 
 const ICONS = [
   {id:"archive",svg:'<svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>'},
@@ -590,6 +590,12 @@ const TOKENS = [
       window.addEventListener("unload", function() { obs.disconnect(); });
     }
 
+    // [Fix B5] Set the first link active immediately on load so there is always
+    // a highlighted item before the user scrolls. IntersectionObserver only
+    // fires on scroll/resize, so without this the TOC shows nothing active
+    // when the page first loads or is reloaded at the top.
+    if (links.length) setActive(links[0].getAttribute("href").slice(1));
+
     /* Rail reveal: hidden over the hero, slides in once content is reached */
     if (isRail) {
       const firstTarget = targets.find(function(t) { return !!t; });
@@ -676,10 +682,15 @@ const TOKENS = [
     e.preventDefault();
     const text = getSourceText(btn);
     if (!text) return;
+    // [Fix B3] Hoist `label` and `original` before the then/catch split so both
+    // branches can reference them without a ReferenceError. Previously `original`
+    // was declared inside .then(), making it unreachable from .catch(), which
+    // caused the catch timeout to throw and the button label to remain "复制失败"
+    // forever instead of restoring to the original text.
+    const label = btn.querySelector(".ds-copy-label");
+    const original = label ? label.textContent : btn.getAttribute("data-label-original") || btn.textContent.trim();
+    if (!label && !btn.getAttribute("data-label-original")) btn.setAttribute("data-label-original", btn.textContent.trim());
     copyText(text).then(function() {
-      const label = btn.querySelector(".ds-copy-label");
-      const original = label ? label.textContent : btn.getAttribute("data-label-original") || btn.textContent.trim();
-      if (!label && !btn.getAttribute("data-label-original")) btn.setAttribute("data-label-original", btn.textContent.trim());
       btn.classList.add("is-copied");
       const copiedText = label ? (btn.dataset.copiedLabel || "已复制") : "已复制";
       if (label) { label.textContent = copiedText; }
@@ -690,7 +701,6 @@ const TOKENS = [
       }, 1800);
     }).catch(function() {
       // Show error state on button
-      const label = btn.querySelector(".ds-copy-label");
       if (label) label.textContent = "复制失败";
       btn.classList.add("is-error");
       window.setTimeout(function() {
@@ -706,28 +716,54 @@ const TOKENS = [
   const groups = document.querySelectorAll("[data-tabs]");
   if (!groups.length) return;
   Array.prototype.forEach.call(groups, function(group) {
-    const tabs = group.querySelectorAll("[data-tab]");
+    const tabs = Array.prototype.slice.call(group.querySelectorAll("[data-tab]"));
     const scope = group.getAttribute("data-tabs-scope");
     const panelHost = scope ? document.querySelector(scope) : group.parentNode;
+
+    // [Fix B7] Add ARIA tablist role to the container
+    group.setAttribute("role", "tablist");
+
     function activate(name) {
       Array.prototype.forEach.call(tabs, function(t) {
-        t.classList.toggle("ds-tab--active", t.getAttribute("data-tab") === name);
-        t.setAttribute("aria-selected", t.getAttribute("data-tab") === name ? "true" : "false");
+        const on = t.getAttribute("data-tab") === name;
+        t.classList.toggle("ds-tab--active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        // [Fix B7] tabindex roving: only the active tab is in the tab order
+        t.setAttribute("tabindex", on ? "0" : "-1");
       });
       const panels = (panelHost || document).querySelectorAll("[data-panel]");
       Array.prototype.forEach.call(panels, function(p) {
         p.classList.toggle("is-active", p.getAttribute("data-panel") === name);
       });
     }
-    Array.prototype.forEach.call(tabs, function(t) {
+
+    Array.prototype.forEach.call(tabs, function(t, idx) {
+      // [Fix B7] role=tab on every tab button
+      t.setAttribute("role", "tab");
+
       t.addEventListener("click", function() { activate(this.getAttribute("data-tab")); });
       t.addEventListener("keydown", function(e) {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           activate(this.getAttribute("data-tab"));
+          return;
+        }
+        // [Fix B7] Arrow key navigation (WAI-ARIA Tabs pattern)
+        if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+          e.preventDefault();
+          const dir = e.key === "ArrowRight" ? 1 : -1;
+          const next = (idx + dir + tabs.length) % tabs.length;
+          tabs[next].focus();
         }
       });
     });
+
+    // [Fix B7] role=tabpanel on every panel
+    const panels = (panelHost || document).querySelectorAll("[data-panel]");
+    Array.prototype.forEach.call(panels, function(p) {
+      p.setAttribute("role", "tabpanel");
+    });
+
     const first = tabs[0];
     if (first) activate(first.getAttribute("data-tab"));
   });
@@ -738,6 +774,12 @@ const TOKENS = [
   const headers = document.querySelectorAll(".ds-accordion-header");
   if (!headers.length) return;
   Array.prototype.forEach.call(headers, function(h) {
+    // [Fix B2] Accordion headers are <div> elements, not <button>s. Without
+    // role="button" and tabindex="0" they are invisible to keyboard navigation
+    // (Tab skips them) and screen readers don't announce them as interactive.
+    h.setAttribute("role", "button");
+    h.setAttribute("tabindex", "0");
+
     // Initialize ARIA attributes on first load
     const item = h.closest(".ds-accordion-item");
     if (item) {
@@ -747,24 +789,22 @@ const TOKENS = [
       if (panel) panel.setAttribute("aria-hidden", item.classList.contains("open") ? "false" : "true");
       if (panelId) h.setAttribute("aria-controls", panelId);
     }
-    h.addEventListener("click", function() {
-      const item = this.closest(".ds-accordion-item");
+
+    function toggle(header) {
+      const item = header.closest(".ds-accordion-item");
       if (!item) return;
       const isOpen = item.classList.toggle("open");
-      this.setAttribute("aria-expanded", String(isOpen));
+      header.setAttribute("aria-expanded", String(isOpen));
       const panel = item.querySelector(".ds-accordion-content");
       if (panel) panel.setAttribute("aria-hidden", String(!isOpen));
-    });
+    }
+
+    h.addEventListener("click", function() { toggle(this); });
     // Keyboard activation: Enter and Space
     h.addEventListener("keydown", function(e) {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        const item = this.closest(".ds-accordion-item");
-        if (!item) return;
-        const isOpen = item.classList.toggle("open");
-        this.setAttribute("aria-expanded", String(isOpen));
-        const panel = item.querySelector(".ds-accordion-content");
-        if (panel) panel.setAttribute("aria-hidden", String(!isOpen));
+        toggle(this);
       }
     });
   });

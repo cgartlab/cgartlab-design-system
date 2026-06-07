@@ -1,4 +1,4 @@
-/* ===== EDIC Design System v1.5.0 — Tokens & Styles ===== */
+/* ===== EDIC Design System v1.5.2 — Tokens & Styles ===== */
 
 :root {
   --ds-color-bg: oklch(97% 0.012 80);
@@ -532,6 +532,10 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-accordion-item:last-child{border-bottom:none}
 .ds-accordion-header{display:flex;justify-content:space-between;align-items:center;padding:var(--ds-space-4);cursor:pointer;font-weight:600;font-size:var(--ds-text-body-sm);transition:background .15s}
 .ds-accordion-header:hover{background:var(--ds-color-surface-overlay)}
+/* [Fix B4] Accordion headers are <div role="button"> — without :focus-visible
+   keyboard users have no visual indication of focus. */
+.ds-accordion-header:focus{outline:none}
+.ds-accordion-header:focus-visible{outline:2px solid var(--ds-accent);outline-offset:-2px;background:var(--ds-color-surface-overlay)}
 .ds-accordion-arrow{transition:transform .2s;color:var(--ds-color-muted)}
 .ds-accordion-item.open .ds-accordion-arrow{transform:rotate(180deg)}
 .ds-accordion-content{padding:0 var(--ds-space-4) var(--ds-space-4);font-size:var(--ds-text-body-sm);color:var(--ds-color-muted);display:none}
@@ -541,9 +545,14 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-tabs{display:inline-flex;border-radius:var(--ds-radius-xl);background:var(--ds-color-surface);padding:3px;border:1px solid var(--ds-color-border-subtle);gap:2px}
 .ds-tab{padding:var(--ds-space-2) var(--ds-space-5);font-size:var(--ds-text-body-sm);font-weight:500;color:var(--ds-color-muted);cursor:pointer;border:none;border-radius:var(--ds-radius-lg);background:transparent;transition:all .2s;font-family:var(--ds-font-ui);white-space:nowrap}
 .ds-tab:hover{color:var(--ds-color-fg)}
+/* [Fix B4] Tab buttons had no :focus-visible style — keyboard focus was invisible */
+.ds-tab:focus{outline:none}
+.ds-tab:focus-visible{outline:2px solid var(--ds-accent);outline-offset:2px;box-shadow:0 0 0 4px var(--ds-accent-soft)}
 .ds-tab--active{background:var(--ds-accent-soft);color:var(--ds-accent);font-weight:600}
 .ds-tab-content{display:none;padding:var(--ds-space-4) 0;font-size:var(--ds-text-body-sm);color:var(--ds-color-muted)}
 .ds-tab-content--active{display:block}
+/* [Fix B1] data-tabs controller sets .is-active on [data-panel] elements */
+.ds-tab-content.is-active{display:block}
 
 /* ===== Progress ===== */
 .ds-progress{max-width:320px}
