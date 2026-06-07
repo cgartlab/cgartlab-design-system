@@ -450,8 +450,21 @@ const TOKENS = [
     else open(e.detail === 0);
   });
   if (backdrop) backdrop.addEventListener("click", function() { close(); });
+
+  // When a user taps a real navigation link, let the browser handle the
+  // navigation naturally. Calling close() here runs window.scrollTo() and
+  // mutates document overflow/touch-action synchronously, which on mobile
+  // browsers can race the navigation and abort the page load — the result
+  // is the menu closes but the target page never paints. The new page
+  // will fully replace the document, so there's nothing to clean up.
+  // The only link that should NOT navigate is the in-page theme toggle.
   Array.prototype.forEach.call(panel.querySelectorAll(".ds-navbar-link"), function(l) {
-    l.addEventListener("click", function() { if (isOpen) close({ restoreFocus: false }); });
+    l.addEventListener("click", function(e) {
+      // Anchor links with a real href: defer entirely to the browser.
+      if (l.getAttribute("href")) return;
+      // Non-anchor controls (defensive): close the menu on activation.
+      if (isOpen) close({ restoreFocus: false });
+    });
   });
 
   document.addEventListener("keydown", function(e) {
