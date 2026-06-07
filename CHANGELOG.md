@@ -3,6 +3,27 @@
 本项目所有显著变更记录于此。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本 2.0.0](https://semver.org/lang/zh-CN/)（设计系统适配版，见 [docs/VERSIONING.md](./docs/VERSIONING.md)）。
 
+## [1.5.3] — 2026-06-08
+
+### 修复
+
+- **数据描述一致性**:将全站散落的"23 核心组件"与"172 design tokens"统一为更准确的口径
+  - `README.md` 顶部 feature 列表:172 design tokens → 200+ design tokens;23 components → 20 core + 5 add-on
+  - `index.html` stats 块:核心组件 stat 拆分为"20 核心"和"5 附加"两个独立统计块,更精确反映组件库的层次
+  - `index.html` / `handbook.html` / `docs.html` 描述文案:所有提及"23 核心组件"之处改为"20 核心 + 5 附加组件"
+  - 同步更新 `handbook.html` 头部 meta 行与 footer 介绍段落
+- **版本号统一**(1.5.2 → 1.5.3):
+  - `VERSION` 1.5.2 → 1.5.3
+  - `tokens.json` / `package.json` / `package-lock.json` `version` 字段 1.5.0 → 1.5.3(修正了此前 1.5.0/1.5.2/1.5.3 三方漂移的旧 bug)
+  - `changelog.html` footer `data-ds-version` 元素 v1.5.0 → v1.5.3(该元素不在 `stamp_version.py` 的 `HTML_TARGETS` 列表中,需手工维护)
+  - 其余 HTML / MD 文件 `?v=` 与可见版本号已由 `make stamp-version` 自动同步
+
+### 维护
+
+- 同步更新 `docs/VERSIONING.md` line 155 的"最新稳定版"引用
+
+---
+
 ## [1.5.2] — 2026-06-07
 
 ### 修复

@@ -3,15 +3,15 @@
 Editorial Design Interface for Content. A framework-agnostic design system for building warm, restrained, ordered interfaces — with OKLch color science and design tokens. For humans and AI alike: even if you don't know design, EDIC helps any AI assistant produce professional-grade interfaces and documents.
 
 **Site:** https://edic.cgartlab.com
-**Version:** v1.5.2
+**Version:** v1.5.3
 **License:** CC BY 4.0
 
 ---
 
 ## What it is
 
-- **172 design tokens** — color, typography, spacing, radius, shadow, motion; change once, update everywhere.
-- **23 components** — semantic `ds-*` classes with full dark-mode coverage.
+- **200+ design tokens** — color, typography, spacing, radius, shadow, motion; change once, update everywhere.
+- **20 core + 5 add-on components** — semantic `ds-*` classes with full dark-mode coverage.
 - **100 SVG icons** — 1.5px stroke, `aria-hidden`, inline-rendered from `scripts.js`.
 - **OKLch-only colors** — perceptually uniform, no more hex/rgb guesswork.
 - **Zero runtime dependencies** — pure HTML/CSS/JS. Use anywhere: React, Vue, Svelte, email, print.
