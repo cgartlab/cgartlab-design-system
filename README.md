@@ -1,6 +1,6 @@
 # EDIC Design System
 
-Editorial Design Interface for Content. A framework-agnostic design system for building warm, restrained, ordered interfaces — with OKLch color science and design tokens.
+Editorial Design Interface for Content. A framework-agnostic design system for building warm, restrained, ordered interfaces — with OKLch color science and design tokens. For humans and AI alike: even if you don't know design, EDIC helps any AI assistant produce professional-grade interfaces and documents.
 
 **Site:** https://edic.cgartlab.com
 **Version:** v1.5.1
@@ -15,7 +15,7 @@ Editorial Design Interface for Content. A framework-agnostic design system for b
 - **100 SVG icons** — 1.5px stroke, `aria-hidden`, inline-rendered from `scripts.js`.
 - **OKLch-only colors** — perceptually uniform, no more hex/rgb guesswork.
 - **Zero runtime dependencies** — pure HTML/CSS/JS. Use anywhere: React, Vue, Svelte, email, print.
-- **AI-ready** — prompts and Skill package in `prompts/` and `skills/edic-design-system/`.
+- **AI-ready** — prompts and Skill package in `prompts/` and `skills/edic-design-system/`. No design background needed — just tell the AI what you want.
 - **Engineering governance** — 6 Python validators, CI on every PR/push, process docs in `docs/`.
 
 ---
