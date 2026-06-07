@@ -16,7 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 | File | Role |
 |------|------|
-| `styles.css` | All design tokens (`:root` + `[data-theme="dark"]`), 23 components, animations, site shell |
+| `styles.css` | All design tokens (`:root` + `[data-theme="dark"]`), 20 core + 5 add-on components, animations, site shell |
 | `scripts.js` | Icon rendering, token table rendering, theme toggle, scroll reveal, copy actions, tab panels |
 | `tokens.json` | Structured JSON of all design tokens — source of truth for programmatic consumption |
 
@@ -48,9 +48,14 @@ All icons are inline SVG in `scripts.js` `ICONS` array. ViewBox must be `0 0 24 
 
 ### Branch Workflow
 
+Follows [BRANCH-WORKFLOW.md](../../BRANCH-WORKFLOW.md). 5 categories (consolidated from 6 legacy types):
+
 - `main` — stable releases, tagged `vX.Y.Z`
-- `dev-xxx` — feature development
-- `fix-xxx` — bug fixes
+- `feat/<scope>-<desc>` — new features (was `dev-*` and `feature/`)
+- `fix/<scope>-<desc>` — bug fixes (was `fix-*` and `hotfix/`)
+- `docs/<desc>` — docs / content / writing (was `write-*`)
+- `chore/<scope>-<desc>` — refactor / perf / format / tools / deps
+- `release/v<X>.<Y>.<Z>` — version release
 - `feat/icons-svg-sprite-generator` — pending: icon SVG sprite generator (4 commits ahead of main)
 
 ## Common Commands
