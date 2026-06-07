@@ -1,6 +1,6 @@
 # EDIC Design System — Agent Instructions
 
-**Version:** v1.5.1 | **Site:** https://edic.cgartlab.com | **License:** CC BY 4.0
+**Version:** v1.5.2 | **Site:** https://edic.cgartlab.com | **License:** CC BY 4.0
 
 ---
 

@@ -3,6 +3,23 @@
 本项目所有显著变更记录于此。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本 2.0.0](https://semver.org/lang/zh-CN/)（设计系统适配版，见 [docs/VERSIONING.md](./docs/VERSIONING.md)）。
 
+## [1.5.2] — 2026-06-07
+
+### 修复
+
+- **[B3] Copy 按钮错误状态后标签永久卡住**：`.catch()` 回调引用了只在 `.then()` 闭包中声明的 `label` 和 `original`，导致 `ReferenceError`，恢复超时从未执行，按钮文字永远停在 "复制失败"。将两个变量提升到 `.then()`/`.catch()` 分叉前，两个分支均可访问。
+- **[B5] PageNav TOC 页面加载时无初始高亮**：`IntersectionObserver` scroll-spy 仅在滚动时触发，页面首次加载时目录无任何项高亮。现在 pagenav 控制器初始化完成后立即调用 `setActive()` 激活第一项。
+- **[B7] Tabs 缺少 WAI-ARIA roles 及 Arrow 键导航**：`data-tabs` 控制器只设置了 `aria-selected`，未设置 `role=tablist`（容器）、`role=tab`（按钮）、`role=tabpanel`（面板），也不支持 WAI-ARIA Tabs pattern 要求的 ArrowLeft/ArrowRight 键盘切换与 roving tabindex。
+- **[B2] Accordion 头部无法键盘访问**：`.ds-accordion-header` 是 `<div>` 元素，缺少 `role="button"` 和 `tabindex="0"`，Tab 键直接跳过，屏幕阅读器不识别为可交互元素。JS 控制器现在在初始化时统一注入两个属性。
+- **[B1] Handbook Tabs 使用全局 `querySelectorAll` inline onclick**：手册页 "14 · Tabs" 演示的 inline onclick 调用 `document.querySelectorAll('.ds-tab')` 全局选择所有 tab，若页面有多组 tabs 则互相干扰，且缺失 ARIA 和键盘导航。已重构为 `data-tabs`/`data-tab`/`data-panel` 声明式模式。
+- **[B4] Accordion 与 Tabs 缺少 `:focus-visible` 样式**：键盘聚焦 accordion header 和 tab 按钮时无可见焦点环。CSS 已补充 `.ds-accordion-header:focus-visible` 与 `.ds-tab:focus-visible` 规则。
+
+### 新增
+
+- **单元测试套件**（`tests/unit/`，Vitest + jsdom）：8 个测试文件，87 个测试用例，全部通过（0 failures）。覆盖主题切换、移动端导航、PageNav TOC、滑块、Accordion、Tabs、Copy、ScrollReveal、图标网格、令牌表格、年份戳，以及所有上述 bug 的回归测试。`npm test` 运行。
+
+---
+
 ## [1.5.1] — 2026-06-06
 
 ### 修复
