@@ -75,73 +75,113 @@ h4 1.5 · h3 1.875 · h2 2.25 · h1 3 · display 3.75 · hero 4.5.
   `--ds-ease-spring`. Always honor `prefers-reduced-motion: reduce`.
 
 ## Component class catalog
-- **Layout**: `ds-wrapper` `ds-section` `ds-stack` (+ `--sm/--lg`) `ds-cluster` `ds-grid-2/3` `ds-feature-grid` `ds-prose`
-- **Buttons**: `ds-btn` + `--primary/--secondary/--ghost` + `--sm/--lg`
-- **Cards**: `ds-card` + `--hoverable/--flat`; glass `ds-glass-card`
-- **Forms**: `ds-input` (`--error`) `ds-label` `ds-select` `ds-checkbox` `ds-radio` `ds-toggle` `ds-form-*`
-- **Feedback**: `ds-badge` (`--accent/--success/--warning/--error`) `ds-alert` (`--info/--success/--warning/--error`) `ds-toast`
-- **Navigation**: `ds-navbar` `ds-tabs/ds-tab` `ds-breadcrumb` `ds-pagination` `ds-nav-item`
-- **Data**: `ds-table` `ds-progress` `ds-avatar` `ds-chip`
-- **Overlay**: `ds-modal` `ds-tooltip-demo` `ds-dropdown`
-- **Type**: `ds-display` `ds-h1..h4` `ds-caption` `ds-eyebrow` `ds-lead` `ds-serif` `ds-mono`
-- **Motion**: `ds-reveal` (+ `--left/--right/--scale`, stagger via inline `--d`), `ds-anim-float/spin-slow/pulse/fade-in/rise/glow-breathe`
 
-### Extended Navigation
-- `ds-pagenav` (`--rail`, `--hidden`), `ds-pagenav-disclosure`, `ds-pagenav-summary`, `ds-pagenav-chevron`, `ds-pagenav-list`, `ds-pagenav-link` (`--active`), `ds-pagenav-num`, `ds-pagenav-text`
-- `ds-mnav-trigger` (+ `ds-mnav-trigger-bar` `ds-mnav-backdrop`)
-- `ds-theme-toggle-btn` (`--fixed`)
+### Layout
+- **基础布局**: `ds-wrapper` `ds-section` (`--alt`/`--tight`) `ds-stack` (`--sm`/`--lg`) `ds-cluster` (`--center`) `ds-prose` `ds-flex-row`
+- **网格系统**: `ds-grid-2` `ds-grid-3` `ds-grid-4` `ds-grid-6` `ds-grid-icons` `ds-feature-grid`
+- **区块元素**: `ds-section-head` (`--center`) `ds-section-header`
+- **间距工具**: `ds-mt-*` `ds-mb-*` `ds-pt-0` `ds-gap-16` `ds-mx-auto` `ds-items-center` `ds-justify-start`
+- **间距展示**: `ds-spacing-vis` `ds-spacing-block` `ds-radius-vis` `ds-shadow-vis`
 
-### Accordion
-- `ds-accordion`, `ds-accordion-item`, `ds-accordion-header`, `ds-accordion-arrow`, `ds-accordion-content`
+### Buttons & Interactive
+- **按钮**: `ds-btn` + `--primary`/`--secondary`/`--ghost` + `--sm`/`--lg`
+- **图标按钮**: `ds-icon-btn`
+- **复制按钮**: `ds-copy-btn` (`--light`)
 
-### Date / Calendar
-- `ds-date-group`, `ds-date-wrap`, `ds-date-input`, `ds-date-icon`, `ds-date-calendar`
-- `ds-cal-header`, `ds-cal-nav`, `ds-cal-month-year`, `ds-cal-month`, `ds-cal-year`
-- `ds-cal-weekdays`, `ds-cal-grid-new`, `ds-cal-day`, `ds-cal-today`, `ds-cal-selected`, `ds-cal-muted`
-- `ds-cal-footer`, `ds-cal-btn` (`--primary`)
+### Cards & Surfaces
+- **卡片**: `ds-card` + `--hoverable`/`--flat`
+- **玻璃卡片**: `ds-glass-card` (`--sm`/`--lg`) `ds-glass-meta` `ds-glass-demo-bg`
+- **组件预览**: `ds-component-preview` `ds-component-group` `ds-component-label`
 
-### Slider
-- `ds-slider-group`, `ds-slider-label-row`, `ds-slider-value`, `ds-slider-track-wrap`, `ds-slider-track`, `ds-slider-fill`, `ds-slider`, `ds-slider-labels`
+### Forms
+- **基础表单**: `ds-input` (`--error`) `ds-label` `ds-hint` `ds-select` `ds-checkbox` `ds-radio` `ds-toggle` (`--track`/`--thumb`)
+- **扩展表单**: `ds-form-input` `ds-form-textarea` `ds-form-select` `ds-form-row` `ds-form-group` `ds-form-label` `ds-form-checkbox` `ds-form-hint` (`--error`) `ds-form-submit` `ds-form-required`
 
-### Glass & Overlay
-- `ds-overlay-sample`, `ds-overlay-bg`, `ds-overlay-layer`, `ds-overlay-strong`, `ds-overlay-light`, `ds-overlay-label`
-- `ds-glass-card` (`--sm`, `--lg`), `ds-glass-meta`, `ds-glass-btn` (+ `ds-glass-btn-row`)
-- `ds-frosted-nav`
-- `ds-toast-group`, `ds-toast-icon`, `ds-toast-text`, `ds-toast-close`
+### Feedback
+- **徽章**: `ds-badge` (`--default`/`--accent`/`--success`/`--warning`/`--error`)
+- **警告框**: `ds-alert` (`--info`/`--success`/`--warning`/`--error`) `ds-alert-icon` `ds-alert-title`
+- **通知**: `ds-toast` (`--error`/`--success`/`--warning`) `ds-toast-group` `ds-toast-icon` `ds-toast-text` `ds-toast-close`
 
-### Gravitas & Glow (dark-mode accent, 0% opacity in light)
-- `ds-glow-border`, `ds-aura`, `ds-surface-glow`, `ds-heading-glow`
-- `ds-anim-glow-breathe` (4s keyframe)
+### Navigation
+- **导航栏**: `ds-navbar` (`--scrolled`) `ds-navbar-inner` `ds-navbar-brand` `ds-navbar-links` `ds-navbar-link` (`--active`) `ds-navbar-actions` `ds-navbar-cta` `ds-navbar-icon-link`
+- **移动端菜单**: `ds-mnav-trigger` `ds-mnav-trigger-bar` `ds-mnav-backdrop`
+- **页面导航**: `ds-pagenav` (`--rail`/`--hidden`) `ds-pagenav-disclosure` `ds-pagenav-summary` `ds-pagenav-chevron` `ds-pagenav-list` `ds-pagenav-link` (`--active`) `ds-pagenav-num` `ds-pagenav-text`
+- **标签页**: `ds-tabs` `ds-tab` (`--active`) `ds-tab-content` (`--active`)
+- **面包屑**: `ds-breadcrumb` `ds-breadcrumb-current` `ds-breadcrumb-sep`
+- **分页**: `ds-pagination` `ds-page-btn` (`--active`)
+- **侧边导航**: `ds-nav` `ds-nav-item` (`--active`) `ds-nav-icon` `ds-nav-section-label`
+- **霜冻导航**: `ds-frosted-nav`
+- **主题切换**: `ds-theme-toggle-btn` (`--fixed`)
 
-### CJK Typography
-- `ds-text-cjk`, `ds-text-cjk-heading`, `ds-text-mixed`
-- `ds-text-indent`, `ds-hanging-punctuation`, `ds-text-emphasis`, `ds-text-highlight`
-- `ds-quote-cjk`, `ds-no-orphan`, `ds-num-unit`
+### Data Display
+- **表格**: `ds-table` `ds-table-wrap` `ds-table-mini` `ds-table-mini-row`
+- **进度条**: `ds-progress` `ds-progress-bar` `ds-progress-fill` `ds-progress-label`
+- **头像**: `ds-avatar` (`--sm`/`--lg`)
+- **芯片/标签**: `ds-chip` (`--active`) `ds-chip-remove`
+- **骨架屏**: `ds-skeleton`
+- **色卡**: `ds-swatch` `ds-swatch-color` `ds-swatch-info` `ds-swatch-name` `ds-swatch-value`
+- **类型标签**: `ds-type-label` `ds-type-label-meta`
+
+### Overlay & Glass
+- **遮罩层**: `ds-overlay-sample` `ds-overlay-bg` `ds-overlay-layer` `ds-overlay-strong` `ds-overlay-light` `ds-overlay-label`
+- **模态框**: `ds-modal` `ds-modal-header` `ds-modal-body` `ds-modal-footer` `ds-modal-close`
+- **工具提示**: `ds-tooltip-demo` `ds-tooltip-bubble`
+- **下拉菜单**: `ds-dropdown` `ds-dropdown-item` `ds-dropdown-divider`
+
+### Typography
+- **标题**: `ds-display` `ds-hero` `ds-h1` `ds-h2` `ds-h3` `ds-h4` `ds-h5` `ds-subtitle`
+- **正文**: `ds-lead` `ds-caption` `ds-eyebrow` `ds-serif` `ds-mono` `ds-meta` `ds-cover`
+- **中文排版**: `ds-text-cjk` `ds-text-cjk-heading` `ds-text-mixed` `ds-text-indent` `ds-hanging-punctuation` `ds-text-emphasis` `ds-text-highlight`
+- **引用**: `ds-quote-cjk` `ds-no-orphan` `ds-num-unit`
+- **工具**: `ds-text-center` `ds-text-muted` `ds-text-accent` `ds-text-balance` `ds-text-pretty` `ds-inline-code` `ds-body-sm`
 
 ### Article TOC
-- `ds-toc-article`, `ds-toc-article-title`, `ds-toc-list`
-- `ds-toc-link` (`--active`, `--h3`), `ds-toc-indicator`, `ds-toc-badge`
+- **目录**: `ds-toc` `ds-toc-article` `ds-toc-article-title` `ds-toc-list` `ds-toc-link` (`--active`/`--h3`) `ds-toc-indicator` `ds-toc-badge` `ds-toc-grid` `ds-toc-item` `ds-toc-num`
 
 ### Timeline
-- `ds-timeline`, `ds-timeline-item`, `ds-timeline-dot`, `ds-timeline-content`
-- `ds-timeline-date`, `ds-timeline-title`, `ds-timeline-tag`
+- **时间线**: `ds-timeline` `ds-timeline-item` `ds-timeline-dot` `ds-timeline-content` `ds-timeline-date` `ds-timeline-title` `ds-timeline-tag`
 
-### Code Block (Prism)
-- `ds-code`, `ds-code-bar`, `ds-code-lang`, `ds-copy-btn` (`--light`)
+### Date / Calendar
+- **日期组**: `ds-date-group` `ds-date-wrap` `ds-date-input` `ds-date-icon` `ds-date-calendar`
+- **日历**: `ds-cal-header` `ds-cal-nav` `ds-cal-month-year` `ds-cal-month` `ds-cal-year` `ds-cal-weekdays` `ds-cal-grid-new` `ds-cal-day` `ds-cal-today` `ds-cal-selected` `ds-cal-muted` `ds-cal-weekend` `ds-cal-weekend-col` `ds-cal-footer` `ds-cal-btn` (`--primary`)
+
+### Slider
+- **滑块**: `ds-slider-group` `ds-slider-label-row` `ds-slider-value` `ds-slider-track-wrap` `ds-slider-track` `ds-slider-fill` `ds-slider` `ds-slider-labels`
+
+### Accordion
+- **手风琴**: `ds-accordion` `ds-accordion-item` `ds-accordion-header` `ds-accordion-arrow` `ds-accordion-content`
+
+### Code Block
+- **代码**: `ds-code` `ds-code-bar` `ds-code-lang`
 
 ### Brand / Logo
-- `ds-logo`, `ds-logo-mark`, `ds-logo-text`, `ds-logo-word`, `ds-logo-sub`, `ds-logo-hero`
+- **Logo**: `ds-logo` (`--lg`) `ds-logo-mark` `ds-logo-text` `ds-logo-word` `ds-logo-sub` `ds-logo-hero` `ds-logo-draw`
+- **品牌预览**: `ds-brand-preview` (`--paper`/`--ink`)
 
 ### Site Shell
-- `ds-hero-section`, `ds-hero-inner`, `ds-hero-badge`, `ds-hero-title`, `ds-hero-lead`, `ds-hero-actions`, `ds-hero-meta`, `ds-gradient-text`
-- `ds-stat-grid`, `ds-stat`, `ds-stat-num`, `ds-stat-label`
-- `ds-steps`, `ds-step`, `ds-step-num`, `ds-step-body`
-- `ds-compat-grid`, `ds-compat-item`
-- `ds-docs` `ds-doc-block`
-- `ds-dl-grid`, `ds-dl-card`, `ds-dl-top`, `ds-dl-ico`, `ds-dl-meta`, `ds-dl-actions`
-- `ds-footer-rich`, `ds-footer-cols`, `ds-footer-brand`, `ds-footer-col`, `ds-footer-links`, `ds-footer-bottom`
-- `ds-edge-decor` (`--tl/--tr/--bl/--br`), `ds-bg-blob` (`--1/--2/--3`)
-- `ds-skip` (#ds-main for a11y skip link)
+- **英雄区**: `ds-hero-section` `ds-hero-inner` `ds-hero-badge` `ds-hero-title` `ds-hero-lead` `ds-hero-actions` `ds-hero-meta` `ds-hero-mark-wrap` `ds-gradient-text`
+- **数据统计**: `ds-stat-grid` `ds-stat` `ds-stat-num` `ds-stat-label`
+- **步骤列表**: `ds-steps` `ds-step` `ds-step-num` `ds-step-body`
+- **兼容徽章**: `ds-compat-grid` `ds-compat-item` `ds-cta-h2`
+- **特性卡片**: `ds-feature-card` `ds-feature-ico`
+- **下载卡片**: `ds-dl-grid` (`--two-rows`) `ds-dl-card` `ds-dl-top` `ds-dl-ico` `ds-dl-meta` `ds-dl-actions`
+- **文档布局**: `ds-docs` `ds-docs-aside` `ds-docs-main` `ds-doc-block`
+- **提示卡片**: `ds-prompt` `ds-prompt-head` `ds-prompt-title` `ds-prompt-body` `ds-prompt-foot`
+- **富页脚**: `ds-footer-rich` `ds-footer-cols` `ds-footer-brand` `ds-footer-col-heading` `ds-footer-links` `ds-footer-bottom`
+
+### Motion & Animation
+- **滚动揭示**: `ds-reveal` (`--left`/`--right`/`--scale`, stagger via inline `--d`)
+- **连续动效**: `ds-anim-float` `ds-anim-spin-slow` `ds-anim-pulse` `ds-anim-fade-in` `ds-anim-rise` `ds-anim-glow-breathe`
+
+### Gravitas & Glow (dark-mode accent)
+- **发光效果**: `ds-glow-border` `ds-aura` `ds-surface-glow` `ds-heading-glow`
+
+### Decorative
+- **边缘装饰**: `ds-edge-decor` (`--tl`/`--tr`/`--bl`/`--br`)
+- **背景斑点**: `ds-bg-blob` (`--1`/`--2`/`--3`)
+
+### Accessibility
+- **无障碍**: `ds-sr-only` `ds-skip` `#ds-main`
 
 ## Output expectations
 - Produce complete, runnable HTML fragments assuming `styles.css` (and optional
