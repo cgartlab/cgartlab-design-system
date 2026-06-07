@@ -839,3 +839,54 @@ const TOKENS = [
   const els = document.querySelectorAll(".ds-year");
   Array.prototype.forEach.call(els, function(el) { el.textContent = year; });
 })();
+
+/* ===== Toast auto-dismiss functionality ===== */
+(function() {
+  // Auto-dismiss toast notifications after 5 seconds
+  var toastElements = document.querySelectorAll('.ds-toast');
+  
+  Array.prototype.forEach.call(toastElements, function(toast) {
+    // Skip if already has auto-dismiss data attribute set
+    if (toast.hasAttribute('data-auto-dismiss')) {
+      var dismissDelay = parseInt(toast.getAttribute('data-auto-dismiss'), 10);
+      if (isNaN(dismissDelay) || dismissDelay < 0) {
+        dismissDelay = 5000; // default 5 seconds
+      }
+      if (dismissDelay > 0) {
+        setTimeout(function() {
+          dismissToast(toast);
+        }, dismissDelay);
+      }
+    } else {
+      // Default auto-dismiss after 5 seconds for all toasts
+      setTimeout(function() {
+        dismissToast(toast);
+      }, 5000);
+    }
+    
+    // Add click handler for close button
+    var closeBtn = toast.querySelector('.ds-toast-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        dismissToast(toast);
+      });
+    }
+  });
+  
+  function dismissToast(toast) {
+    // Check if already dismissing
+    if (toast.classList.contains('ds-toast-dismissing')) {
+      return;
+    }
+    
+    // Add dismissing class to trigger CSS transition
+    toast.classList.add('ds-toast-dismissing');
+    
+    // Remove from DOM after animation completes
+    setTimeout(function() {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300); // Match CSS transition duration
+  }
+})();
