@@ -31,7 +31,7 @@ Lucide 风格线性图标。
 { id: "icon-name", svg: '<svg viewBox="0 0 24 24">...</svg>' }
 ```
 
-并在 `handbook.html`（自动渲染）展示。
+并在 `docs.html`（自动渲染）展示。
 
 ## 优先级
 

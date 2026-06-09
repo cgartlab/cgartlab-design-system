@@ -30,7 +30,7 @@
 - [ ] 检查 `README.md` 截图与示例是否需要更新
 - [ ] 检查 `AGENTS.md` 组件清单是否需要更新
 - [ ] 检查 `DEVELOPMENT-GUIDE.md` 是否需要更新
-- [ ] 检查 `handbook.html` 预览是否完整
+- [ ] 检查 `docs.html` 预览是否完整
 - [ ] 检查 `docs.html` 教程是否需要更新
 
 ## 代码阶段（发布当天）

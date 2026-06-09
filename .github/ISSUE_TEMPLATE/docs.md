@@ -25,7 +25,7 @@ assignees: []
 - [ ] `docs/*`
 - [ ] `prompts/*`
 - [ ] `skills/*`
-- [ ] `terms.html` / `handbook.html` / `docs.html` / `prompts.html` / `downloads.html` / `index.html`
+- [ ] `terms.html` / `docs.html` / `prompts.html` / `downloads.html` / `index.html`
 - [ ] 示例页（`blog.html` / `company.html` / `resume.html` / `report.html`）
 - [ ] 其他：___
 

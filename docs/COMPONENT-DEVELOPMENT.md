@@ -10,7 +10,7 @@
         ↓
 2. 令牌先行（必要时）     ── 评估是否需要新令牌，复用现有
         ↓
-3. 组件原型               ── 在 handbook.html 中加入预览
+3. 组件原型               ── 在 docs.html 中加入预览
         ↓
 4. 暗色 + 响应式验证      ── 多视口、键盘、屏幕阅读器
         ↓
@@ -68,7 +68,7 @@
 1. `styles.css` `:root` 与 `[data-theme="dark"]`
 2. `tokens.json`（结构化数据）
 3. `scripts.js` 的 `TOKENS` 数组（用于令牌表渲染）
-4. `handbook.html` 的 `#tokens` 章节（自动渲染）
+4. `docs.html` 的 `#token-index` 章节（自动渲染）
 5. `AGENTS.md` 令牌章节（如新增类别）
 6. `CHANGELOG.md`（MINOR 条目）
 
@@ -181,7 +181,7 @@
 | `styles.css` | 新增/修改组件样式 |
 | `scripts.js` | 新增/修改交互逻辑（含 ICONS、TOKENS 数组） |
 | `tokens.json` | 同步令牌数据 |
-| `handbook.html` | 新增预览区块 |
+| `docs.html` | 新增预览区块 |
 | `AGENTS.md` | 更新组件清单 |
 | `DEVELOPMENT-GUIDE.md` | 更新组件说明（如有） |
 | `CHANGELOG.md` | 记录变更 |
@@ -193,7 +193,7 @@
 ```bash
 make validate           # 全部校验
 make preview            # 启动本地服务器
-# 浏览器中检查 handbook.html 新组件
+# 浏览器中检查 docs.html 新组件
 ```
 
 ### PR 描述

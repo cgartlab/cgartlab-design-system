@@ -51,7 +51,7 @@ assignees: []
 - [ ] `styles.css`（必须）
 - [ ] `tokens.json`（必须）
 - [ ] `scripts.js` 的 `TOKENS` 数组
-- [ ] `handbook.html`（自动展示）
+- [ ] `docs.html`（自动展示）
 - [ ] `AGENTS.md`（如果新增类别）
 - [ ] `CHANGELOG.md`
 

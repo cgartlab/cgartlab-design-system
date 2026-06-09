@@ -37,7 +37,7 @@
 - [ ] `styles.css`
 - [ ] `scripts.js`
 - [ ] `tokens.json`
-- [ ] `handbook.html` / `index.html` / `docs.html` / `prompts.html` / `downloads.html` / `terms.html`
+- [ ] `index.html` / `docs.html` / `prompts.html` / `downloads.html` / `terms.html`
 - [ ] `blog.html` / `company.html` / `resume.html` / `report.html`
 - [ ] `README.md` / `AGENTS.md` / `DEVELOPMENT-GUIDE.md`
 - [ ] `CHANGELOG.md`

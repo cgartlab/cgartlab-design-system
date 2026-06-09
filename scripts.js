@@ -507,7 +507,7 @@ const TOKENS = [
 /* ===== Page Navigation (unified TOC) controller =====
    Drives every .ds-pagenav: optional link generation from page sections,
    scroll-spy active state, smooth in-page scrolling, and mobile auto-collapse.
-   Works for both .ds-section[id] (handbook) and .ds-doc-block[id] (docs). */
+   Works for .ds-doc-block[id] (docs) and .ds-section[id]. */
 (function() {
   const navs = document.querySelectorAll(".ds-pagenav");
   if (!navs.length) return;
