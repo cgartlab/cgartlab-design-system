@@ -125,7 +125,7 @@ git tag v1.5.0 && git push origin v1.5.0
 1. **Open an Issue** first — describe component name, use cases, variants, states.
 2. **Check existing tokens** — reuse before adding new ones. If new token needed, add to both `styles.css` (`:root` + `[data-theme="dark"]`) and `tokens.json`.
 3. **Implement in `styles.css`** using BEM naming, OKLch colors, `var(--ds-*)` tokens.
-4. **Add preview to `handbook.html`**.
+4. **Add preview to `docs.html`**.
 5. **Update `scripts.js`** `TOKENS` array if new tokens added.
 6. **Update `AGENTS.md`** component catalog.
 7. **Update `CHANGELOG.md`** under `[未发布]`.

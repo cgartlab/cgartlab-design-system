@@ -133,7 +133,7 @@ make serve             # 本地预览
 
 - 改动 `styles.css` / `scripts.js` 后，**必须**在所有 HTML 中同步 bump `?v=` 版本号
 - 改动令牌需同步更新 `tokens.json` 与 `scripts.js` 的 `TOKENS` 数组
-- 新增组件需在 `handbook.html` 的 `#components` 区域添加预览
+- 新增组件需在 `docs.html` 的 `#visual-components` 区域添加预览
 - 重大变更需更新 `CHANGELOG.md` 并 bump 版本号
 
 详见 [`docs/RELEASE-CHECKLIST.md`](./docs/RELEASE-CHECKLIST.md)。
@@ -142,7 +142,7 @@ make serve             # 本地预览
 
 ```
 edic-design-system/
-├── index.html / handbook.html / docs.html / prompts.html / downloads.html / terms.html
+├── index.html / docs.html / prompts.html / downloads.html / terms.html
 ├── blog.html / company.html / resume.html / report.html   # 真实示例
 ├── styles.css         # 令牌 + 暗色 + 组件 + 动效
 ├── scripts.js         # 交互

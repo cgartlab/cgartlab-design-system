@@ -112,7 +112,7 @@ See `SKILL.md` for the complete list of 280+ component classes organized by cate
 
 ## Reference Resources / 参考资源
 
-- **Live Handbook / 视觉手册**: https://edic.cgartlab.com/handbook.html
+- **Live Handbook / 视觉手册**: https://edic.cgartlab.com/docs.html
 - **Documentation / 使用文档**: https://edic.cgartlab.com/docs.html
 - **Downloads / 下载页面**: https://edic.cgartlab.com/downloads.html
 - **GitHub Repository / GitHub 仓库**: https://github.com/cgartlab/cgartlab-design-system

@@ -30,8 +30,7 @@ VERSION           — single-line version source of truth
 favicon.svg       — site icon (pen-nib monogram)
 
 index.html — homepage
-handbook.html     — visual catalog (live component previews)
-docs.html         — usage guide
+docs.html         — usage guide + visual catalog (live component previews)
 prompts.html      — AI prompts & Skill
 downloads.html    — PDF references, token exports, brand assets
 terms.html — CC BY 4.0 license
