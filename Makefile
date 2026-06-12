@@ -4,7 +4,7 @@
 
 SHELL := /bin/sh
 .DEFAULT_GOAL := help
-.PHONY: help validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links validate-cssref validate-darkmode validate-verext validate-hardcode stamp-version serve clean serve-py serve-node generate-pdfs icons icons-check test
+.PHONY: help lint build validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links validate-cssref validate-darkmode validate-verext validate-hardcode stamp-version serve clean serve-py serve-node generate-pdfs icons icons-check test skill-package
 
 PYTHON ?= python3
 NODE ?= node
@@ -18,6 +18,13 @@ help:  ## 显示帮助
 	@echo "Targets:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 	  awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+# ─── 统一入口 ──────────────────────────────────────────────
+lint:  ## 运行统一 lint（聚合 10 个验证器）
+	$(PYTHON) scripts/lint.py
+
+build:  ## 完整构建（lint → stamp → icons → PDFs → SKILL）
+	$(PYTHON) scripts/build.py
 
 # ─── 验证 ──────────────────────────────────────────────────
 # AGENTS.md 退出码契约：0 = pass / 1 = 阻塞错误 / 2 = 仅警告（非阻塞）
@@ -107,6 +114,9 @@ icons:  ## 从 scripts.js 的 ICONS 数组生成 icons.svg sprite
 
 icons-check:  ## 校验 icons.svg 是否与 scripts.js 的 ICONS 数组同步（CI 用）
 	$(PYTHON) tools/generate_icons.py --check
+
+skill-package:  ## 重新打包 SKILL.zip（lint → stamp → icons → PDFs → SKILL）
+	bash scripts/package-skill.sh
 
 # ─── 测试 ──────────────────────────────────────────────────
 test: validate  ## 运行所有测试（当前等价于 validate）

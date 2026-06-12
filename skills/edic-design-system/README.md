@@ -1,48 +1,76 @@
-# EDIC Design System Skill Package v1.5.1
-# EDIC 设计系统 Skill 技能包 v1.5.1
+# EDIC Design System Skill Package v1.5.3
+# EDIC 设计系统 Skill 技能包 v1.5.3
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Version](https://img.shields.io/badge/Version-1.5.1-green.svg)](https://edic.cgartlab.com/)
+[![Version](https://img.shields.io/badge/Version-1.5.3-green.svg)](https://edic.cgartlab.com/)
 
 ---
 
-## Quick Start / 快速开始
+## 安装 Installation
 
-### Claude Code / Claude Code 安装
+### Claude Code / Claude Code
 
 ```bash
-# 方式一：复制到项目 skills 目录
+# 项目级安装（推荐）
 mkdir -p .claude/skills
-# 将本压缩包解压后的 edic-design-system 文件夹复制到 .claude/skills/
-# 或直接复制 SKILL.md 到项目根目录的 .claude/目录
+# 解压本 ZIP，将 edic-design-system 目录内容放入 .claude/skills/edic-design-system/
+# 或直接放置 SKILL.md 文件
 
-# 方式二：复制到全局 skills 目录
-# ~/.claude/skills/edic-design-system/SKILL.md
+# 全局安装
+mkdir -p ~/.claude/skills/edic-design-system
+cp SKILL.md ~/.claude/skills/edic-design-system/
 ```
 
-### Other Agents / 其他 Agent 接入
+> **验证安装成功**：在任意项目中发送「用 EDIC 设计系统设计一个按钮」，Claude 应理解 `--ds-*` 令牌规范并使用 `ds-btn` `ds-btn--primary` 类名。
 
-| Agent | 安装位置 | 说明 |
-|-------|----------|------|
-| ChatGPT | Custom Instructions / 对话首条 |复制精简提示词或 system-prompt.md |
-| Cursor | `.cursor/rules` / Settings → Rules for AI | 写入规则文件 |
-| Kiro | `.kiro/steering/` / `.kiro/skills/` | 放入技能目录 |
-| GitHub Copilot | `.github/copilot-instructions.md` | 写入项目说明 |
-| Gemini / 其他 LLM | 系统消息 / System Message | 作为系统指令粘贴 |
+### Cursor
+
+```bash
+# 方式一：写入项目级规则（推荐）
+# 文件：.cursor/rules/edic-design-system.md
+# 内容：复制 SKILL.md 的设计原则和组件规范部分
+
+# 方式二：复制到全局 skills
+mkdir -p ~/.cursor/skills/edic-design-system
+cp SKILL.md ~/.cursor/skills/edic-design-system/
+```
+
+### Kiro
+
+```bash
+# 写入 steering 文件
+mkdir -p .kiro/steering
+# 复制 SKILL.md 设计规范到 .kiro/steering/edic-design-system.md
+```
+
+### GitHub Copilot
+
+```bash
+# 写入项目说明
+# 文件：.github/copilot-instructions.md
+# 内容：复制 SKILL.md 的设计原则、令牌和组件规范
+```
+
+### ChatGPT / Gemini / 其他 LLM
+
+将 `SKILL.md` 的核心内容（设计原则 + 令牌速查 + 组件类名表）复制到：
+- ChatGPT：Settings → Custom Instructions → "All conversations"
+- Gemini：Gemini App Settings → AI Studio → System Instructions
+- 其他：将规范作为每轮对话的首条系统消息
 
 ---
 
-## File Description / 文件说明
+## 文件说明 Files
 
 | 文件 | 用途 |
 |------|------|
-| `SKILL.md` | Agent 技能包 / Agent Skill Package — 持久化遵循设计规范 |
-| `edic-design-system.css` | 完整样式表 / Complete Stylesheet —零依赖的纯 CSS |
-| `edic-design-system.json` | 设计令牌 / Design Tokens — 结构化 JSON 格式 |
+| `SKILL.md` | Agent 技能包 — 持久化遵循 EDIC 设计规范 |
+| `README.md` | 安装指南 — 多平台 AI 工具接入说明 |
+| `tokens.json` | 设计令牌 — 结构化 JSON 格式参考 |
 
 ---
 
-## Design Principles / 设计原则
+## 设计原则 Design Principles
 
 1. **OKLch Colors / OKLch 颜色** — 所有颜色使用 OKLch 色彩空间，绝不用 hex/rgb
 2. **Token-Driven / 令牌驱动** — 使用 `--ds-*` CSS 变量，禁止硬编码魔法数字
@@ -52,7 +80,7 @@ mkdir -p .claude/skills
 
 ---
 
-## Core Tokens / 核心令牌速查
+## 核心令牌速查 Core Tokens
 
 ```css
 /* Colors / 颜色 */
@@ -69,7 +97,7 @@ mkdir -p .claude/skills
 --ds-space-1..32                          /* 4px base ratio */
 
 /* Radius / 圆角 */
---ds-radius-md: 4px /* Core: 8-16px */
+--ds-radius-md: 4px
 
 /* Motion / 动效 */
 --ds-duration-150..500                    /* Duration scale */
@@ -78,10 +106,10 @@ mkdir -p .claude/skills
 
 ---
 
-## Quick Component Reference / 常用组件速查
+## 常用组件速查 Quick Component Reference
 
-| 需求 Need | 组件类 Class |
-|-----------|-------------|
+| 需求 | 组件类 |
+|------|--------|
 | Button / 按钮 | `ds-btn ds-btn--primary` |
 | Card / 卡片 | `ds-card ds-card--hoverable` |
 | Input / 输入框 | `ds-input ds-label` |
@@ -92,39 +120,26 @@ mkdir -p .claude/skills
 | Reveal animation / 揭示动效 | `ds-reveal` + `--d` stagger |
 | Toast / 通知 | `ds-toast ds-toast-icon` |
 
----
-
-## Full Component Catalog / 完整组件目录
-
-See `SKILL.md` for the complete list of 280+ component classes organized by category:
-- Layout / 布局
-- Buttons & Interactive / 按钮与交互
-- Cards & Surfaces / 卡片与表面
-- Forms / 表单
-- Feedback / 反馈
-- Navigation / 导航
-- Data Display / 数据展示
-- Overlay & Glass / 浮层与玻璃
-- Typography / 排版
-- Motion & Animation / 动效
+完整组件目录（280+）见 `SKILL.md`。
 
 ---
 
-## Reference Resources / 参考资源
+## 参考资源
 
-- **Live Handbook / 视觉手册**: https://edic.cgartlab.com/docs.html
-- **Documentation / 使用文档**: https://edic.cgartlab.com/docs.html
-- **Downloads / 下载页面**: https://edic.cgartlab.com/downloads.html
-- **GitHub Repository / GitHub 仓库**: https://github.com/cgartlab/cgartlab-design-system
+- **视觉手册**: https://edic.cgartlab.com/docs.html
+- **下载页面**: https://edic.cgartlab.com/downloads.html
+- **GitHub**: https://github.com/cgartlab/edic-design-system
 
 ---
 
-## Changelog / 更新日志
+## 更新日志 Changelog
+
+### v1.5.3 (2026-06)
+- 重构 tokens.json 为 flat 结构，与 CSS `--ds-*` 变量名一一对应
+- 添加统一构建工具链 `scripts/lint.py` 和 `scripts/build.py`
+- 完善打印/PDF 输出样式，添加 `@page` 规则
 
 ### v1.5.1 (2026-06)
-- 补全 280+ 遗漏的组件类 / Added 280+ missing component classes
-- 统一组件目录结构 / Unified component catalog structure
-- 添加双语 README 安装说明 / Added bilingual README installation guide
-
-### v1.5.0 (2026-05)
-- 初始发布 / Initial release
+- 补全 280+ 遗漏的组件类
+- 统一组件目录结构
+- 添加双语 README 安装说明

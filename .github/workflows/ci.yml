@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Make scripts executable
-        run: chmod +x tools/validate_*.py
+        run: chmod +x tools/validate_*.py scripts/*.py scripts/*.sh 2>/dev/null || true
       - id: tokens
         run: python3 tools/validate_tokens.py || rc=$?; if [ ${rc:-0} -eq 1 ]; then exit 1; elif [ ${rc:-0} -eq 2 ]; then exit 0; fi
       - id: naming
@@ -57,6 +57,8 @@ jobs:
         continue-on-error: true
         if: always()
         run: python3 tools/validate_hardcode.py || rc=$?; if [ ${rc:-0} -eq 1 ]; then exit 1; elif [ ${rc:-0} -eq 2 ]; then exit 0; fi
+      - id: lint
+        run: python3 scripts/lint.py
       - name: Summarize
         if: always()
         run: |
@@ -73,6 +75,7 @@ jobs:
           echo "| darkmode | ${{ steps.darkmode.outcome }} |" >> $GITHUB_STEP_SUMMARY
           echo "| verext  | ${{ steps.verext.outcome }} |" >> $GITHUB_STEP_SUMMARY
           echo "| hardcode | ${{ steps.hardcode.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| lint     | ${{ steps.lint.outcome }} |" >> $GITHUB_STEP_SUMMARY
       - name: Check for failures
         if: always()
         run: |
@@ -84,6 +87,7 @@ jobs:
           if [ "${{ steps.a11y.outcome }}" = "failure" ]; then FAILED="$FAILED a11y"; fi
           if [ "${{ steps.versions.outcome }}" = "failure" ]; then FAILED="$FAILED versions"; fi
           if [ "${{ steps.links.outcome }}" = "failure" ]; then FAILED="$FAILED links"; fi
+          if [ "${{ steps.lint.outcome }}" = "failure" ]; then FAILED="$FAILED lint"; fi
           # NOTE: cssref/darkmode/verext/hardcode use continue-on-error=true
           # (soft failures / warnings only) — excluded from blocking check
           if [ -n "$FAILED" ]; then

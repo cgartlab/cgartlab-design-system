@@ -1,4 +1,4 @@
-/* ===== EDIC Design System v1.5.2 — Icon Grid & Token Table ===== */
+/* ===== EDIC Design System v1.5.3 — Icon Grid & Token Table ===== */
 
 const ICONS = [
   {id:"archive",svg:'<svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>'},
@@ -344,6 +344,60 @@ const TOKENS = [
       document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "light");
     }
   });
+})();
+
+/* ===== Language Switcher ===== */
+(function() {
+  const LANG_KEY = "ds-lang";
+  const LANGS = ["zh-CN", "en", "ja", "ko", "zh-Hant"];
+  const LABELS = { "zh-CN": "中文", en: "EN", ja: "JA", ko: "KO", "zh-Hant": "繁體" };
+
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    try { localStorage.setItem(LANG_KEY, lang); } catch(e) { console.warn("[EDIC] Language preference could not be saved (localStorage blocked)"); }
+    updateButtons(lang);
+  }
+
+  function updateButtons(lang) {
+    var btns = document.querySelectorAll(".ds-lang-switch-btn");
+    Array.prototype.forEach.call(btns, function(btn) {
+      if (!btn) return;
+      btn.setAttribute("aria-label", "语言：" + (LABELS[lang] || lang));
+      var label = btn.querySelector(".lang-label");
+      if (label) label.textContent = LABELS[lang] || lang;
+    });
+  }
+
+  function cycleLang() {
+    var current = document.documentElement.lang || "zh-CN";
+    var idx = LANGS.indexOf(current);
+    var next = LANGS[(idx + 1) % LANGS.length];
+    applyLang(next);
+  }
+
+  window.setLang = function(lang) {
+    if (LANGS.indexOf(lang) !== -1) applyLang(lang);
+  };
+
+  window.cycleLang = cycleLang;
+
+  function init() {
+    var saved;
+    try { saved = localStorage.getItem(LANG_KEY); } catch(e) { console.warn("[EDIC] Language preference could not be read (localStorage blocked)"); }
+    var initial = LANGS.indexOf(saved) !== -1 ? saved : document.documentElement.lang || "zh-CN";
+    applyLang(initial);
+
+    var btns = document.querySelectorAll(".ds-lang-switch-btn");
+    Array.prototype.forEach.call(btns, function(btn) {
+      if (btn) btn.addEventListener("click", cycleLang);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();
 
 /* ===== Slider sync ===== */

@@ -7,6 +7,13 @@ No third-party dependencies: this writes valid PDF 1.7 by hand (Helvetica /
 Helvetica-Bold / Courier built-in fonts + filled rectangles for swatches).
 Text is ASCII (token names + OKLch values), which suits a reference card.
 
+Capability: This script generates token/color REFERENCE CARDS only (ASCII text +
+swatches). It does NOT perform full HTML → PDF rendering. For full-page PDF
+generation from HTML templates, consider upgrading to WeasyPrint as an optional
+dependency (pip install weasyprint), then call:
+    from weasyprint import HTML, CSS
+    HTML('handbook.html').write_pdf('handbook.pdf', stylesheets=['styles.css'])
+
 版本号：页脚中显示的 "vX.Y.Z" 从仓库根目录的 VERSION 文件读取
 （由 stamp_version.py 与 HTML/MD 文件保持一致）。
 
