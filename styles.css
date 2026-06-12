@@ -1,4 +1,4 @@
-/* ===== EDIC Design System v1.5.2 — Tokens & Styles ===== */
+/* ===== EDIC Design System v1.5.3 — Tokens & Styles ===== */
 
 :root {
   --ds-color-bg: oklch(97% 0.012 80);
@@ -176,6 +176,31 @@
   --ds-token-deleted: oklch(65% 0.14 30);
   --ds-token-url: oklch(72% 0.08 200);
 
+}
+
+/* ===== Language-specific typography ===== */
+html[lang="ja"] {
+  --ds-font-display: "YuMincho", "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  --ds-font-body: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
+  --ds-font-ui: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
+  --ds-font-mono: "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono CJK JP", ui-monospace, monospace;
+  letter-spacing: 0.02em;
+}
+html[lang="ko"] {
+  --ds-font-display: "Nanum Myeongjo", "Noto Serif KR", serif;
+  --ds-font-body: "Noto Sans KR", "Nanum Gothic", system-ui, sans-serif;
+  --ds-font-ui: "Noto Sans KR", "Nanum Gothic", system-ui, sans-serif;
+  --ds-font-mono: "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono CJK KR", ui-monospace, monospace;
+  letter-spacing: 0.025em;
+}
+html[lang="zh-Hant"] {
+  --ds-font-display: "Noto Serif TC", "Source Han Serif TC", serif;
+  --ds-font-body: "Noto Sans TC", "Source Han Sans TC", system-ui, sans-serif;
+  --ds-font-ui: "Noto Sans TC", "Source Han Sans TC", system-ui, sans-serif;
+  --ds-font-mono: "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono CJK TC", ui-monospace, monospace;
+}
+html[lang="zh-CN"] {
+  letter-spacing: var(--ds-tracking-cjk-body);
 }
 
 /* ===== Dark mode ===== */
@@ -731,6 +756,9 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-theme-toggle-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block}
 .ds-theme-toggle-btn--fixed{position:fixed;bottom:var(--ds-space-6);right:var(--ds-space-6);z-index:var(--ds-z-dropdown);width:44px;height:44px;padding:0;border-radius:50%;background:var(--ds-color-surface-raised);border:1px solid var(--ds-color-border);box-shadow:var(--ds-shadow-lg);backdrop-filter:blur(8px)}
 .ds-theme-toggle-btn--fixed svg{width:20px;height:20px}
+.ds-lang-switch-btn{display:inline-flex;align-items:center;gap:var(--ds-space-1);padding:var(--ds-space-1) var(--ds-space-3);border-radius:var(--ds-radius-lg);border:none;background:transparent;color:var(--ds-color-muted);cursor:pointer;font-family:var(--ds-font-ui);font-size:var(--ds-text-body-sm);transition:color .2s,background .2s}
+.ds-lang-switch-btn:hover{color:var(--ds-color-fg);background:var(--ds-accent-soft)}
+.ds-lang-switch-btn .lang-label{font-weight:var(--ds-weight-medium)}
 @media(min-width:1024px){.ds-theme-toggle-btn--fixed{display:none!important}}
 @media(max-width:1023px){.ds-navbar .ds-theme-toggle-btn{display:none!important}}
 
@@ -983,9 +1011,24 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 }
 
 /* ===== Print ===== */
+@page {
+  size: A4;
+  margin: 14mm 16mm;
+  background: var(--ds-color-bg);
+}
+@page :first {
+  margin-top: 20mm;
+}
 @media print{
   .ds-navbar,.ds-pagenav,.ds-edge-decor,.ds-bg-blob,.ds-theme-toggle-btn{display:none!important}
   .ds-section{break-inside:avoid;padding:var(--ds-space-12) 0}
+  .ds-card,.ds-accordion,.ds-table,.ds-alert,.ds-code,.ds-blockquote{break-inside:avoid}
+  .ds-btn{display:none!important}
+  a{text-decoration:underline;color:var(--ds-color-fg-strong)!important}
+  .ds-wrapper{max-width:100%!important;padding:0!important}
+  h1,h2,h3,h4{page-break-after:avoid}
+  img,.ds-swatch{break-inside:avoid}
+  body{background:var(--ds-color-bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 
 
@@ -1333,6 +1376,12 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
   .ds-reveal{opacity:1!important;transform:none!important}
   .ds-code{border:1px solid oklch(79% 0 0);box-shadow:none;background:var(--ds-code-bg)!important}
   .ds-code pre{color:var(--ds-code-text)!important}
+  body{background:var(--ds-color-bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .ds-wrapper{max-width:100%!important;padding:0!important}
+  h1,h2,h3,h4{page-break-after:avoid}
+  img,.ds-swatch,.ds-avatar{break-inside:avoid}
+  .ds-card,.ds-accordion,.ds-table,.ds-alert,.ds-blockquote,.ds-calendar{break-inside:avoid}
+  .ds-code{white-space:pre-wrap;word-break:break-word}
 }
 
 

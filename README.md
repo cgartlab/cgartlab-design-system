@@ -44,7 +44,7 @@ prompts/                      — system-prompt.md, quick-prompt.md
 skills/edic-design-system/     — SKILL.md (Claude Code agent package)
 docs/ — VERSIONING, COMPONENT-DEVELOPMENT, TESTING, RELEASE-CHECKLIST
 tools/                         — validate_*.py (tokens, naming, html, a11y, versions, links)
-scripts/                       — dev.sh, dev.ps1, pre-commit.sh, run-validators.js
+scripts/                       — lint.py (unified validator), build.py (pipeline), dev.sh, dev.ps1, pre-commit.sh
 .github/ — issue templates, PR template, CI workflow
 ```
 
@@ -75,7 +75,9 @@ Full docs at https://edic.cgartlab.com/docs.html
 
 ```bash
 make serve     # http://localhost:8000
-make validate  # run all 6 validators
+make lint      # unified lint (10 validators, one command)
+make build     # full pipeline: lint → stamp → icons → PDFs → SKILL zip
+make validate  # all 10 validators individually
 make clean     # remove temp files
 ```
 

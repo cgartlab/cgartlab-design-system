@@ -188,7 +188,8 @@ def main() -> int:
         print("[OK] styles.css 全部使用 OKLch 表达颜色")
 
     # ─── 警告：tokens.json → styles.css 覆盖 ──────────────
-    missing_in_css = [name for name in json_tokens if name not in root_vars]
+    # -dark 后缀的 token 属于 [data-theme="dark"] 块，不在 :root，排除
+    missing_in_css = [name for name in json_tokens if name not in root_vars and not name.endswith("-dark")]
     if missing_in_css:
         for name in missing_in_css[:5]:
             print(f"[WARN] tokens.json 定义但 :root 缺少：{name}（可能在组件局部 CSS）")

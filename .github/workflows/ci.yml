@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Make scripts executable
-        run: chmod +x tools/validate_*.py
+        run: chmod +x tools/validate_*.py scripts/*.py scripts/*.sh 2>/dev/null || true
       - id: tokens
         run: python3 tools/validate_tokens.py || rc=$?; if [ ${rc:-0} -eq 1 ]; then exit 1; elif [ ${rc:-0} -eq 2 ]; then exit 0; fi
       - id: naming
