@@ -11,6 +11,7 @@
   --ds-color-muted: oklch(48% 0.015 60);
   --ds-color-fg-subtle: oklch(35% 0.018 60);
   --ds-color-fg: oklch(20% 0.02 60);
+  --ds-color-fg-muted: var(--ds-color-muted);
   --ds-color-fg-strong: oklch(14% 0.025 60);
   --ds-color-fg-inverse: oklch(97% 0.005 80);
   --ds-color-white: oklch(100% 0 0);
@@ -249,6 +250,8 @@ html[lang="zh-CN"] {
     --ds-color-error-bg: oklch(22% 0.03 30);
     --ds-color-info: oklch(60% 0.07 240);
     --ds-color-info-bg: oklch(22% 0.025 240);
+    --ds-color-copy-success: oklch(85% 0.10 145);
+    --ds-color-copy-success-border: oklch(65% 0.10 145);
     --ds-shadow-xs: 0 1px 2px oklch(0% 0 0 / 30%);
     --ds-shadow-sm: 0 1px 3px oklch(0% 0 0 / 35%), 0 1px 2px oklch(0% 0 0 / 25%);
     --ds-shadow-md: 0 4px 6px oklch(0% 0 0 / 35%), 0 2px 4px oklch(0% 0 0 / 25%), 0 0 16px oklch(57% 0.065 115 / 4%);
@@ -311,6 +314,8 @@ html[lang="zh-CN"] {
   --ds-color-error-bg: oklch(22% 0.03 30);
   --ds-color-info: oklch(60% 0.07 240);
   --ds-color-info-bg: oklch(22% 0.025 240);
+  --ds-color-copy-success: oklch(85% 0.10 145);
+  --ds-color-copy-success-border: oklch(65% 0.10 145);
   --ds-shadow-xs: 0 1px 2px oklch(0% 0 0 / 30%);
   --ds-shadow-sm: 0 1px 3px oklch(0% 0 0 / 35%), 0 1px 2px oklch(0% 0 0 / 25%);
   --ds-shadow-md: 0 4px 6px oklch(0% 0 0 / 35%), 0 2px 4px oklch(0% 0 0 / 25%), 0 0 16px oklch(57% 0.065 115 / 4%);
