@@ -451,7 +451,7 @@
             <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-100)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 100</div><div class="ds-swatch-value">oklch(82% 0.035 115)</div></div></div>
             <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-200)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 200</div><div class="ds-swatch-value">oklch(72% 0.05 115)</div></div></div>
             <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-300)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 300</div><div class="ds-swatch-value">oklch(62% 0.065 115)</div></div></div>
-            <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-400);border:2px solid var(--ds-accent)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 400 ★</div><div class="ds-swatch-value">oklch(52% 0.08 115)</div></div></div>
+            <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-400);border:var(--ds-space-1) solid var(--ds-accent)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 400 ★</div><div class="ds-swatch-value">oklch(52% 0.08 115)</div></div></div>
             <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-500)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 500</div><div class="ds-swatch-value">oklch(45% 0.085 115)</div></div></div>
             <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-600)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 600</div><div class="ds-swatch-value">oklch(38% 0.08 115)</div></div></div>
             <div class="ds-swatch"><div class="ds-swatch-color" style="background:var(--ds-color-olive-700)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">Olive 700</div><div class="ds-swatch-value">oklch(30% 0.07 115)</div></div></div>
@@ -622,7 +622,7 @@
             <div class="ds-component-preview" style="flex-direction:column;align-items:stretch;">
               <div><label class="ds-label">Email</label><input class="ds-input" type="email" placeholder="your@email.com"></div>
               <div><label class="ds-label">Password</label><input class="ds-input" type="password" placeholder="••••••••"><p class="ds-hint">At least 8 characters</p></div>
-              <div><label class="ds-label">With Error</label><input class="ds-input ds-input--error" type="text" value="invalid@"><p class="ds-hint" style="color:var(--ds-color-error);">Please enter a valid email</p></div>
+              <div><label class="ds-label">With Error</label><input class="ds-input ds-input--error" type="text" value="invalid@"><p class="ds-hint ds-form-hint--error">Please enter a valid email</p></div>
             </div>
           </div>
           <div class="ds-component-group">
@@ -694,7 +694,7 @@
             <div class="ds-component-label">12 · Tabs</div>
             <div class="ds-component-preview" style="flex-direction:column;align-items:stretch;">
               <div class="ds-tabs" role="tablist" aria-label="Sample tabs">
-                <button class="ds-tab ds-active" role="tab" aria-selected="true">Overview</button>
+                <button class="ds-tab ds-tab--active" role="tab" aria-selected="true">Overview</button>
                 <button class="ds-tab" role="tab" aria-selected="false">Components</button>
                 <button class="ds-tab" role="tab" aria-selected="false">Tokens</button>
               </div>
@@ -705,7 +705,7 @@
             <div class="ds-component-preview">
               <div class="ds-avatar ds-avatar--sm" style="background:var(--ds-color-olive-200);color:var(--ds-color-olive-800);font-weight:600;">ED</div>
               <div class="ds-avatar" style="background:var(--ds-color-olive-300);color:var(--ds-color-olive-900);font-weight:600;">EDIC</div>
-              <div class="ds-avatar ds-avatar--lg" style="background:var(--ds-color-olive-400);color:white;font-weight:600;">Design System</div>
+              <div class="ds-avatar ds-avatar--lg" style="background:var(--ds-color-olive-400);color:var(--ds-color-white);font-weight:600;">Design System</div>
             </div>
           </div>
           <div class="ds-component-group">
@@ -757,7 +757,7 @@
               <nav class="ds-pagination" aria-label="Pagination">
                 <button class="ds-pagination-item" aria-label="Previous page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
                 <button class="ds-pagination-item">1</button>
-                <button class="ds-pagination-item ds-active">2</button>
+                <button class="ds-pagination-item ds-pagination-item--active">2</button>
                 <button class="ds-pagination-item">3</button>
                 <button class="ds-pagination-item" aria-label="Next page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
               </nav>
@@ -923,7 +923,7 @@
                     <input class="ds-form-input" id="demo-email" type="email" placeholder="hello@example.com" required>
                   </div>
                 </div>
-                <div class="ds-form-group" style="margin-top:var(--ds-space-5);">
+                <div class="ds-form-group ds-mt-5">
                   <label class="ds-form-label" for="demo-subject">主题</label>
                   <select class="ds-form-select" id="demo-subject">
                     <option value="">请选择…</option>
@@ -933,7 +933,7 @@
                     <option>其他</option>
                   </select>
                 </div>
-                <div class="ds-form-group" style="margin-top:var(--ds-space-5);">
+                <div class="ds-form-group ds-mt-5">
                   <label class="ds-form-label" for="demo-message">留言 <span class="ds-form-required">*</span></label>
                   <textarea class="ds-form-textarea" id="demo-message" placeholder="请描述你的需求…" required></textarea>
                 </div>
@@ -942,7 +942,7 @@
                     <input type="checkbox" id="demo-consent">
                     <label for="demo-consent">我已阅读并同意 <a href="#">隐私政策</a></label>
                   </div>
-                  <button class="ds-btn ds-btn--primary" style="margin-top:var(--ds-space-5);">发送留言</button>
+                  <button class="ds-btn ds-btn--primary ds-mt-5">发送留言</button>
                 </div>
               </div>
             </div>
@@ -1089,7 +1089,7 @@
                     <input class="ds-form-input" id="email" type="email" placeholder="hello@example.com" required>
                   </div>
                 </div>
-                <div class="ds-form-group" style="margin-top:var(--ds-space-5);">
+                <div class="ds-form-group ds-mt-5">
                   <label class="ds-form-label" for="subject">主题</label>
                   <select class="ds-form-select" id="subject">
                     <option value="">请选择…</option>
@@ -1099,7 +1099,7 @@
                     <option>其他</option>
                   </select>
                 </div>
-                <div class="ds-form-group" style="margin-top:var(--ds-space-5);">
+                <div class="ds-form-group ds-mt-5">
                   <label class="ds-form-label" for="message">留言 <span class="ds-form-required">*</span></label>
                   <textarea class="ds-form-textarea" id="message" placeholder="请描述你的需求…" required></textarea>
                 </div>
@@ -1108,7 +1108,7 @@
                     <input type="checkbox" id="consent">
                     <label for="consent">我已阅读并同意 <a href="#">隐私政策</a></label>
                   </div>
-                  <button class="ds-btn ds-btn--primary" style="margin-top:var(--ds-space-5);">发送留言</button>
+                  <button class="ds-btn ds-btn--primary ds-mt-5">发送留言</button>
                 </div>
               </div>
             </div>
@@ -1118,7 +1118,7 @@
         <section class="ds-doc-block" id="token-index">
           <h2>令牌索引</h2>
           <p>全部 200+ CSS 自定义属性汇总。可直接复制使用。</p>
-          <div style="max-height:600px;overflow-y:auto;border:1px solid var(--ds-color-border);border-radius:var(--ds-radius-lg);">
+          <div class="ds-table-wrap" style="max-height:600px;overflow-y:auto;">
             <table class="token-table">
               <thead><tr><th>Token</th><th>Value</th></tr></thead>
               <tbody id="token-tbody"></tbody>
