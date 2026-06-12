@@ -196,6 +196,8 @@ html[lang="ko"] {
 html[lang="zh-Hant"] {
   --ds-font-display: "Noto Serif TC", "Source Han Serif TC", serif;
   --ds-font-body: "Noto Sans TC", "Source Han Sans TC", system-ui, sans-serif;
+  --ds-font-ui: "Noto Sans TC", "Source Han Sans TC", system-ui, sans-serif;
+  --ds-font-mono: "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono CJK TC", ui-monospace, monospace;
 }
 html[lang="zh-CN"] {
   letter-spacing: var(--ds-tracking-cjk-body);
@@ -756,7 +758,7 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-theme-toggle-btn--fixed svg{width:20px;height:20px}
 .ds-lang-switch-btn{display:inline-flex;align-items:center;gap:var(--ds-space-1);padding:var(--ds-space-1) var(--ds-space-3);border-radius:var(--ds-radius-lg);border:none;background:transparent;color:var(--ds-color-muted);cursor:pointer;font-family:var(--ds-font-ui);font-size:var(--ds-text-body-sm);transition:color .2s,background .2s}
 .ds-lang-switch-btn:hover{color:var(--ds-color-fg);background:var(--ds-accent-soft)}
-.ds-lang-switch-btn .lang-label{font-weight:500}
+.ds-lang-switch-btn .lang-label{font-weight:var(--ds-weight-medium)}
 @media(min-width:1024px){.ds-theme-toggle-btn--fixed{display:none!important}}
 @media(max-width:1023px){.ds-navbar .ds-theme-toggle-btn{display:none!important}}
 
