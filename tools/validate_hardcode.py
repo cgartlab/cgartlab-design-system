@@ -32,8 +32,8 @@ CSS_FILE = ROOT / "styles.css"
 # ---------------------------------------------------------------
 # 正则：匹配所有需要检测的颜色格式
 # ---------------------------------------------------------------
-# oklch(<values> ) — 匹配百分比或小数点数值
-RE_OKLCH = re.compile(r'\boklch\(\s*[\d.]+%?\s+[\d.]+\s+[\d.]+\s*\)', re.I)
+# oklch(<values> [ / alpha]) — 匹配百分比或小数点数值，alpha 通道可选
+RE_OKLCH = re.compile(r'\boklch\(\s*[\d.]+%?\s+[\d.]+\s+[\d.]+\s*(?:/\s*[\d.]+%?)?\s*\)', re.I)
 # 十六进制：3位、4位、6位、8位
 RE_HEX = re.compile(r'#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b')
 # rgb / rgba / hsl / hsla
@@ -199,8 +199,13 @@ def check_css(path: Path, verbose: bool) -> tuple[list[str], list[str]]:
 
         # 检测 @keyframes 或 @-prefix-keyframes 开始
         if re.match(r'@-?\w*-?keyframes\b', line, re.I):
-            in_keyframes = True
-            keyframes_depth = brace_depth + (1 if delta > 0 else 0)
+            if delta > 0:
+                # 多行 keyframes：跟踪进入的 brace 深度，直到退出时清除
+                in_keyframes = True
+                keyframes_depth = brace_depth + delta
+            # 单行 keyframes（所有 { } 在同一行，delta=0）：不进入跟踪模式
+            # 直接跳过该行（已是 @keyframes token 声明行，不触发重复检测）
+            continue
 
         old_depth = brace_depth
         brace_depth += delta
