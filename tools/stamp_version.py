@@ -345,7 +345,7 @@ def main() -> int:
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--check", action="store_true", help="仅检查，不修改（CI 用）")
     group.add_argument("--diff", action="store_true", help="显示 diff 预览")
-    group.add_argument("--restore", action="store_true", help="反向：把 stamp 值还原为 {{VERSION}} 占位符")
+    group.add_argument("--restore", action="store_true", help="反向：把 stamp 值还原为 {{DS_VERSION}} 占位符")
     args = parser.parse_args()
 
     if args.restore and (args.check or args.diff):

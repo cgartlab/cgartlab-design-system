@@ -97,8 +97,8 @@ MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]
 | 预览 diff | `python3 tools/stamp_version.py --diff` |
 | 反向还原（开发期） | `python3 tools/stamp_version.py --restore` |
 
-源码中所有需要跟随 VERSION 同步的位置都写成 `1.5.4` 占位符，stamp 工具
-会一次性替换为真实版本号（无构建步骤，GitHub Pages 仍可直接部署静态文件）。
+源码中所有需要跟随 VERSION 同步的位置都使用 `DS_VERSION` 占位符（由双花括号包裹），
+stamp 工具会一次性替换为 VERSION 中的真实版本号（无构建步骤，GitHub Pages 仍可直接部署静态文件）。
 
 > 占位符使用 `DS_` 前缀（Design System）以避免与文档中说明占位符语法的示例
 > （如 `{{VERSION}}`、`{{TOKEN}}` 等通用写法）发生冲突。

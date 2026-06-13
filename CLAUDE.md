@@ -26,7 +26,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 2. **Token-first** — every visual value must use `var(--ds-*)`. No magic numbers (`#fff`, `16px`, etc.).
 3. **BEM class naming** — `ds-component` / `ds-component--variant` / `ds-component-element`.
 4. **Semantic versioning** adapted for design systems — see `docs/VERSIONING.md`.
-5. **Stamp tool** — `tools/stamp_version.py` reads `VERSION` and replaces `1.5.4` placeholders across all HTML/MD files. Always run `make stamp-version` after bumping `VERSION`.
+5. **Stamp tool** — `tools/stamp_version.py` reads `VERSION` and stamps it into all HTML/MD/CSS/JS/JSON files. Always run `make stamp-version` after bumping `VERSION`.
 6. **`?v=` cache busting** — all HTML references to `styles.css` and `scripts.js` include `?v=VERSION`. `validate_versions.py` checks consistency.
 
 ### Token Naming Convention
