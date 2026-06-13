@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>陈阳 · 简历与作品集</title>
 <meta name="description" content="EDIC 设计系统简历模板 — 可打印 A4 简历版式示例">
+<link rel="stylesheet" href="styles.css?v=1.5.3">
 <style>
 /*
  * Resume — EDIC Design System × Kami layout
@@ -13,27 +14,32 @@
 
 /* ===== Design Tokens ===== */
 :root {
-  --canvas:      oklch(96.8% 0.008 95);
-  --ivory:       oklch(99% 0.004 90);
-  --ink:         oklch(16% 0.015 85);
-  --ink-soft:    oklch(35% 0.014 85);
-  --muted:       oklch(50% 0.012 80);
-  --stone:       oklch(68% 0.008 85);
-  --hairline:    oklch(87% 0.01 90);
-  --divider:     oklch(84% 0.014 90);
+  /* ── 画布与中性色 ── */
+  --canvas:      var(--ds-color-bg);
+  --ivory:       var(--ds-color-surface);
+  --ink:         var(--ds-color-fg-strong);
+  --ink-soft:    var(--ds-color-fg);
+  --muted:       var(--ds-color-muted);
+  --stone:       var(--ds-color-fg-subtle);
+  --hairline:    var(--ds-color-border-subtle);
+  --divider:     var(--ds-color-border);
 
-  --brand:       oklch(40% 0.075 120);
-  --brand-soft:  oklch(82% 0.032 118);
-  --brand-bg:    oklch(94% 0.014 115);
+  /* ── 品牌色（映射到 EDIC 橄榄绿体系） ── */
+  --brand:       var(--ds-accent);
+  --brand-soft:  var(--ds-accent-soft);
+  --brand-bg:    var(--ds-accent-muted);
 
+  /* ── 字族 ── */
   --serif: "Iowan Old Style", "Charter", Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
   --sans:  "Noto Sans SC", "Source Han Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --mono:  "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono SC", ui-monospace, monospace;
 
+  /* ── 行高 ── */
   --lh-title:  1.20;
   --lh-dense:  1.42;
   --lh-body:   1.52;
 
+  /* ── 间距 ── */
   --sp-1:  2pt;
   --sp-2:  4pt;
   --sp-3:  6pt;
@@ -43,13 +49,15 @@
   --sp-8:  16pt;
   --sp-10: 20pt;
 
+  /* ── 圆角 ── */
   --r-sm:  1.5pt;
   --r-md:  3pt;
 
-  --ring:    0 0 0 1pt oklch(0% 0 0 / 3%);
-  --whisper: 0 0.5pt 3pt oklch(0% 0 0 / 2%);
+  /* ── 阴影与光晕 ── */
+  --ring:    0 0 0 1pt var(--ds-color-black / 3%);
+  --whisper: 0 0.5pt 3pt var(--ds-color-black / 2%);
 
-  /* Unified font sizes — 5 tiers */
+  /* ── 统一字号（5 级） ── */
   --fs-xl: 24pt;
   --fs-l:  11pt;
   --fs-m:  9pt;
@@ -91,7 +99,7 @@ body {
     border-radius: var(--r-sm);
     background: var(--canvas);
   }
-  html { background: oklch(93% 0.006 90); }
+  html { background: var(--ds-color-surface-overlay); }
 }
 
 @page {
