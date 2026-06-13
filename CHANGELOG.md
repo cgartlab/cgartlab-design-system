@@ -24,6 +24,36 @@
 
 ---
 
+## [未发布]
+
+### 修复
+
+#### 移动端滚动锁定无法释放（站点级）
+- **根因**：移动端汉堡菜单关闭时，`close()` 用 `style.removeProperty("touchAction")`（驼峰写法）尝试清除锁定样式 —— `removeProperty` 要求 kebab-case（`touch-action`），故该调用为空操作，`touch-action:none` 永久残留在 `<html>` 上。一旦在移动端开/关过一次菜单，整页（及所有页面）的触摸滚动即被禁用，且会覆盖后代元素的 `touch-action:pan-y`。
+- **修复**：改用业界标准的 `body{position:fixed;top:-Ypx;width:100%}` 滚动锁定方案，关闭时清除内联样式并 `scrollTo` 回原位。
+- 移除 `.ds-pagenav-disclosure` / `.ds-pagenav-list` 上为绕过该 bug 而堆叠的 `touch-action:pan-y` / `overscroll-behavior:contain` / `-webkit-overflow-scrolling` 等无效 hack。
+
+#### 页脚「网站地图」死链
+- `index.html#sitemap` 锚点在 `index.html` 中不存在，导致 `validate-links` 阻塞性报错；为 `index.html` 页脚链接分区补充 `id="sitemap"`。
+
+#### 组件变体缺失
+- `.ds-progress` 新增 `--success` 和 `--error` 颜色变体（分别使用 `--ds-color-success` / `--ds-color-error` 令牌着色）
+
+### 维护
+
+#### 技术债务清理
+- `CLAUDE.md`：移除已过期的 `feat/icons-svg-sprite-generator` pending 标记，修正版本号
+- `validate-verext`：修复 `scripts.js` 版本查询串警告
+- `DEVELOPMENT-GUIDE.md` Appendix A：补充 `.ds-divider` 和 `.ds-empty-state` 组件条目
+
+#### Release 流程自动化
+- 新增 `scripts/package_skill.py`（纯 Python，替代 `package-skill.sh`）和 `scripts/package_release.py`，生成三类发行产物：完整发行 ZIP、Skill ZIP、PDF 参考卡
+- `.github/workflows/release.yml` 重写为三产物流程（PDF + Skill ZIP + 完整发行 ZIP）
+- `.gitattributes` 新增 `export-ignore` 和 `*.zip binary`
+- `stamp_version.py` 将 `skills/edic-design-system/README.md` 纳入版本 stamp 目标
+
+---
+
 ## [1.5.2] — 2026-06-07
 
 ### 修复
@@ -135,101 +165,6 @@
 - `tools/validate_naming.py` 的 `VALID_CATEGORIES` 新增 7 个合法类别：`code` / `token` / `cjk` / `reveal` / `draw` / `stack` / `brand`（均为项目已使用但验证器历史遗漏的合法 CSS 变量类别）
 
 ---
-
-## [未发布]
-
-### 修复
-
-#### 移动端滚动锁定无法释放（站点级）
-- **根因**：移动端汉堡菜单关闭时，`close()` 用 `style.removeProperty("touchAction")`（驼峰写法）尝试清除锁定样式 —— `removeProperty` 要求 kebab-case（`touch-action`），故该调用为空操作，`touch-action:none` 永久残留在 `<html>` 上。一旦在移动端开/关过一次菜单，整页（及所有页面）的触摸滚动即被禁用，且会覆盖后代元素的 `touch-action:pan-y`。这正是「手册页目录展开后无法下滑」「多个页面无法滚动」的根源。
-- **修复**：改用业界标准的 `body{position:fixed;top:-Ypx;width:100%}` 滚动锁定方案，关闭时清除内联样式并 `scrollTo` 回原位。该方案在 iOS Safari 上可靠，且不冻结抽屉自身滚动、不会遗留无法释放的锁。
-- 移除 `.ds-pagenav-disclosure` / `.ds-pagenav-list` 上为绕过该 bug 而堆叠的 `touch-action:pan-y` / `overscroll-behavior:contain` / `-webkit-overflow-scrolling` 等无效 hack。
-- 修复 docs/terms 移动端侧栏「双层边框」：`.ds-docs-aside` 不再重复绘制卡片边框（由 `.ds-pagenav-disclosure` 承载）。
-
-#### 页脚「网站地图」死链（6 个页面）
-- 统一页脚的 `index.html#sitemap` 锚点在 `index.html` 中不存在，导致 `validate-links` 阻塞性报错；为 `index.html` 页脚链接分区补充 `id="sitemap"`。
-
-
-- 新增完整 Prism.js 语法高亮系统，定制橄榄绿编辑风格主题
-- **CSS 令牌变量**：`--ds-token-comment` / `--ds-token-keyword` / `--ds-token-string` / `--ds-token-function` / `--ds-token-number` / `--ds-token-tag` / `--ds-token-attr-name` / `--ds-token-operator` / `--ds-token-punctuation` / `--ds-token-variable` / `--ds-token-selector` / `--ds-token-builtin` 等 16 种
-- **代码块变量**：`--ds-code-bg`（背景）/ `--ds-code-text`（文字色）/ `--ds-code-bg-bar`（语言栏背景）
-- **Prism 主题**：12 条 `.token.*` 规则覆盖所有语法高亮场景
-- **暗色模式**：代码块背景始终保持暗色（不受页面主题影响），确保可读性
-- **向后兼容**：保留 `.tok-*` 类（`.tok-c/p/v/k/s`），指向对应的 `--ds-token-*` 变量
-- **文档更新**：`docs.html` 新增「代码样式」章节，说明使用方式和令牌对照表
-- **Prism.js 版本**：1.30.0（含 SRI 完整性校验）
-- **应用范围**：仅 `docs.html` 有代码块（其他页面检查后确认无需处理）
-
-- 新增完整 Prism.js 语法高亮系统，定制橄榄绿编辑风格主题
-- **CSS 令牌变量**：`--ds-token-comment` / `--ds-token-keyword` / `--ds-token-string` / `--ds-token-function` / `--ds-token-number` / `--ds-token-tag` / `--ds-token-attr-name` / `--ds-token-operator` / `--ds-token-punctuation` / `--ds-token-variable` / `--ds-token-selector` / `--ds-token-builtin` 等 16 种
-- **代码块变量**：`--ds-code-bg`（背景）/ `--ds-code-text`（文字色）/ `--ds-code-bg-bar`（语言栏背景）
-- **Prism 主题**：12 条 `.token.*` 规则覆盖所有语法高亮场景
-- **暗色模式**：代码块背景始终保持暗色（不受页面主题影响），确保可读性
-- **向后兼容**：保留 `.tok-*` 类（`.tok-c/p/v/k/s`），指向对应的 `--ds-token-*` 变量
-- **文档更新**：`docs.html` 新增「代码样式」章节，说明使用方式和令牌对照表
-- **Prism.js 版本**：1.30.0（含 SRI 完整性校验）
-- **应用范围**：仅 `docs.html` 有代码块（其他页面检查后确认无需处理）
-
-#### 统一页面目录组件 `.ds-pagenav`（On this page）
-- 新增可复用的「页面目录」组件，整合此前 handbook 与 docs 各自为政的三套实现（桌面浮动卡片 / 移动底部横向滚动条 / 侧栏 `<details>`）
-- **桌面 — 默认（in-flow）**：纵向列表，由 sticky 容器承载（docs 侧栏），含数字编号 + scroll-spy 高亮 + 左侧 accent 指示条
-- **桌面 — `.ds-pagenav--rail`**：handbook 右侧浮动玻璃卡片，从视口边缘内缩 `--ds-space-6`、全圆角、滚动到正文后柔和滑入（替代原先贴边、垂直居中、显隐生硬的 `.ds-floating-toc`）
-- **移动（≤1023px）**：两页统一为导航栏下方的「目录」`<details>` 折叠披露，纵向展开、点击后自动收起（替代 handbook 的底部横向滚动条，消除与主题切换 FAB 的碰撞）
-- 全令牌驱动、无硬编码色；统一 JS 控制器支持可选生成（`data-pagenav-generate`）、`IntersectionObserver` scroll-spy、平滑滚动（尊重 `prefers-reduced-motion`）、移动端自动收起
-
-### 修复
-
-- **TOC 命名空间冲突回归**：移除 `.ds-toc-*` 重复定义的 shared base，`handbook` 落地卡片编号（`.ds-toc-item .ds-toc-num`）恢复 accent 强调色（此前被晚出现的 `.ds-toc-num` 规则覆盖为灰色）
-- 移除随之失效的 `.ds-floating-toc*` / `.ds-mobile-toc*` / `.ds-docs-menu` / `.ds-docs-aside-title` 等冗余样式与脚本
-
-#### Prism 代码块主题适配与暗色模式可见性
-- `.ds-code-bar` 改为跟随页面主题（亮/暗色自适应，原先恒为暗底）
-- `.ds-code-lang` / `.ds-copy-btn` 改用语义令牌（暗色模式文字不再不可见）
-- 防止 inline-code 样式泄漏到代码块
-- Prism 升级 1.29.0 → 1.30.0 + 引入 SRI 完整性校验
-- `docs.html` 移动端侧栏简化为常驻目录（去除 `<details>` 折叠）
-- `blog.html` 移除小屏汉堡菜单（改为垂直堆叠）
-
-#### 反模式清理
-- `styles.css` 5 处 hex/rgba 迁移到 OKLch：`.ds-logo-hero` 高光 / 打印边框 / 品牌常量
-- `styles.css` 5 行死代码 `--ds-letter-spacing-*` / `--ds-word-spacing-cjk` 删除（遗留自 `--ds-tracking-*` 重命名前）
-- `scripts.js` 3 处空 catch 块改为 `void e;` / `void 0;`（localStorage 读/写 + clipboard.writeText）
-
-#### 暗色模式 Gravitas & Glow（编辑主义暗色深化）
-- 8 个新令牌（`--ds-glow-xs/sm/md/lg/border/text/surface/aura`）：光模式下 0% 不透明度（视觉惰性），暗模式 4-22% 橄榄色底色（暖调 gravitas）
-- 1 个新关键帧 `ds-glow-breathe`：柔和呼吸光晕，4s 周期
-- 5 个新工具类：`.ds-glow-border`（发光边框） / `.ds-aura`（径向光晕伪元素） / `.ds-surface-glow`（内部发光表面） / `.ds-heading-glow`（标题文本发光） / `.ds-anim-glow-breathe`（呼吸动画）
-- 暗模式 `--ds-shadow-md/lg/xl/2xl` 注入橄榄色发光层（4-14% 透明度），从纯黑阴影升级为分层暖色阴影
-- 暗模式 `.ds-glass-card` / `.ds-frosted-nav` / `.ds-toast` 玻璃组件增加暖色底色 box-shadow + 色调边框
-- 双重暗模式选择器覆盖（`@media(prefers-color-scheme:dark)` + `[data-theme="dark"]`）确保跟随系统与手动切换行为一致
-- `prefers-reduced-motion` 显式关闭 `.ds-anim-glow-breathe`（避免 0.001ms 关键帧闪烁）
-
-### 变更
-
-#### 命名验证器白名单扩展
-- `tools/validate_naming.py` 的 `VALID_CATEGORIES` 新增 7 个合法类别：`code` / `token` / `cjk` / `reveal` / `draw` / `stack` / `brand`（均为项目已使用但验证器历史遗漏的合法 CSS 变量类别）
-
-#### CI 治理
-- 在 v1.3.x 治理层（6 验证器）落地后，main 分支首次实现所有 6 个 GitHub Actions 验证器 exit 0（4 pass clean，2 pass with warns，`ci.yml` 已正确将 exit 2 映射为 exit 0）
-- `Makefile` 的 `validate` 目标改写为退出码聚合器：仅 exit 1 视为失败，exit 0/2 视为通过，与 `ci.yml` 语义对齐；本地 `make validate` 首次真正"绿"（输出 `✓ 全部验证通过`）；单个 `make validate-X` 调用保持原验证器自然退出码不变
-
-### 新增（进行中）
-
-#### 图标 sprite 生成（icons.svg）
-- 新增 `tools/generate_icons.py` — 从 `scripts.js` 的 `ICONS` 数组生成独立 SVG sprite
-- 兑现 `handbook.html` 第 5 章"配套生成 icons.svg"的承诺
-- 输出文件 `icons.svg`（仓库根目录）支持 Penpot 直接导入 + 外部 `<svg><use href="icons.svg#archive"/></svg>` 引用
-- 集成入口：`make icons` / `make icons-check` / `npm run icons` / `npm run icons:check` / `./scripts/dev.sh icons`
-
-#### 工程治理（preparation）
-- 工程基础配置：`.editorconfig` / `.gitattributes` / 扩展 `.gitignore`
-- 治理文档：`LICENSE` / `CONTRIBUTING.md` / `CHANGELOG.md` / `CODE_OF_CONDUCT.md` / `SECURITY.md`
-- 流程文档：[`docs/VERSIONING.md`](./docs/VERSIONING.md) / [`docs/COMPONENT-DEVELOPMENT.md`](./docs/COMPONENT-DEVELOPMENT.md) / [`docs/TESTING.md`](./docs/TESTING.md) / [`docs/RELEASE-CHECKLIST.md`](./docs/RELEASE-CHECKLIST.md)
-- GitHub 模板：`.github/ISSUE_TEMPLATE/`（bug / feature / component / token）+ `PULL_REQUEST_TEMPLATE.md` + `CODEOWNERS`
-- CI/CD：`.github/workflows/ci.yml`（令牌、命名、HTML、可访问性、链接、版本号同步校验）
-- 验证工具：`tools/validate_tokens.py` / `validate_naming.py` / `validate_html.py` / `validate_a11y.py` / `validate_versions.py` / `validate_links.py`
-- 测试夹具：`tests/fixtures/`
-- 本地辅助：`Makefile` / `scripts/dev.sh` / `scripts/dev.ps1` / `.nvmrc`
 
 ---
 

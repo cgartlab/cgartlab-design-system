@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-**EDIC Design System** (formerly CGArtLab) — Editorial × Olive Green, a zero-runtime-dependency static design system driven by OKLch color science and design tokens. Current version: **v1.5.2**.
+**EDIC Design System** (formerly CGArtLab) — Editorial × Olive Green, a zero-runtime-dependency static design system driven by OKLch color science and design tokens. Current version: **v1.5.3**.
 
 - **Website:** https://edic.cgartlab.com
 - **License:** CC BY 4.0
@@ -56,7 +56,6 @@ Follows [BRANCH-WORKFLOW.md](../../BRANCH-WORKFLOW.md). 5 categories (consolidat
 - `docs/<desc>` — docs / content / writing (was `write-*`)
 - `chore/<scope>-<desc>` — refactor / perf / format / tools / deps
 - `release/v<X>.<Y>.<Z>` — version release
-- `feat/icons-svg-sprite-generator` — pending: icon SVG sprite generator (4 commits ahead of main)
 
 ## Common Commands
 
@@ -158,5 +157,4 @@ git tag v1.5.0 && git push origin v1.5.0
 
 ## Pending Work
 
-- `feat/icons-svg-sprite-generator` branch has 4 commits (SVG sprite generator) not yet merged to main
-- See `CHANGELOG.md` for `[未发布]` section with planned changes
+- See `CHANGELOG.md` `[未发布]` section for planned changes

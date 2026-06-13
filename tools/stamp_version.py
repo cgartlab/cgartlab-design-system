@@ -62,7 +62,7 @@ HTML_TARGETS = [
 ]
 # scripts.js 也使用 {{DS_VERSION}} 占位符
 JS_TARGETS = ["scripts.js"]
-MD_TARGETS = ["README.md", "AGENTS.md"]
+MD_TARGETS = ["README.md", "AGENTS.md", "skills/edic-design-system/README.md"]
 
 
 def read_version() -> str:

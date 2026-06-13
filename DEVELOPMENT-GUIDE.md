@@ -1385,6 +1385,8 @@ timeline, contact-form, toast, glass-card, glass-btn
 | 30 | Glass Button | `.ds-glass-btn` | — |
 | 31 | Frosted Nav | `.ds-frosted-nav` | — |
 | 32 | Article TOC | `.ds-toc-article` | — |
+| 33 | Divider | `.ds-divider` | — |
+| 34 | Empty State | `.ds-empty-state` | — |
 
 ---
 

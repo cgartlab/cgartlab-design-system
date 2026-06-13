@@ -4,7 +4,7 @@
 
 SHELL := /bin/sh
 .DEFAULT_GOAL := help
-.PHONY: help lint build validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links validate-cssref validate-darkmode validate-verext validate-hardcode stamp-version serve clean serve-py serve-node generate-pdfs icons icons-check test skill-package
+.PHONY: help lint build validate validate-tokens validate-naming validate-html validate-a11y validate-versions validate-links validate-cssref validate-darkmode validate-verext validate-hardcode stamp-version serve clean serve-py serve-node generate-pdfs icons icons-check test skill-package release-package
 
 PYTHON ?= python3
 NODE ?= node
@@ -115,8 +115,11 @@ icons:  ## 从 scripts.js 的 ICONS 数组生成 icons.svg sprite
 icons-check:  ## 校验 icons.svg 是否与 scripts.js 的 ICONS 数组同步（CI 用）
 	$(PYTHON) tools/generate_icons.py --check
 
-skill-package:  ## 重新打包 SKILL.zip（lint → stamp → icons → PDFs → SKILL）
-	bash scripts/package-skill.sh
+skill-package: icons generate-pdfs stamp-version  ## 重新打包 SKILL.zip（stamp → icons → PDFs → SKILL）
+	$(PYTHON) scripts/package_skill.py
+
+release-package: stamp-version icons generate-pdfs skill-package  ## 完整打包发行 ZIP（stamp → icons → PDFs → SKILL → release ZIP）
+	$(PYTHON) scripts/package_release.py
 
 # ─── 测试 ──────────────────────────────────────────────────
 test: validate  ## 运行所有测试（当前等价于 validate）

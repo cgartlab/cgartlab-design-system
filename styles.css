@@ -621,6 +621,8 @@ h1, h2, h3, h4, h5, h6, .ds-h1, .ds-h2, .ds-h3, .ds-h4, .ds-h5, .ds-display, .ds
 .ds-progress-bar{height:var(--ds-space-1);background:var(--ds-color-border-subtle);border-radius:var(--ds-radius-full);overflow:hidden;margin-top:var(--ds-space-2)}
 .ds-progress-fill{height:100%;background:var(--ds-accent);border-radius:var(--ds-radius-full);transition:width .5s}
 .ds-progress-label{display:flex;justify-content:space-between;font-size:var(--ds-text-caption);color:var(--ds-color-muted)}
+.ds-progress--success .ds-progress-fill{background:var(--ds-color-success)}
+.ds-progress--error .ds-progress-fill{background:var(--ds-color-error)}
 
 /* ===== Avatar ===== */
 .ds-avatar{width:40px;height:40px;border-radius:var(--ds-radius-full);background:var(--ds-accent-soft);color:var(--ds-accent);display:inline-flex;align-items:center;justify-content:center;font-family:var(--ds-font-display);font-weight:700;font-size:var(--ds-text-body);overflow:hidden}

@@ -35,7 +35,13 @@ def run(cmd: list[str], label: str, cwd: Path | None = None) -> int:
 
 
 def main() -> int:
-    version = open(ROOT / "VERSION").read().strip()
+    try:
+        version = open(ROOT / "VERSION").read().strip().splitlines()[0].strip()
+        if not version:
+            raise ValueError("VERSION 文件为空")
+    except (OSError, ValueError) as e:
+        print(f"[ABORT] 无法读取 VERSION: {e}")
+        return 1
     print(f"EDIC Build Pipeline · v{version}")
     print(f"Root: {ROOT}")
 
@@ -60,9 +66,9 @@ def main() -> int:
         return rc
 
     # Step 5: package SKILL (optional — skip if script doesn't exist)
-    skill_script = SCRIPTS / "package-skill.sh"
+    skill_script = SCRIPTS / "package_skill.py"
     if skill_script.exists():
-        rc = run(["bash", str(skill_script)], "Step 5: Package SKILL ZIP")
+        rc = run([sys.executable, str(skill_script)], "Step 5: Package SKILL ZIP")
         if rc != 0:
             return rc
     else:
@@ -75,7 +81,7 @@ def main() -> int:
 Generated artifacts:
   - icons.svg            (from scripts.js ICONS array)
   - assets/downloads/*.pdf (PDF reference cards)
-  - assets/downloads/edic-design-system-skill.zip (if package-skill.sh ran)
+  - assets/downloads/edic-design-system-skill.zip (if package_skill.py ran)
 """)
     return 0
 
