@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-**EDIC Design System** (formerly CGArtLab) — Editorial × Olive Green, a zero-runtime-dependency static design system driven by OKLch color science and design tokens. Current version: **v1.5.3**.
+**EDIC Design System** (formerly CGArtLab) — Editorial × Olive Green, a zero-runtime-dependency static design system driven by OKLch color science and design tokens. Current version: **v1.5.4**.
 
 - **Website:** https://edic.cgartlab.com
 - **License:** CC BY 4.0
@@ -26,7 +26,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 2. **Token-first** — every visual value must use `var(--ds-*)`. No magic numbers (`#fff`, `16px`, etc.).
 3. **BEM class naming** — `ds-component` / `ds-component--variant` / `ds-component-element`.
 4. **Semantic versioning** adapted for design systems — see `docs/VERSIONING.md`.
-5. **Stamp tool** — `tools/stamp_version.py` reads `VERSION` and replaces `{{DS_VERSION}}` placeholders across all HTML/MD files. Always run `make stamp-version` after bumping `VERSION`.
+5. **Stamp tool** — `tools/stamp_version.py` reads `VERSION` and stamps it into all HTML/MD/CSS/JS/JSON files. Always run `make stamp-version` after bumping `VERSION`.
 6. **`?v=` cache busting** — all HTML references to `styles.css` and `scripts.js` include `?v=VERSION`. `validate_versions.py` checks consistency.
 
 ### Token Naming Convention
@@ -113,10 +113,10 @@ make stamp-version
 make validate
 
 # 4. Commit
-git add -A && git commit -m "chore(release): bump to v1.5.0"
+git add -A && git commit -m "chore(release): bump to v1.5.4"
 
 # 5. Tag & push
-git tag v1.5.0 && git push origin v1.5.0
+git tag v1.5.4 && git push origin v1.5.4
 ```
 
 ## Adding a New Component

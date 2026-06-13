@@ -168,7 +168,7 @@ release/{version}      # release prep
 2. Also update `tokens.json` `"version"` and `package.json` `"version"` to match
 3. Run `make stamp-version` to sync `?v=` to all HTML/MD files
 4. Run `make validate`
-5. Commit: `git add -A && git commit -m "chore(release): bump to v1.6.0"`
-6. Tag: `git tag v1.6.0 && git push origin v1.6.0`
+5. Commit: `git add -A && git commit -m "chore(release): bump to v1.5.4"`
+6. Tag: `git tag v1.5.4 && git push origin v1.5.4`
 
 Tag push triggers `release.yml` — builds PDFs and creates GitHub Release automatically.
