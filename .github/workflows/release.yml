@@ -1,39 +1,88 @@
-# 仅在主分支 release 时触发：构建 PDF 产物 + 检查产物大小
-name: Build Artifacts
+# EDIC Design System — Release Pipeline
+# 构建 PDF + Skill ZIP + 完整发行 ZIP，附加到 GitHub Release
+name: Release Pipeline
 
 on:
   push:
     tags:
       - "v*"
   workflow_dispatch:
+    inputs:
+      skip_validation:
+        description: "跳过验证步骤（仅用于紧急热修复）"
+        required: false
+        default: "false"
+        type: boolean
 
 permissions:
   contents: read
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
-    name: Build PDFs
+    name: Build Release Assets
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      - name: Make scripts executable
+        run: chmod +x tools/validate_*.py scripts/*.py scripts/*.sh 2>/dev/null || true
+
+      # ── 版本一致性校验 ─────────────────────────────
+      - name: Validate version consistency
+        if: inputs.skip_validation != 'true'
+        run: |
+          python3 tools/validate_versions.py || rc=$?; \
+          if [ ${rc:-0} -eq 1 ]; then exit 1; elif [ ${rc:-0} -eq 2 ]; then exit 0; fi
+
+      - name: Validate token/CSS consistency
+        if: inputs.skip_validation != 'true'
+        run: |
+          python3 tools/validate_tokens.py || rc=$?; \
+          if [ ${rc:-0} -eq 1 ]; then exit 1; elif [ ${rc:-0} -eq 2 ]; then exit 0; fi
+
+      # ── Stamp ────────────────────────────────────
+      - name: Stamp version placeholders
+        run: python3 tools/stamp_version.py
+
+      # ── 生成图标精灵 ─────────────────────────────
+      - name: Verify icons sprite
+        run: python3 tools/generate_icons.py --check
+
+      # ── 生成 PDF ─────────────────────────────────
       - name: Generate PDFs
         run: |
           mkdir -p assets/downloads
           python3 tools/generate_pdfs.py
 
-      - name: Upload PDFs
+      # ── 打包 Skill ZIP ───────────────────────────
+      - name: Package AI Skill ZIP
+        run: python3 scripts/package_skill.py
+
+      # ── 打包完整发行 ZIP ─────────────────────────
+      - name: Package distribution ZIP
+        run: python3 scripts/package_release.py
+
+      # ── 上传全部产物 ─────────────────────────────
+      - name: Upload all artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: design-system-pdfs
-          path: assets/downloads/*.pdf
+          name: release-assets
+          path: |
+            assets/downloads/*.pdf
+            assets/downloads/*.zip
           retention-days: 90
 
   release:
@@ -50,13 +99,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download PDFs
+      - name: Download all assets
         uses: actions/download-artifact@v4
         with:
-          name: design-system-pdfs
+          name: release-assets
           path: assets/downloads/
 
-      - name: Extract changelog
+      - name: Extract changelog for release notes
         id: changelog
         run: |
           awk '/^## \[/{flag=!flag; if(flag && !/Unreleased|未发布/) {capture=1}} capture' CHANGELOG.md | \
@@ -65,11 +114,22 @@ jobs:
           cat /tmp/release-notes.md >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Create Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ github.ref_name }}
           body: ${{ steps.changelog.outputs.RELEASE_NOTES }}
-          files: assets/downloads/*.pdf
+          files: |
+            assets/downloads/*.pdf
+            assets/downloads/*.zip
           draft: false
           prerelease: ${{ contains(github.ref_name, '-') }}
+          generate_release_notes: false
+
+      - name: Verify release assets
+        run: |
+          echo "=== Release artifacts ==="
+          ls -lh assets/downloads/
+          echo ""
+          echo "=== Artifact sizes ==="
+          for f in assets/downloads/*; do echo "$(basename $f): $(du -sh $f | cut -f1)"; done

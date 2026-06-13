@@ -34,12 +34,17 @@ VERSION_FILE = os.path.join(ROOT, "VERSION")
 
 
 def read_version() -> str:
-    """从仓库根目录的 VERSION 文件读取当前版本号。失败回退到 '0.0.0'。"""
+    """从仓库根目录的 VERSION 文件读取当前版本号。失败则报错。"""
     try:
         with open(VERSION_FILE, "r", encoding="utf-8") as f:
-            return f.read().strip().splitlines()[0].strip() or "0.0.0"
-    except OSError:
-        return "0.0.0"
+            text = f.read().strip().splitlines()[0].strip()
+            if not text:
+                raise ValueError("VERSION 文件为空")
+            return text
+    except OSError as e:
+        raise RuntimeError(f"无法读取 VERSION 文件: {e}") from e
+    except ValueError as e:
+        raise RuntimeError(f"VERSION 文件格式错误: {e}") from e
 
 
 VERSION = read_version()

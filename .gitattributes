@@ -28,9 +28,11 @@
 *.ttf      binary
 *.pdf      binary
 *.penpot   binary
+*.zip      binary
 
 # Markdown diff 友好（按段落而非行）
 *.md       diff=markdown
 
 # 导出归档（下载产物 — 仍跟随仓库，但避免误改）
-/assets/downloads/* linguist-generated
+# export-ignore 确保 git archive 下载不包含生成的二进制产物
+/assets/downloads/* linguist-generated export-ignore
