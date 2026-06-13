@@ -1,6 +1,6 @@
 # EDIC Design System — Agent Instructions
 
-**Version:** v1.5.4 | **Site:** https://edic.cgartlab.com | **License:** CC BY 4.0
+**Version:** v{{DS_VERSION}} | **Site:** https://edic.cgartlab.com | **License:** CC BY 4.0
 
 ---
 
@@ -168,7 +168,7 @@ release/{version}      # release prep
 2. Also update `tokens.json` `"version"` and `package.json` `"version"` to match
 3. Run `make stamp-version` to sync `?v=` to all HTML/MD files
 4. Run `make validate`
-5. Commit: `git add -A && git commit -m "chore(release): bump to v1.6.0"`
-6. Tag: `git tag v1.6.0 && git push origin v1.6.0`
+5. Commit: `git add -A && git commit -m "chore(release): bump to v{{DS_VERSION}}"`
+6. Tag: `git tag v{{DS_VERSION}} && git push origin v{{DS_VERSION}}`
 
 Tag push triggers `release.yml` — builds PDFs and creates GitHub Release automatically.

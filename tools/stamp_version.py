@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-stamp_version.py — 将 VERSION 同步到所有 HTML / MD 资源
+stamp_version.py — 将 VERSION 同步到所有项目资源
 
 目的：消除仓库内所有"硬编码版本号"造成的版本漂移问题。VERSION 是唯一真相源。
 
 可标记（stamp）的目标：
 
-  ┌─────────────────┬────────────────────────────────────────────┐
-  │ 目标             │ 占位符（源码中写此占位符）                  │
-  ├─────────────────┼────────────────────────────────────────────┤
-  │ HTML ?v=        │ ?v={{DS_VERSION}}                           │
-  │ HTML 可见文本   │ v{{DS_VERSION}} / {{DS_VERSION}}            │
-  │ README.md badge │ v{{DS_VERSION}} + {{DS_VERSION}}（两处替换）│
-  │ AGENTS.md 状态  │ v{{DS_VERSION}}                             │
-  └─────────────────┴────────────────────────────────────────────┘
+  ┌────────────────────┬────────────────────────────────────────────┐
+  │ 目标                │ 占位符（源码中写此占位符）                  │
+  ├────────────────────┼────────────────────────────────────────────┤
+  │ HTML ?v=           │ ?v={{DS_VERSION}}                           │
+  │ HTML 可见文本      │ v{{DS_VERSION}} / {{DS_VERSION}}            │
+  │ CSS 注释           │ {{DS_VERSION}}（头部/底部版本注释）          │
+  │ JSON version 字段  │ "{{DS_VERSION}}"                            │
+  │ MD 可见文本        │ v{{DS_VERSION}} / {{DS_VERSION}}            │
+  │ README.md badge    │ v{{DS_VERSION}} + {{DS_VERSION}}（两处替换）│
+  │ AGENTS.md 状态     │ v{{DS_VERSION}}                             │
+  └────────────────────┴────────────────────────────────────────────┘
 
 占位符设计的取舍：源文件保留 `{{DS_VERSION}}` 字面量，stamp 时一次性替换为真实版本号。
 "DS_" 前缀避免与文档中说明占位符语法的示例（"{{VERSION}}" 等通用写法）发生冲突。
@@ -46,23 +49,32 @@ from typing import Iterable
 ROOT = Path(__file__).resolve().parent.parent
 VERSION_FILE = ROOT / "VERSION"
 
-# 占位符常量（使用 DS_ 前缀以避免与文档中通用占位符示例冲突）
 PLACEHOLDER = "{{DS_VERSION}}"
 PLACEHOLDER_RE = re.compile(r"\{\{DS_VERSION\}\}")
 
-# 哪些文件参与 stamp
 HTML_TARGETS = [
     "index.html", "terms.html", "prompts.html",
-    "downloads.html", "handbook.html", "docs.html",
+    "downloads.html", "docs.html",
     "changelog.html",
-    # 模板/示例页：与主站共享 styles.css/scripts.js
     "blog.html", "company.html",
-    # 离线模板（仅占位，不读取 styles.css/scripts.js，跳过）
-    # "resume.html", "report.html",
+    "resume.html", "report.html",
 ]
-# scripts.js 也使用 {{DS_VERSION}} 占位符
+
+CSS_TARGETS = ["styles.css"]
+
 JS_TARGETS = ["scripts.js"]
-MD_TARGETS = ["README.md", "AGENTS.md", "skills/edic-design-system/README.md"]
+
+JSON_TARGETS = ["package.json", "tokens.json"]
+
+MD_TARGETS = [
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "CONTRIBUTING.md",
+    "skills/edic-design-system/README.md",
+    "docs/VERSIONING.md",
+    "DEVELOPMENT-GUIDE.md",
+]
 
 
 def read_version() -> str:
@@ -78,26 +90,14 @@ def read_version() -> str:
     return first_line
 
 
-def stamp_html(text: str, version: str, dry: bool = False) -> tuple[str, int]:
-    """替换 HTML 中所有 ?v={{VERSION}} 与 v{{VERSION}} 占位符。
+def stamp_file(text: str, version: str) -> tuple[str, int]:
+    """替换文件中所有 {{DS_VERSION}} 占位符。
 
-    返回 (新文本, 替换次数)。dry=True 时不修改，仅统计。
+    适用于所有文件类型（HTML、CSS、JS、JSON、MD）。
+    返回 (新文本, 替换次数)。
     """
-    count = 0
-    # 1) ?v={{VERSION}} → ?v=VERSION
     new_text, n = PLACEHOLDER_RE.subn(version, text)
-    count += n
-    return new_text, count
-
-
-def stamp_readme(text: str, version: str, dry: bool = False) -> tuple[str, int]:
-    """替换 README.md 中的 {{DS_VERSION}} 占位符（用于版本 badge）。"""
-    return stamp_html(text, version, dry)
-
-
-def stamp_agents(text: str, version: str, dry: bool = False) -> tuple[str, int]:
-    """替换 AGENTS.md 中的 {{DS_VERSION}} 占位符。"""
-    return stamp_html(text, version, dry)
+    return new_text, n
 
 
 def restore_placeholders(text: str, version: str) -> tuple[str, int]:
@@ -107,6 +107,7 @@ def restore_placeholders(text: str, version: str) -> tuple[str, int]:
     会替换：
       - ?v=VERSION  →  ?v={{DS_VERSION}}
       - v{VERSION} （作为整词）  →  v{{DS_VERSION}}
+      - "VERSION"（JSON version 字段）  →  "{{DS_VERSION}}"
     """
     count = 0
 
@@ -117,24 +118,33 @@ def restore_placeholders(text: str, version: str) -> tuple[str, int]:
     quote_class = r"""["']"""
     text, n = _sub(rf"\?v={re.escape(version)}(?={quote_class})", f"?v={PLACEHOLDER}", text)
     count += n
-    # 仅在 word boundary 处替换 v{VERSION}（避免误伤 v1.1.0-rc.1 等）
     text, n = _sub(rf"\bv{re.escape(version)}\b", f"v{PLACEHOLDER}", text)
+    count += n
+    text, n = _sub(rf'"version":\s*"{re.escape(version)}"', f'"version": "{PLACEHOLDER}"', text)
     count += n
     return text, count
 
 
 def collect_targets() -> list[Path]:
-    """收集所有需要 stamp 的文件路径（按 HTML → MD → JS 顺序）。"""
+    """收集所有需要 stamp 的文件路径（HTML → CSS → JS → JSON → MD 顺序）。"""
     paths: list[Path] = []
     for name in HTML_TARGETS:
         p = ROOT / name
         if p.exists():
             paths.append(p)
-    for name in MD_TARGETS:
+    for name in CSS_TARGETS:
         p = ROOT / name
         if p.exists():
             paths.append(p)
     for name in JS_TARGETS:
+        p = ROOT / name
+        if p.exists():
+            paths.append(p)
+    for name in JSON_TARGETS:
+        p = ROOT / name
+        if p.exists():
+            paths.append(p)
+    for name in MD_TARGETS:
         p = ROOT / name
         if p.exists():
             paths.append(p)
@@ -168,9 +178,10 @@ def diff_text(old: str, new: str) -> list[str]:
 def replace_old_version(text: str, old_version: str, new_version: str) -> tuple[str, int]:
     """在已提交（已 stamp）的文件中把旧版本号替换为新版本号。
 
-    处理两种形式：
+    处理三种形式：
       - ?v=OLD  （cache-busting query string）
       - vOLD    （可见的版本文字，仅在词边界处）
+      - "version": "OLD"（JSON version 字段）
     """
     count = 0
 
@@ -187,24 +198,38 @@ def replace_old_version(text: str, old_version: str, new_version: str) -> tuple[
     count += n
     text, n = _sub(rf"\bv{re.escape(old_version)}\b", f"v{new_version}", text)
     count += n
+    text, n = _sub(
+        rf'"version":\s*"{re.escape(old_version)}"',
+        f'"version": "{new_version}"',
+        text,
+    )
+    count += n
     return text, count
 
 
 def find_previous_version(paths: list[Path], current_version: str) -> str | None:
-    """从已提交的文件中探测现有的版本号（?v=X.Y.Z），用于版本 bump 场景。
+    """从已提交的文件中探测现有的版本号，用于版本 bump 场景。
 
-    当文件已被 stamp（不含占位符），需要把旧版本号替换为新版本号时使用。
+    扫描三种模式：
+      - ?v=X.Y.Z（HTML cache-busting）
+      - vX.Y.Z（可见版本文字）
+      - "version": "X.Y.Z"（JSON）
     """
-    version_re = re.compile(r'\?v=([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?)["\']')
+    patterns = [
+        re.compile(r'\?v=([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?)["\']'),
+        re.compile(r'\bv([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?)\b'),
+        re.compile(r'"version":\s*"([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?)"'),
+    ]
     for path in paths:
         if not path.exists():
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
-        m = version_re.search(text)
-        if m:
-            v = m.group(1)
-            if v != current_version:
-                return v
+        for pattern in patterns:
+            m = pattern.search(text)
+            if m:
+                v = m.group(1)
+                if v != current_version:
+                    return v
     return None
 
 
@@ -219,9 +244,8 @@ def apply_stamp(paths: Iterable[Path], version: str, mode: str) -> int:
       第二段：将已 stamp 的旧版本号替换为 version（版本 bump）
     两段合并后得到最终的变更数，确保无论源文件处于哪种状态都能正确更新。
     """
-    paths = list(paths)  # 需要两次遍历（探测旧版本）
+    paths = list(paths)
 
-    # 探测已提交文件中的旧版本号（用于 bump 场景）
     old_version: str | None = None
     if mode in ("write", "check", "diff"):
         old_version = find_previous_version(paths, version)
@@ -248,10 +272,8 @@ def apply_stamp(paths: Iterable[Path], version: str, mode: str) -> int:
                 path.write_text(new_text, encoding="utf-8")
             continue
 
-        # ── 第一段：占位符替换 ──────────────────────────────────────
         new_text, n_placeholder = PLACEHOLDER_RE.subn(version, original)
 
-        # ── 第二段：旧版本号替换（bump 场景）──────────────────────
         n_bump = 0
         if old_version:
             new_text, n_bump = replace_old_version(new_text, old_version, version)
@@ -260,7 +282,6 @@ def apply_stamp(paths: Iterable[Path], version: str, mode: str) -> int:
         files_checked += 1
 
         if n == 0:
-            # 文件已是最新版本，跳过
             continue
 
         if mode == "check":
@@ -282,7 +303,6 @@ def apply_stamp(paths: Iterable[Path], version: str, mode: str) -> int:
             total_changes += n
             continue
 
-        # mode == "write"
         reasons = []
         if n_placeholder:
             reasons.append(f"{n_placeholder} 个占位符")
@@ -314,14 +334,13 @@ def apply_stamp(paths: Iterable[Path], version: str, mode: str) -> int:
         print(f"✓ 还原完成：{files_changed} 个文件，{total_changes} 处占位符恢复")
         return 0
 
-    # write 模式
     print(f"✓ stamp 完成：{files_changed} 个文件，{total_changes} 处替换（VERSION = v{version}）")
     return 0
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="将 VERSION 同步到所有 HTML / MD 资源",
+        description="将 VERSION 同步到所有项目资源",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     group = parser.add_mutually_exclusive_group()
