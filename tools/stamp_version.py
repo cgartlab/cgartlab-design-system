@@ -210,14 +210,13 @@ def replace_old_version(text: str, old_version: str, new_version: str) -> tuple[
 def find_previous_version(paths: list[Path], current_version: str) -> str | None:
     """从已提交的文件中探测现有的版本号，用于版本 bump 场景。
 
-    扫描三种模式：
+    仅扫描两种 stamp 目标字段：
       - ?v=X.Y.Z（HTML cache-busting）
-      - vX.Y.Z（可见版本文字）
       - "version": "X.Y.Z"（JSON）
+    不扫描可见版本文字，避免从历史记录（如 docs.html 时间线）中误检旧版本。
     """
     patterns = [
         re.compile(r'\?v=([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?)["\']'),
-        re.compile(r'\bv([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?)\b'),
         re.compile(r'"version":\s*"([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?)"'),
     ]
     for path in paths:

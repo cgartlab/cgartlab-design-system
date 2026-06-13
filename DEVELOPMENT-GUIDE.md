@@ -1414,7 +1414,7 @@ timeline, contact-form, toast, glass-card, glass-btn
 ```json
 {
   "name": "EDIC Design Tokens",
-  "version": "{{DS_VERSION}}",
+  "version": "1.5.4",
   "tokens": {
     "colors": {
       "neutral": { "bg": "oklch(...)", ... },
