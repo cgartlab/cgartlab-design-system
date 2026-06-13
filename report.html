@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EDIC A4 报告规范 · 模板 v3.0</title>
 <meta name="description" content="EDIC A4 报告规范 v3.0 — 国际标准文档模板与排版示例">
+<link rel="stylesheet" href="styles.css?v=1.5.3">
 <!--
 ╔══════════════════════════════════════════════════════════════════════════╗
 ║                                                                          ║
@@ -56,20 +57,20 @@
     content: element(header-left);
     font-family: "Noto Sans SC", "Source Han Sans SC", -apple-system, "Segoe UI", system-ui, sans-serif;
     font-size: 7.5pt;
-    color: oklch(48% 0.015 60);
+    color: var(--ds-color-muted);
     letter-spacing: 0.05em;
   }
   @top-right {
     content: element(header-right);
     font-family: "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono SC", ui-monospace, monospace;
     font-size: 7pt;
-    color: oklch(48% 0.015 60);
+    color: var(--ds-color-muted);
   }
   @bottom-center {
     content: counter(page);
     font-family: "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono SC", ui-monospace, monospace;
     font-size: 8pt;
-    color: oklch(35% 0.018 60);
+    color: var(--ds-color-fg-subtle);
   }
 }
 
@@ -83,12 +84,12 @@
 
 /* ── 目录页：页眉显示「目录」 ── */
 @page toc-page {
-  @top-left { content: "│ 目录 │"; font-size: 7.5pt; color: oklch(48% 0.015 60); }
+  @top-left { content: "│ 目录 │"; font-size: 7.5pt; color: var(--ds-color-muted); }
 }
 
 /* ── 附录页：页眉显示「附录」 ── */
 @page appendix-page {
-  @top-left { content: "│ 附录 │"; font-size: 7.5pt; color: oklch(48% 0.015 60); }
+  @top-left { content: "│ 附录 │"; font-size: 7.5pt; color: var(--ds-color-muted); }
 }
 
 /* ===================================================================
@@ -99,55 +100,41 @@
    完整令牌列表参见 index.html #tokens。
    =================================================================== */
 :root {
-  /* ── 中性色 ── */
-  --bg:         oklch(97% 0.012 80);
-  --surface:    oklch(100% 0 0);
-  --fg:         oklch(20% 0.02 60);
-  --fg-strong:  oklch(14% 0.025 60);
-  --muted:      oklch(48% 0.015 60);
-  --muted-weak: oklch(60% 0.01 62);
-  --border:     oklch(89% 0.012 80);
-  --rule:       oklch(85% 0.015 75);
-  --rule-light: oklch(92% 0.008 80);
+  /* ── 中性色（全部映射到 EDIC 设计令牌） ── */
+  --bg:         var(--ds-color-bg);
+  --surface:    var(--ds-color-surface);
+  --fg:         var(--ds-color-fg);
+  --fg-strong:  var(--ds-color-fg-strong);
+  --muted:      var(--ds-color-muted);
+  --muted-weak: var(--ds-color-fg-subtle);
+  --border:     var(--ds-color-border);
+  --rule:       var(--ds-color-border-strong);
+  --rule-light: var(--ds-color-border-subtle);
 
   /* ── 橄榄绿强调色（10 级色阶中的 4/5/1 级） ── */
-  --accent:       oklch(52% 0.08 115);  /* olive-400 */
-  --accent-hover: oklch(45% 0.085 115); /* olive-500 */
-  --accent-soft:  oklch(72% 0.05 115);  /* olive-200 */
-  --accent-bg:    oklch(90% 0.025 115); /* olive-50 */
-  --accent-subtle: oklch(90% 0.025 115);
+  --accent:       var(--ds-accent);
+  --accent-hover: var(--ds-accent-hover);
+  --accent-soft:  var(--ds-accent-soft);
+  --accent-bg:    var(--ds-accent-muted);
+  --accent-subtle: var(--ds-accent-muted);
 
   /* ── 语义色 ── */
-  --color-success:    oklch(55% 0.1 145);
-  --color-success-bg: oklch(93% 0.025 145);
-  --color-warning:    oklch(65% 0.1 85);
-  --color-warning-bg: oklch(95% 0.025 85);
-  --color-error:      oklch(50% 0.14 30);
-  --color-error-bg:   oklch(93% 0.025 30);
-  --color-info:       oklch(55% 0.08 240);
-  --color-info-bg:    oklch(93% 0.02 240);
+  --color-success:    var(--ds-color-success);
+  --color-success-bg: var(--ds-color-success-bg);
+  --color-warning:    var(--ds-color-warning);
+  --color-warning-bg: var(--ds-color-warning-bg);
+  --color-error:      var(--ds-color-error);
+  --color-error-bg:   var(--ds-color-error-bg);
+  --color-info:       var(--ds-color-info);
+  --color-info-bg:    var(--ds-color-info-bg);
 
-  /* ── 字族 ──
-     排版哲学：
-     Display（衬线）— 标题、引言、装饰性文字
-     Body（无衬线）— 正文、注释
-     Mono（等宽）— 数据、代码、标注
-     UI（无衬线）— 页眉、页脚、运行文本
-     中文字体栈确保 Noto Sans/Serif SC 回退。 */
-  --font-display: "Iowan Old Style", "Charter", Georgia,
-                  "Noto Serif SC", "Source Han Serif SC", serif;
-  --font-body:    "Noto Sans SC", "Source Han Sans SC",
-                  -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --font-mono:    "JetBrains Mono", "IBM Plex Mono",
-                  "Noto Sans Mono SC", ui-monospace, Menlo, monospace;
-  --font-ui:      "Noto Sans SC", "Source Han Sans SC",
-                  -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  /* ── 字族 ── */
+  --font-display: "Iowan Old Style", "Charter", Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-body:    "Noto Sans SC", "Source Han Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono SC", ui-monospace, Menlo, monospace;
+  --font-ui:      "Noto Sans SC", "Source Han Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 
-  /* ── 字号（印刷 pt 体系）
-     核心原则：正文 10pt = 阅读舒适下限
-     标题采用 modular scale 1.25 (major third)：
-     正文 10 → h5 12 → h4 15 → h3 18 → h2 22 → h1 28 → display 36
-     caption 和 footnotes 单独定义。 */
+  /* ── 字号（印刷 pt 体系） ── */
   --text-caption:   7.5pt;
   --text-footnote:  8pt;
   --text-body-sm:   9pt;
@@ -166,9 +153,7 @@
   --leading-snug:  1.25;
   --leading-loose: 1.8;
 
-  /* ── 间距（基于 4pt 栅格）
-     印刷间距与屏幕不同：4pt 基元 × 倍率
-     所有 margin/padding 必须落在 4pt 网格上。 */
+  /* ── 间距（基于 4pt 栅格） ── */
   --space-1:   4pt;
   --space-2:   8pt;
   --space-3:   12pt;
@@ -190,14 +175,14 @@
   --tracking-widest: 0.08em;
 
   /* ── 颜色变量别名（组件用） ── */
-  --c-bg:       var(--bg);
-  --c-surface:  var(--surface);
-  --c-fg:       var(--fg);
-  --c-strong:   var(--fg-strong);
-  --c-muted:    var(--muted);
-  --c-accent:   var(--accent);
-  --c-border:   var(--border);
-  --c-rule:     var(--rule);
+  --c-bg:       var(--ds-color-bg);
+  --c-surface:  var(--ds-color-surface);
+  --c-fg:       var(--ds-color-fg);
+  --c-strong:   var(--ds-color-fg-strong);
+  --c-muted:    var(--ds-color-muted);
+  --c-accent:   var(--ds-accent);
+  --c-border:   var(--ds-color-border);
+  --c-rule:     var(--ds-color-border-strong);
 }
 
 /* ===================================================================
@@ -455,7 +440,7 @@ img, svg, video, canvas {
 .rp-body pre {
   margin: var(--space-4) 0;
   padding: var(--space-3) var(--space-4);
-  background: oklch(96% 0.004 100);
+  background: var(--ds-color-surface-overlay);
   border: 0.5pt solid var(--rule);
   font-family: var(--font-mono);
   font-size: 8pt;
@@ -466,7 +451,8 @@ img, svg, video, canvas {
 }
 
 /* ===================================================================
-   8. 表格规范
+    8. 表格规范
+    ───────────────────────────────────────────────
    ───────────────────────────────────────────────
    核心设计原则：
    - 表头：等宽 + uppercase + 宽字距 + 底部加粗橄榄绿线
@@ -546,7 +532,7 @@ img, svg, video, canvas {
 
 /* ── 条纹表格（仅用于数据密集场景） ── */
 .rp-table.-striped tbody tr:nth-child(even) td {
-  background: oklch(97% 0.005 80);
+  background: var(--ds-color-surface);
 }
 
 /* ===================================================================
@@ -656,7 +642,7 @@ img, svg, video, canvas {
 .rp-bar-track {
   flex: 1;
   height: 14pt;
-  background: oklch(93% 0.008 80);
+  background: var(--ds-color-surface-overlay);
   border-radius: 1pt;
   overflow: hidden;
 }
@@ -678,7 +664,7 @@ img, svg, video, canvas {
 
 .rp-bar-fill--alt {
   background: var(--accent-soft);
-  color: oklch(15% 0.02 115);
+  color: var(--ds-color-fg-strong);
   font-weight: 800;
 }
 
@@ -843,7 +829,7 @@ img, svg, video, canvas {
 
 .rp-badge.-accent { background: var(--accent); color: var(--surface); }
 .rp-badge.-success { background: var(--color-success); color: var(--surface); }
-.rp-badge.-warning { background: var(--color-warning); color: oklch(15% 0.02 60); }
+.rp-badge.-warning { background: var(--color-warning); color: var(--ds-color-fg-strong); }
 .rp-badge.-error { background: var(--color-error); color: var(--surface); }
 .rp-badge.-info { background: var(--color-info); color: var(--surface); }
 .rp-badge.-outline { background: transparent; border: 0.5pt solid var(--border); color: var(--muted); }
@@ -1072,13 +1058,13 @@ img, svg, video, canvas {
   height: 120px;
   border-radius: 12px;
   padding: 12px;
-  background: oklch(100% 0 0);
-  box-shadow: 0 2px 12px oklch(0% 0 0 / 0.06), 0 0 0 1px oklch(0% 0 0 / 0.04);
+  background: var(--ds-color-white);
+  box-shadow: 0 2px 12px var(--ds-color-black / 0.06), 0 0 0 1px var(--ds-color-black / 0.04);
   transition: box-shadow 0.2s ease;
 }
 
 .rp-footer-qr img:hover {
-  box-shadow: 0 4px 20px oklch(0% 0 0 / 0.10), 0 0 0 1px oklch(0% 0 0 / 0.06);
+  box-shadow: 0 4px 20px var(--ds-color-black / 0.10), 0 0 0 1px var(--ds-color-black / 0.06);
 }
 
 .rp-footer-qr .rp-footer-qr-label {
@@ -1196,7 +1182,7 @@ img, svg, video, canvas {
     display: block;
     font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
     font-size: 6.5pt;
-    color: oklch(60% 0.01 62);
+    color: var(--ds-color-fg-subtle);
     text-align: right;
     margin-top: var(--space-4);
     opacity: 0.6;
@@ -1214,12 +1200,12 @@ img, svg, video, canvas {
   padding: 8px 18px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   font-size: 12px;
-  background: oklch(52% 0.08 115);
+  background: var(--ds-accent);
   color: white;
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  box-shadow: 0 2px 10px oklch(0% 0 0 / 0.25);
+  box-shadow: 0 2px 10px var(--ds-color-black / 0.25);
   transition: opacity 0.2s ease, transform 0.15s ease;
   opacity: 0.85;
   -webkit-print-color-adjust: exact;
@@ -1234,7 +1220,7 @@ img, svg, video, canvas {
 .rp-paginate-mark {
   display: block;
   height: 0;
-  border-top: 1.5px dashed oklch(52% 0.08 115 / 0.35);
+  border-top: 1.5px dashed var(--ds-accent / 0.35);
   margin: 8px 0;
   position: relative;
   pointer-events: none;
@@ -1246,7 +1232,7 @@ img, svg, video, canvas {
   top: -8px;
   font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
   font-size: 7px;
-  color: oklch(52% 0.08 115 / 0.5);
+  color: var(--ds-accent / 0.5);
   background: var(--surface);
   padding: 0 6px;
   letter-spacing: 0.05em;
@@ -1261,7 +1247,7 @@ img, svg, video, canvas {
    =================================================================== */
 @media screen {
   body {
-    background: oklch(94% 0.006 80);
+    background: var(--ds-color-bg);
     padding: 0;
   }
 
@@ -2091,13 +2077,13 @@ img, svg, video, canvas {
     <div class="rp-chart">
       <div class="rp-chart-title">Penpot 采纳意愿分布</div>
       <div class="rp-donut">
-        <div class="rp-donut-ring" style="background: conic-gradient(var(--accent) 0deg 126deg, var(--accent-soft) 126deg 216deg, oklch(75% 0.012 75) 216deg 360deg);">
+        <div class="rp-donut-ring" style="background: conic-gradient(var(--accent) 0deg 126deg, var(--accent-soft) 126deg 216deg, var(--ds-color-fg-subtle) 216deg 360deg);">
           <div class="rp-donut-center">35%</div>
         </div>
         <div class="rp-donut-legend">
           <span class="rp-donut-item"><span class="rp-donut-dot" style="background:var(--accent);"></span> 已采用/计划迁移 (35%)</span>
           <span class="rp-donut-item"><span class="rp-donut-dot" style="background:var(--accent-soft);"></span> 评估中 (25%)</span>
-          <span class="rp-donut-item"><span class="rp-donut-dot" style="background:oklch(75% 0.012 75);"></span> 暂不考虑 (40%)</span>
+          <span class="rp-donut-item"><span class="rp-donut-dot" style="background:var(--ds-color-fg-subtle);"></span> 暂不考虑 (40%)</span>
         </div>
       </div>
     </div>
@@ -2373,7 +2359,7 @@ img, svg, video, canvas {
         <tr><th>变量</th><th>默认值</th><th>说明</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>--accent</code></td><td><code>oklch(52% 0.08 115)</code></td><td>橄榄绿 · 主要强调色</td></tr>
+        <tr><td><code>--accent</code></td><td><code>var(--ds-accent)</code></td><td>橄榄绿 · 主要强调色</td></tr>
         <tr><td><code>--accent-soft</code></td><td><code>oklch(72% 0.05 115)</code></td><td>浅橄榄 · 次要强调色</td></tr>
         <tr><td><code>--accent-bg</code></td><td><code>oklch(90% 0.025 115)</code></td><td>底色版本</td></tr>
         <tr><td><code>--font-display</code></td><td>Iowan Old Style / Noto Serif SC</td><td>标题字族</td></tr>
