@@ -54,11 +54,14 @@ PLACEHOLDER_RE = re.compile(r"\{\{DS_VERSION\}\}")
 HTML_TARGETS = [
     "index.html", "terms.html", "prompts.html",
     "downloads.html", "handbook.html", "docs.html",
+    "changelog.html",
     # 模板/示例页：与主站共享 styles.css/scripts.js
     "blog.html", "company.html",
     # 离线模板（仅占位，不读取 styles.css/scripts.js，跳过）
     # "resume.html", "report.html",
 ]
+# scripts.js 也使用 {{DS_VERSION}} 占位符
+JS_TARGETS = ["scripts.js"]
 MD_TARGETS = ["README.md", "AGENTS.md"]
 
 
@@ -121,13 +124,17 @@ def restore_placeholders(text: str, version: str) -> tuple[str, int]:
 
 
 def collect_targets() -> list[Path]:
-    """收集所有需要 stamp 的文件路径（按 HTML → MD 顺序）。"""
+    """收集所有需要 stamp 的文件路径（按 HTML → MD → JS 顺序）。"""
     paths: list[Path] = []
     for name in HTML_TARGETS:
         p = ROOT / name
         if p.exists():
             paths.append(p)
     for name in MD_TARGETS:
+        p = ROOT / name
+        if p.exists():
+            paths.append(p)
+    for name in JS_TARGETS:
         p = ROOT / name
         if p.exists():
             paths.append(p)
